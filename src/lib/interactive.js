@@ -57,8 +57,58 @@ window.cerrarSesion = async function() {
 // GESTIÓN DE PERFIL DE USUARIO Y PERSISTENCIA SUPABASE
 // ==============================================================================
 
+let pendingAvatarDataUrl = null;
+
+window.procesarFotoPerfil = function(event) {
+  const file = event?.target?.files?.[0];
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    showToast('Por favor selecciona un archivo de imagen válido.', 'warning');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = 160;
+        canvas.height = 160;
+        const ctx = canvas.getContext('2d');
+
+        // Recorte cuadrado centrado
+        const size = Math.min(img.width, img.height);
+        const startX = (img.width - size) / 2;
+        const startY = (img.height - size) / 2;
+
+        ctx.drawImage(img, startX, startY, size, size, 0, 0, 160, 160);
+
+        // Compresión ligera a 160x160 JPEG calidad 0.8
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+        pendingAvatarDataUrl = compressedDataUrl;
+
+        // Actualizar vista previa de inmediato en el modal
+        const previewEl = document.getElementById('perfil-avatar-preview');
+        if (previewEl) {
+          previewEl.src = compressedDataUrl;
+        }
+
+        showToast('📸 Foto procesada con éxito (160x160px). Haz clic en "Guardar Cambios" para confirmar.', 'info');
+      } catch (err) {
+        console.error('Error procesando imagen de avatar:', err);
+        showToast('No se pudo procesar la imagen seleccionada.', 'error');
+      }
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+
 window.abrirModalPerfil = function() {
   window.toggleUserDropdown(true);
+  pendingAvatarDataUrl = null;
 
   const u = store.state.currentUser || {};
   const nombre = u.nombre || '';
@@ -67,24 +117,35 @@ window.abrirModalPerfil = function() {
   const club = u.club || 'LigaPro Ecuador';
   const rol = u.rol || 'DIR_COMP';
   const cedula = u.cedula || '1714209552';
-  const avatar = u.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80';
+  const avatar = u.avatar_url || u.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80';
 
   const modalHtml = `
   <div id="modal-perfil-backdrop" class="fixed inset-0 bg-black/75 backdrop-blur-xs z-50 flex items-start justify-center p-4 pt-20 overflow-y-auto">
     <div class="bg-white dark:bg-[#111827] rounded-2xl max-w-2xl w-full p-6 sm:p-7 shadow-2xl border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 my-auto sm:my-4 transition-all">
       <!-- Encabezado del Modal -->
       <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
-        <div class="flex items-center gap-3">
-          <div class="relative">
-            <img src="${avatar}" alt="Avatar" class="w-12 h-12 rounded-full object-cover border-2 border-blue-600 shadow-sm" />
-            <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white dark:border-[#111827] rounded-full"></span>
+        <div class="flex items-center gap-3.5">
+          <!-- Avatar Interactivo con Overlay y Disparador de Archivo -->
+          <div class="relative group cursor-pointer shrink-0" onclick="document.getElementById('perfil-avatar-input').click()" title="Haz clic para cambiar foto de perfil">
+            <img id="perfil-avatar-preview" src="${avatar}" alt="Avatar" class="w-16 h-16 rounded-2xl object-cover border-2 border-blue-600 shadow-md transition-all group-hover:brightness-75 group-hover:scale-[1.02]" />
+            <div class="absolute inset-0 rounded-2xl bg-black/45 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center text-white transition-opacity">
+              <span class="material-symbols-outlined text-xl">photo_camera</span>
+              <span class="text-[9px] font-bold tracking-tight">Cambiar</span>
+            </div>
+            <span class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-white dark:border-[#111827] rounded-full" title="Acreditación Vigente"></span>
           </div>
+          <input type="file" id="perfil-avatar-input" accept="image/*" class="hidden" onchange="procesarFotoPerfil(event)" />
+
           <div>
             <div class="flex items-center gap-2">
               <h3 class="font-extrabold text-slate-900 dark:text-white text-base sm:text-lg">Mi Perfil & Acreditación</h3>
               <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800">COMET SEC://2025</span>
             </div>
             <p class="text-xs text-slate-500 dark:text-slate-400">Identidad federativa, asignación de club y credenciales oficiales</p>
+            <button type="button" onclick="document.getElementById('perfil-avatar-input').click()" class="mt-1 text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 transition-colors">
+              <span class="material-symbols-outlined text-xs">add_a_photo</span>
+              <span>Cambiar foto de perfil</span>
+            </button>
           </div>
         </div>
         <button type="button" onclick="cerrarModalPerfil()" class="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
@@ -269,6 +330,10 @@ window.guardarCambiosPerfil = async function(event) {
     btnGuardar.innerHTML = `<span class="material-symbols-outlined text-base animate-spin">refresh</span> Guardando...`;
   }
 
+  // Determinar foto final de perfil (nueva comprimida o la existente)
+  const currentAvatar = store.state.currentUser.avatar_url || store.state.currentUser.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80';
+  const finalAvatar = pendingAvatarDataUrl || currentAvatar;
+
   // 1. Persistencia real en Supabase
   const sb = getSupabase();
   let pwdUpdated = false;
@@ -283,7 +348,9 @@ window.guardarCambiosPerfil = async function(event) {
           rol: rol,
           club: club,
           cargo: cargo,
-          cedula: cedula
+          cedula: cedula,
+          avatar_url: finalAvatar,
+          avatar: finalAvatar
         }
       };
 
@@ -310,6 +377,7 @@ window.guardarCambiosPerfil = async function(event) {
             club: club,
             cargo: cargo,
             cedula: cedula,
+            avatar_url: finalAvatar,
             updated_at: new Date().toISOString()
           }).catch(() => {});
 
@@ -332,8 +400,12 @@ window.guardarCambiosPerfil = async function(event) {
     cargo,
     club,
     rol,
-    cedula
+    cedula,
+    avatar: finalAvatar,
+    avatar_url: finalAvatar
   });
+
+  pendingAvatarDataUrl = null;
 
   // 3. Reflejar inmediatamente en Header
   actualizarUIHeader();
@@ -429,7 +501,9 @@ window.loginFormSubmit = async function(event) {
   store.setUserRole(role, nombreUsuario, email, {
     cargo: userMeta.cargo,
     club: userMeta.club,
-    cedula: userMeta.cedula
+    cedula: userMeta.cedula,
+    avatar: userMeta.avatar_url || userMeta.avatar,
+    avatar_url: userMeta.avatar_url || userMeta.avatar
   });
   actualizarUIHeader();
   showToast(`¡Bienvenido! Sesión iniciada como ${store.state.currentUser.rolNombre}`, 'success');
@@ -1267,7 +1341,8 @@ function actualizarUIHeader() {
 
   if (userNameEl) userNameEl.textContent = u.nombre;
   if (userRoleEl) userRoleEl.textContent = u.rolNombre;
-  if (userAvatarEl && u.avatar) userAvatarEl.src = u.avatar;
+  const userAvatar = u.avatar_url || u.avatar;
+  if (userAvatarEl && userAvatar) userAvatarEl.src = userAvatar;
   if (dropdownNameEl) dropdownNameEl.textContent = u.nombre;
   if (dropdownEmailEl) dropdownEmailEl.textContent = u.email;
   if (dropdownRoleEl) dropdownRoleEl.textContent = u.rolNombre;
@@ -1857,7 +1932,9 @@ document.addEventListener('DOMContentLoaded', () => {
           rol: meta.role || meta.rol || 'DIR_COMP',
           cargo: meta.cargo || 'Oficial LigaPro',
           club: meta.club || (meta.rol === 'CLUB_ADMIN' ? 'Liga Deportiva Universitaria' : 'LigaPro Ecuador'),
-          cedula: meta.cedula || '1714209552'
+          cedula: meta.cedula || '1714209552',
+          avatar: meta.avatar_url || meta.avatar || null,
+          avatar_url: meta.avatar_url || meta.avatar || null
         });
         actualizarUIHeader();
       }

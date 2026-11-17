@@ -22,6 +22,7 @@ export const INITIAL_STATE = {
     rol: 'PUBLICO',
     rolNombre: 'Acceso Público (Aficionado)',
     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
+    avatar_url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
     cargo: 'Espectador Público',
     club: 'Ninguno',
     cedula: 'Consumidor Final',
@@ -276,7 +277,8 @@ const ROLES_MAP = {
   'PUBLICO': { 
     nombre: 'Aficionado / Acceso Público', 
     email: 'publico@ligapro.ec', 
-    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80', 
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
+    avatar_url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80', 
     usuario: 'Invitado General',
     cargo: 'Espectador Público',
     club: 'Ninguno',
@@ -399,12 +401,14 @@ class Store {
       nombre: rolCode,
       email: `${rolCode.toLowerCase()}@ligapro.ec`,
       avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
+    avatar_url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
       usuario: nombreUsuario || 'Oficial LigaPro',
       cargo: 'Oficial de Partido',
       club: 'LigaPro Ecuador',
       cedula: '1700000000'
     };
 
+    const finalAvatar = extraData.avatar_url || extraData.avatar || roleConfig.avatar;
     this.state.currentUser = {
       ...this.state.currentUser,
       isAuthenticated: rolCode !== 'PUBLICO',
@@ -412,7 +416,8 @@ class Store {
       rolNombre: roleConfig.nombre,
       nombre: nombreUsuario || roleConfig.usuario,
       email: emailUsuario || roleConfig.email,
-      avatar: roleConfig.avatar,
+      avatar: finalAvatar,
+      avatar_url: finalAvatar,
       cargo: extraData.cargo || roleConfig.cargo || 'Oficial de Partido',
       club: extraData.club || roleConfig.club || 'LigaPro Ecuador',
       cedula: extraData.cedula || roleConfig.cedula || '1700000000'
@@ -430,13 +435,15 @@ class Store {
     if (!this.state.currentUser) return;
     const nuevoRol = datos.rol || this.state.currentUser.rol;
     const roleConfig = ROLES_MAP[nuevoRol] || {};
+    const nuevoAvatar = datos.avatar_url || datos.avatar || this.state.currentUser.avatar_url || this.state.currentUser.avatar || roleConfig.avatar;
 
     this.state.currentUser = {
       ...this.state.currentUser,
       ...datos,
       rol: nuevoRol,
       rolNombre: datos.rolNombre || roleConfig.nombre || this.state.currentUser.rolNombre,
-      avatar: datos.avatar || roleConfig.avatar || this.state.currentUser.avatar
+      avatar: nuevoAvatar,
+      avatar_url: nuevoAvatar
     };
 
     this.notify();
