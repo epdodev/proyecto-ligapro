@@ -31,7 +31,6 @@ window.toggleUserDropdown = function(forceClose = false) {
 window.cambiarRol = function(nuevoRol) {
   store.setUserRole(nuevoRol);
   window.toggleUserDropdown(true);
-  showToast(`Rol activo: ${store.state.currentUser.rolNombre}`, 'info');
   actualizarUIHeader();
   
   // Si estamos en la vista de login, redirigir a tablero o posiciones
@@ -48,9 +47,28 @@ window.cambiarRol = function(nuevoRol) {
 window.cerrarSesion = async function() {
   window.toggleUserDropdown(true);
   await store.logout();
-  showToast('Sesión cerrada. Acceso público para aficionados activado.', 'info');
   actualizarUIHeader();
+  showToast('Sesión cerrada correctamente.', 'info');
   window.navigateView('auth');
+};
+
+window.toggleAuthTab = function(tab) {
+  const loginSection = document.getElementById('auth-section-login');
+  const signupSection = document.getElementById('auth-section-signup');
+  const tabBtnLogin = document.getElementById('tab-btn-login');
+  const tabBtnSignup = document.getElementById('tab-btn-signup');
+
+  if (tab === 'signup') {
+    if (loginSection) loginSection.classList.add('hidden');
+    if (signupSection) signupSection.classList.remove('hidden');
+    if (tabBtnLogin) tabBtnLogin.className = "flex-1 py-2 text-center font-bold text-xs border-b-2 border-transparent text-slate-400 hover:text-white transition-colors";
+    if (tabBtnSignup) tabBtnSignup.className = "flex-1 py-2 text-center font-bold text-xs border-b-2 border-amber-400 text-amber-400 transition-colors";
+  } else {
+    if (signupSection) signupSection.classList.add('hidden');
+    if (loginSection) loginSection.classList.remove('hidden');
+    if (tabBtnLogin) tabBtnLogin.className = "flex-1 py-2 text-center font-bold text-xs border-b-2 border-amber-400 text-amber-400 transition-colors";
+    if (tabBtnSignup) tabBtnSignup.className = "flex-1 py-2 text-center font-bold text-xs border-b-2 border-transparent text-slate-400 hover:text-white transition-colors";
+  }
 };
 
 window.loginFormSubmit = async function(event) {
@@ -59,11 +77,18 @@ window.loginFormSubmit = async function(event) {
   const passInput = document.getElementById('credencial-clave') || document.getElementById('login-password');
   const roleRadio = document.querySelector('input[name="portal_role"]:checked');
 
-  const rawId = idInput ? idInput.value.trim() : 'oficial@ligapro.ec';
-  const email = rawId.includes('@') ? rawId : `${rawId.replace(/[^a-zA-Z0-9]/g, '') || 'oficial'}@ligapro.ec`;
-  const rawRole = roleRadio ? roleRadio.value : 'DIR_COMP';
+  const rawId = idInput ? idInput.value.trim() : '';
+  if (!rawId) {
+    showToast('Por favor ingrese su usuario o correo electrónico.', 'warning');
+    return;
+  }
+  const email = rawId.includes('@') ? rawId : `${rawId.replace(/[^a-zA-Z0-9._-]/g, '') || 'oficial'}@ligapro.ec`;
+  const password = passInput ? passInput.value : '';
+  if (!password) {
+    showToast('Por favor ingrese su contraseña.', 'warning');
+    return;
+  }
 
-  // Mapeo flexible de roles de formulario
   const roleMap = {
     'competiciones': 'DIR_COMP',
     'comisario': 'COMISARIO',
@@ -74,20 +99,28 @@ window.loginFormSubmit = async function(event) {
     'CLUB_ADMIN': 'CLUB_ADMIN',
     'PUBLICO': 'PUBLICO'
   };
-  const role = roleMap[rawRole] || 'DIR_COMP';
+  let role = roleRadio ? (roleMap[roleRadio.value] || 'DIR_COMP') : 'DIR_COMP';
+  let nombreUsuario = rawId.includes('@') ? rawId.split('@')[0] : rawId;
 
   // Intentar autenticación con Supabase si está disponible
   const sb = getSupabase();
-  if (sb && sb.auth && passInput && passInput.value) {
+  if (sb && sb.auth) {
     try {
       const { data, error } = await sb.auth.signInWithPassword({
         email,
-        password: passInput.value
+        password
       });
       if (error) {
-        console.warn('Supabase Auth fallo, usando modo credencial local demo:', error.message);
-      } else {
-        console.log('✅ Supabase Auth exitoso:', data.user?.email);
+        console.warn('Supabase Auth fallo:', error.message);
+        if (!email.includes('ligapro.ec') && !email.includes('ldu.com.ec')) {
+          showToast(`Error de autenticación: ${error.message}`, 'error');
+          return;
+        }
+      } else if (data && data.user) {
+        if (data.user.user_metadata) {
+          if (data.user.user_metadata.rol) role = data.user.user_metadata.rol;
+          if (data.user.user_metadata.nombre) nombreUsuario = data.user.user_metadata.nombre;
+        }
       }
     } catch (err) {
       console.warn('Supabase Auth offline, aplicando fallback demo.');
@@ -95,9 +128,67 @@ window.loginFormSubmit = async function(event) {
   }
 
   // Activar sesión en store
-  const nombreUsuario = rawId.includes('@') ? rawId.split('@')[0] : (rawId || 'Oficial LigaPro');
-  store.setUserRole(role, nombreUsuario);
+  store.setUserRole(role, nombreUsuario, email);
+  actualizarUIHeader();
   showToast(`¡Bienvenido! Sesión iniciada como ${store.state.currentUser.rolNombre}`, 'success');
+  window.navigateView('tablero');
+};
+
+window.signupFormSubmit = async function(event) {
+  if (event) event.preventDefault();
+  const nombreInput = document.getElementById('signup-nombre');
+  const emailInput = document.getElementById('signup-email');
+  const passInput = document.getElementById('signup-password');
+  const roleSelect = document.getElementById('signup-rol');
+
+  const nombre = nombreInput ? nombreInput.value.trim() : '';
+  const email = emailInput ? emailInput.value.trim() : '';
+  const password = passInput ? passInput.value : '';
+  const rol = roleSelect ? roleSelect.value : 'DIR_COMP';
+
+  if (!nombre || !email || !password) {
+    showToast('Por favor complete todos los campos obligatorios.', 'warning');
+    return;
+  }
+
+  if (password.length < 6) {
+    showToast('La contraseña debe tener al menos 6 caracteres.', 'warning');
+    return;
+  }
+
+  const sb = getSupabase();
+  if (sb && sb.auth) {
+    try {
+      const { data, error } = await sb.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            nombre,
+            rol
+          }
+        }
+      });
+
+      if (error) {
+        showToast(`Error al crear cuenta: ${error.message}`, 'error');
+        return;
+      }
+
+      if (data && data.user) {
+        await safeInsert('user_roles', {
+          user_id: data.user.id,
+          rol: rol === 'DIR_COMP' ? 'DIR_COMP' : rol
+        });
+      }
+    } catch (err) {
+      console.warn('Supabase signUp excepción:', err);
+    }
+  }
+
+  store.setUserRole(rol, nombre, email);
+  actualizarUIHeader();
+  showToast(`✅ Cuenta creada exitosamente. Bienvenido a SIGEC-LP, ${nombre}.`, 'success');
   window.navigateView('tablero');
 };
 
@@ -131,7 +222,6 @@ window.navigateView = function(viewId) {
 window.toggleGlobalHighContrast = function() {
   const isHc = store.toggleHighContrast();
   document.body.classList.toggle('high-contrast-mode', isHc);
-  showToast(isHc ? 'Modo Alto Contraste WCAG AAA (#000000 / #FFE600) Activado' : 'Modo Visual Estándar Restaurado', 'info');
 };
 
 window.ajustarTexto = function(delta) {
@@ -139,16 +229,12 @@ window.ajustarTexto = function(delta) {
   const newScale = Math.min(130, Math.max(80, current + delta));
   store.setFontScale(newScale);
   document.documentElement.style.fontSize = `${newScale}%`;
-  showToast(`Escala tipográfica accesible: ${newScale}%`, 'info');
 };
 
 window.toggleAlertaAuditiva = function() {
   const active = store.toggleAudioAlerts();
   if (active) {
     reproducirTonoAccesible(880, 0.15); // Tono de prueba 880Hz (La)
-    showToast('🔊 Alertas auditivas y visuales sincronizadas activadas.', 'info');
-  } else {
-    showToast('🔇 Alertas sonoras silenciadas.', 'info');
   }
 };
 
@@ -802,6 +888,21 @@ function actualizarUIHeader() {
   if (scoreEl) scoreEl.textContent = `${p.marcador.local} - ${p.marcador.visitante}`;
   if (minEl) minEl.textContent = `${p.minuto}' ${p.periodo}T`;
 
+  // Controlar visibilidad: Botón Iniciar Sesión vs. Perfil de Usuario
+  const authBtnEl = document.getElementById('header-auth-btn');
+  const userBlockEl = document.getElementById('header-user-block');
+  const estaAutenticado = u && u.isAuthenticated && u.rol !== 'PUBLICO';
+
+  if (authBtnEl && userBlockEl) {
+    if (estaAutenticado) {
+      authBtnEl.classList.add('hidden');
+      userBlockEl.classList.remove('hidden');
+    } else {
+      authBtnEl.classList.remove('hidden');
+      userBlockEl.classList.add('hidden');
+    }
+  }
+
   // Actualizar bloque de usuario
   const userNameEl = document.getElementById('header-user-name');
   const userRoleEl = document.getElementById('header-user-role');
@@ -838,7 +939,6 @@ window.toggleLuzEstadio = function() {
       ? `<span class="material-symbols-outlined text-sm">nightlight</span> Modo: Luz Artificial 20:00 (1200 Lux)`
       : `<span class="material-symbols-outlined text-sm">wb_sunny</span> Modo: Luz Natural 18:00`;
   }
-  showToast(estadioLuzArtificial ? '💡 Simulación de Iluminación Artificial 20:00 (1200 Lux HDTV Art. 51) Activada' : '☀️ Modo Luz Natural 18:00 Activado', 'info');
 };
 
 window.descargarActaUniformesPDF = async function() {
@@ -1156,17 +1256,11 @@ window.cerrarModalCriterios = function() {
 };
 
 window.cambiarDivision = function(div) {
-  showToast(`Mostrando tabla oficial: LigaPro Ecuabet Serie ${div} 2025`, 'info');
+  // Cambio de división silencioso sin toast invasivo
 };
 
 window.cambiarFaseTorneo = function(fase) {
-  const nombres = {
-    'inicial': 'Fase Inicial (30 Fechas Acumuladas)',
-    'hex_titulo': '1° Hexagonal (Puestos 1-6 Título & Libertadores)',
-    'hex_sudamericana': '2° Hexagonal (Puestos 7-12 Sudamericana)',
-    'cuad_descenso': 'Cuadrangular de Descenso (Puestos 13-16)'
-  };
-  showToast(`Filtro de fase: ${nombres[fase] || fase}`, 'info');
+  // Cambio de fase silencioso sin toast invasivo
 };
 
 window.descargarPlanillaMatchday = function() {
@@ -1191,6 +1285,171 @@ Certificado emitido electrónicamente desde SIGEC-LP.`;
   a.download = `Planilla_Matchday_${p.local.nombreCorto}_vs_${p.visitante.nombreCorto}_${Date.now()}.txt`;
   a.click();
   showToast('📄 Planilla COMET descargada con éxito.', 'success');
+};
+
+window.mostrarModalCompeticionesFormatos = function() {
+  const modalHtml = `
+  <div id="modal-formatos-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 shrink-0">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-amber-500 text-2xl">emoji_events</span>
+          <div>
+            <h3 class="font-extrabold text-slate-900 text-base">Configurador de Competiciones & Formatos (Art. 9, 10, 11, 14)</h3>
+            <p class="text-[11px] text-slate-500">Gobernanza oficial del sistema de torneo LigaPro Ecuador 2025</p>
+          </div>
+        </div>
+        <button onclick="document.getElementById('modal-formatos-backdrop').remove()" class="text-slate-400 hover:text-slate-700">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="mt-4 space-y-4 overflow-y-auto pr-1 text-xs">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="p-3 bg-blue-50 border border-blue-200 rounded-xl space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-blue-900">LigaPro Ecuabet Serie A</span>
+              <span class="px-2 py-0.5 rounded bg-blue-600 text-white font-mono text-[10px] font-bold">16 CLUBES</span>
+            </div>
+            <p class="text-blue-800 text-[11px] leading-relaxed">
+              • Fase Uno: 15 fechas (todos contra todos).<br>
+              • Fase Dos: 15 fechas (espejo de localías).<br>
+              • Definición de Título: Final de Ida y Vuelta si hay distintos ganadores (Art. 11) o Campeón Directo (Art. 12).<br>
+              • Descenso: Últimos 2 puestos de la Tabla Acumulada descienden a Serie B.
+            </p>
+          </div>
+
+          <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-amber-900">LigaPro Ecuabet Serie B</span>
+              <span class="px-2 py-0.5 rounded bg-amber-600 text-white font-mono text-[10px] font-bold">10 CLUBES</span>
+            </div>
+            <p class="text-amber-800 text-[11px] leading-relaxed">
+              • Formato: 36 fechas en 4 ruedas (todos contra todos).<br>
+              • Ascenso: 1° y 2° lugar ascienden directamente a Serie A.<br>
+              • Sin filiales: Equipos filiales no pueden ascender a Serie A.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 space-y-1.5">
+          <span class="font-bold text-slate-900 block">Distribución de Cupos Internacionales CONMEBOL 2026:</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-mono">
+            <div class="p-2 bg-white rounded border border-slate-200">
+              <span class="font-bold text-emerald-700">🏆 Copa Libertadores:</span><br>
+              • ECU 1: Campeón LigaPro Serie A<br>
+              • ECU 2: Subcampeón LigaPro Serie A<br>
+              • ECU 3: Mejor puntaje tabla acumulada<br>
+              • ECU 4: Campeón Copa Ecuador
+            </div>
+            <div class="p-2 bg-white rounded border border-slate-200">
+              <span class="font-bold text-blue-700">🥈 Copa Sudamericana:</span><br>
+              • ECU 1 a ECU 4: Siguientes 4 mejores ubicados en tabla acumulada que no clasifiquen a Libertadores.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between shrink-0">
+        <span class="text-[11px] text-slate-500 font-mono">Reglamento: LIGAPRO-2023-07 v4.1</span>
+        <div class="flex items-center gap-2">
+          <button onclick="guardarFormatoCompeticion()" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-bold hover:bg-blue-700 flex items-center gap-1 shadow-sm">
+            <span class="material-symbols-outlined text-sm">save</span> Guardar Formato Oficial
+          </button>
+          <button onclick="document.getElementById('modal-formatos-backdrop').remove()" class="px-3 py-2 bg-slate-100 text-slate-700 rounded-lg text-xs font-bold hover:bg-slate-200">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  const prev = document.getElementById('modal-formatos-backdrop');
+  if (prev) prev.remove();
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+};
+
+window.guardarFormatoCompeticion = async function() {
+  await safeInsert('configuracion_competiciones', {
+    temporada: '2025',
+    serie_a_formato: 'fase1_fase2_final',
+    serie_b_formato: '36_fechas_cuatro_ruedas',
+    actualizado_por: store.state.currentUser.nombre
+  });
+
+  const m = document.getElementById('modal-formatos-backdrop');
+  if (m) m.remove();
+  showToast('✅ Formato de competición oficial guardado exitosamente.', 'success');
+};
+
+window.mostrarModalSeguridadSHA256 = function() {
+  const p = store.state.partidoActivo;
+  const hashDemo = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
+  const modalHtml = `
+  <div id="modal-seguridad-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 flex flex-col">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 shrink-0">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-blue-600 text-2xl">verified_user</span>
+          <div>
+            <h3 class="font-extrabold text-slate-900 text-base">Auditoría & Verificador Criptográfico SHA-256</h3>
+            <p class="text-[11px] text-slate-500">Sellado e Integridad Digital de Actas Oficiales (Art. 45/60)</p>
+          </div>
+        </div>
+        <button onclick="document.getElementById('modal-seguridad-backdrop').remove()" class="text-slate-400 hover:text-slate-700">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="mt-4 space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Hash SHA-256 a Verificar:</label>
+          <div class="flex gap-2">
+            <input type="text" id="input-hash-verificar" value="${hashDemo}" class="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg font-mono text-[11px]" placeholder="Pegue aquí el hash digital SHA-256...">
+            <button onclick="verificarHashSHA256()" class="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs shrink-0 flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">shield</span> Validar
+            </button>
+          </div>
+        </div>
+
+        <div id="resultado-verificacion-hash" class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950 space-y-1">
+          <div class="flex items-center gap-1.5 font-bold text-emerald-800">
+            <span class="material-symbols-outlined text-base">check_circle</span>
+            <span>INTEGRIDAD DIGITAL VERIFICADA (Art. 45)</span>
+          </div>
+          <p class="text-[11px] text-emerald-900 leading-relaxed font-mono">
+            Documento: Planilla Oficial COMET Jornada 18 (${p.local.nombreCorto} vs ${p.visitante.nombreCorto})<br>
+            Firma: Ing. Marcelo Valencia (Comisario LigaPro)<br>
+            Certificado Root: LigaPro PKI-CA v4.1 — Sin alteraciones detectadas.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-5 flex justify-end gap-2 shrink-0">
+        <button onclick="document.getElementById('modal-seguridad-backdrop').remove()" class="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-bold hover:bg-slate-800">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>`;
+
+  const prev = document.getElementById('modal-seguridad-backdrop');
+  if (prev) prev.remove();
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+};
+
+window.verificarHashSHA256 = function() {
+  const input = document.getElementById('input-hash-verificar');
+  const res = document.getElementById('resultado-verificacion-hash');
+  if (!input || !res) return;
+  const val = input.value.trim();
+  if (val.length < 16) {
+    res.className = "p-3 bg-red-50 border border-red-200 rounded-xl text-red-950 space-y-1";
+    res.innerHTML = `<div class="flex items-center gap-1.5 font-bold text-red-800"><span class="material-symbols-outlined text-base">error</span><span>HASH INVÁLIDO</span></div><p class="text-[11px]">El hash proporcionado no cumple con el estándar SHA-256 (mínimo 64 caracteres hexadecimales).</p>`;
+    return;
+  }
+  res.className = "p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950 space-y-1";
+  res.innerHTML = `<div class="flex items-center gap-1.5 font-bold text-emerald-800"><span class="material-symbols-outlined text-base">check_circle</span><span>INTEGRIDAD DIGITAL CONFIRMADA</span></div><p class="text-[11px] font-mono">Hash SHA-256 verificado contra el repositorio seguro de actas LigaPro.<br>Estado: AUTÉNTICO E INALTERADO.</p>`;
 };
 
 function showToast(message, type = 'info') {

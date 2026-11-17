@@ -10,20 +10,20 @@ import { evaluarAcumulacionAmarillas } from '../domain/disciplina/acumulacion.js
 import { calcularMulta } from '../domain/multas/calculo.js';
 
 export const INITIAL_STATE = {
-  activeView: 'tablero',
+  activeView: 'posiciones',
   highContrast: false,
   fontScale: 100, // porcentaje
   audioAlerts: true,
   currentUser: {
-    isAuthenticated: true,
-    id: 'usr-dir-001',
-    nombre: 'Lic. Carlos Villacís',
-    email: 'c.villacis@ligapro.ec',
-    rol: 'DIR_COMP',
-    rolNombre: 'Dirección de Competiciones',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
+    isAuthenticated: false,
+    id: null,
+    nombre: 'Invitado General',
+    email: 'publico@ligapro.ec',
+    rol: 'PUBLICO',
+    rolNombre: 'Acceso Público (Aficionado)',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
     clubId: null,
-    partidoId: '88888888-8888-8888-8888-888888888888'
+    partidoId: null
   },
   temporada: {
     anio: 2025,
@@ -355,7 +355,7 @@ class Store {
     return this.state.audioAlerts;
   }
 
-  setUserRole(rolCode, nombreUsuario = null) {
+  setUserRole(rolCode, nombreUsuario = null, emailUsuario = null) {
     const roleConfig = ROLES_MAP[rolCode] || {
       nombre: rolCode,
       email: `${rolCode.toLowerCase()}@ligapro.ec`,
@@ -369,7 +369,7 @@ class Store {
       rol: rolCode,
       rolNombre: roleConfig.nombre,
       nombre: nombreUsuario || roleConfig.usuario,
-      email: roleConfig.email,
+      email: emailUsuario || roleConfig.email,
       avatar: roleConfig.avatar
     };
 

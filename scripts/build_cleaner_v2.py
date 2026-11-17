@@ -1,21 +1,21 @@
 import os
 import re
 
-DATA_PATH_TO_VIEW = {
-    'tablero-general': 'tablero',
-    'competiciones-formatos': 'tablero',
-    'posiciones-fair-play': 'posiciones',
-    'portal-clubes': 'clubes',
-    'designacion-uniformes': 'uniformes',
-    'validador-uniformes': 'uniformes',
-    'calificacion-escenarios': 'estadios',
-    'inspeccion-terreno': 'estadios',
-    'consola-matchday': 'consola',
-    'consola-operativa': 'consola',
-    'cuenta-regresiva': 'consola',
-    'planilla-comet': 'consola',
-    'seguridad-criptografica': 'consola_alto_contraste',
-    'informe-disciplinario': 'clubes'
+DATA_PATH_TO_ACTION = {
+    'tablero-general': "navigateView('tablero')",
+    'competiciones-formatos': "mostrarModalCompeticionesFormatos()",
+    'posiciones-fair-play': "navigateView('posiciones')",
+    'portal-clubes': "navigateView('clubes')",
+    'designacion-uniformes': "navigateView('uniformes')",
+    'validador-uniformes': "navigateView('uniformes')",
+    'calificacion-escenarios': "navigateView('estadios')",
+    'inspeccion-terreno': "navigateView('estadios')",
+    'consola-matchday': "navigateView('consola')",
+    'consola-operativa': "navigateView('consola')",
+    'cuenta-regresiva': "navigateView('consola')",
+    'planilla-comet': "navigateView('consola')",
+    'seguridad-criptografica': "mostrarModalSeguridadSHA256()",
+    'informe-disciplinario': "navigateView('clubes')"
 }
 
 def clean_and_transform_screen(folder, screen_id):
@@ -30,17 +30,14 @@ def clean_and_transform_screen(folder, screen_id):
 
     # 1. Eliminar header duplicado interno si existe
     body_content = re.sub(r'<header class="fixed top-0 left-0 right-0 h-16[^>]*>.*?</header>', '', body_content, flags=re.DOTALL)
-    
-    # 2. Corregir cualquier pt-16 o top-16 sobrante derivado del header interno fijo
-    body_content = body_content.replace('top-16', 'top-[112px]').replace('pt-16', 'pt-4')
 
-    # 3. Transformar los enlaces del sidebar según data-path
-    for dpath, target_view in DATA_PATH_TO_VIEW.items():
+    # 2. Transformar los enlaces del sidebar según DATA_PATH_TO_ACTION
+    for dpath, target_action in DATA_PATH_TO_ACTION.items():
         pattern = rf'(data-path=["\']{dpath}["\'][^>]*href=)["\']#["\']'
-        replacement = rf'\1"javascript:void(0)" onclick="navigateView(\'{target_view}\')"'
+        replacement = rf'\1"javascript:void(0)" onclick="{target_action}"'
         body_content = re.sub(pattern, replacement, body_content)
         pattern2 = rf'(href=)["\']#["\']([^>]*data-path=["\']{dpath}["\'])'
-        replacement2 = rf'href="javascript:void(0)" onclick="navigateView(\'{target_view}\')"\2'
+        replacement2 = rf'href="javascript:void(0)" onclick="{target_action}"\2'
         body_content = re.sub(pattern2, replacement2, body_content)
 
     # Helper robusto para adjuntar onclick a botones por coincidencia de texto
@@ -70,7 +67,7 @@ def clean_and_transform_screen(folder, screen_id):
         r'<button\1 onclick="forzarSincroComet()">',
         body_content
     )
-    body_content = add_onclick_to_btn(body_content, r'Cuenta\s*Regresiva', "showToast('Cuenta regresiva T-90 a T-0 sincronizada', 'info')")
+    body_content = add_onclick_to_btn(body_content, r'Cuenta\s*Regresiva', "navigateView('consola')")
     body_content = add_onclick_to_btn(body_content, r'Planilla\s*&amp;\s*Médicos', 'mostrarNominaCompleta()')
     body_content = add_onclick_to_btn(body_content, r'Incidentes\s*Rápidos', 'registrarIncidenteEnVivo()')
     body_content = add_onclick_to_btn(body_content, r'Pasabolas\s*&amp;\s*Perímetro', 'mostrarModalPasabolas()')
@@ -78,7 +75,6 @@ def clean_and_transform_screen(folder, screen_id):
     body_content = add_onclick_to_btn(body_content, r'Marcar\s*OK', 'marcarHitoOk(this)')
     body_content = add_onclick_to_btn(body_content, r'Test\s*Alerta\s*Lumínica', 'testAlertaLuminica()')
     body_content = add_onclick_to_btn(body_content, r'Re-inspeccionar\s*Perímetro', 'evaluarEscenarioEnVivo()')
-    # Incident buttons en tablet por data-incident
     body_content = re.sub(
         r'<button\b([^>]*?data-incident="([^"]+)"[^>]*?)>',
         r'<button\1 onclick="registrarIncidenteEnVivo(\'\2 (Art. 73)\')">',
@@ -86,7 +82,7 @@ def clean_and_transform_screen(folder, screen_id):
     )
     body_content = add_onclick_to_btn(body_content, r'Dictar\s*por\s*Voz', 'dictarPorVoz()')
     body_content = add_onclick_to_btn(body_content, r'Firmar\s*Acta\s*Previa', 'sellarPlanillaJuego()')
-    body_content = add_onclick_to_btn(body_content, r'SOS\s*Alerta', "showToast('Alerta de seguridad SOS emitida a Policía Nacional', 'warning')")
+    body_content = add_onclick_to_btn(body_content, r'SOS\s*Alerta', "registrarIncidenteEnVivo('Alerta de seguridad SOS emitida a Policía Nacional')")
     
     # Para botones con solo iconos en tablet:
     body_content = re.sub(
@@ -96,12 +92,12 @@ def clean_and_transform_screen(folder, screen_id):
     )
     body_content = re.sub(
         r'<button\b([^>]*?)>(\s*<span[^>]*?>tune</span>\s*)</button>',
-        r'<button\1 onclick="showToast(\'Panel de calibración táctil\', \'info\')">\2</button>',
+        r'<button\1 onclick="navigateView(\'consola\')">\2</button>',
         body_content
     )
     body_content = re.sub(
         r'<button\b([^>]*?)>(\s*<span[^>]*?>edit</span>\s*)</button>',
-        r'<button\1 onclick="showToast(\'Modo edición Comisario activado\', \'info\')">\2</button>',
+        r'<button\1 onclick="navigateView(\'consola\')">\2</button>',
         body_content
     )
 
@@ -141,14 +137,14 @@ def clean_and_transform_screen(folder, screen_id):
     )
 
     # --- TABLERO GENERAL ---
-    body_content = add_onclick_to_btn(body_content, r'Sincronizar\s*Árbitros', "showToast('Cronómetros arbitrales sincronizados con reloj central FIFA/COMET.', 'success')")
+    body_content = add_onclick_to_btn(body_content, r'Sincronizar\s*Árbitros', "forzarSincroComet()")
     body_content = add_onclick_to_btn(body_content, r'F-14\s*/\s*30', "navigateView('posiciones')")
     body_content = add_onclick_to_btn(body_content, r'F-11', "navigateView('posiciones')")
-    body_content = add_onclick_to_btn(body_content, r'calendar_month', "showToast('Calendario oficial LigaPro 2025 sincronizado', 'info')")
-    body_content = add_onclick_to_btn(body_content, r'Filtrar\s*por\s*Estadio', "showToast('Filtro por estadio activado', 'info')")
+    body_content = add_onclick_to_btn(body_content, r'calendar_month', "navigateView('posiciones')")
+    body_content = add_onclick_to_btn(body_content, r'Filtrar\s*por\s*Estadio', "navigateView('estadios')")
     body_content = add_onclick_to_btn(body_content, r'Descargar\s*Planilla\s*Matchday', 'descargarPlanillaMatchday()')
     body_content = add_onclick_to_btn(body_content, r'Aprobar\s*Uniforme\s*Árbitro', 'sellarActaUniformes()')
-    body_content = add_onclick_to_btn(body_content, r'Ver\s*Registro\s*Fotográfico', "showToast('Registro fotográfico de inspección técnica cargado.', 'info')")
+    body_content = add_onclick_to_btn(body_content, r'Ver\s*Registro\s*Fotográfico', "navigateView('estadios')")
     body_content = add_onclick_to_btn(body_content, r'Revisar\s*Acta', "navigateView('uniformes')")
 
     body_content = re.sub(
@@ -176,54 +172,130 @@ def clean_and_transform_screen(folder, screen_id):
         flags=re.DOTALL
     )
 
-    # --- INICIO DE SESIÓN / ROLES ---
+    # --- INICIO DE SESIÓN / ROLES (AUTENTICACIÓN REAL CON TABS) ---
     if screen_id == 'auth' or 'inicio_de_sesi_n' in folder:
-        body_content = re.sub(
-            r'<form([^>]*onsubmit=["\'][^"\']*["\'][^>]*)>',
-            r'<form\1 id="login-form" onsubmit="loginFormSubmit(event)">',
-            body_content
-        )
-        body_content = body_content.replace('simulateAuth()', 'loginFormSubmit(event)')
-        body_content = body_content.replace('href="#recuperar"', 'href="javascript:void(0)" onclick="showToast(\'Para restablecer credenciales COMET contacte a soporte@ligapro.ec\', \'info\')"')
-        body_content = body_content.replace('onclick="toggleContrast()"', 'onclick="toggleGlobalHighContrast()"')
-        body_content = body_content.replace('onclick="speakScreenSummary()"', 'onclick="toggleAlertaAuditiva()"')
-
-        # Fast role access block
-        fast_roles_card = '''
-        <!-- Barra de Acceso Rápido por Rol para Demostración Oficial -->
-        <div class="mb-4 p-3.5 bg-slate-900/90 rounded-xl border border-secondary-container/40 text-on-secondary shadow-lg">
-          <div class="text-[11px] font-bold text-amber-400 uppercase tracking-wider mb-2 flex items-center justify-between">
-            <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">bolt</span> Acceso Rápido por Rol (Evaluación en 1-Clic):</span>
-            <span class="text-[10px] text-emerald-400 font-mono">SUPABASE OK</span>
+        auth_card = '''
+        <div class="w-full max-w-lg mx-auto bg-slate-900 text-white rounded-2xl shadow-2xl overflow-hidden border border-slate-800 p-6 my-6">
+          <!-- Cabecera -->
+          <div class="flex flex-col items-center text-center mb-5">
+            <div class="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg border border-amber-400 mb-2">
+              <span class="material-symbols-outlined text-white text-2xl">shield</span>
+            </div>
+            <h1 class="text-xl font-extrabold tracking-tight text-white">SIGEC-LP</h1>
+            <p class="text-xs text-amber-400 font-bold uppercase tracking-wider">Liga Profesional de Fútbol del Ecuador</p>
+            <p class="text-xs text-slate-400 mt-1">Portal Oficial de Acceso y Gestión Federativa</p>
           </div>
-          <div class="grid grid-cols-2 gap-2 text-xs font-bold">
-            <button type="button" onclick="cambiarRol('DIR_COMP')" class="p-2.5 bg-blue-700 hover:bg-blue-600 text-white rounded-lg flex items-center justify-center gap-1.5 shadow-sm transition-all hover:scale-[1.02]">
-              <span class="material-symbols-outlined text-sm">admin_panel_settings</span> Dirección LigaPro
+
+          <!-- Pestañas de Autenticación -->
+          <div class="flex border-b border-slate-800 mb-5">
+            <button type="button" id="tab-btn-login" onclick="toggleAuthTab('login')" class="flex-1 py-2 text-center font-bold text-xs border-b-2 border-amber-400 text-amber-400 transition-colors">
+              Iniciar Sesión
             </button>
-            <button type="button" onclick="cambiarRol('COMISARIO')" class="p-2.5 bg-amber-500 hover:bg-amber-400 text-black rounded-lg flex items-center justify-center gap-1.5 shadow-sm transition-all hover:scale-[1.02]">
-              <span class="material-symbols-outlined text-sm">sports</span> Comisario de Juego
+            <button type="button" id="tab-btn-signup" onclick="toggleAuthTab('signup')" class="flex-1 py-2 text-center font-bold text-xs border-b-2 border-transparent text-slate-400 hover:text-white transition-colors">
+              Crear Cuenta
             </button>
-            <button type="button" onclick="cambiarRol('CLUB_ADMIN')" class="p-2.5 bg-emerald-700 hover:bg-emerald-600 text-white rounded-lg flex items-center justify-center gap-1.5 shadow-sm transition-all hover:scale-[1.02]">
-              <span class="material-symbols-outlined text-sm">shield</span> Delegado de Club
-            </button>
-            <button type="button" onclick="cambiarRol('PUBLICO')" class="p-2.5 bg-purple-700 hover:bg-purple-600 text-white rounded-lg flex items-center justify-center gap-1.5 shadow-sm transition-all hover:scale-[1.02]">
-              <span class="material-symbols-outlined text-sm">visibility</span> Acceso Público
-            </button>
+          </div>
+
+          <!-- Sección Iniciar Sesión -->
+          <div id="auth-section-login">
+            <form id="login-form" onsubmit="loginFormSubmit(event)" class="space-y-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Cédula / Correo / ID COMET</label>
+                <div class="relative flex items-center">
+                  <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">fingerprint</span>
+                  <input type="text" id="login-email" required placeholder="c.villacis@ligapro.ec" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between items-center mb-1">
+                  <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Contraseña</label>
+                  <a href="javascript:void(0)" onclick="showToast('Para restablecer credenciales COMET contacte a soporte@ligapro.ec', 'info')" class="text-[11px] text-blue-400 hover:underline">¿Olvidó contraseña?</a>
+                </div>
+                <div class="relative flex items-center">
+                  <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">lock</span>
+                  <input type="password" id="login-password" required placeholder="••••••••" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
+                </div>
+              </div>
+
+              <button type="submit" id="btn-login-submit" class="w-full h-10 mt-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md transition-all">
+                <span class="material-symbols-outlined text-sm">login</span> Iniciar Sesión en SIGEC-LP
+              </button>
+            </form>
+          </div>
+
+          <!-- Sección Crear Cuenta -->
+          <div id="auth-section-signup" class="hidden">
+            <form id="signup-form" onsubmit="signupFormSubmit(event)" class="space-y-3">
+              <div>
+                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Nombres y Apellidos</label>
+                <div class="relative flex items-center">
+                  <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">badge</span>
+                  <input type="text" id="signup-nombre" required placeholder="Ej: Dr. Fernando Gaibor" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Correo Electrónico Oficial</label>
+                <div class="relative flex items-center">
+                  <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">mail</span>
+                  <input type="email" id="signup-email" required placeholder="f.gaibor@ligapro.ec" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Contraseña (Mínimo 6 caracteres)</label>
+                <div class="relative flex items-center">
+                  <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">key</span>
+                  <input type="password" id="signup-password" minlength="6" required placeholder="••••••••" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Rol / Función Oficial</label>
+                <select id="signup-rol" class="w-full h-10 px-3 rounded-lg bg-slate-800 text-white text-xs border border-slate-700 focus:outline-none focus:border-blue-500">
+                  <option value="DIR_COMP">Dirección de Competiciones LigaPro</option>
+                  <option value="COMISARIO">Comisario de Partido (Matchday)</option>
+                  <option value="CLUB_ADMIN">Delegado Oficial de Club</option>
+                </select>
+              </div>
+
+              <button type="submit" id="btn-signup-submit" class="w-full h-10 mt-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md transition-all">
+                <span class="material-symbols-outlined text-sm">person_add</span> Registrar Cuenta Oficial
+              </button>
+            </form>
+          </div>
+
+          <!-- Botón Discreto de Acceso Demo Rápido -->
+          <div class="mt-6 pt-4 border-t border-slate-800">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">⚡ Acceso Demo Rápido (1 Clic)</span>
+              <span class="text-[9px] font-mono text-emerald-400">SUPABASE CONNECTED</span>
+            </div>
+            <div class="grid grid-cols-2 gap-1.5 text-[11px] font-semibold">
+              <button type="button" onclick="cambiarRol('DIR_COMP')" class="p-1.5 rounded bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-left flex items-center gap-1 truncate">
+                <span>🛡️</span> Dirección LigaPro
+              </button>
+              <button type="button" onclick="cambiarRol('COMISARIO')" class="p-1.5 rounded bg-slate-800 hover:bg-amber-600 text-slate-300 hover:text-white transition-all text-left flex items-center gap-1 truncate">
+                <span>📋</span> Comisario Juego
+              </button>
+              <button type="button" onclick="cambiarRol('CLUB_ADMIN')" class="p-1.5 rounded bg-slate-800 hover:bg-emerald-600 text-slate-300 hover:text-white transition-all text-left flex items-center gap-1 truncate">
+                <span>⚽</span> Delegado Club
+              </button>
+              <button type="button" onclick="cambiarRol('PUBLICO')" class="p-1.5 rounded bg-slate-800 hover:bg-purple-600 text-slate-300 hover:text-white transition-all text-left flex items-center gap-1 truncate">
+                <span>👁️</span> Acceso Público
+              </button>
+            </div>
           </div>
         </div>
         '''
-        body_content = re.sub(
-            r'(<header class="flex flex-col items-center text-center gap-space-xs">.*?</header>)',
-            r'\1\n' + fast_roles_card,
-            body_content,
-            flags=re.DOTALL
-        )
+        body_content = auth_card
 
-    # 5. Reemplazar cualquier href="#" remanente por javascript:void(0)
+    # 3. Reemplazar cualquier href="#" remanente por javascript:void(0)
     body_content = body_content.replace('href="#"', 'href="javascript:void(0)"')
     body_content = body_content.replace("href='#'", 'href="javascript:void(0)"')
 
-    # 6. Eliminar cualquier referencia residual hardcodeada a 'Ab. Comisario LigaPro'
+    # 4. Eliminar cualquier referencia residual hardcodeada a 'Ab. Comisario LigaPro'
     body_content = body_content.replace('Ab. Comisario LigaPro', 'Comisario Oficial LigaPro')
 
     return body_content

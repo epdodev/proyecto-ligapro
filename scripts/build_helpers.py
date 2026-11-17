@@ -65,57 +65,40 @@ SCREENS = [
 ]
 
 def generate_header(active_id):
-    links = []
-    for s in SCREENS:
-        is_active = (s['id'] == active_id)
-        active_class = "bg-secondary text-white font-bold shadow-sm" if is_active else "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
-        links.append(f'''
-        <button onclick="navigateView('{s['id']}')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all {active_class}" title="{s['title']}">
-          <span class="material-symbols-outlined text-sm">{s['icon']}</span>
-          <span>{s['nav_label']}</span>
-        </button>''')
-    
     header_html = f'''
-    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs px-4 py-2.5">
-      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
-        <!-- Logo & Brand -->
-        <div class="flex items-center gap-3">
-          <div onclick="navigateView('tablero')" class="cursor-pointer w-9 h-9 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-md border border-amber-400">
-            <span class="text-amber-400 text-lg">⚡</span>
+    <header class="fixed top-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 z-50 shadow-xs px-4 sm:px-6">
+      <div class="w-full h-full flex items-center justify-between gap-2 sm:gap-4">
+        <!-- Logo & Brand (Compacto) -->
+        <div class="flex items-center gap-2.5 shrink-0">
+          <div onclick="navigateView('tablero')" class="cursor-pointer w-8 h-8 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-sm border border-amber-400">
+            <span class="text-amber-400 text-sm">⚡</span>
           </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <span onclick="navigateView('tablero')" class="cursor-pointer font-extrabold text-sm tracking-tight text-slate-900 hover:text-blue-700 transition-colors">LIGAPRO ECUABET</span>
-              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 uppercase">SIGEC-LP</span>
-              <span class="hidden sm:inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200" title="https://udykrprupwifmffhpvuz.supabase.co">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>Supabase Conectado</span>
-              </span>
-            </div>
-            <p class="text-[11px] text-slate-500 font-medium">Sistema Integral de Gestión de Competiciones — Rige Reglamento 2023</p>
+          <div class="flex items-center gap-2">
+            <span onclick="navigateView('tablero')" class="cursor-pointer font-extrabold text-sm tracking-tight text-slate-900 hover:text-blue-700 transition-colors">LIGAPRO ECUABET</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 uppercase font-mono">SIGEC-LP</span>
           </div>
         </div>
 
-        <!-- Controls: Scoreboard, Accessibility, Notifications & Real User Session -->
-        <div class="flex items-center flex-wrap gap-2">
-          <!-- Live Match Score Widget -->
-          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-2 bg-slate-900 text-white px-3 py-1.5 rounded-lg border border-slate-800 text-xs shadow-sm hover:border-amber-400 transition-colors" title="Ver Consola de Comisario">
+        <!-- Centro: Marcador En Vivo + Reloj UTC-5 -->
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-1.5 sm:gap-2 bg-slate-900 text-white px-2.5 py-1.5 rounded-lg border border-slate-800 text-[11px] sm:text-xs shadow-sm hover:border-amber-400 transition-colors" title="Ver Consola de Comisario">
             <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
-            <span class="font-bold text-amber-400">EN VIVO:</span>
-            <span class="font-bold" id="header-match-local">LDU Quito</span>
-            <span class="font-mono bg-slate-800 px-1.5 py-0.5 rounded font-bold text-amber-300" id="header-score">1 - 1</span>
-            <span class="font-bold" id="header-match-visitante">Barcelona SC</span>
+            <span class="font-bold text-amber-400 hidden sm:inline">EN VIVO:</span>
+            <span class="font-bold">LDU</span>
+            <span class="font-mono bg-slate-800 px-1 py-0.5 rounded font-bold text-amber-300" id="header-score">1 - 1</span>
+            <span class="font-bold">BSC</span>
             <span class="font-mono text-slate-400 text-[10px]" id="header-match-min">68' 2T</span>
           </div>
 
-          <!-- Reloj UTC-5 -->
-          <div class="hidden lg:flex items-center gap-1 bg-slate-100 px-2.5 py-1.5 rounded-lg text-slate-700 font-mono text-xs border border-slate-200">
-            <span class="material-symbols-outlined text-sm text-slate-500">schedule</span>
+          <div class="hidden md:flex items-center gap-1 bg-slate-100 px-2.5 py-1 rounded-md text-slate-700 font-mono text-[11px] border border-slate-200">
             <span class="text-[10px] text-slate-400 font-sans font-bold">UTC-5:</span>
             <span id="header-utc-clock" class="font-bold">18:42:09</span>
           </div>
+        </div>
 
-          <!-- Barra Accesibilidad (WCAG AAA, A-, A+, Audio) -->
+        <!-- Derecha: Accesibilidad + Notificaciones + Perfil / Iniciar Sesión -->
+        <div class="flex items-center gap-2 shrink-0">
+          <!-- Controles Compactos de Accesibilidad (Alto Contraste, A-, A+) -->
           <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200">
             <button onclick="toggleGlobalHighContrast()" class="p-1.5 text-slate-700 hover:text-amber-500 hover:bg-white rounded transition-colors" title="Modo Alto Contraste WCAG AAA (Negro / Amarillo)">
               <span class="material-symbols-outlined text-base">contrast</span>
@@ -125,9 +108,6 @@ def generate_header(active_id):
             </button>
             <button onclick="ajustarTexto(10)" class="px-2 py-1 text-slate-700 hover:bg-white rounded font-bold text-[11px]" title="Aumentar Texto A+">
               A+
-            </button>
-            <button onclick="toggleAlertaAuditiva()" class="p-1.5 text-slate-700 hover:text-blue-600 hover:bg-white rounded transition-colors" title="Alertas Auditivas Accesibles">
-              <span class="material-symbols-outlined text-base">hearing</span>
             </button>
           </div>
 
@@ -167,23 +147,32 @@ def generate_header(active_id):
             </div>
           </div>
 
-          <!-- Sesión de Usuario y Cambio de Rol Rápido -->
-          <div class="relative">
-            <div id="header-user-block" onclick="toggleUserDropdown()" class="cursor-pointer flex items-center gap-2 pl-2 border-l border-slate-200 py-1 hover:opacity-90 transition-opacity">
+          <!-- Botón Iniciar Sesión / Crear Cuenta (Visible cuando NO hay sesión) -->
+          <div id="header-auth-btn" class="hidden">
+            <button onclick="navigateView('auth')" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all hover:scale-[1.02]">
+              <span class="material-symbols-outlined text-sm">login</span>
+              <span class="hidden sm:inline">Iniciar Sesión / Crear Cuenta</span>
+              <span class="sm:hidden">Acceso</span>
+            </button>
+          </div>
+
+          <!-- Sesión de Usuario y Cambio de Rol Rápido (Visible cuando SÍ hay sesión activa) -->
+          <div id="header-user-block" class="relative">
+            <div onclick="toggleUserDropdown()" class="cursor-pointer flex items-center gap-2 pl-2 border-l border-slate-200 py-1 hover:opacity-90 transition-opacity">
               <div class="flex flex-col text-right hidden sm:flex">
-                <span id="header-user-name" class="font-bold text-xs text-slate-900 leading-tight">Lic. Carlos Villacís</span>
-                <span id="header-user-role" class="text-[10px] text-blue-700 font-bold uppercase tracking-wider">Dirección de Competiciones</span>
+                <span id="header-user-name" class="font-bold text-xs text-slate-900 leading-tight">Invitado General</span>
+                <span id="header-user-role" class="text-[10px] text-blue-700 font-bold uppercase tracking-wider">Acceso Público</span>
               </div>
-              <img id="header-user-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Avatar Usuario" class="w-8 h-8 rounded-full object-cover border-2 border-blue-600 shadow-xs"/>
+              <img id="header-user-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" alt="Avatar Usuario" class="w-8 h-8 rounded-full object-cover border-2 border-blue-600 shadow-xs"/>
               <span class="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
             </div>
 
             <!-- Menú Desplegable de Usuario y Cierre de Sesión -->
             <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-slate-200 z-50 p-3 text-xs">
               <div class="pb-3 border-b border-slate-100 mb-3">
-                <div class="font-bold text-slate-900" id="dropdown-user-name">Lic. Carlos Villacís</div>
-                <div class="text-[11px] text-slate-500 truncate" id="dropdown-user-email">c.villacis@ligapro.ec</div>
-                <div class="mt-1 inline-block px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-bold text-[10px]" id="dropdown-user-role">Dirección de Competiciones</div>
+                <div class="font-bold text-slate-900" id="dropdown-user-name">Invitado General</div>
+                <div class="text-[11px] text-slate-500 truncate" id="dropdown-user-email">publico@ligapro.ec</div>
+                <div class="mt-1 inline-block px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-bold text-[10px]" id="dropdown-user-role">Acceso Público</div>
               </div>
 
               <!-- Cambio de Rol Rápido -->
@@ -213,11 +202,6 @@ def generate_header(active_id):
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Navigation Tabs Bar -->
-      <div class="max-w-7xl mx-auto mt-2 pt-2 border-t border-slate-100 flex items-center gap-1 overflow-x-auto pb-1 scrollbar-none">
-        {''.join(links)}
       </div>
     </header>
     '''
