@@ -95,6 +95,12 @@ def get_tailwind_config():
     end = html.find('</script>', start)
     return html[start:end]
 
+def insert_into_screen_main(body_html, bar_html):
+    pattern = r'(<main\b[^>]*>)'
+    if re.search(pattern, body_html):
+        return re.sub(pattern, rf'\1\n{bar_html}', body_html, count=1)
+    return bar_html + body_html
+
 def enrich_screen_html(screen_id, body_html):
     # Añadimos hooks interactivos según la vista
     if screen_id == 'consola':
@@ -132,7 +138,7 @@ def enrich_screen_html(screen_id, body_html):
           </div>
         </div>
         '''
-        return control_bar + body_html
+        return insert_into_screen_main(body_html, control_bar)
 
     elif screen_id == 'consola_tablet':
         control_bar = '''
@@ -150,7 +156,7 @@ def enrich_screen_html(screen_id, body_html):
           </div>
         </div>
         '''
-        return control_bar + body_html
+        return insert_into_screen_main(body_html, control_bar)
 
     elif screen_id == 'consola_alto_contraste':
         control_bar = '''
@@ -167,7 +173,7 @@ def enrich_screen_html(screen_id, body_html):
           </div>
         </div>
         '''
-        return control_bar + body_html
+        return insert_into_screen_main(body_html, control_bar)
 
     elif screen_id == 'posiciones':
         action_bar = '''
@@ -185,7 +191,7 @@ def enrich_screen_html(screen_id, body_html):
           </div>
         </div>
         '''
-        return action_bar + body_html
+        return insert_into_screen_main(body_html, action_bar)
 
     elif screen_id == 'clubes':
         btn_bar = '''
@@ -200,7 +206,7 @@ def enrich_screen_html(screen_id, body_html):
           </button>
         </div>
         '''
-        return btn_bar + body_html
+        return insert_into_screen_main(body_html, btn_bar)
 
     elif screen_id == 'uniformes':
         btn_bar = '''
@@ -219,7 +225,7 @@ def enrich_screen_html(screen_id, body_html):
           </div>
         </div>
         '''
-        return btn_bar + body_html
+        return insert_into_screen_main(body_html, btn_bar)
 
     elif screen_id == 'estadios':
         btn_bar = '''
@@ -235,7 +241,7 @@ def enrich_screen_html(screen_id, body_html):
           </div>
         </div>
         '''
-        return btn_bar + body_html
+        return insert_into_screen_main(body_html, btn_bar)
 
     return body_html
 

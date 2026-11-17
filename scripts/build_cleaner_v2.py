@@ -31,7 +31,10 @@ def clean_and_transform_screen(folder, screen_id):
     # 1. Eliminar header duplicado interno si existe
     body_content = re.sub(r'<header class="fixed top-0 left-0 right-0 h-16[^>]*>.*?</header>', '', body_content, flags=re.DOTALL)
 
-    # 2. Transformar los enlaces del sidebar según DATA_PATH_TO_ACTION
+    # 2. Corregir padding superior en <main> para que ningún componente quede debajo del Header fijo (pt-16 -> pt-20)
+    body_content = re.sub(r'(<main\b[^>]*\bclass=["\'][^"\']*\b)pt-16(\b[^"\']*["\'])', r'\1pt-20\2', body_content)
+
+    # 3. Transformar los enlaces del sidebar según DATA_PATH_TO_ACTION
     for dpath, target_action in DATA_PATH_TO_ACTION.items():
         pattern = rf'(data-path=["\']{dpath}["\'][^>]*href=)["\']#["\']'
         replacement = rf'\1"javascript:void(0)" onclick="{target_action}"'
