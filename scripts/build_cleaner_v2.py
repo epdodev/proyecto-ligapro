@@ -298,4 +298,8 @@ def clean_and_transform_screen(folder, screen_id):
     # 4. Eliminar cualquier referencia residual hardcodeada a 'Ab. Comisario LigaPro'
     body_content = body_content.replace('Ab. Comisario LigaPro', 'Comisario Oficial LigaPro')
 
+    # 5. Agregar soporte de modo oscuro (dark:...) a contenedores con fondo blanco fijo (bg-white / bg-surface)
+    body_content = re.sub(r'\bclass=(["\'])([^"\']*\bbg-white\b[^"\']*)\1', lambda m: 'class=' + m.group(1) + (m.group(2) if 'dark:bg-' in m.group(2) else m.group(2) + ' dark:bg-slate-900 dark:text-slate-100 dark:border-slate-800') + m.group(1), body_content)
+    body_content = re.sub(r'\bclass=(["\'])([^"\']*\bbg-surface\b[^"\']*)\1', lambda m: 'class=' + m.group(1) + (m.group(2) if 'dark:bg-' in m.group(2) else m.group(2) + ' dark:bg-slate-950 dark:text-slate-100') + m.group(1), body_content)
+
     return body_content

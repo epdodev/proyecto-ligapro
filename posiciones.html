@@ -11,12 +11,106 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"border-subtle":"#E2E8F0","on-tertiary-container":"#0090ae","secondary-fixed-dim":"#b6c4ff","on-secondary":"#ffffff","on-primary-fixed":"#101c2e","surface":"#f8f9ff","on-secondary-fixed-variant":"#0039b3","on-background":"#0b1c30","on-tertiary-fixed-variant":"#004e5f","surface-container-low":"#eff4ff","sport-warning":"#FFD100","on-tertiary-fixed":"#001f27","sport-success":"#00A859","on-surface":"#0b1c30","on-error-container":"#93000a","secondary-container":"#0356ff","surface-base":"#F8FAFC","error-container":"#ffdad6","inverse-primary":"#bbc7df","primary-fixed":"#d7e3fc","sport-danger":"#D92D20","surface-dim":"#cbdbf5","surface-container-lowest":"#ffffff","border-strong":"#CBD5E1","inverse-on-surface":"#eaf1ff","on-primary-container":"#79849b","on-primary-fixed-variant":"#3c475b","primary-fixed-dim":"#bbc7df","text-secondary":"#334155","surface-container":"#e5eeff","outline":"#75777d","inverse-surface":"#213145","secondary":"#0041c9","high-contrast-bg":"#000000","on-primary":"#ffffff","outline-variant":"#c5c6cd","on-secondary-fixed":"#001551","secondary-fixed":"#dce1ff","error":"#ba1a1a","high-contrast-accent":"#FFE600","primary":"#000000","on-surface-variant":"#45474c","surface-card":"#FFFFFF","surface-container-highest":"#d3e4fe","on-tertiary":"#ffffff","text-primary":"#0F172A","surface-tint":"#535f74","on-error":"#ffffff","background":"#f8f9ff","surface-container-high":"#dce9ff","surface-bright":"#f8f9ff","tertiary":"#000000","tertiary-container":"#001f27","tertiary-fixed":"#b4ebff","tertiary-fixed-dim":"#3cd7ff","surface-variant":"#d3e4fe","primary-container":"#101c2e","on-secondary-container":"#e4e7ff"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"margin-md":"1.5rem","space-2xl":"3rem","space-lg":"1.5rem","margin":"1rem","space-xs":"0.25rem","gutter":"1rem","space-sm":"0.5rem","space-md":"1rem","margin-lg":"2rem","space-xl":"2rem","gutter-lg":"1.5rem"},fontFamily:{"label-caps":["Plus Jakarta Sans"],"display-lg-mobile":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"mono-matchday":["JetBrains Mono"],"mono-metric":["JetBrains Mono"],"headline-sm":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"mono-table":["JetBrains Mono"],"body-md":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"]},fontSize:{"label-caps":["11px",{lineHeight:"14px",letterSpacing:"0.06em",fontWeight:"700"}],"display-lg-mobile":["30px",{lineHeight:"36px",letterSpacing:"-0.01em",fontWeight:"800"}],"body-sm":["12px",{lineHeight:"16px",fontWeight:"400"}],"mono-matchday":["20px",{lineHeight:"28px",fontWeight:"600"}],"mono-metric":["32px",{lineHeight:"36px",fontWeight:"700"}],"headline-sm":["20px",{lineHeight:"28px",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"24px",fontWeight:"400"}],"display-lg":["40px",{lineHeight:"48px",letterSpacing:"-0.02em",fontWeight:"800"}],"headline-md":["24px",{lineHeight:"32px",fontWeight:"700"}],"mono-table":["13px",{lineHeight:"18px",fontWeight:"500"}],"body-md":["14px",{lineHeight:"20px",fontWeight:"400"}],"title-md":["16px",{lineHeight:"24px",fontWeight:"600"}],"headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.01em",fontWeight:"700"}]}}}}</script>
+  <script>
+    (function() {
+      try {
+        var theme = localStorage.getItem('sigec_theme') || (localStorage.getItem('sigec_high_contrast') === 'true' ? 'dark' : null);
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark', 'high-contrast');
+        }
+        var scale = localStorage.getItem('sigec_font_scale');
+        if (scale) {
+          document.documentElement.style.fontSize = scale + '%';
+        }
+      } catch (e) {}
+    })();
+  </script>
   <style>
     @layer base {
-      html, body { margin: 0; padding: 0; }
+      html, body { margin: 0; padding: 0; transition: background-color 0.15s ease, color 0.15s ease; }
       body { overscroll-behavior: none; }
     }
     ::-webkit-scrollbar { display: none; }
+
+    /* MODO OSCURO (Tailwind dark: y soporte directo) */
+    html.dark {
+      color-scheme: dark;
+    }
+    html.dark body {
+      background-color: #0b1329 !important;
+      color: #f1f5f9 !important;
+    }
+    html.dark header {
+      background-color: rgba(15, 23, 42, 0.95) !important;
+      border-color: #1e293b !important;
+      color: #f1f5f9 !important;
+    }
+    html.dark aside {
+      background-color: #0f172a !important;
+      border-color: #1e293b !important;
+      color: #f1f5f9 !important;
+    }
+    html.dark aside a, html.dark aside button {
+      color: #cbd5e1 !important;
+    }
+    html.dark aside a:hover, html.dark aside button:hover {
+      background-color: #1e293b !important;
+      color: #ffffff !important;
+    }
+    html.dark .bg-white {
+      background-color: #0f172a !important;
+      color: #f1f5f9 !important;
+      border-color: #1e293b !important;
+    }
+    html.dark .bg-surface, html.dark .bg-surface-container-low, html.dark .bg-surface-container {
+      background-color: #0b1329 !important;
+      color: #f1f5f9 !important;
+    }
+    html.dark .bg-slate-50, html.dark .bg-slate-100 {
+      background-color: #1e293b !important;
+      color: #e2e8f0 !important;
+      border-color: #334155 !important;
+    }
+    html.dark .text-slate-900, html.dark .text-slate-800, html.dark .text-slate-700 {
+      color: #f8fafc !important;
+    }
+    html.dark .text-slate-600, html.dark .text-slate-500 {
+      color: #94a3b8 !important;
+    }
+    html.dark .border-slate-100, html.dark .border-slate-200, html.dark .border-slate-300 {
+      border-color: #334155 !important;
+    }
+    html.dark input, html.dark select, html.dark textarea {
+      background-color: #1e293b !important;
+      border-color: #475569 !important;
+      color: #f8fafc !important;
+    }
+
+    /* MODO ALTO CONTRASTE WCAG AAA (Negro / Amarillo #FFE600 / 21:1) */
+    html.high-contrast {
+      color-scheme: dark;
+    }
+    html.high-contrast body {
+      background-color: #000000 !important;
+      color: #FFFFFF !important;
+    }
+    html.high-contrast header, html.high-contrast aside, html.high-contrast .bg-white, html.high-contrast .bg-surface, html.high-contrast .bg-slate-50, html.high-contrast .bg-slate-100 {
+      background-color: #000000 !important;
+      border-color: #FFE600 !important;
+      color: #FFFFFF !important;
+    }
+    html.high-contrast button {
+      border-color: #FFE600 !important;
+    }
+    html.high-contrast a, html.high-contrast .text-amber-400, html.high-contrast .text-amber-500 {
+      color: #FFE600 !important;
+    }
+    html.high-contrast .text-slate-900, html.high-contrast .text-slate-800, html.high-contrast .text-slate-700, html.high-contrast .text-slate-600, html.high-contrast .text-slate-500 {
+      color: #FFFFFF !important;
+    }
+    html.high-contrast .border-slate-100, html.high-contrast .border-slate-200, html.high-contrast .border-slate-300 {
+      border-color: #FFE600 !important;
+    }
     .high-contrast-mode {
       background-color: #000000 !important;
       color: #FFFFFF !important;
@@ -25,7 +119,7 @@
 </head>
 <body class="bg-surface font-body-md text-on-surface antialiased min-h-screen">
   
-    <header class="fixed top-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 z-50 shadow-xs px-4 sm:px-6">
+    <header class="fixed top-0 left-0 right-0 h-16 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50 shadow-xs px-4 sm:px-6 transition-colors">
       <div class="w-full h-full flex items-center justify-between gap-2 sm:gap-4">
         <!-- Logo & Brand (Compacto) -->
         <div class="flex items-center gap-2.5 shrink-0">
@@ -33,8 +127,8 @@
             <span class="text-amber-400 text-sm">⚡</span>
           </div>
           <div class="flex items-center gap-2">
-            <span onclick="navigateView('tablero')" class="cursor-pointer font-extrabold text-sm tracking-tight text-slate-900 hover:text-blue-700 transition-colors">LIGAPRO ECUABET</span>
-            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 uppercase font-mono">SIGEC-LP</span>
+            <span onclick="navigateView('tablero')" class="cursor-pointer font-extrabold text-sm tracking-tight text-slate-900 dark:text-white hover:text-blue-700 dark:hover:text-blue-400 transition-colors">LIGAPRO ECUABET</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-300 uppercase font-mono">SIGEC-LP</span>
           </div>
         </div>
 
@@ -49,7 +143,7 @@
             <span class="font-mono text-slate-400 text-[10px]" id="header-match-min">68' 2T</span>
           </div>
 
-          <div class="hidden md:flex items-center gap-1 bg-slate-100 px-2.5 py-1 rounded-md text-slate-700 font-mono text-[11px] border border-slate-200">
+          <div class="hidden md:flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md text-slate-700 dark:text-slate-200 font-mono text-[11px] border border-slate-200 dark:border-slate-700">
             <span class="text-[10px] text-slate-400 font-sans font-bold">UTC-5:</span>
             <span id="header-utc-clock" class="font-bold">18:42:09</span>
           </div>
@@ -57,50 +151,50 @@
 
         <!-- Derecha: Accesibilidad + Notificaciones + Perfil / Iniciar Sesión -->
         <div class="flex items-center gap-2 shrink-0">
-          <!-- Controles Compactos de Accesibilidad (Alto Contraste, A-, A+) -->
-          <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200">
-            <button onclick="toggleGlobalHighContrast()" class="p-1.5 text-slate-700 hover:text-amber-500 hover:bg-white rounded transition-colors" title="Modo Alto Contraste WCAG AAA (Negro / Amarillo)">
+          <!-- Controles Compactos de Accesibilidad (Modo Oscuro / Alto Contraste, A-, A+) -->
+          <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200 dark:border-slate-700">
+            <button id="btn-theme-toggle" onclick="toggleGlobalHighContrast()" class="p-1.5 text-slate-700 dark:text-slate-200 hover:text-amber-500 hover:bg-white dark:hover:bg-slate-700 rounded transition-colors" title="Modo Oscuro / Alto Contraste (WCAG AAA)">
               <span class="material-symbols-outlined text-base">contrast</span>
             </button>
-            <button onclick="ajustarTexto(-10)" class="px-2 py-1 text-slate-700 hover:bg-white rounded font-bold text-[11px]" title="Reducir Texto A-">
+            <button onclick="ajustarTexto('dec')" class="px-2 py-1 text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 rounded font-bold text-[11px] transition-colors" title="Reducir Texto A-">
               A-
             </button>
-            <button onclick="ajustarTexto(10)" class="px-2 py-1 text-slate-700 hover:bg-white rounded font-bold text-[11px]" title="Aumentar Texto A+">
+            <button onclick="ajustarTexto('inc')" class="px-2 py-1 text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 rounded font-bold text-[11px] transition-colors" title="Aumentar Texto A+">
               A+
             </button>
           </div>
 
           <!-- Campana de Notificaciones Reglamentarias -->
           <div class="relative">
-            <button id="btn-notificaciones" onclick="toggleNotificationsPanel()" class="relative p-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-colors" title="Centro de Notificaciones">
+            <button id="btn-notificaciones" onclick="toggleNotificationsPanel()" class="relative p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors" title="Centro de Notificaciones">
               <span class="material-symbols-outlined text-lg">notifications</span>
               <span id="notif-badge-indicator" class="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
             </button>
 
             <!-- Dropdown Panel de Notificaciones -->
-            <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-slate-200 z-50 p-3 text-xs">
-              <div class="flex items-center justify-between pb-2 border-b border-slate-100 mb-2">
-                <span class="font-bold text-slate-900 flex items-center gap-1">
-                  <span class="material-symbols-outlined text-base text-blue-600">notifications_active</span> Notificaciones Oficiales
+            <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
+              <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800 mb-2">
+                <span class="font-bold text-slate-900 dark:text-white flex items-center gap-1">
+                  <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">notifications_active</span> Notificaciones Oficiales
                 </span>
-                <button onclick="marcarNotificacionesLeidas()" class="text-[10px] text-blue-600 hover:underline font-semibold">Marcar leídas</button>
+                <button onclick="marcarNotificacionesLeidas()" class="text-[10px] text-blue-600 dark:text-blue-400 hover:underline font-semibold">Marcar leídas</button>
               </div>
               <div class="space-y-2 max-h-60 overflow-y-auto">
-                <div class="p-2 bg-red-50 text-red-950 rounded-lg border border-red-100">
+                <div class="p-2 bg-red-50 dark:bg-red-950/40 text-red-950 dark:text-red-200 rounded-lg border border-red-100 dark:border-red-900/50">
                   <div class="font-bold">🔴 Minuto 68' — Partido en Disputa</div>
-                  <div class="text-[11px] text-red-800">LDU Quito 1 - 1 Barcelona SC en Estadio Rodrigo Paz Delgado.</div>
+                  <div class="text-[11px] text-red-800 dark:text-red-300">LDU Quito 1 - 1 Barcelona SC en Estadio Rodrigo Paz Delgado.</div>
                 </div>
-                <div class="p-2 bg-amber-50 text-amber-950 rounded-lg border border-amber-100">
+                <div class="p-2 bg-amber-50 dark:bg-amber-950/40 text-amber-950 dark:text-amber-200 rounded-lg border border-amber-100 dark:border-amber-900/50">
                   <div class="font-bold">⚠️ Alerta Art. 91 — Tarjeta Amarilla</div>
-                  <div class="text-[11px] text-amber-800">Jesús Trindade (BSC) acumula 4 amarillas. Suspensión al recibir una más.</div>
+                  <div class="text-[11px] text-amber-800 dark:text-amber-300">Jesús Trindade (BSC) acumula 4 amarillas. Suspensión al recibir una más.</div>
                 </div>
-                <div class="p-2 bg-emerald-50 text-emerald-950 rounded-lg border border-emerald-100">
+                <div class="p-2 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-950 dark:text-emerald-200 rounded-lg border border-emerald-100 dark:border-emerald-900/50">
                   <div class="font-bold">✅ Trámite TRM-2025-089 Aprobado</div>
-                  <div class="text-[11px] text-emerald-800">Uso de indumentaria alterna conmemorativa homologada para fecha 19.</div>
+                  <div class="text-[11px] text-emerald-800 dark:text-emerald-300">Uso de indumentaria alterna conmemorativa homologada para fecha 19.</div>
                 </div>
-                <div class="p-2 bg-blue-50 text-blue-950 rounded-lg border border-blue-100">
+                <div class="p-2 bg-blue-50 dark:bg-blue-950/40 text-blue-950 dark:text-blue-200 rounded-lg border border-blue-100 dark:border-blue-900/50">
                   <div class="font-bold">📢 Protocolo Art. 49</div>
-                  <div class="text-[11px] text-blue-800">Horario unificado confirmado a las 18h00 para encuentros con incidencia.</div>
+                  <div class="text-[11px] text-blue-800 dark:text-blue-300">Horario unificado confirmado a las 18h00 para encuentros con incidencia.</div>
                 </div>
               </div>
             </div>
@@ -117,43 +211,43 @@
 
           <!-- Sesión de Usuario y Cambio de Rol Rápido (Visible cuando SÍ hay sesión activa) -->
           <div id="header-user-block" class="relative">
-            <div onclick="toggleUserDropdown()" class="cursor-pointer flex items-center gap-2 pl-2 border-l border-slate-200 py-1 hover:opacity-90 transition-opacity">
+            <div onclick="toggleUserDropdown()" class="cursor-pointer flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-slate-700 py-1 hover:opacity-90 transition-opacity">
               <div class="flex flex-col text-right hidden sm:flex">
-                <span id="header-user-name" class="font-bold text-xs text-slate-900 leading-tight">Invitado General</span>
-                <span id="header-user-role" class="text-[10px] text-blue-700 font-bold uppercase tracking-wider">Acceso Público</span>
+                <span id="header-user-name" class="font-bold text-xs text-slate-900 dark:text-white leading-tight">Invitado General</span>
+                <span id="header-user-role" class="text-[10px] text-blue-700 dark:text-blue-400 font-bold uppercase tracking-wider">Acceso Público</span>
               </div>
               <img id="header-user-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" alt="Avatar Usuario" class="w-8 h-8 rounded-full object-cover border-2 border-blue-600 shadow-xs"/>
               <span class="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
             </div>
 
             <!-- Menú Desplegable de Usuario y Cierre de Sesión -->
-            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-slate-200 z-50 p-3 text-xs">
-              <div class="pb-3 border-b border-slate-100 mb-3">
-                <div class="font-bold text-slate-900" id="dropdown-user-name">Invitado General</div>
-                <div class="text-[11px] text-slate-500 truncate" id="dropdown-user-email">publico@ligapro.ec</div>
-                <div class="mt-1 inline-block px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-bold text-[10px]" id="dropdown-user-role">Acceso Público</div>
+            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
+              <div class="pb-3 border-b border-slate-100 dark:border-slate-800 mb-3">
+                <div class="font-bold text-slate-900 dark:text-white" id="dropdown-user-name">Invitado General</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 truncate" id="dropdown-user-email">publico@ligapro.ec</div>
+                <div class="mt-1 inline-block px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 font-bold text-[10px]" id="dropdown-user-role">Acceso Público</div>
               </div>
 
               <!-- Cambio de Rol Rápido -->
               <div class="font-bold text-slate-400 uppercase text-[10px] tracking-wider mb-1.5">Cambiar Rol Rápido</div>
               <div class="space-y-1 mb-3">
-                <button onclick="cambiarRol('DIR_COMP')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 flex items-center justify-between text-slate-700">
-                  <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-blue-600">admin_panel_settings</span> Dirección LigaPro</span>
+                <button onclick="cambiarRol('DIR_COMP')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-between text-slate-700 dark:text-slate-200">
+                  <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-blue-600 dark:text-blue-400">admin_panel_settings</span> Dirección LigaPro</span>
                 </button>
-                <button onclick="cambiarRol('COMISARIO')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 flex items-center justify-between text-slate-700">
+                <button onclick="cambiarRol('COMISARIO')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-between text-slate-700 dark:text-slate-200">
                   <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-amber-500">sports</span> Comisario de Juego</span>
                 </button>
-                <button onclick="cambiarRol('CLUB_ADMIN')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 flex items-center justify-between text-slate-700">
-                  <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-emerald-600">shield</span> Delegado de Club</span>
+                <button onclick="cambiarRol('CLUB_ADMIN')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-between text-slate-700 dark:text-slate-200">
+                  <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-emerald-600 dark:text-emerald-400">shield</span> Delegado de Club</span>
                 </button>
-                <button onclick="cambiarRol('PUBLICO')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 flex items-center justify-between text-slate-700">
-                  <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-purple-600">visibility</span> Acceso Público (Aficionado)</span>
+                <button onclick="cambiarRol('PUBLICO')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-between text-slate-700 dark:text-slate-200">
+                  <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-purple-600 dark:text-purple-400">visibility</span> Acceso Público (Aficionado)</span>
                 </button>
               </div>
 
               <!-- Cerrar Sesión -->
-              <div class="pt-2 border-t border-slate-100">
-                <button onclick="cerrarSesion()" class="w-full text-left px-2 py-2 rounded text-red-600 hover:bg-red-50 font-bold flex items-center gap-2">
+              <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+                <button onclick="cerrarSesion()" class="w-full text-left px-2 py-2 rounded text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 font-bold flex items-center gap-2">
                   <span class="material-symbols-outlined text-base">logout</span>
                   Cerrar Sesión
                 </button>
@@ -179,7 +273,7 @@
             </button>
           </div>
         </div>
-        <aside class="fixed left-0 top-16 bottom-0 w-72 bg-surface-card z-40 flex flex-col border-r border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.02)]"><div class="p-space-md border-b border-border-subtle"><div class="flex items-center justify-between bg-surface-container-low px-space-sm py-2 rounded border border-border-subtle"><div class="flex items-center gap-space-xs"><span class="inline-block w-2.5 h-2.5 rounded-full bg-sport-success animate-pulse"></span><span class="font-label-caps text-label-caps text-text-primary uppercase">COMET Enlace Activo</span></div><span class="font-mono-table text-[11px] text-sport-success font-semibold">SYNC</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-xs"><div class="px-space-sm py-1 font-label-caps text-label-caps text-text-secondary uppercase tracking-wider">Administración LigaPro</div><nav class="flex flex-col gap-0.5 mt-1" data-active-classes="bg-secondary text-on-secondary font-semibold shadow-sm"><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="tablero-general" href="javascript:void(0)" onclick="navigateView('tablero')"><span class="material-symbols-outlined text-xl">space_dashboard</span><span>Tablero General</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="competiciones-formatos" href="javascript:void(0)" onclick="mostrarModalCompeticionesFormatos()"><span class="material-symbols-outlined text-xl">emoji_events</span><span>Competiciones &amp; Formatos</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="calificacion-escenarios" href="javascript:void(0)" onclick="navigateView('estadios')"><span class="material-symbols-outlined text-xl">stadium</span><span>Escenarios &amp; VAR (Z)</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="designacion-uniformes" href="javascript:void(0)" onclick="navigateView('uniformes')"><span class="material-symbols-outlined text-xl">checkroom</span><span>Designación de Uniformes</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="consola-matchday" href="javascript:void(0)" onclick="navigateView('consola')"><span class="material-symbols-outlined text-xl">sports_soccer</span><span>Consola Comisario Matchday</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="portal-clubes" href="javascript:void(0)" onclick="navigateView('clubes')"><span class="material-symbols-outlined text-xl">shield_person</span><span>Portal Clubes &amp; Trámites</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2.5 rounded transition-colors bg-secondary text-on-secondary font-semibold shadow-sm" data-path="posiciones-fair-play" href="javascript:void(0)" onclick="navigateView('posiciones')"><span class="material-symbols-outlined text-xl">leaderboard</span><span>Posiciones &amp; Fair Play</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="seguridad-criptografica" href="javascript:void(0)" onclick="mostrarModalSeguridadSHA256()"><span class="material-symbols-outlined text-xl">verified_user</span><span>Seguridad SHA-256</span></a></nav></div><div class="p-space-sm border-t border-border-subtle bg-surface-container-low/50"><div class="flex items-center justify-between text-text-secondary font-label-caps text-[10px]"><span>VERSION 4.2.1-SEC</span><span class="font-mono-table text-text-secondary">ID: LIGAPRO-EC</span></div></div></aside><div class="pl-72"><main class="relative w-full pt-16 bg-surface min-h-screen px-gutter-lg py-margin-md"><div class="flex flex-col w-full">
+        <aside class="fixed left-0 top-16 bottom-0 w-72 bg-surface-card z-40 flex flex-col border-r border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.02)] dark:bg-slate-950 dark:text-slate-100"><div class="p-space-md border-b border-border-subtle"><div class="flex items-center justify-between bg-surface-container-low px-space-sm py-2 rounded border border-border-subtle dark:bg-slate-950 dark:text-slate-100"><div class="flex items-center gap-space-xs"><span class="inline-block w-2.5 h-2.5 rounded-full bg-sport-success animate-pulse"></span><span class="font-label-caps text-label-caps text-text-primary uppercase">COMET Enlace Activo</span></div><span class="font-mono-table text-[11px] text-sport-success font-semibold">SYNC</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-xs"><div class="px-space-sm py-1 font-label-caps text-label-caps text-text-secondary uppercase tracking-wider">Administración LigaPro</div><nav class="flex flex-col gap-0.5 mt-1" data-active-classes="bg-secondary text-on-secondary font-semibold shadow-sm"><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="tablero-general" href="javascript:void(0)" onclick="navigateView('tablero')"><span class="material-symbols-outlined text-xl">space_dashboard</span><span>Tablero General</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="competiciones-formatos" href="javascript:void(0)" onclick="mostrarModalCompeticionesFormatos()"><span class="material-symbols-outlined text-xl">emoji_events</span><span>Competiciones &amp; Formatos</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="calificacion-escenarios" href="javascript:void(0)" onclick="navigateView('estadios')"><span class="material-symbols-outlined text-xl">stadium</span><span>Escenarios &amp; VAR (Z)</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="designacion-uniformes" href="javascript:void(0)" onclick="navigateView('uniformes')"><span class="material-symbols-outlined text-xl">checkroom</span><span>Designación de Uniformes</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="consola-matchday" href="javascript:void(0)" onclick="navigateView('consola')"><span class="material-symbols-outlined text-xl">sports_soccer</span><span>Consola Comisario Matchday</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="portal-clubes" href="javascript:void(0)" onclick="navigateView('clubes')"><span class="material-symbols-outlined text-xl">shield_person</span><span>Portal Clubes &amp; Trámites</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2.5 rounded transition-colors bg-secondary text-on-secondary font-semibold shadow-sm" data-path="posiciones-fair-play" href="javascript:void(0)" onclick="navigateView('posiciones')"><span class="material-symbols-outlined text-xl">leaderboard</span><span>Posiciones &amp; Fair Play</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="seguridad-criptografica" href="javascript:void(0)" onclick="mostrarModalSeguridadSHA256()"><span class="material-symbols-outlined text-xl">verified_user</span><span>Seguridad SHA-256</span></a></nav></div><div class="p-space-sm border-t border-border-subtle bg-surface-container-low/50 dark:bg-slate-950 dark:text-slate-100"><div class="flex items-center justify-between text-text-secondary font-label-caps text-[10px]"><span>VERSION 4.2.1-SEC</span><span class="font-mono-table text-text-secondary">ID: LIGAPRO-EC</span></div></div></aside><div class="pl-72"><main class="relative w-full pt-16 bg-surface min-h-screen px-gutter-lg py-margin-md dark:bg-slate-950 dark:text-slate-100"><div class="flex flex-col w-full">
 <!-- Live Broadcast Header & Quick Controls -->
 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md mb-space-lg">
 <div class="flex flex-col gap-1">
@@ -200,10 +294,10 @@
 </div>
 <!-- Quick Action / Rules Drawer Trigger -->
 <div class="flex items-center gap-space-sm flex-wrap">
-<button aria-controls="modal-criterios" aria-haspopup="dialog" class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded bg-surface-card text-text-primary shadow-sm hover:bg-surface-container-low transition-all font-title-md text-title-md" id="btn-open-criterios" type="button" onclick="mostrarModalCriteriosDesempate()">
+<button aria-controls="modal-criterios" aria-haspopup="dialog" class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded bg-surface-card text-text-primary shadow-sm hover:bg-surface-container-low transition-all font-title-md text-title-md dark:bg-slate-950 dark:text-slate-100" id="btn-open-criterios" type="button" onclick="mostrarModalCriteriosDesempate()">
 <span class="material-symbols-outlined text-secondary">balance</span>
 <span>5 Criterios de Desempate</span>
-<span class="inline-block px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-mono-table text-[10px] font-bold">REG. ART 18</span>
+<span class="inline-block px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-mono-table text-[10px] font-bold dark:bg-slate-950 dark:text-slate-100">REG. ART 18</span>
 </button>
 <button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded bg-secondary text-on-secondary shadow hover:bg-on-secondary-fixed-variant transition-all font-title-md text-title-md" id="btn-print-acta" onclick="window.print()" type="button">
 <span class="material-symbols-outlined text-lg">download</span>
@@ -212,10 +306,10 @@
 </div>
 </div>
 <!-- Tournament & Stage Navigation Rail -->
-<div class="bg-surface-card rounded-xl shadow-sm p-space-md mb-space-lg flex flex-col gap-space-md">
+<div class="bg-surface-card rounded-xl shadow-sm p-space-md mb-space-lg flex flex-col gap-space-md dark:bg-slate-950 dark:text-slate-100">
 <!-- Division Toggle -->
 <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm">
-<div aria-label="División de Torneo" class="inline-flex p-1 rounded-lg bg-surface-container-low" role="tablist">
+<div aria-label="División de Torneo" class="inline-flex p-1 rounded-lg bg-surface-container-low dark:bg-slate-950 dark:text-slate-100" role="tablist">
 <button aria-selected="true" class="division-tab px-space-md py-2 rounded-md font-title-md text-title-md font-bold bg-secondary text-on-secondary shadow-sm transition-all" data-division="serie-a" role="tab" type="button" onclick="cambiarDivision('A')">
           LigaPro Ecuabet Serie A 2025
         </button>
@@ -234,15 +328,15 @@
 <span class="w-2 h-2 rounded-full bg-high-contrast-accent"></span>
 <span>Fase Inicial (30 Fechas Acumuladas)</span>
 </button>
-<button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2" data-phase="hex-1" role="tab" type="button" onclick="cambiarFaseTorneo('hex_titulo')">
+<button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2 dark:bg-slate-950 dark:text-slate-100" data-phase="hex-1" role="tab" type="button" onclick="cambiarFaseTorneo('hex_titulo')">
 <span class="material-symbols-outlined text-xs text-sport-success">stars</span>
 <span>1° Hexagonal (Puestos 1-6 Título &amp; Libertadores)</span>
 </button>
-<button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2" data-phase="hex-2" role="tab" type="button" onclick="cambiarFaseTorneo('hex_sudamericana')">
+<button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2 dark:bg-slate-950 dark:text-slate-100" data-phase="hex-2" role="tab" type="button" onclick="cambiarFaseTorneo('hex_sudamericana')">
 <span class="material-symbols-outlined text-xs text-secondary">diamond</span>
 <span>2° Hexagonal (Puestos 7-12 Sudamericana)</span>
 </button>
-<button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2" data-phase="cuadrangular" role="tab" type="button" onclick="cambiarFaseTorneo('cuad_descenso')">
+<button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2 dark:bg-slate-950 dark:text-slate-100" data-phase="cuadrangular" role="tab" type="button" onclick="cambiarFaseTorneo('cuad_descenso')">
 <span class="material-symbols-outlined text-xs text-sport-danger">warning</span>
 <span>Cuadrangular Descenso (Puestos 13-16)</span>
 </button>
@@ -251,7 +345,7 @@
 <!-- Accessible Broadcast Legend (Triple-Encoded) -->
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm mb-space-md">
 <!-- Libertadores -->
-<div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm">
+<div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-slate-950 dark:text-slate-100">
 <div class="w-8 h-8 rounded bg-sport-success/15 flex items-center justify-center text-sport-success flex-shrink-0">
 <span class="material-symbols-outlined text-xl">stars</span>
 </div>
@@ -264,7 +358,7 @@
 </div>
 </div>
 <!-- Sudamericana -->
-<div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm">
+<div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-slate-950 dark:text-slate-100">
 <div class="w-8 h-8 rounded bg-secondary/15 flex items-center justify-center text-secondary flex-shrink-0">
 <span class="material-symbols-outlined text-xl">diamond</span>
 </div>
@@ -277,7 +371,7 @@
 </div>
 </div>
 <!-- Descenso -->
-<div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm">
+<div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-slate-950 dark:text-slate-100">
 <div class="w-8 h-8 rounded bg-sport-danger/15 flex items-center justify-center text-sport-danger flex-shrink-0">
 <span class="material-symbols-outlined text-xl">warning</span>
 </div>
@@ -291,9 +385,9 @@
 </div>
 </div>
 <!-- Standings Table Container -->
-<div class="bg-surface-card rounded-xl shadow-md overflow-hidden mb-space-xl">
+<div class="bg-surface-card rounded-xl shadow-md overflow-hidden mb-space-xl dark:bg-slate-950 dark:text-slate-100">
 <!-- Table Header Toolbar -->
-<div class="p-space-md bg-surface-container-low flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm">
+<div class="p-space-md bg-surface-container-low flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm dark:bg-slate-950 dark:text-slate-100">
 <div class="flex items-center gap-space-sm">
 <span class="material-symbols-outlined text-secondary">table_chart</span>
 <h2 class="font-headline-sm text-headline-sm text-text-primary font-bold">
@@ -310,7 +404,7 @@
 <div class="overflow-x-auto w-full">
 <table class="w-full text-left border-collapse" id="standings-table">
 <thead>
-<tr class="bg-surface-container/60 text-text-secondary font-label-caps text-label-caps uppercase tracking-wider">
+<tr class="bg-surface-container/60 text-text-secondary font-label-caps text-label-caps uppercase tracking-wider dark:bg-slate-950 dark:text-slate-100">
 <th class="py-3 px-3 text-center w-14" scope="col">POS</th>
 <th class="py-3 px-3 w-12 text-center" scope="col">ZONA</th>
 <th class="py-3 px-4 min-w-[220px]" scope="col">CLUB</th>
@@ -327,7 +421,7 @@
 </thead>
 <tbody class="font-body-md text-body-md text-text-primary divide-y-0">
 <!-- Row 1: Libertadores Group -->
-<tr class="bg-surface-card hover:bg-surface-container-low transition-colors group">
+<tr class="bg-surface-card hover:bg-surface-container-low transition-colors group dark:bg-slate-950 dark:text-slate-100">
 <td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">1</td>
 <td class="py-3 px-3 text-center">
 <span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-success/15 text-sport-success" title="Zona Conmebol Libertadores (Fase de Grupos)">
@@ -336,7 +430,7 @@
 </td>
 <td class="py-3 px-4">
 <div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm dark:bg-slate-950 dark:text-slate-100">
                   LDU
                 </div>
 <div class="flex flex-col min-w-0">
@@ -364,7 +458,7 @@
 </td>
 </tr>
 <!-- Row 2: Libertadores Group -->
-<tr class="bg-surface-base hover:bg-surface-container-low transition-colors group">
+<tr class="bg-surface-base hover:bg-surface-container-low transition-colors group dark:bg-slate-950 dark:text-slate-100">
 <td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">2</td>
 <td class="py-3 px-3 text-center">
 <span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-success/15 text-sport-success" title="Zona Conmebol Libertadores (Fase de Grupos)">
@@ -373,7 +467,7 @@
 </td>
 <td class="py-3 px-4">
 <div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm dark:bg-slate-950 dark:text-slate-100">
                   IDV
                 </div>
 <div class="flex flex-col min-w-0">
@@ -401,7 +495,7 @@
 </td>
 </tr>
 <!-- Row 3: Libertadores Previa -->
-<tr class="bg-surface-card hover:bg-surface-container-low transition-colors group">
+<tr class="bg-surface-card hover:bg-surface-container-low transition-colors group dark:bg-slate-950 dark:text-slate-100">
 <td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">3</td>
 <td class="py-3 px-3 text-center">
 <span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-success/15 text-sport-success" title="Zona Conmebol Libertadores (Fases Clasificatorias)">
@@ -410,7 +504,7 @@
 </td>
 <td class="py-3 px-4">
 <div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm dark:bg-slate-950 dark:text-slate-100">
                   BSC
                 </div>
 <div class="flex flex-col min-w-0">
@@ -438,7 +532,7 @@
 </td>
 </tr>
 <!-- Row 4: Libertadores Previa -->
-<tr class="bg-surface-base hover:bg-surface-container-low transition-colors group">
+<tr class="bg-surface-base hover:bg-surface-container-low transition-colors group dark:bg-slate-950 dark:text-slate-100">
 <td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">4</td>
 <td class="py-3 px-3 text-center">
 <span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-success/15 text-sport-success" title="Zona Conmebol Libertadores (Fases Clasificatorias)">
@@ -447,7 +541,7 @@
 </td>
 <td class="py-3 px-4">
 <div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm dark:bg-slate-950 dark:text-slate-100">
                   AUC
                 </div>
 <div class="flex flex-col min-w-0">
@@ -475,7 +569,7 @@
 </td>
 </tr>
 <!-- Row 5: Sudamericana -->
-<tr class="bg-surface-card hover:bg-surface-container-low transition-colors group">
+<tr class="bg-surface-card hover:bg-surface-container-low transition-colors group dark:bg-slate-950 dark:text-slate-100">
 <td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">5</td>
 <td class="py-3 px-3 text-center">
 <span class="inline-flex items-center justify-center w-7 h-7 rounded bg-secondary/15 text-secondary" title="Zona Conmebol Sudamericana">
@@ -484,7 +578,7 @@
 </td>
 <td class="py-3 px-4">
 <div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm dark:bg-slate-950 dark:text-slate-100">
                   UCAT
                 </div>
 <div class="flex flex-col min-w-0">
@@ -512,7 +606,7 @@
 </td>
 </tr>
 <!-- Row 6: Sudamericana -->
-<tr class="bg-surface-base hover:bg-surface-container-low transition-colors group">
+<tr class="bg-surface-base hover:bg-surface-container-low transition-colors group dark:bg-slate-950 dark:text-slate-100">
 <td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">6</td>
 <td class="py-3 px-3 text-center">
 <span class="inline-flex items-center justify-center w-7 h-7 rounded bg-secondary/15 text-secondary" title="Zona Conmebol Sudamericana">
@@ -521,7 +615,7 @@
 </td>
 <td class="py-3 px-4">
 <div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm dark:bg-slate-950 dark:text-slate-100">
                   EME
                 </div>
 <div class="flex flex-col min-w-0">
@@ -549,7 +643,7 @@
 </td>
 </tr>
 <!-- Row 7: Sudamericana -->
-<tr class="bg-surface-card hover:bg-surface-container-low transition-colors group">
+<tr class="bg-surface-card hover:bg-surface-container-low transition-colors group dark:bg-slate-950 dark:text-slate-100">
 <td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">7</td>
 <td class="py-3 px-3 text-center">
 <span class="inline-flex items-center justify-center w-7 h-7 rounded bg-secondary/15 text-secondary" title="Zona Conmebol Sudamericana">
@@ -558,7 +652,7 @@
 </td>
 <td class="py-3 px-4">
 <div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm dark:bg-slate-950 dark:text-slate-100">
                   ORE
                 </div>
 <div class="flex flex-col min-w-0">
@@ -586,7 +680,7 @@
 </td>
 </tr>
 <!-- Row 8: Sudamericana -->
-<tr class="bg-surface-base hover:bg-surface-container-low transition-colors group">
+<tr class="bg-surface-base hover:bg-surface-container-low transition-colors group dark:bg-slate-950 dark:text-slate-100">
 <td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">8</td>
 <td class="py-3 px-3 text-center">
 <span class="inline-flex items-center justify-center w-7 h-7 rounded bg-secondary/15 text-secondary" title="Zona Conmebol Sudamericana">
@@ -595,7 +689,7 @@
 </td>
 <td class="py-3 px-4">
 <div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm dark:bg-slate-950 dark:text-slate-100">
                   MAC
                 </div>
 <div class="flex flex-col min-w-0">
@@ -623,14 +717,14 @@
 </td>
 </tr>
 <!-- Mid Table: Zona Neutra -->
-<tr class="bg-surface-card hover:bg-surface-container-low transition-colors group">
+<tr class="bg-surface-card hover:bg-surface-container-low transition-colors group dark:bg-slate-950 dark:text-slate-100">
 <td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">9</td>
 <td class="py-3 px-3 text-center">
 <span class="inline-block w-2.5 h-0.5 bg-outline-variant rounded" title="Posición Neutra"></span>
 </td>
 <td class="py-3 px-4">
 <div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm dark:bg-slate-950 dark:text-slate-100">
                   CUE
                 </div>
 <div class="flex flex-col min-w-0">
@@ -658,14 +752,14 @@
 </td>
 </tr>
 <!-- Row 10 -->
-<tr class="bg-surface-base hover:bg-surface-container-low transition-colors group">
+<tr class="bg-surface-base hover:bg-surface-container-low transition-colors group dark:bg-slate-950 dark:text-slate-100">
 <td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">10</td>
 <td class="py-3 px-3 text-center">
 <span class="inline-block w-2.5 h-0.5 bg-outline-variant rounded" title="Posición Neutra"></span>
 </td>
 <td class="py-3 px-4">
 <div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm dark:bg-slate-950 dark:text-slate-100">
                   MUS
                 </div>
 <div class="flex flex-col min-w-0">
@@ -702,7 +796,7 @@
 </td>
 <td class="py-3 px-4">
 <div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-sport-danger text-xs shadow-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-sport-danger text-xs shadow-sm dark:bg-slate-950 dark:text-slate-100">
                   CUM
                 </div>
 <div class="flex flex-col min-w-0">
@@ -739,7 +833,7 @@
 </td>
 <td class="py-3 px-4">
 <div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-sport-danger text-xs shadow-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-sport-danger text-xs shadow-sm dark:bg-slate-950 dark:text-slate-100">
                   LIB
                 </div>
 <div class="flex flex-col min-w-0">
@@ -770,7 +864,7 @@
 </table>
 </div>
 <!-- Table Footer / Regulatory Note -->
-<div class="p-space-sm bg-surface-container-low flex flex-col sm:flex-row items-start sm:items-center justify-between text-on-surface-variant font-body-sm text-body-sm gap-2">
+<div class="p-space-sm bg-surface-container-low flex flex-col sm:flex-row items-start sm:items-center justify-between text-on-surface-variant font-body-sm text-body-sm gap-2 dark:bg-slate-950 dark:text-slate-100">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-sport-warning text-base">gavel</span>
 <span>Resolución Tribunal de Disciplina LP-2024-88: Libertad F.C. sancionado con -4 puntos en la tabla acumulada.</span>
@@ -783,8 +877,8 @@
 <!-- Fair Play, Cards & Financial Sanctions Section -->
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg mb-space-xl">
 <!-- Fair Play & Yellow/Red Cards Table -->
-<div class="lg:col-span-8 bg-surface-card rounded-xl shadow-md overflow-hidden">
-<div class="p-space-md bg-surface-container-low flex items-center justify-between">
+<div class="lg:col-span-8 bg-surface-card rounded-xl shadow-md overflow-hidden dark:bg-slate-950 dark:text-slate-100">
+<div class="p-space-md bg-surface-container-low flex items-center justify-between dark:bg-slate-950 dark:text-slate-100">
 <div class="flex items-center gap-space-sm">
 <span class="material-symbols-outlined text-secondary">sports</span>
 <h2 class="font-headline-sm text-headline-sm text-text-primary font-bold">
@@ -802,7 +896,7 @@
 <div class="overflow-x-auto">
 <table class="w-full text-left border-collapse">
 <thead>
-<tr class="bg-surface-container/50 text-text-secondary font-label-caps text-label-caps uppercase">
+<tr class="bg-surface-container/50 text-text-secondary font-label-caps text-label-caps uppercase dark:bg-slate-950 dark:text-slate-100">
 <th class="py-2.5 px-3 w-12 text-center" scope="col">RANK</th>
 <th class="py-2.5 px-3 min-w-[180px]" scope="col">CLUB</th>
 <th class="py-2.5 px-3 text-center" scope="col">
@@ -823,7 +917,7 @@
 </thead>
 <tbody class="font-body-md text-body-md divide-y-0">
 <!-- Fair Play 1 -->
-<tr class="hover:bg-surface-container-low transition-colors">
+<tr class="hover:bg-surface-container-low transition-colors dark:bg-slate-950 dark:text-slate-100">
 <td class="py-2.5 px-3 text-center font-mono-table font-bold text-sport-success">1</td>
 <td class="py-2.5 px-3 font-title-md text-title-md font-semibold text-text-primary">Independiente del Valle</td>
 <td class="py-2.5 px-3 text-center font-mono-table">38</td>
@@ -832,7 +926,7 @@
 <td class="py-2.5 px-3 text-right font-mono-table text-text-secondary">$ 4.250,00</td>
 </tr>
 <!-- Fair Play 2 -->
-<tr class="bg-surface-base hover:bg-surface-container-low transition-colors">
+<tr class="bg-surface-base hover:bg-surface-container-low transition-colors dark:bg-slate-950 dark:text-slate-100">
 <td class="py-2.5 px-3 text-center font-mono-table font-bold text-sport-success">2</td>
 <td class="py-2.5 px-3 font-title-md text-title-md font-semibold text-text-primary">Universidad Católica</td>
 <td class="py-2.5 px-3 text-center font-mono-table">42</td>
@@ -841,7 +935,7 @@
 <td class="py-2.5 px-3 text-right font-mono-table text-text-secondary">$ 5.800,00</td>
 </tr>
 <!-- Fair Play 3 -->
-<tr class="hover:bg-surface-container-low transition-colors">
+<tr class="hover:bg-surface-container-low transition-colors dark:bg-slate-950 dark:text-slate-100">
 <td class="py-2.5 px-3 text-center font-mono-table font-bold">3</td>
 <td class="py-2.5 px-3 font-title-md text-title-md font-semibold text-text-primary">Liga Deportiva Universitaria</td>
 <td class="py-2.5 px-3 text-center font-mono-table">48</td>
@@ -850,7 +944,7 @@
 <td class="py-2.5 px-3 text-right font-mono-table text-text-secondary">$ 8.100,00</td>
 </tr>
 <!-- Fair Play 4 -->
-<tr class="bg-surface-base hover:bg-surface-container-low transition-colors">
+<tr class="bg-surface-base hover:bg-surface-container-low transition-colors dark:bg-slate-950 dark:text-slate-100">
 <td class="py-2.5 px-3 text-center font-mono-table font-bold">4</td>
 <td class="py-2.5 px-3 font-title-md text-title-md font-semibold text-text-primary">S.D. Aucas</td>
 <td class="py-2.5 px-3 text-center font-mono-table">51</td>
@@ -904,7 +998,7 @@
 </div>
 </div>
 <!-- Quick Fair Play Criteria Graphic -->
-<div class="bg-surface-card rounded-xl shadow-md p-space-md flex flex-col gap-space-sm">
+<div class="bg-surface-card rounded-xl shadow-md p-space-md flex flex-col gap-space-sm dark:bg-slate-950 dark:text-slate-100">
 <h3 class="font-title-md text-title-md font-bold text-text-primary flex items-center gap-2">
 <span class="material-symbols-outlined text-sport-success">eco</span>
 <span>Premio al Juego Limpio 2025</span>
@@ -918,7 +1012,7 @@
 <span>IDV (Líder Actual)</span>
 <span class="font-mono-table text-sport-success">43 / 150 umbral</span>
 </div>
-<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden dark:bg-slate-950 dark:text-slate-100">
 <div class="h-full bg-sport-success rounded-full" style="width: 28%"></div>
 </div>
 </div>
@@ -927,7 +1021,7 @@
 <span>Promedio Liga</span>
 <span class="font-mono-table text-text-primary">78.5 pts</span>
 </div>
-<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden dark:bg-slate-950 dark:text-slate-100">
 <div class="h-full bg-secondary rounded-full" style="width: 52%"></div>
 </div>
 </div>
@@ -936,7 +1030,7 @@
 </div>
 <!-- Modal / Flyout: 5 Criterios Oficiales de Desempate -->
 <div aria-labelledby="modal-criterios-title" aria-modal="true" class="fixed inset-0 z-50 flex items-center justify-center p-space-md bg-primary-container/80 backdrop-blur-sm hidden" id="modal-criterios" role="dialog">
-<div class="bg-surface-card rounded-xl shadow-2xl max-w-2xl w-full overflow-hidden flex flex-col max-h-[921px]">
+<div class="bg-surface-card rounded-xl shadow-2xl max-w-2xl w-full overflow-hidden flex flex-col max-h-[921px] dark:bg-slate-950 dark:text-slate-100">
 <!-- Modal Header -->
 <div class="p-space-md bg-primary-container text-on-primary flex items-center justify-between">
 <div class="flex items-center gap-space-sm">
@@ -961,7 +1055,7 @@
         </p>
 <div class="flex flex-col gap-space-sm">
 <!-- Criterio 1 -->
-<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors dark:bg-slate-950 dark:text-slate-100">
 <span class="w-8 h-8 rounded-full bg-secondary text-on-secondary font-mono-table font-bold flex items-center justify-center flex-shrink-0">
               1
             </span>
@@ -975,7 +1069,7 @@
 </div>
 </div>
 <!-- Criterio 2 -->
-<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors dark:bg-slate-950 dark:text-slate-100">
 <span class="w-8 h-8 rounded-full bg-secondary text-on-secondary font-mono-table font-bold flex items-center justify-center flex-shrink-0">
               2
             </span>
@@ -989,7 +1083,7 @@
 </div>
 </div>
 <!-- Criterio 3 -->
-<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors dark:bg-slate-950 dark:text-slate-100">
 <span class="w-8 h-8 rounded-full bg-secondary text-on-secondary font-mono-table font-bold flex items-center justify-center flex-shrink-0">
               3
             </span>
@@ -1003,7 +1097,7 @@
 </div>
 </div>
 <!-- Criterio 4 -->
-<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors dark:bg-slate-950 dark:text-slate-100">
 <span class="w-8 h-8 rounded-full bg-secondary text-on-secondary font-mono-table font-bold flex items-center justify-center flex-shrink-0">
               4
             </span>
@@ -1038,7 +1132,7 @@
 </div>
 </div>
 <!-- Modal Footer -->
-<div class="p-space-md bg-surface-container-low flex justify-end">
+<div class="p-space-md bg-surface-container-low flex justify-end dark:bg-slate-950 dark:text-slate-100">
 <button class="px-space-md py-2 rounded bg-primary-container text-on-primary font-title-md text-title-md hover:bg-inverse-surface transition-colors" id="btn-close-criterios-footer" type="button" onclick="cerrarModalCriterios()">
           Entendido / Cerrar
         </button>

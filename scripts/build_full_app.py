@@ -264,12 +264,106 @@ def build():
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script id="tailwind-config">{tw_config}</script>
+  <script>
+    (function() {{
+      try {{
+        var theme = localStorage.getItem('sigec_theme') || (localStorage.getItem('sigec_high_contrast') === 'true' ? 'dark' : null);
+        if (theme === 'dark') {{
+          document.documentElement.classList.add('dark', 'high-contrast');
+        }}
+        var scale = localStorage.getItem('sigec_font_scale');
+        if (scale) {{
+          document.documentElement.style.fontSize = scale + '%';
+        }}
+      }} catch (e) {{}}
+    }})();
+  </script>
   <style>
     @layer base {{
-      html, body {{ margin: 0; padding: 0; }}
+      html, body {{ margin: 0; padding: 0; transition: background-color 0.15s ease, color 0.15s ease; }}
       body {{ overscroll-behavior: none; }}
     }}
     ::-webkit-scrollbar {{ display: none; }}
+
+    /* MODO OSCURO (Tailwind dark: y soporte directo) */
+    html.dark {{
+      color-scheme: dark;
+    }}
+    html.dark body {{
+      background-color: #0b1329 !important;
+      color: #f1f5f9 !important;
+    }}
+    html.dark header {{
+      background-color: rgba(15, 23, 42, 0.95) !important;
+      border-color: #1e293b !important;
+      color: #f1f5f9 !important;
+    }}
+    html.dark aside {{
+      background-color: #0f172a !important;
+      border-color: #1e293b !important;
+      color: #f1f5f9 !important;
+    }}
+    html.dark aside a, html.dark aside button {{
+      color: #cbd5e1 !important;
+    }}
+    html.dark aside a:hover, html.dark aside button:hover {{
+      background-color: #1e293b !important;
+      color: #ffffff !important;
+    }}
+    html.dark .bg-white {{
+      background-color: #0f172a !important;
+      color: #f1f5f9 !important;
+      border-color: #1e293b !important;
+    }}
+    html.dark .bg-surface, html.dark .bg-surface-container-low, html.dark .bg-surface-container {{
+      background-color: #0b1329 !important;
+      color: #f1f5f9 !important;
+    }}
+    html.dark .bg-slate-50, html.dark .bg-slate-100 {{
+      background-color: #1e293b !important;
+      color: #e2e8f0 !important;
+      border-color: #334155 !important;
+    }}
+    html.dark .text-slate-900, html.dark .text-slate-800, html.dark .text-slate-700 {{
+      color: #f8fafc !important;
+    }}
+    html.dark .text-slate-600, html.dark .text-slate-500 {{
+      color: #94a3b8 !important;
+    }}
+    html.dark .border-slate-100, html.dark .border-slate-200, html.dark .border-slate-300 {{
+      border-color: #334155 !important;
+    }}
+    html.dark input, html.dark select, html.dark textarea {{
+      background-color: #1e293b !important;
+      border-color: #475569 !important;
+      color: #f8fafc !important;
+    }}
+
+    /* MODO ALTO CONTRASTE WCAG AAA (Negro / Amarillo #FFE600 / 21:1) */
+    html.high-contrast {{
+      color-scheme: dark;
+    }}
+    html.high-contrast body {{
+      background-color: #000000 !important;
+      color: #FFFFFF !important;
+    }}
+    html.high-contrast header, html.high-contrast aside, html.high-contrast .bg-white, html.high-contrast .bg-surface, html.high-contrast .bg-slate-50, html.high-contrast .bg-slate-100 {{
+      background-color: #000000 !important;
+      border-color: #FFE600 !important;
+      color: #FFFFFF !important;
+    }}
+    html.high-contrast button {{
+      border-color: #FFE600 !important;
+    }}
+    html.high-contrast a, html.high-contrast .text-amber-400, html.high-contrast .text-amber-500 {{
+      color: #FFE600 !important;
+    }}
+    html.high-contrast .text-slate-900, html.high-contrast .text-slate-800, html.high-contrast .text-slate-700, html.high-contrast .text-slate-600, html.high-contrast .text-slate-500 {{
+      color: #FFFFFF !important;
+    }}
+    html.high-contrast .border-slate-100, html.high-contrast .border-slate-200, html.high-contrast .border-slate-300 {{
+      border-color: #FFE600 !important;
+    }}
     .high-contrast-mode {{
       background-color: #000000 !important;
       color: #FFFFFF !important;
@@ -317,12 +411,106 @@ def build():
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script id="tailwind-config">{tw_config}</script>
+  <script>
+    (function() {{
+      try {{
+        var theme = localStorage.getItem('sigec_theme') || (localStorage.getItem('sigec_high_contrast') === 'true' ? 'dark' : null);
+        if (theme === 'dark') {{
+          document.documentElement.classList.add('dark', 'high-contrast');
+        }}
+        var scale = localStorage.getItem('sigec_font_scale');
+        if (scale) {{
+          document.documentElement.style.fontSize = scale + '%';
+        }}
+      }} catch (e) {{}}
+    }})();
+  </script>
   <style>
     @layer base {{
-      html, body {{ margin: 0; padding: 0; }}
+      html, body {{ margin: 0; padding: 0; transition: background-color 0.15s ease, color 0.15s ease; }}
       body {{ overscroll-behavior: none; }}
     }}
     ::-webkit-scrollbar {{ display: none; }}
+
+    /* MODO OSCURO (Tailwind dark: y soporte directo) */
+    html.dark {{
+      color-scheme: dark;
+    }}
+    html.dark body {{
+      background-color: #0b1329 !important;
+      color: #f1f5f9 !important;
+    }}
+    html.dark header {{
+      background-color: rgba(15, 23, 42, 0.95) !important;
+      border-color: #1e293b !important;
+      color: #f1f5f9 !important;
+    }}
+    html.dark aside {{
+      background-color: #0f172a !important;
+      border-color: #1e293b !important;
+      color: #f1f5f9 !important;
+    }}
+    html.dark aside a, html.dark aside button {{
+      color: #cbd5e1 !important;
+    }}
+    html.dark aside a:hover, html.dark aside button:hover {{
+      background-color: #1e293b !important;
+      color: #ffffff !important;
+    }}
+    html.dark .bg-white {{
+      background-color: #0f172a !important;
+      color: #f1f5f9 !important;
+      border-color: #1e293b !important;
+    }}
+    html.dark .bg-surface, html.dark .bg-surface-container-low, html.dark .bg-surface-container {{
+      background-color: #0b1329 !important;
+      color: #f1f5f9 !important;
+    }}
+    html.dark .bg-slate-50, html.dark .bg-slate-100 {{
+      background-color: #1e293b !important;
+      color: #e2e8f0 !important;
+      border-color: #334155 !important;
+    }}
+    html.dark .text-slate-900, html.dark .text-slate-800, html.dark .text-slate-700 {{
+      color: #f8fafc !important;
+    }}
+    html.dark .text-slate-600, html.dark .text-slate-500 {{
+      color: #94a3b8 !important;
+    }}
+    html.dark .border-slate-100, html.dark .border-slate-200, html.dark .border-slate-300 {{
+      border-color: #334155 !important;
+    }}
+    html.dark input, html.dark select, html.dark textarea {{
+      background-color: #1e293b !important;
+      border-color: #475569 !important;
+      color: #f8fafc !important;
+    }}
+
+    /* MODO ALTO CONTRASTE WCAG AAA (Negro / Amarillo #FFE600 / 21:1) */
+    html.high-contrast {{
+      color-scheme: dark;
+    }}
+    html.high-contrast body {{
+      background-color: #000000 !important;
+      color: #FFFFFF !important;
+    }}
+    html.high-contrast header, html.high-contrast aside, html.high-contrast .bg-white, html.high-contrast .bg-surface, html.high-contrast .bg-slate-50, html.high-contrast .bg-slate-100 {{
+      background-color: #000000 !important;
+      border-color: #FFE600 !important;
+      color: #FFFFFF !important;
+    }}
+    html.high-contrast button {{
+      border-color: #FFE600 !important;
+    }}
+    html.high-contrast a, html.high-contrast .text-amber-400, html.high-contrast .text-amber-500 {{
+      color: #FFE600 !important;
+    }}
+    html.high-contrast .text-slate-900, html.high-contrast .text-slate-800, html.high-contrast .text-slate-700, html.high-contrast .text-slate-600, html.high-contrast .text-slate-500 {{
+      color: #FFFFFF !important;
+    }}
+    html.high-contrast .border-slate-100, html.high-contrast .border-slate-200, html.high-contrast .border-slate-300 {{
+      border-color: #FFE600 !important;
+    }}
     .high-contrast-mode {{
       background-color: #000000 !important;
       color: #FFFFFF !important;

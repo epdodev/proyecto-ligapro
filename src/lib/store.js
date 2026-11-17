@@ -341,12 +341,16 @@ class Store {
   toggleHighContrast() {
     this.state.highContrast = !this.state.highContrast;
     this.notify();
+    this.saveToLocalStorage();
     return this.state.highContrast;
   }
 
   setFontScale(scale) {
-    this.state.fontScale = Math.min(130, Math.max(80, scale));
+    const valid = [100, 112.5, 125, 137.5, 150];
+    const num = Number(scale);
+    this.state.fontScale = valid.includes(num) ? num : 100;
     this.notify();
+    this.saveToLocalStorage();
   }
 
   toggleAudioAlerts() {

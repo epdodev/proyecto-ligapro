@@ -216,19 +216,65 @@ window.navigateView = function(viewId) {
 };
 
 // ==============================================================================
-// 3. ACCESIBILIDAD (WCAG AAA, ESCALADO Y AUDIO)
+// 3. ACCESIBILIDAD (MODO OSCURO / ALTO CONTRASTE Y ESCALADO PROPORCIONAL)
 // ==============================================================================
 
+const FONT_SCALES = [100, 112.5, 125, 137.5, 150];
+
+export function aplicarTema(isDark) {
+  if (isDark) {
+    document.documentElement.classList.add('dark', 'high-contrast');
+    if (document.body) document.body.classList.add('high-contrast-mode');
+    store.state.highContrast = true;
+    try {
+      localStorage.setItem('sigec_theme', 'dark');
+      localStorage.setItem('sigec_high_contrast', 'true');
+    } catch (e) {}
+  } else {
+    document.documentElement.classList.remove('dark', 'high-contrast');
+    if (document.body) document.body.classList.remove('high-contrast-mode');
+    store.state.highContrast = false;
+    try {
+      localStorage.setItem('sigec_theme', 'light');
+      localStorage.setItem('sigec_high_contrast', 'false');
+    } catch (e) {}
+  }
+  store.saveToLocalStorage();
+  return store.state.highContrast;
+}
+
 window.toggleGlobalHighContrast = function() {
-  const isHc = store.toggleHighContrast();
-  document.body.classList.toggle('high-contrast-mode', isHc);
+  const isDark = !document.documentElement.classList.contains('dark');
+  aplicarTema(isDark);
 };
 
-window.ajustarTexto = function(delta) {
-  const current = store.state.fontScale || 100;
-  const newScale = Math.min(130, Math.max(80, current + delta));
-  store.setFontScale(newScale);
-  document.documentElement.style.fontSize = `${newScale}%`;
+export function aplicarFontScale(scale) {
+  const numScale = Number(scale);
+  const validScale = FONT_SCALES.includes(numScale) ? numScale : 100;
+  document.documentElement.style.fontSize = `${validScale}%`;
+  store.setFontScale(validScale);
+  try {
+    localStorage.setItem('sigec_font_scale', validScale.toString());
+  } catch (e) {}
+  return validScale;
+}
+
+window.ajustarTexto = function(action) {
+  const currentScale = Number(store.state.fontScale) || 100;
+  let currentIndex = FONT_SCALES.indexOf(currentScale);
+  if (currentIndex === -1) currentIndex = 0;
+
+  if (action === 'inc' || (typeof action === 'number' && action > 0)) {
+    if (currentIndex < FONT_SCALES.length - 1) {
+      currentIndex++;
+    }
+  } else if (action === 'dec' || (typeof action === 'number' && action < 0)) {
+    if (currentIndex > 0) {
+      currentIndex--;
+    }
+  }
+  const newScale = FONT_SCALES[currentIndex];
+  aplicarFontScale(newScale);
 };
 
 window.toggleAlertaAuditiva = function() {
@@ -1473,6 +1519,21 @@ function showToast(message, type = 'info') {
 
 // Reloj continuo y sincronización al cargar
 document.addEventListener('DOMContentLoaded', () => {
+  // 1. Sincronizar tema y accesibilidad desde localStorage / store
+  try {
+    const savedTheme = localStorage.getItem('sigec_theme') || (localStorage.getItem('sigec_high_contrast') === 'true' ? 'dark' : null);
+    if (savedTheme === 'dark' || store.state.highContrast) {
+      aplicarTema(true);
+    } else {
+      aplicarTema(false);
+    }
+
+    const savedScale = localStorage.getItem('sigec_font_scale') || store.state.fontScale;
+    if (savedScale) {
+      aplicarFontScale(Number(savedScale));
+    }
+  } catch (e) {}
+
   const params = new URLSearchParams(window.location.search);
   const initialView = params.get('view') || 'tablero';
   window.navigateView(initialView);
