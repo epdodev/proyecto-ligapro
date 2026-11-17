@@ -53,6 +53,301 @@ window.cerrarSesion = async function() {
   window.navigateView('auth');
 };
 
+// ==============================================================================
+// GESTIÓN DE PERFIL DE USUARIO Y PERSISTENCIA SUPABASE
+// ==============================================================================
+
+window.abrirModalPerfil = function() {
+  window.toggleUserDropdown(true);
+
+  const u = store.state.currentUser || {};
+  const nombre = u.nombre || '';
+  const email = u.email || 'usuario@ligapro.ec';
+  const cargo = u.cargo || 'Oficial de Partido';
+  const club = u.club || 'LigaPro Ecuador';
+  const rol = u.rol || 'DIR_COMP';
+  const cedula = u.cedula || '1714209552';
+  const avatar = u.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80';
+
+  const modalHtml = `
+  <div id="modal-perfil-backdrop" class="fixed inset-0 bg-black/75 backdrop-blur-xs z-50 flex items-start justify-center p-4 pt-20 overflow-y-auto">
+    <div class="bg-white dark:bg-[#111827] rounded-2xl max-w-2xl w-full p-6 sm:p-7 shadow-2xl border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 my-auto sm:my-4 transition-all">
+      <!-- Encabezado del Modal -->
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <img src="${avatar}" alt="Avatar" class="w-12 h-12 rounded-full object-cover border-2 border-blue-600 shadow-sm" />
+            <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white dark:border-[#111827] rounded-full"></span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-extrabold text-slate-900 dark:text-white text-base sm:text-lg">Mi Perfil & Acreditación</h3>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800">COMET SEC://2025</span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Identidad federativa, asignación de club y credenciales oficiales</p>
+          </div>
+        </div>
+        <button type="button" onclick="cerrarModalPerfil()" class="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+          <span class="material-symbols-outlined text-xl">close</span>
+        </button>
+      </div>
+
+      <!-- Formulario de Edición de Perfil -->
+      <form id="form-perfil-usuario" onsubmit="guardarCambiosPerfil(event)" class="mt-5 space-y-4 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Nombre Completo -->
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm text-blue-600 dark:text-blue-400">badge</span>
+              Nombre Completo Oficial
+            </label>
+            <input id="perfil-nombre" type="text" value="${nombre}" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all" />
+          </div>
+
+          <!-- Correo Electrónico (Solo Lectura) -->
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-sm text-slate-400">mail</span>
+                Correo Electrónico
+              </span>
+              <span class="text-[10px] text-slate-400 font-normal">Solo Lectura</span>
+            </label>
+            <input id="perfil-email" type="email" value="${email}" readonly disabled class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/60 text-slate-500 dark:text-slate-400 text-xs font-medium cursor-not-allowed select-none" />
+          </div>
+
+          <!-- Cargo / Función Oficial -->
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm text-blue-600 dark:text-blue-400">work</span>
+              Cargo o Función Institucional
+            </label>
+            <input id="perfil-cargo" type="text" value="${cargo}" placeholder="Ej: Comisario Principal, Delegado, Director" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all" />
+          </div>
+
+          <!-- Club Asignado u Organización -->
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm text-amber-500">shield</span>
+              Club Asignado / Organización
+            </label>
+            <input id="perfil-club" type="text" value="${club}" placeholder="Ej: Liga Deportiva Universitaria, LigaPro Sede Central" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all" />
+          </div>
+
+          <!-- Rol en el Sistema SIGEC-LP -->
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm text-purple-500">security</span>
+              Rol en el Sistema
+            </label>
+            <select id="perfil-rol" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all">
+              <option value="DIR_COMP" ${rol === 'DIR_COMP' ? 'selected' : ''}>Dirección de Competiciones LigaPro</option>
+              <option value="COMISARIO" ${rol === 'COMISARIO' ? 'selected' : ''}>Comisario de Partido / Seguridad</option>
+              <option value="CLUB_ADMIN" ${rol === 'CLUB_ADMIN' ? 'selected' : ''}>Delegado Oficial de Club</option>
+              <option value="PUBLICO" ${rol === 'PUBLICO' ? 'selected' : ''}>Acceso Público / Aficionado</option>
+            </select>
+          </div>
+
+          <!-- Número de Cédula / ID COMET -->
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm text-emerald-500">pin</span>
+              Número de Cédula / ID COMET
+            </label>
+            <input id="perfil-cedula" type="text" value="${cedula}" placeholder="Ej: 1714209552 o COMET-EC-883" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-mono font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all" />
+          </div>
+        </div>
+
+        <!-- Sección Desplegable: Cambio de Contraseña -->
+        <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+          <button type="button" onclick="togglePasswordChangeSection()" class="flex items-center justify-between w-full py-2 text-xs font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors">
+            <span class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm">lock_reset</span>
+              Actualizar Contraseña de Acceso (Opcional)
+            </span>
+            <span id="pwd-toggle-icon" class="material-symbols-outlined text-sm transition-transform">expand_more</span>
+          </button>
+
+          <div id="perfil-password-section" class="hidden mt-2 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-3">
+            <p class="text-[11px] text-slate-500 dark:text-slate-400">Si deseas cambiar tu contraseña en Supabase Auth, ingresa la nueva clave a continuación (mínimo 6 caracteres). Si no deseas cambiarla, deja estos campos en blanco.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Nueva Contraseña</label>
+                <input id="perfil-nueva-pwd" type="password" placeholder="Mínimo 6 caracteres" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-blue-600 focus:outline-none" />
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Confirmar Nueva Contraseña</label>
+                <input id="perfil-confirm-pwd" type="password" placeholder="Repite la contraseña" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-blue-600 focus:outline-none" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Estado de Sincronización y Botones -->
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400">
+            <span class="material-symbols-outlined text-sm text-emerald-500">cloud_done</span>
+            <span>Sincronización en tiempo real con Supabase</span>
+          </div>
+          <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+            <button type="button" onclick="cerrarModalPerfil()" class="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold transition-colors">
+              Cancelar
+            </button>
+            <button id="btn-guardar-perfil" type="submit" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold flex items-center justify-center gap-1.5 shadow-sm transition-colors">
+              <span class="material-symbols-outlined text-base">save</span>
+              <span>Guardar Cambios</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>`;
+
+  const prev = document.getElementById('modal-perfil-backdrop');
+  if (prev) prev.remove();
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+};
+
+window.cerrarModalPerfil = function() {
+  const modal = document.getElementById('modal-perfil-backdrop');
+  if (modal) modal.remove();
+};
+
+window.togglePasswordChangeSection = function() {
+  const section = document.getElementById('perfil-password-section');
+  const icon = document.getElementById('pwd-toggle-icon');
+  if (!section) return;
+  const isHidden = section.classList.contains('hidden');
+  if (isHidden) {
+    section.classList.remove('hidden');
+    if (icon) icon.textContent = 'expand_less';
+  } else {
+    section.classList.add('hidden');
+    if (icon) icon.textContent = 'expand_more';
+  }
+};
+
+window.guardarCambiosPerfil = async function(event) {
+  if (event) event.preventDefault();
+
+  const nombreInput = document.getElementById('perfil-nombre');
+  const cargoInput = document.getElementById('perfil-cargo');
+  const clubInput = document.getElementById('perfil-club');
+  const rolInput = document.getElementById('perfil-rol');
+  const cedulaInput = document.getElementById('perfil-cedula');
+  const nuevaPwdInput = document.getElementById('perfil-nueva-pwd');
+  const confirmPwdInput = document.getElementById('perfil-confirm-pwd');
+  const btnGuardar = document.getElementById('btn-guardar-perfil');
+
+  const nombre = nombreInput ? nombreInput.value.trim() : '';
+  const cargo = cargoInput ? cargoInput.value.trim() : '';
+  const club = clubInput ? clubInput.value.trim() : '';
+  const rol = rolInput ? rolInput.value : 'DIR_COMP';
+  const cedula = cedulaInput ? cedulaInput.value.trim() : '';
+  const nuevaPwd = nuevaPwdInput ? nuevaPwdInput.value : '';
+  const confirmPwd = confirmPwdInput ? confirmPwdInput.value : '';
+
+  if (!nombre) {
+    showToast('Por favor ingrese su nombre completo.', 'warning');
+    return;
+  }
+
+  // Validar contraseña si se especificó una nueva
+  if (nuevaPwd) {
+    if (nuevaPwd.length < 6) {
+      showToast('La nueva contraseña debe tener al menos 6 caracteres.', 'warning');
+      return;
+    }
+    if (nuevaPwd !== confirmPwd) {
+      showToast('Las contraseñas no coinciden. Por favor verifique.', 'error');
+      return;
+    }
+  }
+
+  if (btnGuardar) {
+    btnGuardar.disabled = true;
+    btnGuardar.innerHTML = `<span class="material-symbols-outlined text-base animate-spin">refresh</span> Guardando...`;
+  }
+
+  // 1. Persistencia real en Supabase
+  const sb = getSupabase();
+  let pwdUpdated = false;
+
+  if (sb && sb.auth) {
+    try {
+      const updatePayload = {
+        data: {
+          full_name: nombre,
+          nombre: nombre,
+          role: rol,
+          rol: rol,
+          club: club,
+          cargo: cargo,
+          cedula: cedula
+        }
+      };
+
+      if (nuevaPwd) {
+        updatePayload.password = nuevaPwd;
+      }
+
+      const { data, error } = await sb.auth.updateUser(updatePayload);
+      if (error) {
+        console.warn('Supabase auth.updateUser aviso:', error.message);
+      } else {
+        if (nuevaPwd) pwdUpdated = true;
+      }
+
+      // Sincronizar en tabla profiles o user_roles si existen
+      try {
+        const { data: userData } = await sb.auth.getUser();
+        if (userData && userData.user) {
+          const uid = userData.user.id;
+          await sb.from('profiles').upsert({
+            id: uid,
+            full_name: nombre,
+            role: rol,
+            club: club,
+            cargo: cargo,
+            cedula: cedula,
+            updated_at: new Date().toISOString()
+          }).catch(() => {});
+
+          await sb.from('user_roles').upsert({
+            user_id: uid,
+            rol: rol
+          }).catch(() => {});
+        }
+      } catch (tableErr) {
+        // Tablas auxiliares opcionales
+      }
+    } catch (err) {
+      console.warn('Supabase offline o modo demo:', err);
+    }
+  }
+
+  // 2. Actualizar Store local y persistir en localStorage
+  store.updateUserProfile({
+    nombre,
+    cargo,
+    club,
+    rol,
+    cedula
+  });
+
+  // 3. Reflejar inmediatamente en Header
+  actualizarUIHeader();
+
+  // 4. Cerrar modal y notificar al usuario
+  window.cerrarModalPerfil();
+
+  if (pwdUpdated) {
+    showToast('✅ Perfil y contraseña actualizados correctamente.', 'success');
+  } else {
+    showToast('✅ Perfil de usuario actualizado exitosamente.', 'success');
+  }
+};
+
 window.toggleAuthTab = function(tab) {
   const loginSection = document.getElementById('auth-section-login');
   const signupSection = document.getElementById('auth-section-signup');
@@ -102,6 +397,7 @@ window.loginFormSubmit = async function(event) {
   };
   let role = roleRadio ? (roleMap[roleRadio.value] || 'DIR_COMP') : 'DIR_COMP';
   let nombreUsuario = rawId.includes('@') ? rawId.split('@')[0] : rawId;
+  let userMeta = {};
 
   // Intentar autenticación con Supabase si está disponible
   const sb = getSupabase();
@@ -119,8 +415,9 @@ window.loginFormSubmit = async function(event) {
         }
       } else if (data && data.user) {
         if (data.user.user_metadata) {
-          if (data.user.user_metadata.rol) role = data.user.user_metadata.rol;
-          if (data.user.user_metadata.nombre) nombreUsuario = data.user.user_metadata.nombre;
+          userMeta = data.user.user_metadata;
+          if (userMeta.rol || userMeta.role) role = userMeta.rol || userMeta.role;
+          if (userMeta.nombre || userMeta.full_name) nombreUsuario = userMeta.nombre || userMeta.full_name;
         }
       }
     } catch (err) {
@@ -129,7 +426,11 @@ window.loginFormSubmit = async function(event) {
   }
 
   // Activar sesión en store
-  store.setUserRole(role, nombreUsuario, email);
+  store.setUserRole(role, nombreUsuario, email, {
+    cargo: userMeta.cargo,
+    club: userMeta.club,
+    cedula: userMeta.cedula
+  });
   actualizarUIHeader();
   showToast(`¡Bienvenido! Sesión iniciada como ${store.state.currentUser.rolNombre}`, 'success');
   window.navigateView('tablero');
@@ -198,6 +499,11 @@ window.signupFormSubmit = async function(event) {
 // ==============================================================================
 
 window.navigateView = function(viewId) {
+  if (viewId === 'perfil') {
+    window.abrirModalPerfil();
+    return;
+  }
+
   // Comprobar protección de rutas
   if (!store.canAccessView(viewId)) {
     showToast('🔒 Acceso Restringido: Debe iniciar sesión con credenciales autorizadas de LigaPro o Club.', 'warning');
@@ -1536,9 +1842,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   } catch (e) {}
 
+  // 2. Sincronizar sesión activa de Supabase si existe
+  const sb = getSupabase();
+  if (sb && sb.auth) {
+    sb.auth.getSession().then(({ data: { session } }) => {
+      if (session && session.user) {
+        const u = session.user;
+        const meta = u.user_metadata || {};
+        store.updateUserProfile({
+          isAuthenticated: true,
+          id: u.id,
+          nombre: meta.full_name || meta.nombre || u.email.split('@')[0],
+          email: u.email,
+          rol: meta.role || meta.rol || 'DIR_COMP',
+          cargo: meta.cargo || 'Oficial LigaPro',
+          club: meta.club || (meta.rol === 'CLUB_ADMIN' ? 'Liga Deportiva Universitaria' : 'LigaPro Ecuador'),
+          cedula: meta.cedula || '1714209552'
+        });
+        actualizarUIHeader();
+      }
+    }).catch(err => {
+      console.warn('Supabase getSession fallback:', err);
+    });
+  }
+
   const params = new URLSearchParams(window.location.search);
   const initialView = params.get('view') || 'tablero';
-  window.navigateView(initialView);
+  if (initialView === 'perfil') {
+    window.navigateView('tablero');
+    window.abrirModalPerfil();
+  } else {
+    window.navigateView(initialView);
+  }
   actualizarUIHeader();
 
   // Reloj cada segundo

@@ -15,7 +15,8 @@ DATA_PATH_TO_ACTION = {
     'cuenta-regresiva': "navigateView('consola')",
     'planilla-comet': "navigateView('consola')",
     'seguridad-criptografica': "mostrarModalSeguridadSHA256()",
-    'informe-disciplinario': "navigateView('clubes')"
+    'informe-disciplinario': "navigateView('clubes')",
+    'mi-perfil': "abrirModalPerfil()"
 }
 
 def clean_and_transform_screen(folder, screen_id):

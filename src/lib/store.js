@@ -22,6 +22,9 @@ export const INITIAL_STATE = {
     rol: 'PUBLICO',
     rolNombre: 'Acceso Público (Aficionado)',
     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
+    cargo: 'Espectador Público',
+    club: 'Ninguno',
+    cedula: 'Consumidor Final',
     clubId: null,
     partidoId: null
   },
@@ -243,10 +246,42 @@ export const INITIAL_STATE = {
 };
 
 const ROLES_MAP = {
-  'DIR_COMP': { nombre: 'Dirección de Competiciones', email: 'c.villacis@ligapro.ec', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80', usuario: 'Lic. Carlos Villacís' },
-  'COMISARIO': { nombre: 'Comisario de Juego', email: 'm.valencia@ligapro.ec', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80', usuario: 'Ing. Marcelo Valencia' },
-  'CLUB_ADMIN': { nombre: 'Delegado de Club (LDU Quito)', email: 'delegado@ldu.com.ec', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80', usuario: 'Dr. Diego Castro' },
-  'PUBLICO': { nombre: 'Aficionado / Acceso Público', email: 'publico@ligapro.ec', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80', usuario: 'Invitado General' }
+  'DIR_COMP': { 
+    nombre: 'Dirección de Competiciones', 
+    email: 'c.villacis@ligapro.ec', 
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80', 
+    usuario: 'Lic. Carlos Villacís',
+    cargo: 'Director de Competiciones LigaPro',
+    club: 'Liga Profesional de Fútbol del Ecuador (LigaPro)',
+    cedula: '1708923411'
+  },
+  'COMISARIO': { 
+    nombre: 'Comisario de Juego', 
+    email: 'm.valencia@ligapro.ec', 
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80', 
+    usuario: 'Ing. Marcelo Valencia',
+    cargo: 'Comisario Nacional Acreditado (COMET-883)',
+    club: 'Comisión de Seguridad y Escenarios LigaPro',
+    cedula: '1714209552'
+  },
+  'CLUB_ADMIN': { 
+    nombre: 'Delegado de Club (LDU Quito)', 
+    email: 'delegado@ldu.com.ec', 
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80', 
+    usuario: 'Dr. Diego Castro',
+    cargo: 'Gerente Deportivo / Delegado Oficial',
+    club: 'Liga Deportiva Universitaria de Quito',
+    cedula: '1705648190'
+  },
+  'PUBLICO': { 
+    nombre: 'Aficionado / Acceso Público', 
+    email: 'publico@ligapro.ec', 
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80', 
+    usuario: 'Invitado General',
+    cargo: 'Espectador Público',
+    club: 'Ninguno',
+    cedula: 'Consumidor Final'
+  }
 };
 
 class Store {
@@ -359,12 +394,15 @@ class Store {
     return this.state.audioAlerts;
   }
 
-  setUserRole(rolCode, nombreUsuario = null, emailUsuario = null) {
+  setUserRole(rolCode, nombreUsuario = null, emailUsuario = null, extraData = {}) {
     const roleConfig = ROLES_MAP[rolCode] || {
       nombre: rolCode,
       email: `${rolCode.toLowerCase()}@ligapro.ec`,
       avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
-      usuario: nombreUsuario || 'Oficial LigaPro'
+      usuario: nombreUsuario || 'Oficial LigaPro',
+      cargo: 'Oficial de Partido',
+      club: 'LigaPro Ecuador',
+      cedula: '1700000000'
     };
 
     this.state.currentUser = {
@@ -374,7 +412,10 @@ class Store {
       rolNombre: roleConfig.nombre,
       nombre: nombreUsuario || roleConfig.usuario,
       email: emailUsuario || roleConfig.email,
-      avatar: roleConfig.avatar
+      avatar: roleConfig.avatar,
+      cargo: extraData.cargo || roleConfig.cargo || 'Oficial de Partido',
+      club: extraData.club || roleConfig.club || 'LigaPro Ecuador',
+      cedula: extraData.cedula || roleConfig.cedula || '1700000000'
     };
 
     // Si cambió a público y estaba en vista restringida, redirigir a posiciones
@@ -383,6 +424,23 @@ class Store {
     }
 
     this.notify();
+  }
+
+  updateUserProfile(datos) {
+    if (!this.state.currentUser) return;
+    const nuevoRol = datos.rol || this.state.currentUser.rol;
+    const roleConfig = ROLES_MAP[nuevoRol] || {};
+
+    this.state.currentUser = {
+      ...this.state.currentUser,
+      ...datos,
+      rol: nuevoRol,
+      rolNombre: datos.rolNombre || roleConfig.nombre || this.state.currentUser.rolNombre,
+      avatar: datos.avatar || roleConfig.avatar || this.state.currentUser.avatar
+    };
+
+    this.notify();
+    this.saveToLocalStorage();
   }
 
   async logout() {

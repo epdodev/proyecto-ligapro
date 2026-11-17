@@ -192,9 +192,16 @@ def generate_header(active_id):
                 </button>
               </div>
 
-              <!-- Cerrar Sesión -->
-              <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
-                <button onclick="cerrarSesion()" class="w-full text-left px-2 py-2 rounded text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 font-bold flex items-center gap-2">
+              <!-- Acciones de Cuenta: Mi Perfil & Cerrar Sesión -->
+              <div class="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-1">
+                <button onclick="abrirModalPerfil()" class="w-full text-left px-2 py-2 rounded text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold flex items-center justify-between transition-colors">
+                  <span class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">badge</span>
+                    Mi Perfil Oficial
+                  </span>
+                  <span class="material-symbols-outlined text-xs text-slate-400">chevron_right</span>
+                </button>
+                <button onclick="cerrarSesion()" class="w-full text-left px-2 py-2 rounded text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 font-bold flex items-center gap-2 transition-colors">
                   <span class="material-symbols-outlined text-base">logout</span>
                   Cerrar Sesión
                 </button>
