@@ -263,6 +263,7 @@ def build():
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{s['title']}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -432,6 +433,7 @@ def build():
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SIGEC-LP — Sistema Integral de Gestión de Competiciones LigaPro Ecuador</title>
   <meta name="description" content="Plataforma tecnológica oficial para la administración de competiciones, fixture, comisarías de partido, actas de uniformes, estadios e inspección VAR de LigaPro Ecuador."/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
