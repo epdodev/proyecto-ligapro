@@ -1,12 +1,23 @@
 /**
- * SIGEC-LP — Cliente Supabase Oficial
- * Conexión al proyecto Supabase oficial de LigaPro Ecuador
+ * SIGEC-LP — Cliente Supabase Oficial con Fallback Seguro
+ * Extrae credenciales de variables de entorno (VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY)
+ * y provee resiliencia para que la interfaz nunca se rompa ante tablas vacías o desconexión.
  */
 
-export const SUPABASE_URL = 'https://udykrprupwifmffhpvuz.supabase.co';
-export const SUPABASE_ANON_KEY = 'sb_publishable_BWp4gPHD6qr2TeqUJfOh2Q_IVleiAeo';
+// 1. Extracción de variables de entorno con fallback seguro
+const envUrl = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SUPABASE_URL)
+  || (typeof process !== 'undefined' && process.env && process.env.VITE_SUPABASE_URL)
+  || 'https://udykrprupwifmffhpvuz.supabase.co';
+
+const envKey = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SUPABASE_ANON_KEY)
+  || (typeof process !== 'undefined' && process.env && process.env.VITE_SUPABASE_ANON_KEY)
+  || 'sb_publishable_BWp4gPHD6qr2TeqUJfOh2Q_IVleiAeo';
+
+export const SUPABASE_URL = envUrl;
+export const SUPABASE_ANON_KEY = envKey;
 
 let supabaseClient = null;
+let isConnected = false;
 
 /**
  * Inicializa y retorna la instancia del cliente Supabase
@@ -14,42 +25,84 @@ let supabaseClient = null;
 export function getSupabase() {
   if (supabaseClient) return supabaseClient;
 
-  if (typeof window !== 'undefined' && window.supabase && typeof window.supabase.createClient === 'function') {
-    try {
-      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  try {
+    // Soporte para importación de módulo o CDN global window.supabase
+    const createClientFn = (typeof window !== 'undefined' && window.supabase && window.supabase.createClient)
+      ? window.supabase.createClient
+      : null;
+
+    if (createClientFn) {
+      supabaseClient = createClientFn(SUPABASE_URL, SUPABASE_ANON_KEY, {
         auth: {
           persistSession: true,
           autoRefreshToken: true
         }
       });
-      console.log('✅ Supabase Client conectado exitosamente a', SUPABASE_URL);
-    } catch (err) {
-      console.warn('⚠️ No se pudo inicializar Supabase client:', err);
+      isConnected = true;
+      console.log('✅ Supabase conectado a:', SUPABASE_URL);
     }
+  } catch (err) {
+    console.warn('⚠️ Supabase no pudo inicializarse, usando fallback seguro:', err);
+    isConnected = false;
   }
 
   return supabaseClient;
 }
 
 /**
- * Helper para realizar consultas directas vía REST de Supabase con fallback
+ * Consulta segura a Supabase con fallback integrado.
+ * Si la tabla aún no existe o Supabase no responde, retorna los datos de fallback
+ * sin romper la interfaz de usuario.
+ *
+ * @param {string} tableName
+ * @param {any[]} fallbackData
+ * @param {string} select
+ * @returns {Promise<{ data: any[], source: 'supabase' | 'fallback', error: any }>}
  */
-export async function fetchSupabaseTable(tableName, select = '*', filters = {}) {
-  const sb = getSupabase();
-  if (sb) {
-    try {
-      let query = sb.from(tableName).select(select);
-      for (const [col, val] of Object.entries(filters)) {
-        query = query.eq(col, val);
-      }
-      const { data, error } = await query;
-      if (!error && data && data.length > 0) {
-        return { data, error: null, source: 'supabase_live' };
-      }
-    } catch (e) {
-      console.warn(`[Supabase Live Error on ${tableName}]:`, e);
-    }
+export async function safeQuery(tableName, fallbackData = [], select = '*') {
+  const client = getSupabase();
+  if (!client) {
+    return { data: fallbackData, source: 'fallback', error: 'Cliente Supabase no inicializado' };
   }
 
-  return { data: null, error: 'Offline / Fallback to local store', source: 'local' };
+  try {
+    const { data, error } = await client.from(tableName).select(select);
+    if (error) {
+      console.warn(`[Supabase Fallback en "${tableName}"]:`, error.message);
+      return { data: fallbackData, source: 'fallback', error };
+    }
+
+    if (!data || data.length === 0) {
+      return { data: fallbackData, source: 'fallback', error: null };
+    }
+
+    return { data, source: 'supabase', error: null };
+  } catch (ex) {
+    console.warn(`[Supabase Excepción en "${tableName}"]:`, ex);
+    return { data: fallbackData, source: 'fallback', error: ex };
+  }
+}
+
+/**
+ * Inserción segura en Supabase con captura de errores
+ */
+export async function safeInsert(tableName, record) {
+  const client = getSupabase();
+  if (!client) return { success: false, error: 'Sin cliente Supabase' };
+
+  try {
+    const { data, error } = await client.from(tableName).insert(record).select();
+    if (error) {
+      console.warn(`[Supabase Error al insertar en "${tableName}"]:`, error.message);
+      return { success: false, error };
+    }
+    return { success: true, data };
+  } catch (ex) {
+    console.warn(`[Supabase Excepción al insertar en "${tableName}"]:`, ex);
+    return { success: false, error: ex };
+  }
+}
+
+export function isSupabaseConnected() {
+  return isConnected;
 }

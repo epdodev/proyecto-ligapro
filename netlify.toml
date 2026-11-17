@@ -1,6 +1,7 @@
-# Netlify Configuration for SIGEC-LP (LigaPro Ecuador)
+# Configuración de despliegue en Netlify para SIGEC-LP
 [build]
-  publish = "."
+  command = "npm run build"
+  publish = "dist"
 
 [[redirects]]
   from = "/*"

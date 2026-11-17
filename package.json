@@ -4,22 +4,25 @@
   "description": "Sistema Integral de Gestión de Competiciones — Liga Profesional de Fútbol del Ecuador (LigaPro)",
   "type": "module",
   "scripts": {
-    "dev": "python -m http.server 8080",
-    "build": "python scripts/build_full_app.py",
-    "seed": "echo 'Seed SQL located in supabase/migrations/20261106000001_sigec_lp_seed.sql'"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "python tests/test_domain_logic.py"
   },
   "keywords": [
     "ligapro",
     "ecuador",
-    "football",
     "competition-management",
     "supabase",
-    "wcag-aaa",
-    "matchday"
+    "vite",
+    "wcag-aaa"
   ],
   "author": "LigaPro Ecuador",
   "license": "Proprietary",
   "dependencies": {
     "@supabase/supabase-js": "^2.49.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
   }
 }
