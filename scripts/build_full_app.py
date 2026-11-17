@@ -295,6 +295,10 @@ def build():
       background-color: #0B0F19 !important;
       color: #F8FAFC !important;
     }}
+    #header-brand-title,
+    html.dark #header-brand-title {{
+      color: #F1F5F9 !important;
+    }}
     html.dark header {{
       background-color: #111827 !important;
       border-color: #1E293B !important;
@@ -459,6 +463,10 @@ def build():
     html.dark body {{
       background-color: #0B0F19 !important;
       color: #F8FAFC !important;
+    }}
+    #header-brand-title,
+    html.dark #header-brand-title {{
+      color: #F1F5F9 !important;
     }}
     html.dark header {{
       background-color: #111827 !important;

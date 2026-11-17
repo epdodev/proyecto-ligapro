@@ -175,10 +175,11 @@ def clean_and_transform_screen(folder, screen_id):
     # --- INICIO DE SESIÓN / ROLES (AUTENTICACIÓN REAL CON TABS) ---
     if screen_id == 'auth' or 'inicio_de_sesi_n' in folder:
         auth_card = '''
-        <div class="w-full max-w-lg mx-auto bg-slate-900 text-white rounded-2xl shadow-2xl overflow-hidden border border-slate-800 p-6 my-6">
-          <!-- Cabecera -->
-          <div class="flex flex-col items-center text-center mb-5">
-            <div class="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg border border-amber-400 mb-2">
+        <div class="min-h-[calc(100vh-4rem)] pt-20 pb-8 flex items-center justify-center w-full px-4">
+          <div class="w-full max-w-lg bg-slate-900 text-white rounded-2xl shadow-2xl overflow-hidden border border-slate-800 p-6">
+            <!-- Cabecera -->
+            <div class="flex flex-col items-center text-center mb-5">
+              <div class="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg border border-slate-700 mb-2">
               <span class="material-symbols-outlined text-white text-2xl">shield</span>
             </div>
             <h1 class="text-xl font-extrabold tracking-tight text-white">SIGEC-LP</h1>
@@ -288,7 +289,8 @@ def clean_and_transform_screen(folder, screen_id):
             </div>
           </div>
         </div>
-        '''
+      </div>
+      '''
         body_content = auth_card
 
     # 3. Reemplazar cualquier href="#" remanente por javascript:void(0)

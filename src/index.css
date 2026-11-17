@@ -16,6 +16,12 @@
 }
 
 /* 1. ESTRUCTURA: HEADER, SIDEBAR Y FONDOS PRINCIPALES */
+#header-brand-title,
+html.dark #header-brand-title,
+.dark #header-brand-title {
+  color: #F1F5F9 !important;
+}
+
 html.dark header,
 .dark header {
   background-color: #111827 !important;

@@ -74,7 +74,7 @@ def generate_header(active_id):
             <span class="text-amber-400 text-sm">⚡</span>
           </div>
           <div class="flex items-center gap-2">
-            <span onclick="navigateView('tablero')" class="cursor-pointer font-extrabold text-sm tracking-tight text-slate-900 dark:text-white hover:text-blue-700 dark:hover:text-blue-400 transition-colors">LIGAPRO ECUABET</span>
+            <span id="header-brand-title" onclick="navigateView('tablero')" class="cursor-pointer font-extrabold text-sm tracking-tight text-slate-900 dark:text-slate-100 hover:text-blue-700 dark:hover:text-blue-400 transition-colors">LIGAPRO ECUABET</span>
             <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-300 uppercase font-mono">SIGEC-LP</span>
           </div>
         </div>
