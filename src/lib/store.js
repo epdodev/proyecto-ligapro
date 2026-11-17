@@ -1,6 +1,6 @@
 /**
  * SIGEC-LP — Store Global Reactivo y Repositorio de Datos
- * Conecta Supabase + Cache Local Offline + Lógica de Dominio
+ * Conecta Supabase + Cache Local Offline + Lógica de Dominio y Gestión de Sesión
  */
 
 import { getSupabase } from './supabase.js';
@@ -10,12 +10,18 @@ import { evaluarAcumulacionAmarillas } from '../domain/disciplina/acumulacion.js
 import { calcularMulta } from '../domain/multas/calculo.js';
 
 export const INITIAL_STATE = {
-  activeView: 'tablero', // 'tablero', 'posiciones', 'clubes', 'uniformes', 'estadios', 'consola', 'consola_alto_contraste', 'consola_tablet', 'login'
+  activeView: 'tablero',
   highContrast: false,
+  fontScale: 100, // porcentaje
+  audioAlerts: true,
   currentUser: {
+    isAuthenticated: true,
+    id: 'usr-dir-001',
     nombre: 'Lic. Carlos Villacís',
+    email: 'c.villacis@ligapro.ec',
     rol: 'DIR_COMP',
     rolNombre: 'Dirección de Competiciones',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
     clubId: null,
     partidoId: '88888888-8888-8888-8888-888888888888'
   },
@@ -24,6 +30,40 @@ export const INITIAL_STATE = {
     nombre: 'LigaPro Ecuabet Serie A 2025',
     reglamento: 'LIGAPRO-2023-07'
   },
+  notificaciones: [
+    {
+      id: 1,
+      titulo: 'Jornada 18 en Vivo',
+      detalle: 'LDU Quito vs Barcelona SC disputándose en Casa Blanca (68\')',
+      hora: 'Hace 5 min',
+      tipo: 'match',
+      leida: false
+    },
+    {
+      id: 2,
+      titulo: 'Alerta Art. 91 — 4ª Amarilla',
+      detalle: 'Jesús Trindade (Barcelona SC) acumuló su 4ª tarjeta amarilla en el torneo.',
+      hora: 'Hace 27 min',
+      tipo: 'warning',
+      leida: false
+    },
+    {
+      id: 3,
+      titulo: 'Trámite TRM-2025-089 Aprobado',
+      detalle: 'Uso de camiseta conmemorativa autorizado para Barcelona SC (Jornada 19 en adelante).',
+      hora: 'Hace 2 horas',
+      tipo: 'success',
+      leida: false
+    },
+    {
+      id: 4,
+      titulo: 'Horario Unificado (Art. 49)',
+      detalle: 'Sincronización vinculante a las 18:00 UTC-5 para encuentros decisivos de Fecha 14 y 15.',
+      hora: 'Hace 4 horas',
+      tipo: 'info',
+      leida: true
+    }
+  ],
   partidoActivo: {
     id: '88888888-8888-8888-8888-888888888888',
     jornada: 18,
@@ -164,11 +204,11 @@ export const INITIAL_STATE = {
       club: 'LDU Quito',
       capacidad: 41575,
       cespedTipo: 'natural',
-      cespedMm: 22.5, // 20-25 mm
-      hospitalMin: 12, // <= 15 min
-      varMb: 200, // >= 100 Mbps
-      varVoltaje: 220, // 220V
-      camarasAlturaM: 8.5, // >= 7m
+      cespedMm: 22.5,
+      hospitalMin: 12,
+      varMb: 200,
+      varVoltaje: 220,
+      camarasAlturaM: 8.5,
       calificacion: 'calificado'
     },
     {
@@ -192,7 +232,7 @@ export const INITIAL_STATE = {
       club: 'Deportivo Cuenca',
       capacidad: 16500,
       cespedTipo: 'natural',
-      cespedMm: 27.0, // Alerta: mayor a 25 mm
+      cespedMm: 27.0,
       hospitalMin: 10,
       varMb: 120,
       varVoltaje: 218,
@@ -200,6 +240,13 @@ export const INITIAL_STATE = {
       calificacion: 'condicionado'
     }
   ]
+};
+
+const ROLES_MAP = {
+  'DIR_COMP': { nombre: 'Dirección de Competiciones', email: 'c.villacis@ligapro.ec', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80', usuario: 'Lic. Carlos Villacís' },
+  'COMISARIO': { nombre: 'Comisario de Juego', email: 'm.valencia@ligapro.ec', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80', usuario: 'Ing. Marcelo Valencia' },
+  'CLUB_ADMIN': { nombre: 'Delegado de Club (LDU Quito)', email: 'delegado@ldu.com.ec', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80', usuario: 'Dr. Diego Castro' },
+  'PUBLICO': { nombre: 'Aficionado / Acceso Público', email: 'publico@ligapro.ec', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80', usuario: 'Invitado General' }
 };
 
 class Store {
@@ -235,13 +282,16 @@ class Store {
         localStorage.setItem('sigec_lp_state', JSON.stringify({
           activeView: this.state.activeView,
           highContrast: this.state.highContrast,
+          fontScale: this.state.fontScale,
+          audioAlerts: this.state.audioAlerts,
           currentUser: this.state.currentUser,
           partidoActivo: this.state.partidoActivo,
           tramites: this.state.tramites,
-          clubes: this.state.clubes
+          clubes: this.state.clubes,
+          notificaciones: this.state.notificaciones
         }));
       } catch (err) {
-        // storage quota or disabled
+        // quota
       }
     }
   }
@@ -255,6 +305,7 @@ class Store {
           this.state = {
             ...this.state,
             ...parsed,
+            currentUser: { ...this.state.currentUser, ...(parsed.currentUser || {}) },
             partidoActivo: { ...this.state.partidoActivo, ...(parsed.partidoActivo || {}) }
           };
         }
@@ -264,37 +315,88 @@ class Store {
     }
   }
 
+  canAccessView(viewId) {
+    // Las vistas públicas son siempre accesibles
+    if (viewId === 'posiciones' || viewId === 'auth') {
+      return true;
+    }
+    // Si no está autenticado o su rol es público, denegar acceso a áreas administrativas
+    if (!this.state.currentUser.isAuthenticated || this.state.currentUser.rol === 'PUBLICO') {
+      return false;
+    }
+    return true;
+  }
+
   setView(viewName) {
+    if (!this.canAccessView(viewName)) {
+      this.state.activeView = 'auth';
+      this.notify();
+      return false;
+    }
     this.state.activeView = viewName;
     this.notify();
+    return true;
   }
 
   toggleHighContrast() {
     this.state.highContrast = !this.state.highContrast;
     this.notify();
+    return this.state.highContrast;
+  }
+
+  setFontScale(scale) {
+    this.state.fontScale = Math.min(130, Math.max(80, scale));
+    this.notify();
+  }
+
+  toggleAudioAlerts() {
+    this.state.audioAlerts = !this.state.audioAlerts;
+    this.notify();
+    return this.state.audioAlerts;
   }
 
   setUserRole(rolCode, nombreUsuario = null) {
-    const rolesMap = {
-      'DIR_COMP': 'Dirección de Competiciones',
-      'COMISARIO': 'Comisario de Partido (Matchday)',
-      'DEL_SEG': 'Delegado de Seguridad',
-      'OF_VAR': 'Oficial Técnico VAR',
-      'MED_CAMPO': 'Médico de Campo',
-      'CLUB_ADMIN': 'Administrador de Club',
-      'ADM_SIS': 'Administrador del Sistema'
+    const roleConfig = ROLES_MAP[rolCode] || {
+      nombre: rolCode,
+      email: `${rolCode.toLowerCase()}@ligapro.ec`,
+      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
+      usuario: nombreUsuario || 'Oficial LigaPro'
     };
 
     this.state.currentUser = {
       ...this.state.currentUser,
+      isAuthenticated: rolCode !== 'PUBLICO',
       rol: rolCode,
-      rolNombre: rolesMap[rolCode] || rolCode,
-      nombre: nombreUsuario || this.state.currentUser.nombre
+      rolNombre: roleConfig.nombre,
+      nombre: nombreUsuario || roleConfig.usuario,
+      email: roleConfig.email,
+      avatar: roleConfig.avatar
     };
+
+    // Si cambió a público y estaba en vista restringida, redirigir a posiciones
+    if (rolCode === 'PUBLICO' && !this.canAccessView(this.state.activeView)) {
+      this.state.activeView = 'posiciones';
+    }
+
     this.notify();
   }
 
-  // Registrar un evento en vivo en la consola de comisario
+  async logout() {
+    const sb = getSupabase();
+    if (sb && sb.auth) {
+      try {
+        await sb.auth.signOut();
+      } catch (err) {
+        console.warn('Supabase signOut error:', err);
+      }
+    }
+
+    this.setUserRole('PUBLICO', 'Invitado General');
+    this.state.currentUser.isAuthenticated = false;
+    this.state.activeView = 'auth';
+    this.notify();
+  }
+
   registrarEventoPartido(evento) {
     const nuevoEvento = {
       id: Date.now(),
@@ -316,7 +418,6 @@ class Store {
       eventos: nuevosEventos
     };
 
-    // Actualizar tabla si hay gol
     if (evento.tipo === 'gol') {
       this.recalcularPuntosPartidoEnVivo();
     }
@@ -330,7 +431,6 @@ class Store {
     const gl = this.state.partidoActivo.marcador.local;
     const gv = this.state.partidoActivo.marcador.visitante;
 
-    // Actualizar dinámicamente las estadísticas de LDU y Barcelona
     this.state.clubes = this.state.clubes.map((c) => {
       if (c.id === localId) {
         return {
@@ -353,7 +453,6 @@ class Store {
       return c;
     });
 
-    // Reordenar según criterios oficiales LigaPro
     const resultado = ordenarTabla(
       this.state.clubes.map((c) => ({
         clubId: c.id,
@@ -368,13 +467,6 @@ class Store {
     this.state.clubes.sort((a, b) => (mapOrden.get(a.id) ?? 99) - (mapOrden.get(b.id) ?? 99));
   }
 
-  avanzarMinutoPartido(delta = 1) {
-    let nuevoMin = this.state.partidoActivo.minuto + delta;
-    if (nuevoMin > 95) nuevoMin = 95;
-    this.state.partidoActivo.minuto = nuevoMin;
-    this.notify();
-  }
-
   crearTramite(tramite) {
     const nuevo = {
       id: `TRM-2025-${Math.floor(100 + Math.random() * 900)}`,
@@ -385,6 +477,7 @@ class Store {
     };
     this.state.tramites = [nuevo, ...this.state.tramites];
     this.notify();
+    return nuevo;
   }
 }
 

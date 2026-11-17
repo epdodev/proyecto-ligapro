@@ -29,14 +29,14 @@
       <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
         <!-- Logo & Brand -->
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-md border border-amber-400">
+          <div onclick="navigateView('tablero')" class="cursor-pointer w-9 h-9 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-md border border-amber-400">
             <span class="text-amber-400 text-lg">⚡</span>
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <span class="font-extrabold text-sm tracking-tight text-slate-900">LIGAPRO ECUABET</span>
+              <span onclick="navigateView('tablero')" class="cursor-pointer font-extrabold text-sm tracking-tight text-slate-900 hover:text-blue-700 transition-colors">LIGAPRO ECUABET</span>
               <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 uppercase">SIGEC-LP</span>
-              <span class="hidden sm:inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+              <span class="hidden sm:inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200" title="https://udykrprupwifmffhpvuz.supabase.co">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 <span>Supabase Conectado</span>
               </span>
@@ -45,10 +45,10 @@
           </div>
         </div>
 
-        <!-- Live Match Banner & Controls -->
+        <!-- Controls: Scoreboard, Accessibility, Notifications & Real User Session -->
         <div class="flex items-center flex-wrap gap-2">
           <!-- Live Match Score Widget -->
-          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-2 bg-slate-900 text-white px-3 py-1.5 rounded-lg border border-slate-800 text-xs shadow-sm hover:border-amber-400 transition-colors">
+          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-2 bg-slate-900 text-white px-3 py-1.5 rounded-lg border border-slate-800 text-xs shadow-sm hover:border-amber-400 transition-colors" title="Ver Consola de Comisario">
             <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
             <span class="font-bold text-amber-400">EN VIVO:</span>
             <span class="font-bold" id="header-match-local">LDU Quito</span>
@@ -57,24 +57,110 @@
             <span class="font-mono text-slate-400 text-[10px]" id="header-match-min">68' 2T</span>
           </div>
 
-          <!-- Role Selector -->
-          <div class="relative inline-block text-left">
-            <select id="global-role-select" onchange="onRoleChange(this.value)" class="text-xs bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none cursor-pointer">
-              <option value="DIR_COMP">Dirección de Competiciones</option>
-              <option value="COMISARIO">Comisario de Partido (Matchday)</option>
-              <option value="CLUB_ADMIN_LDU">Club Admin: LDU Quito</option>
-              <option value="CLUB_ADMIN_BSC">Club Admin: Barcelona SC</option>
-              <option value="OF_VAR">Oficial Técnico VAR</option>
-              <option value="DEL_SEG">Delegado de Seguridad</option>
-              <option value="MED_CAMPO">Médico de Campo</option>
-              <option value="ADM_SIS">Administrador del Sistema</option>
-            </select>
+          <!-- Reloj UTC-5 -->
+          <div class="hidden lg:flex items-center gap-1 bg-slate-100 px-2.5 py-1.5 rounded-lg text-slate-700 font-mono text-xs border border-slate-200">
+            <span class="material-symbols-outlined text-sm text-slate-500">schedule</span>
+            <span class="text-[10px] text-slate-400 font-sans font-bold">UTC-5:</span>
+            <span id="header-utc-clock" class="font-bold">18:42:09</span>
           </div>
 
-          <!-- WCAG AAA High Contrast Toggle -->
-          <button onclick="toggleGlobalHighContrast()" id="btn-toggle-contrast" class="p-1.5 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-700 transition-colors" title="Modo Alto Contraste WCAG AAA (Negro / Amarillo)">
-            <span class="material-symbols-outlined text-lg">contrast</span>
-          </button>
+          <!-- Barra Accesibilidad (WCAG AAA, A-, A+, Audio) -->
+          <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200">
+            <button onclick="toggleGlobalHighContrast()" class="p-1.5 text-slate-700 hover:text-amber-500 hover:bg-white rounded transition-colors" title="Modo Alto Contraste WCAG AAA (Negro / Amarillo)">
+              <span class="material-symbols-outlined text-base">contrast</span>
+            </button>
+            <button onclick="ajustarTexto(-10)" class="px-2 py-1 text-slate-700 hover:bg-white rounded font-bold text-[11px]" title="Reducir Texto A-">
+              A-
+            </button>
+            <button onclick="ajustarTexto(10)" class="px-2 py-1 text-slate-700 hover:bg-white rounded font-bold text-[11px]" title="Aumentar Texto A+">
+              A+
+            </button>
+            <button onclick="toggleAlertaAuditiva()" class="p-1.5 text-slate-700 hover:text-blue-600 hover:bg-white rounded transition-colors" title="Alertas Auditivas Accesibles">
+              <span class="material-symbols-outlined text-base">hearing</span>
+            </button>
+          </div>
+
+          <!-- Campana de Notificaciones Reglamentarias -->
+          <div class="relative">
+            <button id="btn-notificaciones" onclick="toggleNotificationsPanel()" class="relative p-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-colors" title="Centro de Notificaciones">
+              <span class="material-symbols-outlined text-lg">notifications</span>
+              <span id="notif-badge-indicator" class="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+            </button>
+
+            <!-- Dropdown Panel de Notificaciones -->
+            <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-slate-200 z-50 p-3 text-xs">
+              <div class="flex items-center justify-between pb-2 border-b border-slate-100 mb-2">
+                <span class="font-bold text-slate-900 flex items-center gap-1">
+                  <span class="material-symbols-outlined text-base text-blue-600">notifications_active</span> Notificaciones Oficiales
+                </span>
+                <button onclick="marcarNotificacionesLeidas()" class="text-[10px] text-blue-600 hover:underline font-semibold">Marcar leídas</button>
+              </div>
+              <div class="space-y-2 max-h-60 overflow-y-auto">
+                <div class="p-2 bg-red-50 text-red-950 rounded-lg border border-red-100">
+                  <div class="font-bold">🔴 Minuto 68' — Partido en Disputa</div>
+                  <div class="text-[11px] text-red-800">LDU Quito 1 - 1 Barcelona SC en Estadio Rodrigo Paz Delgado.</div>
+                </div>
+                <div class="p-2 bg-amber-50 text-amber-950 rounded-lg border border-amber-100">
+                  <div class="font-bold">⚠️ Alerta Art. 91 — Tarjeta Amarilla</div>
+                  <div class="text-[11px] text-amber-800">Jesús Trindade (BSC) acumula 4 amarillas. Suspensión al recibir una más.</div>
+                </div>
+                <div class="p-2 bg-emerald-50 text-emerald-950 rounded-lg border border-emerald-100">
+                  <div class="font-bold">✅ Trámite TRM-2025-089 Aprobado</div>
+                  <div class="text-[11px] text-emerald-800">Uso de indumentaria alterna conmemorativa homologada para fecha 19.</div>
+                </div>
+                <div class="p-2 bg-blue-50 text-blue-950 rounded-lg border border-blue-100">
+                  <div class="font-bold">📢 Protocolo Art. 49</div>
+                  <div class="text-[11px] text-blue-800">Horario unificado confirmado a las 18h00 para encuentros con incidencia.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sesión de Usuario y Cambio de Rol Rápido -->
+          <div class="relative">
+            <div id="header-user-block" onclick="toggleUserDropdown()" class="cursor-pointer flex items-center gap-2 pl-2 border-l border-slate-200 py-1 hover:opacity-90 transition-opacity">
+              <div class="flex flex-col text-right hidden sm:flex">
+                <span id="header-user-name" class="font-bold text-xs text-slate-900 leading-tight">Lic. Carlos Villacís</span>
+                <span id="header-user-role" class="text-[10px] text-blue-700 font-bold uppercase tracking-wider">Dirección de Competiciones</span>
+              </div>
+              <img id="header-user-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Avatar Usuario" class="w-8 h-8 rounded-full object-cover border-2 border-blue-600 shadow-xs"/>
+              <span class="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
+            </div>
+
+            <!-- Menú Desplegable de Usuario y Cierre de Sesión -->
+            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-slate-200 z-50 p-3 text-xs">
+              <div class="pb-3 border-b border-slate-100 mb-3">
+                <div class="font-bold text-slate-900" id="dropdown-user-name">Lic. Carlos Villacís</div>
+                <div class="text-[11px] text-slate-500 truncate" id="dropdown-user-email">c.villacis@ligapro.ec</div>
+                <div class="mt-1 inline-block px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-bold text-[10px]" id="dropdown-user-role">Dirección de Competiciones</div>
+              </div>
+
+              <!-- Cambio de Rol Rápido -->
+              <div class="font-bold text-slate-400 uppercase text-[10px] tracking-wider mb-1.5">Cambiar Rol Rápido</div>
+              <div class="space-y-1 mb-3">
+                <button onclick="cambiarRol('DIR_COMP')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 flex items-center justify-between text-slate-700">
+                  <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-blue-600">admin_panel_settings</span> Dirección LigaPro</span>
+                </button>
+                <button onclick="cambiarRol('COMISARIO')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 flex items-center justify-between text-slate-700">
+                  <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-amber-500">sports</span> Comisario de Juego</span>
+                </button>
+                <button onclick="cambiarRol('CLUB_ADMIN')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 flex items-center justify-between text-slate-700">
+                  <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-emerald-600">shield</span> Delegado de Club</span>
+                </button>
+                <button onclick="cambiarRol('PUBLICO')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 flex items-center justify-between text-slate-700">
+                  <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-purple-600">visibility</span> Acceso Público (Aficionado)</span>
+                </button>
+              </div>
+
+              <!-- Cerrar Sesión -->
+              <div class="pt-2 border-t border-slate-100">
+                <button onclick="cerrarSesion()" class="w-full text-left px-2 py-2 rounded text-red-600 hover:bg-red-50 font-bold flex items-center gap-2">
+                  <span class="material-symbols-outlined text-base">logout</span>
+                  Cerrar Sesión
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -134,7 +220,7 @@
             <button onclick="registrarTarjetaEnVivo('roja', 'visitante')" class="px-3 py-1.5 bg-[#FF3333] text-white font-extrabold rounded border-2 border-white">ROJA</button>
           </div>
         </div>
-        <header class="fixed top-0 left-0 right-0 h-16 bg-primary-container z-50 shadow-[0_1px_8px_rgba(0,0,0,0.12)] flex items-center justify-between px-gutter-lg border-b border-inverse-surface" style="background-color: #000000; border-bottom: 3px solid #FFE600; min-height: 72px;"><div class="flex items-center gap-space-md"><img alt="LigaPro SIGEC-LP Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrB3xiEylcx8yxJh6M0sxga_M-fXg3HhJAh-c_WafR2xlAx2wzR2gW-EWvL9b81FalXdOh7N_hJv71x919_6-MkML-_I57QuSQfmNcU47upNCPTsHk-jHNIR0eFE50TAVGVOFawUEeFY2h_dbVd8Wf0M00VDnA7Dqk5qZSBbsLUhZyBg1z01cqnbFuWed9-erP4VveSFUiRSVCtDSWhlcKm93rFf2C53DFEDGEi09-_u"/><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-title-md text-title-md text-on-primary font-bold tracking-tight">SIGEC-LP</span><span class="bg-secondary text-on-secondary font-label-caps text-label-caps px-space-xs py-0.5 rounded">PRO</span></div><span class="font-body-sm text-[10px] text-on-primary-container leading-none uppercase tracking-wider">Sistema Integral de Competiciones</span></div><div class="hidden xl:block h-6 w-px bg-inverse-surface mx-space-xs"></div><div class="hidden xl:flex items-center bg-inverse-surface/60 rounded px-space-sm py-1"><span class="material-symbols-outlined text-on-primary-container text-sm mr-1.5">trophy</span><span class="font-label-caps text-label-caps text-on-primary uppercase tracking-wide">Temporada 2025 - Serie A / Serie B</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 bg-[#FFE600] text-[#000000] px-3 py-1.5 rounded border-2 border-[#FFFFFF] font-bold text-sm tracking-wide shadow-md"><span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">contrast</span><span>MODO ALTO CONTRASTE ACTIVO (WCAG AAA - 125% ACCESIBLE)</span><span class="material-symbols-outlined text-lg" title="Accesibilidad auditiva activa">hearing_disabled</span></div><div class="hidden lg:flex items-center gap-space-xs bg-inverse-surface/80 px-space-sm py-1 rounded"><span class="material-symbols-outlined text-sport-success text-sm">schedule</span><span class="font-label-caps text-label-caps text-on-primary-container mr-1">UTC-5 EC:</span><span class="font-mono-table text-mono-table text-on-primary font-bold tracking-wider">18:42:09</span></div><div class="hidden md:flex items-center bg-inverse-surface/50 rounded p-0.5 gap-0.5"><button class="p-1 text-on-primary-container hover:text-high-contrast-accent hover:bg-inverse-surface rounded transition-colors" title="Modo Alto Contraste" type="button"><span class="material-symbols-outlined text-base">contrast</span></button><button class="px-1.5 py-0.5 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded font-label-caps text-label-caps" title="Reducir Texto A-" type="button">A-</button><button class="px-1.5 py-0.5 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded font-label-caps text-label-caps" title="Aumentar Texto A+" type="button">A+</button><button class="p-1 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded transition-colors" title="Alertas Visuales Accesibles" type="button"><span class="material-symbols-outlined text-base">hearing</span></button></div><button class="relative p-1.5 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded transition-colors" title="Notificaciones Reglamentarias" type="button"><span class="material-symbols-outlined text-xl">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-sport-danger"></span></button><div class="flex items-center gap-space-sm pl-space-xs border-l border-inverse-surface"><div class="flex flex-col text-right hidden sm:flex"><span class="font-title-md text-body-sm text-on-primary font-semibold leading-tight">Ab. Comisario LigaPro</span><span class="font-label-caps text-[10px] text-on-primary-container uppercase">Dirección de Competiciones</span></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-secondary" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSacWCeuAAENmbzFg-bZ637A1mJFVBa6rvFnexwNvRQQbAF3HGnomjFNfqL1zzok3CW0J3fVxMC2Cu5dfwlKJ5_VPOG6EtKPSvimhHMOq9qs3SPMY8KqUsxyiQE2kGe2hzAazL-tvwBW9vFW25MR6aH_AOmV4scZcuUqiihEdXV8eV5daHsOzd6ZjOSXm4WsHBROJQ0IX02JSNn2Ib5I6IUeUMiVOW7zl07vOg3myw"/></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-72 bg-surface-card z-40 flex flex-col border-r border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.02)]" style="background-color: #000000; border-right: 3px solid #FFFFFF; top: 72px; width: 300px;"><div class="p-space-md border-b border-border-subtle"><div class="flex items-center justify-between bg-[#000000] px-3 py-2.5 rounded border-2 border-[#FFE600]"><div class="flex items-center gap-2"><span class="inline-block w-3.5 h-3.5 rounded-full bg-[#00FF66] animate-pulse border border-[#000000]"></span><span class="font-bold text-sm text-[#FFFFFF] uppercase tracking-wide">COMET Enlace Activo</span></div><span class="font-mono font-bold text-sm text-[#FFE600] bg-[#000000] px-2 py-0.5 border border-[#FFE600] rounded">SYNC 100%</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-xs"><div class="px-3 py-2 font-bold text-sm text-[#FFE600] uppercase tracking-wider border-b border-[#FFFFFF]/40 mb-2">Administración LigaPro</div><nav class="flex flex-col gap-2"><a class="flex items-center gap-3 px-3 py-3 rounded border-2 border-transparent text-[#FFFFFF] hover:border-[#FFE600] hover:text-[#FFE600] text-base font-semibold transition-colors" href="#"><span class="material-symbols-outlined text-2xl">space_dashboard</span><span>Tablero General</span></a><a class="flex items-center gap-3 px-3 py-3 rounded border-2 border-transparent text-[#FFFFFF] hover:border-[#FFE600] hover:text-[#FFE600] text-base font-semibold transition-colors" href="#"><span class="material-symbols-outlined text-2xl">emoji_events</span><span>Competiciones &amp; Formatos</span></a><a class="flex items-center gap-3 px-3 py-3 rounded border-2 border-transparent text-[#FFFFFF] hover:border-[#FFE600] hover:text-[#FFE600] text-base font-semibold transition-colors" href="#"><span class="material-symbols-outlined text-2xl">stadium</span><span>Escenarios &amp; VAR</span></a><a class="flex items-center gap-3 px-3 py-3 rounded border-2 border-transparent text-[#FFFFFF] hover:border-[#FFE600] hover:text-[#FFE600] text-base font-semibold transition-colors" href="#"><span class="material-symbols-outlined text-2xl">checkroom</span><span>Designación Uniformes</span></a><a aria-current="page" class="flex items-center gap-3 px-3 py-3 rounded bg-[#FFE600] text-[#000000] font-bold text-base border-2 border-[#FFFFFF] shadow-md" href="#"><span class="material-symbols-outlined text-2xl">sports_soccer</span><span>Consola Matchday</span></a><a class="flex items-center gap-3 px-3 py-3 rounded border-2 border-transparent text-[#FFFFFF] hover:border-[#FFE600] hover:text-[#FFE600] text-base font-semibold transition-colors" href="#"><span class="material-symbols-outlined text-2xl">shield_person</span><span>Portal Clubes</span></a><a class="flex items-center gap-3 px-3 py-3 rounded border-2 border-transparent text-[#FFFFFF] hover:border-[#FFE600] hover:text-[#FFE600] text-base font-semibold transition-colors" href="#"><span class="material-symbols-outlined text-2xl">leaderboard</span><span>Posiciones &amp; Fair Play</span></a><a class="flex items-center gap-3 px-3 py-3 rounded border-2 border-transparent text-[#FFFFFF] hover:border-[#FFE600] hover:text-[#FFE600] text-base font-semibold transition-colors" href="#"><span class="material-symbols-outlined text-2xl">verified_user</span><span>Seguridad Criptográfica</span></a></nav></div><div class="p-space-sm border-t border-border-subtle bg-surface-container-low/50"><div class="flex items-center justify-between text-text-secondary font-label-caps text-[10px]"><span>VERSION 4.2.1-SEC</span><span class="font-mono-table text-text-secondary">ID: LIGAPRO-EC</span></div></div></aside><div class="pl-72" style="padding-left: 300px; background-color: #000000;"><main class="relative w-full pt-16 bg-surface min-h-screen px-gutter-lg py-margin-md" style="background-color: #000000; min-height: 100vh; padding-top: 84px; color: #FFFFFF;"><div class="flex flex-col w-full gap-space-lg">
+        <aside class="fixed left-0 top-[112px] bottom-0 w-72 bg-surface-card z-40 flex flex-col border-r border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.02)]" style="background-color: #000000; border-right: 3px solid #FFFFFF; top: 72px; width: 300px;"><div class="p-space-md border-b border-border-subtle"><div class="flex items-center justify-between bg-[#000000] px-3 py-2.5 rounded border-2 border-[#FFE600]"><div class="flex items-center gap-2"><span class="inline-block w-3.5 h-3.5 rounded-full bg-[#00FF66] animate-pulse border border-[#000000]"></span><span class="font-bold text-sm text-[#FFFFFF] uppercase tracking-wide">COMET Enlace Activo</span></div><span class="font-mono font-bold text-sm text-[#FFE600] bg-[#000000] px-2 py-0.5 border border-[#FFE600] rounded">SYNC 100%</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-xs"><div class="px-3 py-2 font-bold text-sm text-[#FFE600] uppercase tracking-wider border-b border-[#FFFFFF]/40 mb-2">Administración LigaPro</div><nav class="flex flex-col gap-2"><a class="flex items-center gap-3 px-3 py-3 rounded border-2 border-transparent text-[#FFFFFF] hover:border-[#FFE600] hover:text-[#FFE600] text-base font-semibold transition-colors" href="javascript:void(0)"><span class="material-symbols-outlined text-2xl">space_dashboard</span><span>Tablero General</span></a><a class="flex items-center gap-3 px-3 py-3 rounded border-2 border-transparent text-[#FFFFFF] hover:border-[#FFE600] hover:text-[#FFE600] text-base font-semibold transition-colors" href="javascript:void(0)"><span class="material-symbols-outlined text-2xl">emoji_events</span><span>Competiciones &amp; Formatos</span></a><a class="flex items-center gap-3 px-3 py-3 rounded border-2 border-transparent text-[#FFFFFF] hover:border-[#FFE600] hover:text-[#FFE600] text-base font-semibold transition-colors" href="javascript:void(0)"><span class="material-symbols-outlined text-2xl">stadium</span><span>Escenarios &amp; VAR</span></a><a class="flex items-center gap-3 px-3 py-3 rounded border-2 border-transparent text-[#FFFFFF] hover:border-[#FFE600] hover:text-[#FFE600] text-base font-semibold transition-colors" href="javascript:void(0)"><span class="material-symbols-outlined text-2xl">checkroom</span><span>Designación Uniformes</span></a><a aria-current="page" class="flex items-center gap-3 px-3 py-3 rounded bg-[#FFE600] text-[#000000] font-bold text-base border-2 border-[#FFFFFF] shadow-md" href="javascript:void(0)"><span class="material-symbols-outlined text-2xl">sports_soccer</span><span>Consola Matchday</span></a><a class="flex items-center gap-3 px-3 py-3 rounded border-2 border-transparent text-[#FFFFFF] hover:border-[#FFE600] hover:text-[#FFE600] text-base font-semibold transition-colors" href="javascript:void(0)"><span class="material-symbols-outlined text-2xl">shield_person</span><span>Portal Clubes</span></a><a class="flex items-center gap-3 px-3 py-3 rounded border-2 border-transparent text-[#FFFFFF] hover:border-[#FFE600] hover:text-[#FFE600] text-base font-semibold transition-colors" href="javascript:void(0)"><span class="material-symbols-outlined text-2xl">leaderboard</span><span>Posiciones &amp; Fair Play</span></a><a class="flex items-center gap-3 px-3 py-3 rounded border-2 border-transparent text-[#FFFFFF] hover:border-[#FFE600] hover:text-[#FFE600] text-base font-semibold transition-colors" href="javascript:void(0)"><span class="material-symbols-outlined text-2xl">verified_user</span><span>Seguridad Criptográfica</span></a></nav></div><div class="p-space-sm border-t border-border-subtle bg-surface-container-low/50"><div class="flex items-center justify-between text-text-secondary font-label-caps text-[10px]"><span>VERSION 4.2.1-SEC</span><span class="font-mono-table text-text-secondary">ID: LIGAPRO-EC</span></div></div></aside><div class="pl-72" style="padding-left: 300px; background-color: #000000;"><main class="relative w-full pt-4 bg-surface min-h-screen px-gutter-lg py-margin-md" style="background-color: #000000; min-height: 100vh; padding-top: 84px; color: #FFFFFF;"><div class="flex flex-col w-full gap-space-lg">
 <!-- Operational Context Header Ribbon -->
 <div class="w-full bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-space-md" style="background-color: #000000; border: 3px solid #FFE600; padding: 18px 24px; color: #FFFFFF;"><div class="flex flex-wrap items-center gap-4"><div class="flex items-center gap-2 bg-[#FFE600] text-[#000000] px-3.5 py-2 rounded-lg font-extrabold text-sm border-2 border-[#FFFFFF]"><span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">sports</span><span class="tracking-wider uppercase">FECHA 12 • FASE 1 • SERIE A</span></div><div class="flex items-center gap-2.5"><span class="w-3.5 h-3.5 rounded-full bg-[#00FF66] animate-pulse border-2 border-[#FFFFFF]"></span><span class="text-xl font-extrabold text-[#FFFFFF]">LDU Quito <span class="text-[#FFE600] font-bold">vs</span> Barcelona SC</span></div><span class="text-[#FFE600] text-xl font-bold hidden sm:inline">|</span><div class="flex items-center gap-2 text-base text-[#FFFFFF] font-bold"><span class="material-symbols-outlined text-[#FFE600] text-xl">stadium</span><span>Estadio Rodrigo Paz Delgado • Altitud: 2,850m</span></div></div><div class="flex items-center gap-3 flex-wrap"><div class="flex items-center gap-2 bg-[#000000] border-2 border-[#FFFFFF] px-3 py-1.5 rounded-lg"><span class="material-symbols-outlined text-[#FFE600] text-base">enhanced_encryption</span><span class="font-mono text-sm text-[#FFFFFF] font-bold">SIGEC-SEC://PKI-COM-883</span></div><div class="flex items-center gap-2 bg-[#000000] border-2 border-[#00FF66] px-3 py-1.5 rounded-lg"><span class="w-3 h-3 rounded-full bg-[#00FF66]"></span><span class="text-sm text-[#00FF66] uppercase font-extrabold">Planilla COMET OK</span></div><button class="flex items-center gap-2 bg-[#FFE600] text-[#000000] px-4 py-2 rounded font-extrabold text-sm uppercase border-2 border-[#FFFFFF] hover:bg-[#FFFFFF] hover:text-[#000000] transition-colors shadow-lg active:scale-95" id="contrastFlashBtn" onclick="toggleScreenFlasher()"><span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">flash_on</span><span>Alerta Lumínica Auditiva</span></button></div></div>
 <!-- Hero Grid: Countdown Display + Audio-Visual Sensory Beacon + Protocol Timeline -->
@@ -148,7 +234,7 @@
 <!-- Big Mono Metric Clock Display -->
 <div class="my-space-md flex flex-col items-center justify-center text-center relative z-10"><div class="font-mono text-[76px] sm:text-[98px] xl:text-[112px] font-black tracking-tight leading-none text-[#FFE600] select-none flex items-baseline justify-center gap-3"><span class="text-[#FFFFFF] text-[54px] sm:text-[68px] font-extrabold">-</span><span id="countdownMinutes">44</span><span class="animate-pulse text-[#FFFFFF]">:</span><span id="countdownSeconds">38</span></div><p class="font-bold text-base text-[#FFFFFF] uppercase tracking-widest mt-3 bg-[#000000] px-3 py-1 border border-[#FFFFFF] rounded">Tiempo Restante Para el Pitazo Inicial (19:00:00 UTC-5)</p></div>
 <!-- Current Ongoing Official Event Card -->
-<div class="bg-inverse-surface/90 rounded-xl p-space-md relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm shadow-sm" style="background-color: #000000; border: 2px solid #FFFFFF; padding: 18px;"><div class="flex items-center gap-3"><div class="w-12 h-12 rounded-lg bg-[#FFE600] text-[#000000] flex items-center justify-center shrink-0 border-2 border-[#FFFFFF]"><span class="material-symbols-outlined text-3xl font-bold">fitness_center</span></div><div><div class="flex items-center gap-2"><span class="text-xl text-[#FFFFFF] font-extrabold">Hito Actual: T -45:00</span><span class="bg-[#00FF66] text-[#000000] font-extrabold text-xs px-2 py-0.5 rounded uppercase border border-[#FFFFFF]">En Curso</span></div><p class="text-base text-[#FFFFFF] font-medium mt-1">Calentamiento reglamentario en campo (Máx 30 min) • Chalecos oficiales numerados obligatorios.</p></div></div><div class="flex items-center gap-2 self-end sm:self-center"><button class="bg-[#FFE600] text-[#000000] px-4 py-2.5 rounded font-extrabold text-sm uppercase hover:bg-[#FFFFFF] transition-colors flex items-center gap-2 border-2 border-[#FFFFFF]"><span class="material-symbols-outlined text-lg">timer</span><span>Forzar Sincro</span></button></div></div>
+<div class="bg-inverse-surface/90 rounded-xl p-space-md relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm shadow-sm" style="background-color: #000000; border: 2px solid #FFFFFF; padding: 18px;"><div class="flex items-center gap-3"><div class="w-12 h-12 rounded-lg bg-[#FFE600] text-[#000000] flex items-center justify-center shrink-0 border-2 border-[#FFFFFF]"><span class="material-symbols-outlined text-3xl font-bold">fitness_center</span></div><div><div class="flex items-center gap-2"><span class="text-xl text-[#FFFFFF] font-extrabold">Hito Actual: T -45:00</span><span class="bg-[#00FF66] text-[#000000] font-extrabold text-xs px-2 py-0.5 rounded uppercase border border-[#FFFFFF]">En Curso</span></div><p class="text-base text-[#FFFFFF] font-medium mt-1">Calentamiento reglamentario en campo (Máx 30 min) • Chalecos oficiales numerados obligatorios.</p></div></div><div class="flex items-center gap-2 self-end sm:self-center"><button class="bg-[#FFE600] text-[#000000] px-4 py-2.5 rounded font-extrabold text-sm uppercase hover:bg-[#FFFFFF] transition-colors flex items-center gap-2 border-2 border-[#FFFFFF]" onclick="forzarSincroComet()"><span class="material-symbols-outlined text-lg">timer</span><span>Forzar Sincro</span></button></div></div>
 <!-- Triple Sensory Alert Beacon for Hearing & Visually Impaired -->
 <div class="mt-space-sm bg-surface-card rounded-lg p-space-sm flex items-center justify-between gap-space-sm relative z-10 shadow-inner" id="protocolSensoryBanner" style="background-color: #FFE600; color: #000000; border: 3px solid #FFFFFF; padding: 14px 18px;"><div class="flex items-center gap-3 min-w-0"><div class="w-10 h-10 rounded bg-[#000000] text-[#FFE600] flex items-center justify-center shrink-0 border border-[#FFFFFF]"><span class="material-symbols-outlined text-2xl animate-pulse">hearing_disabled</span></div><div class="flex flex-col min-w-0"><div class="flex items-center gap-2"><span class="text-xs px-2 py-0.5 rounded bg-[#000000] font-extrabold text-[#FFE600] uppercase border border-[#FFFFFF]">ALERTA SENSORIAL ÓPTICA / VISUAL</span><span class="font-mono text-sm text-[#000000] font-black underline">T -09:20 PRÓXIMA</span></div><span class="text-base text-[#000000] font-extrabold truncate mt-0.5">«Canción Oficial LigaPro (Ecualizador Audio-Visual en Pantalla Central y Subtitulado en Vivo)»</span></div></div><div class="flex items-center gap-1 bg-[#000000] text-[#00FF66] px-2.5 py-1 rounded font-bold text-xs border border-[#FFFFFF]"><span class="material-symbols-outlined text-base">check_circle</span><span>ACTIVO</span></div></div>
 </div>
@@ -158,7 +244,7 @@
 <div><div class="flex items-center justify-between pb-3 border-b-2 border-[#FFFFFF]/40"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-[#FFE600] text-2xl">checklist</span><h2 class="text-xl font-extrabold text-[#FFFFFF]">Hitos Reglamentarios Obligatorios</h2></div><span class="font-bold text-xs text-[#000000] bg-[#FFE600] px-2.5 py-1 rounded border border-[#FFFFFF]">Reglamento 2025</span></div><div class="flex flex-col gap-2.5 mt-3 max-h-[380px] overflow-y-auto pr-1"><!-- -90m --><div class="flex items-start gap-3 p-3 rounded-lg bg-[#000000] border-2 border-[#00FF66]"><span class="material-symbols-outlined text-[#00FF66] text-2xl mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-mono text-base font-extrabold text-[#FFFFFF]">-90:00</span><span class="font-mono text-xs text-[#00FF66] font-bold bg-[#000000] border border-[#00FF66] px-2 py-0.5 rounded">17:30:12 REGISTRADO</span></div><p class="text-sm text-[#FFFFFF] mt-1">Llegada oficial de delegaciones, escolta policial y validación biométrica.</p></div></div><!-- -70m --><div class="flex items-start gap-3 p-3 rounded-lg bg-[#000000] border-2 border-[#00FF66]"><span class="material-symbols-outlined text-[#00FF66] text-2xl mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-mono text-base font-extrabold text-[#FFFFFF]">-70:00</span><span class="font-mono text-xs text-[#00FF66] font-bold bg-[#000000] border border-[#00FF66] px-2 py-0.5 rounded">17:50:04 FIRMADO</span></div><p class="text-sm text-[#FFFFFF] mt-1">Entrega de alineación oficial COMET firmada por ambos DT y Médicos.</p></div></div><!-- -45m (Active) --><div class="flex items-start gap-3 p-3 rounded-lg bg-[#000000] border-3 border-[#FFE600] shadow-md"><span class="material-symbols-outlined text-[#FFE600] text-2xl animate-spin mt-0.5">progress_activity</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-mono text-base font-extrabold text-[#FFE600]">-45:00 (ACTUAL)</span><span class="font-bold text-xs bg-[#FFE600] text-[#000000] px-2 py-0.5 rounded uppercase border border-[#FFFFFF]">En Progreso</span></div><p class="text-sm text-[#FFFFFF] font-bold mt-1">Salida a calentamiento reglamentario (30 min máx). Inspector en túnel.</p></div></div><!-- -09m:20s: Scheduled --><div class="flex items-start gap-3 p-3 rounded-lg bg-[#000000] border-2 border-[#FFE600]"><span class="material-symbols-outlined text-[#FFE600] text-2xl mt-0.5">radio_button_unchecked</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-mono text-base font-extrabold text-[#FFFFFF]">-09:20</span><span class="font-bold text-xs text-[#000000] bg-[#FFE600] px-2 py-0.5 rounded uppercase border border-[#FFFFFF]">ÓPTICA / AUDIO</span></div><p class="text-sm text-[#FFFFFF] mt-1">Canción Oficial LigaPro. Alerta visual de alto contraste y subtitulado.</p></div></div><!-- -08m:01s: Scheduled --><div class="flex items-start gap-3 p-3 rounded-lg bg-[#000000] border-2 border-[#FFFFFF]"><span class="material-symbols-outlined text-[#FFFFFF] text-2xl mt-0.5">radio_button_unchecked</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-mono text-base font-extrabold text-[#FFFFFF]">-08:01</span><span class="font-bold text-xs text-[#FFFFFF] border border-[#FFFFFF] px-2 py-0.5 rounded">PROGRAMADO</span></div><p class="text-sm text-[#FFFFFF] mt-1">Himno Nacional del Ecuador. Cuarteto arbitral en cabecera de hilera.</p></div></div></div></div>
 <div class="mt-space-md pt-space-sm flex items-center justify-between">
 <span class="font-label-caps text-label-caps text-text-secondary">Tolerancia Reglamento: ±30s</span>
-<button class="bg-surface-container-low text-text-primary hover:bg-surface-container px-3 py-1.5 rounded font-label-caps text-label-caps uppercase font-semibold transition-colors flex items-center gap-1">
+<button class="bg-surface-container-low text-text-primary hover:bg-surface-container px-3 py-1.5 rounded font-label-caps text-label-caps uppercase font-semibold transition-colors flex items-center gap-1" onclick="mostrarAuditoriaMarcas()">
 <span class="material-symbols-outlined text-sm">history</span>
 <span>Auditoría de Marcas</span>
 </button>
@@ -204,7 +290,7 @@
 <span class="material-symbols-outlined text-sport-success text-base">fact_check</span>
 <span>Alineaciones homologadas por Árbitro Central y Cabina VOR</span>
 </div>
-<button class="bg-surface-container-low hover:bg-surface-container text-text-primary px-3 py-1.5 rounded font-label-caps text-label-caps uppercase font-bold transition-colors">
+<button class="bg-surface-container-low hover:bg-surface-container text-text-primary px-3 py-1.5 rounded font-label-caps text-label-caps uppercase font-bold transition-colors" onclick="mostrarNominaCompleta()">
           Ver Nómina Completa (33 Integrantes)
         </button>
 </div>

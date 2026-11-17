@@ -29,14 +29,14 @@
       <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
         <!-- Logo & Brand -->
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-md border border-amber-400">
+          <div onclick="navigateView('tablero')" class="cursor-pointer w-9 h-9 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-md border border-amber-400">
             <span class="text-amber-400 text-lg">⚡</span>
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <span class="font-extrabold text-sm tracking-tight text-slate-900">LIGAPRO ECUABET</span>
+              <span onclick="navigateView('tablero')" class="cursor-pointer font-extrabold text-sm tracking-tight text-slate-900 hover:text-blue-700 transition-colors">LIGAPRO ECUABET</span>
               <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 uppercase">SIGEC-LP</span>
-              <span class="hidden sm:inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+              <span class="hidden sm:inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200" title="https://udykrprupwifmffhpvuz.supabase.co">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 <span>Supabase Conectado</span>
               </span>
@@ -45,10 +45,10 @@
           </div>
         </div>
 
-        <!-- Live Match Banner & Controls -->
+        <!-- Controls: Scoreboard, Accessibility, Notifications & Real User Session -->
         <div class="flex items-center flex-wrap gap-2">
           <!-- Live Match Score Widget -->
-          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-2 bg-slate-900 text-white px-3 py-1.5 rounded-lg border border-slate-800 text-xs shadow-sm hover:border-amber-400 transition-colors">
+          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-2 bg-slate-900 text-white px-3 py-1.5 rounded-lg border border-slate-800 text-xs shadow-sm hover:border-amber-400 transition-colors" title="Ver Consola de Comisario">
             <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
             <span class="font-bold text-amber-400">EN VIVO:</span>
             <span class="font-bold" id="header-match-local">LDU Quito</span>
@@ -57,24 +57,110 @@
             <span class="font-mono text-slate-400 text-[10px]" id="header-match-min">68' 2T</span>
           </div>
 
-          <!-- Role Selector -->
-          <div class="relative inline-block text-left">
-            <select id="global-role-select" onchange="onRoleChange(this.value)" class="text-xs bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none cursor-pointer">
-              <option value="DIR_COMP">Dirección de Competiciones</option>
-              <option value="COMISARIO">Comisario de Partido (Matchday)</option>
-              <option value="CLUB_ADMIN_LDU">Club Admin: LDU Quito</option>
-              <option value="CLUB_ADMIN_BSC">Club Admin: Barcelona SC</option>
-              <option value="OF_VAR">Oficial Técnico VAR</option>
-              <option value="DEL_SEG">Delegado de Seguridad</option>
-              <option value="MED_CAMPO">Médico de Campo</option>
-              <option value="ADM_SIS">Administrador del Sistema</option>
-            </select>
+          <!-- Reloj UTC-5 -->
+          <div class="hidden lg:flex items-center gap-1 bg-slate-100 px-2.5 py-1.5 rounded-lg text-slate-700 font-mono text-xs border border-slate-200">
+            <span class="material-symbols-outlined text-sm text-slate-500">schedule</span>
+            <span class="text-[10px] text-slate-400 font-sans font-bold">UTC-5:</span>
+            <span id="header-utc-clock" class="font-bold">18:42:09</span>
           </div>
 
-          <!-- WCAG AAA High Contrast Toggle -->
-          <button onclick="toggleGlobalHighContrast()" id="btn-toggle-contrast" class="p-1.5 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-700 transition-colors" title="Modo Alto Contraste WCAG AAA (Negro / Amarillo)">
-            <span class="material-symbols-outlined text-lg">contrast</span>
-          </button>
+          <!-- Barra Accesibilidad (WCAG AAA, A-, A+, Audio) -->
+          <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200">
+            <button onclick="toggleGlobalHighContrast()" class="p-1.5 text-slate-700 hover:text-amber-500 hover:bg-white rounded transition-colors" title="Modo Alto Contraste WCAG AAA (Negro / Amarillo)">
+              <span class="material-symbols-outlined text-base">contrast</span>
+            </button>
+            <button onclick="ajustarTexto(-10)" class="px-2 py-1 text-slate-700 hover:bg-white rounded font-bold text-[11px]" title="Reducir Texto A-">
+              A-
+            </button>
+            <button onclick="ajustarTexto(10)" class="px-2 py-1 text-slate-700 hover:bg-white rounded font-bold text-[11px]" title="Aumentar Texto A+">
+              A+
+            </button>
+            <button onclick="toggleAlertaAuditiva()" class="p-1.5 text-slate-700 hover:text-blue-600 hover:bg-white rounded transition-colors" title="Alertas Auditivas Accesibles">
+              <span class="material-symbols-outlined text-base">hearing</span>
+            </button>
+          </div>
+
+          <!-- Campana de Notificaciones Reglamentarias -->
+          <div class="relative">
+            <button id="btn-notificaciones" onclick="toggleNotificationsPanel()" class="relative p-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-colors" title="Centro de Notificaciones">
+              <span class="material-symbols-outlined text-lg">notifications</span>
+              <span id="notif-badge-indicator" class="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+            </button>
+
+            <!-- Dropdown Panel de Notificaciones -->
+            <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-slate-200 z-50 p-3 text-xs">
+              <div class="flex items-center justify-between pb-2 border-b border-slate-100 mb-2">
+                <span class="font-bold text-slate-900 flex items-center gap-1">
+                  <span class="material-symbols-outlined text-base text-blue-600">notifications_active</span> Notificaciones Oficiales
+                </span>
+                <button onclick="marcarNotificacionesLeidas()" class="text-[10px] text-blue-600 hover:underline font-semibold">Marcar leídas</button>
+              </div>
+              <div class="space-y-2 max-h-60 overflow-y-auto">
+                <div class="p-2 bg-red-50 text-red-950 rounded-lg border border-red-100">
+                  <div class="font-bold">🔴 Minuto 68' — Partido en Disputa</div>
+                  <div class="text-[11px] text-red-800">LDU Quito 1 - 1 Barcelona SC en Estadio Rodrigo Paz Delgado.</div>
+                </div>
+                <div class="p-2 bg-amber-50 text-amber-950 rounded-lg border border-amber-100">
+                  <div class="font-bold">⚠️ Alerta Art. 91 — Tarjeta Amarilla</div>
+                  <div class="text-[11px] text-amber-800">Jesús Trindade (BSC) acumula 4 amarillas. Suspensión al recibir una más.</div>
+                </div>
+                <div class="p-2 bg-emerald-50 text-emerald-950 rounded-lg border border-emerald-100">
+                  <div class="font-bold">✅ Trámite TRM-2025-089 Aprobado</div>
+                  <div class="text-[11px] text-emerald-800">Uso de indumentaria alterna conmemorativa homologada para fecha 19.</div>
+                </div>
+                <div class="p-2 bg-blue-50 text-blue-950 rounded-lg border border-blue-100">
+                  <div class="font-bold">📢 Protocolo Art. 49</div>
+                  <div class="text-[11px] text-blue-800">Horario unificado confirmado a las 18h00 para encuentros con incidencia.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sesión de Usuario y Cambio de Rol Rápido -->
+          <div class="relative">
+            <div id="header-user-block" onclick="toggleUserDropdown()" class="cursor-pointer flex items-center gap-2 pl-2 border-l border-slate-200 py-1 hover:opacity-90 transition-opacity">
+              <div class="flex flex-col text-right hidden sm:flex">
+                <span id="header-user-name" class="font-bold text-xs text-slate-900 leading-tight">Lic. Carlos Villacís</span>
+                <span id="header-user-role" class="text-[10px] text-blue-700 font-bold uppercase tracking-wider">Dirección de Competiciones</span>
+              </div>
+              <img id="header-user-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Avatar Usuario" class="w-8 h-8 rounded-full object-cover border-2 border-blue-600 shadow-xs"/>
+              <span class="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
+            </div>
+
+            <!-- Menú Desplegable de Usuario y Cierre de Sesión -->
+            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-slate-200 z-50 p-3 text-xs">
+              <div class="pb-3 border-b border-slate-100 mb-3">
+                <div class="font-bold text-slate-900" id="dropdown-user-name">Lic. Carlos Villacís</div>
+                <div class="text-[11px] text-slate-500 truncate" id="dropdown-user-email">c.villacis@ligapro.ec</div>
+                <div class="mt-1 inline-block px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-bold text-[10px]" id="dropdown-user-role">Dirección de Competiciones</div>
+              </div>
+
+              <!-- Cambio de Rol Rápido -->
+              <div class="font-bold text-slate-400 uppercase text-[10px] tracking-wider mb-1.5">Cambiar Rol Rápido</div>
+              <div class="space-y-1 mb-3">
+                <button onclick="cambiarRol('DIR_COMP')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 flex items-center justify-between text-slate-700">
+                  <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-blue-600">admin_panel_settings</span> Dirección LigaPro</span>
+                </button>
+                <button onclick="cambiarRol('COMISARIO')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 flex items-center justify-between text-slate-700">
+                  <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-amber-500">sports</span> Comisario de Juego</span>
+                </button>
+                <button onclick="cambiarRol('CLUB_ADMIN')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 flex items-center justify-between text-slate-700">
+                  <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-emerald-600">shield</span> Delegado de Club</span>
+                </button>
+                <button onclick="cambiarRol('PUBLICO')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-100 flex items-center justify-between text-slate-700">
+                  <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-purple-600">visibility</span> Acceso Público (Aficionado)</span>
+                </button>
+              </div>
+
+              <!-- Cerrar Sesión -->
+              <div class="pt-2 border-t border-slate-100">
+                <button onclick="cerrarSesion()" class="w-full text-left px-2 py-2 rounded text-red-600 hover:bg-red-50 font-bold flex items-center gap-2">
+                  <span class="material-symbols-outlined text-base">logout</span>
+                  Cerrar Sesión
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -135,7 +221,7 @@
             <button onclick="registrarTarjetaEnVivo('roja', 'visitante')" class="px-2 py-1 bg-red-700 rounded text-white text-[11px]">Roja</button>
           </div>
         </div>
-        <header class="fixed top-0 left-0 right-0 h-16 bg-surface-container-lowest z-50 shadow-[0_1px_8px_rgba(0,0,0,0.04)] px-gutter"><div class="h-16 w-full flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md min-w-[260px]"><div class="flex items-center gap-space-xs"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">sports_soccer</span></div><div class="flex flex-col"><span class="font-label-caps text-label-caps uppercase text-text-secondary">SIGEC-LP</span><span class="font-title-md text-title-md uppercase text-on-surface tracking-tight">Comisario Matchday</span></div></div><div class="h-8 w-px bg-border-subtle mx-space-xs"></div><div class="flex items-center bg-surface-container-low px-space-sm py-space-xs rounded-lg gap-space-sm"><div class="w-3 h-3 rounded-full bg-sport-success animate-pulse"></div><div class="flex flex-col"><span class="font-label-caps text-label-caps uppercase text-text-secondary">Hora Oficial UTC-5</span><span class="font-mono-matchday text-mono-matchday text-on-surface font-bold leading-none">17:42:08</span></div></div></div><div class="flex items-center flex-1 max-w-md justify-center"><button class="min-h-[48px] px-space-md py-space-xs w-full bg-surface-container-low hover:bg-surface-container hover:text-on-surface rounded-lg flex items-center justify-between gap-space-sm transition-colors text-left" type="button"><div class="flex items-center gap-space-sm overflow-hidden"><span class="material-symbols-outlined text-secondary text-[20px]">stadium</span><div class="truncate"><span class="font-label-caps text-label-caps uppercase text-text-secondary block">Fecha 18 • Serie A</span><span class="font-body-md text-body-md font-bold text-on-surface truncate block">LDU Quito vs Barcelona SC</span></div></div><span class="material-symbols-outlined text-on-surface-variant text-[20px]">expand_more</span></button></div><div class="flex items-center gap-space-sm"><div class="flex items-center bg-surface-container-low px-space-sm py-space-xs rounded-lg gap-space-sm min-h-[48px]"><div class="w-2.5 h-2.5 rounded-full bg-sport-success"></div><div class="flex flex-col"><span class="font-label-caps text-label-caps uppercase text-text-secondary">COMET Live Sync</span><span class="font-mono-table text-mono-table font-semibold text-on-surface">En Línea • 0s</span></div><span class="material-symbols-outlined text-sport-success text-[18px]">sync</span></div><button class="min-h-[48px] min-w-[48px] px-space-md py-space-xs rounded-lg bg-sport-danger hover:bg-error hover:text-on-error text-on-error flex items-center justify-center gap-space-xs transition-colors shadow-sm" type="button"><span class="material-symbols-outlined text-[22px]">warning</span><span class="font-label-caps text-label-caps uppercase tracking-wider font-bold">SOS Alerta</span></button><div class="h-8 w-px bg-border-subtle mx-space-xs"></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-20 bg-surface-container-lowest z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between py-space-md items-center"><nav class="flex flex-col gap-space-sm w-full px-space-xs" data-active-classes="bg-primary text-on-primary font-bold"><a aria-current="page" class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg transition-colors bg-primary text-on-primary font-bold" data-path="consola-operativa" href="#"><span class="material-symbols-outlined text-[24px]">dashboard</span><span class="font-label-caps text-[10px] mt-0.5">Control</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="inspeccion-terreno" href="#"><span class="material-symbols-outlined text-[24px]">grid_on</span><span class="font-label-caps text-[10px] mt-0.5">Cancha</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="validador-uniformes" href="#"><span class="material-symbols-outlined text-[24px]">checkroom</span><span class="font-label-caps text-[10px] mt-0.5">Kits</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="planilla-comet" href="#"><span class="material-symbols-outlined text-[24px]">assignment_turned_in</span><span class="font-label-caps text-[10px] mt-0.5">COMET</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="cuenta-regresiva" href="#"><span class="material-symbols-outlined text-[24px]">timer</span><span class="font-label-caps text-[10px] mt-0.5">Protocolo</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="informe-disciplinario" href="#"><span class="material-symbols-outlined text-[24px]">report</span><span class="font-label-caps text-[10px] mt-0.5">Actas</span></a></nav><div class="flex flex-col gap-space-xs items-center w-full px-space-xs"><button class="min-h-[48px] w-full flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" title="Modo Alto Contraste" type="button"><span class="material-symbols-outlined text-[22px]">contrast</span></button><button class="min-h-[48px] w-full flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" title="Configuración Local y Caché" type="button"><span class="material-symbols-outlined text-[22px]">tune</span></button></div></aside><div class="pl-20"><main class="relative pt-16 w-full min-h-screen bg-surface px-gutter py-space-md"><div class="flex flex-col w-full">
+        <aside class="fixed left-0 top-[112px] bottom-0 w-20 bg-surface-container-lowest z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between py-space-md items-center"><nav class="flex flex-col gap-space-sm w-full px-space-xs" data-active-classes="bg-primary text-on-primary font-bold"><a aria-current="page" class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg transition-colors bg-primary text-on-primary font-bold" data-path="consola-operativa" href="javascript:void(0)" onclick="navigateView(\'consola\')"><span class="material-symbols-outlined text-[24px]">dashboard</span><span class="font-label-caps text-[10px] mt-0.5">Control</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="inspeccion-terreno" href="javascript:void(0)" onclick="navigateView(\'estadios\')"><span class="material-symbols-outlined text-[24px]">grid_on</span><span class="font-label-caps text-[10px] mt-0.5">Cancha</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="validador-uniformes" href="javascript:void(0)" onclick="navigateView(\'uniformes\')"><span class="material-symbols-outlined text-[24px]">checkroom</span><span class="font-label-caps text-[10px] mt-0.5">Kits</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="planilla-comet" href="javascript:void(0)" onclick="navigateView(\'consola\')"><span class="material-symbols-outlined text-[24px]">assignment_turned_in</span><span class="font-label-caps text-[10px] mt-0.5">COMET</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="cuenta-regresiva" href="javascript:void(0)" onclick="navigateView(\'consola\')"><span class="material-symbols-outlined text-[24px]">timer</span><span class="font-label-caps text-[10px] mt-0.5">Protocolo</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="informe-disciplinario" href="javascript:void(0)" onclick="navigateView(\'clubes\')"><span class="material-symbols-outlined text-[24px]">report</span><span class="font-label-caps text-[10px] mt-0.5">Actas</span></a></nav><div class="flex flex-col gap-space-xs items-center w-full px-space-xs"><button class="min-h-[48px] w-full flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" title="Modo Alto Contraste" type="button" onclick="toggleGlobalHighContrast()"><span class="material-symbols-outlined text-[22px]">contrast</span></button><button class="min-h-[48px] w-full flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" title="Configuración Local y Caché" type="button" onclick="showToast(\'Panel de calibración táctil\', \'info\')"><span class="material-symbols-outlined text-[22px]">tune</span></button></div></aside><div class="pl-20"><main class="relative pt-4 w-full min-h-screen bg-surface px-gutter py-space-md"><div class="flex flex-col w-full">
 <!-- Tablet Tactical Operational Header: Sun-glare resistant & High Contrast -->
 <section class="w-full bg-surface-container-lowest rounded-xl shadow-md p-space-md mb-space-md">
 <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-space-md">
@@ -173,7 +259,7 @@
 </div>
 </div>
 <!-- Force Sync Touch Button -->
-<button class="min-h-[52px] px-space-md bg-secondary hover:bg-secondary-container active:scale-[0.98] text-on-secondary rounded-xl flex items-center justify-center gap-space-xs transition-all shadow-sm flex-1 sm:flex-none" id="btn-force-sync" type="button">
+<button class="min-h-[52px] px-space-md bg-secondary hover:bg-secondary-container active:scale-[0.98] text-on-secondary rounded-xl flex items-center justify-center gap-space-xs transition-all shadow-sm flex-1 sm:flex-none" id="btn-force-sync" type="button" onclick="forzarSincroComet()">
 <span class="material-symbols-outlined text-[22px] transition-transform duration-500" id="sync-icon">sync</span>
 <div class="flex flex-col text-left">
 <span class="font-label-caps text-label-caps uppercase leading-none">Forzar Sync</span>
@@ -187,29 +273,29 @@
 <nav class="w-full bg-surface-container-lowest rounded-xl shadow-sm p-space-xs mb-space-md overflow-x-auto">
 <div class="flex items-stretch gap-space-xs min-w-[700px]">
 <!-- Tab 1 (Active) -->
-<button class="min-h-[54px] flex-1 px-space-md bg-primary text-on-primary rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md shadow-sm transition-transform active:scale-[0.99]" type="button">
+<button class="min-h-[54px] flex-1 px-space-md bg-primary text-on-primary rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md shadow-sm transition-transform active:scale-[0.99]" type="button" onclick="showToast('Cuenta regresiva T-90 a T-0 sincronizada', 'info')">
 <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">timer</span>
 <span>Cuenta Regresiva &amp; Hitos</span>
 </button>
 <!-- Tab 2 -->
-<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors" type="button">
+<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors" type="button" onclick="mostrarNominaCompleta()">
 <span class="material-symbols-outlined text-[22px]">medical_services</span>
 <span>Planilla &amp; Médicos</span>
 <span class="w-2 h-2 rounded-full bg-sport-success"></span>
 </button>
 <!-- Tab 3 -->
-<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors" type="button">
+<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors" type="button" onclick="registrarIncidenteEnVivo()">
 <span class="material-symbols-outlined text-[22px]">crisis_alert</span>
 <span>Incidentes Rápidos</span>
 <span class="bg-sport-danger text-on-error font-mono-table text-[11px] px-1.5 py-0.5 rounded-full font-bold">2</span>
 </button>
 <!-- Tab 4 -->
-<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors" type="button">
+<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors" type="button" onclick="mostrarModalPasabolas()">
 <span class="material-symbols-outlined text-[22px]">shield_person</span>
 <span>Pasabolas &amp; Perímetro</span>
 </button>
 <!-- Tab 5 -->
-<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors" type="button">
+<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors" type="button" onclick="sellarPlanillaJuego()">
 <span class="material-symbols-outlined text-[22px]">verified_user</span>
 <span>Cierre de Acta</span>
 </button>
@@ -266,7 +352,7 @@
               </p>
 </div>
 <!-- Big Action Touch Trigger: Min 56px height -->
-<button class="min-h-[56px] min-w-[200px] px-space-md bg-sport-success hover:bg-opacity-90 active:scale-95 text-on-primary font-headline-sm text-headline-sm rounded-lg flex items-center justify-center gap-space-xs shadow transition-all flex-shrink-0" id="btn-warmup" type="button">
+<button class="min-h-[56px] min-w-[200px] px-space-md bg-sport-success hover:bg-opacity-90 active:scale-95 text-on-primary font-headline-sm text-headline-sm rounded-lg flex items-center justify-center gap-space-xs shadow transition-all flex-shrink-0" id="btn-warmup" type="button" onclick="marcarHitoOk(this)">
 <span class="material-symbols-outlined text-[26px]">check_circle</span>
 <span>Marcar OK</span>
 </button>
@@ -294,7 +380,7 @@
 </div>
 </div>
 <!-- Tactile Trigger Test Lumínico: 52px Touch Target -->
-<button class="min-h-[52px] px-space-md bg-surface-container-lowest hover:bg-surface-container active:scale-95 text-on-surface rounded-lg flex items-center justify-center gap-space-xs font-title-md text-title-md transition-colors flex-shrink-0 shadow-sm" id="btn-test-optic" type="button">
+<button class="min-h-[52px] px-space-md bg-surface-container-lowest hover:bg-surface-container active:scale-95 text-on-surface rounded-lg flex items-center justify-center gap-space-xs font-title-md text-title-md transition-colors flex-shrink-0 shadow-sm" id="btn-test-optic" type="button" onclick="testAlertaLuminica()">
 <span class="material-symbols-outlined text-sport-warning text-[24px]">light_mode</span>
 <span>Test Alerta Lumínica</span>
 </button>
@@ -382,7 +468,7 @@
 </div>
 </div>
 </div>
-<button class="min-h-[48px] w-full mt-space-sm bg-surface-container-high hover:bg-surface-container text-on-surface rounded-lg flex items-center justify-center gap-space-xs font-title-md text-title-md transition-colors" type="button">
+<button class="min-h-[48px] w-full mt-space-sm bg-surface-container-high hover:bg-surface-container text-on-surface rounded-lg flex items-center justify-center gap-space-xs font-title-md text-title-md transition-colors" type="button" onclick="evaluarEscenarioEnVivo()">
 <span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
 <span>Re-inspeccionar Perímetro</span>
 </button>
@@ -415,7 +501,7 @@
 <!-- 4 Massive Tactile Buttons (56px minimum height) -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-sm mb-space-md">
 <!-- Incident 1: Lanzamiento de Objetos -->
-<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-error-container hover:text-on-error-container active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm" data-incident="Lanzamiento de Objetos" type="button">
+<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-error-container hover:text-on-error-container active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm" data-incident="Lanzamiento de Objetos" type="button" onclick="registrarIncidenteEnVivo(\'Lanzamiento de Objetos (Art. 73)\')">
 <div class="flex items-center gap-space-sm">
 <div class="w-10 h-10 rounded-lg bg-sport-warning text-on-primary flex items-center justify-center flex-shrink-0">
 <span class="material-symbols-outlined text-[24px]">front_hand</span>
@@ -428,7 +514,7 @@
 <span class="material-symbols-outlined text-[20px]">add_circle</span>
 </button>
 <!-- Incident 2: Bengalas / Pirotecnia -->
-<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-error-container hover:text-on-error-container active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm" data-incident="Uso de Bengalas / Pirotecnia" type="button">
+<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-error-container hover:text-on-error-container active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm" data-incident="Uso de Bengalas / Pirotecnia" type="button" onclick="registrarIncidenteEnVivo(\'Uso de Bengalas / Pirotecnia (Art. 73)\')">
 <div class="flex items-center gap-space-sm">
 <div class="w-10 h-10 rounded-lg bg-sport-danger text-on-error flex items-center justify-center flex-shrink-0">
 <span class="material-symbols-outlined text-[24px]">local_fire_department</span>
@@ -441,7 +527,7 @@
 <span class="material-symbols-outlined text-[20px]">add_circle</span>
 </button>
 <!-- Incident 3: Invasión de Terreno -->
-<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-error-container hover:text-on-error-container active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm" data-incident="Invasión de Terreno de Juego" type="button">
+<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-error-container hover:text-on-error-container active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm" data-incident="Invasión de Terreno de Juego" type="button" onclick="registrarIncidenteEnVivo(\'Invasión de Terreno de Juego (Art. 73)\')">
 <div class="flex items-center gap-space-sm">
 <div class="w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center flex-shrink-0">
 <span class="material-symbols-outlined text-[24px]">run_circle</span>
@@ -454,7 +540,7 @@
 <span class="material-symbols-outlined text-[20px]">add_circle</span>
 </button>
 <!-- Incident 4: Demora en Reanudación -->
-<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-surface-container hover:text-on-surface active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm" data-incident="Demora en Reanudación (Art. 82)" type="button">
+<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-surface-container hover:text-on-surface active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm" data-incident="Demora en Reanudación (Art. 82)" type="button" onclick="registrarIncidenteEnVivo(\'Demora en Reanudación (Art. 82) (Art. 73)\')">
 <div class="flex items-center gap-space-sm">
 <div class="w-10 h-10 rounded-lg bg-secondary text-on-secondary flex items-center justify-center flex-shrink-0">
 <span class="material-symbols-outlined text-[24px]">hourglass_disabled</span>
@@ -476,7 +562,7 @@
 </div>
 <!-- Dictation & Voice Assist -->
 <div class="flex items-center gap-space-xs">
-<button class="min-h-[44px] px-space-sm bg-surface-container-lowest hover:bg-surface-container text-on-surface rounded-lg flex items-center gap-1 font-body-sm text-body-sm transition-all" id="btn-voice-dictate" type="button">
+<button class="min-h-[44px] px-space-sm bg-surface-container-lowest hover:bg-surface-container text-on-surface rounded-lg flex items-center gap-1 font-body-sm text-body-sm transition-all" id="btn-voice-dictate" type="button" onclick="dictarPorVoz()">
 <span class="material-symbols-outlined text-sport-danger text-[18px]" id="mic-icon">mic</span>
 <span id="voice-text">Dictar por Voz</span>
 </button>
@@ -495,7 +581,7 @@
 </div>
 </div>
 <div class="flex items-center gap-space-xs flex-shrink-0">
-<button class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-text-secondary" title="Editar Nota" type="button">
+<button class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-text-secondary" title="Editar Nota" type="button" onclick="showToast(\'Modo edición Comisario activado\', \'info\')">
 <span class="material-symbols-outlined text-[18px]">edit</span>
 </button>
 <span class="material-symbols-outlined text-sport-success text-[18px]">cloud_done</span>
@@ -511,7 +597,7 @@
 </div>
 </div>
 <div class="flex items-center gap-space-xs flex-shrink-0">
-<button class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-text-secondary" title="Editar Nota" type="button">
+<button class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-text-secondary" title="Editar Nota" type="button" onclick="showToast(\'Modo edición Comisario activado\', \'info\')">
 <span class="material-symbols-outlined text-[18px]">edit</span>
 </button>
 <span class="material-symbols-outlined text-sport-success text-[18px]">cloud_done</span>
@@ -537,7 +623,7 @@
 </div>
 </div>
 <!-- Big Action Sign-off Touch Button: Min 56px height -->
-<button class="min-h-[56px] w-full md:w-auto px-space-xl bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-headline-sm rounded-xl flex items-center justify-center gap-space-sm shadow-md transition-all active:scale-[0.98]" id="btn-sign-acta" type="button">
+<button class="min-h-[56px] w-full md:w-auto px-space-xl bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-headline-sm rounded-xl flex items-center justify-center gap-space-sm shadow-md transition-all active:scale-[0.98]" id="btn-sign-acta" type="button" onclick="sellarPlanillaJuego()">
 <span class="material-symbols-outlined text-[24px]">draw</span>
 <span>Firmar Acta Previa con Hash SHA-256</span>
 </button>
@@ -651,7 +737,7 @@
               </div>
             </div>
             <div class="flex items-center gap-space-xs flex-shrink-0">
-              <button type="button" class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-text-secondary">
+              <button type="button" class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-text-secondary" onclick="showToast(\'Modo edición Comisario activado\', \'info\')">
                 <span class="material-symbols-outlined text-[18px]">edit</span>
               </button>
               <span class="material-symbols-outlined text-sport-success text-[18px]">cloud_done</span>

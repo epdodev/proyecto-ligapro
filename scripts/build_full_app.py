@@ -1,5 +1,6 @@
 import os
 import re
+from build_cleaner_v2 import clean_and_transform_screen
 
 SCREENS = [
     {
@@ -243,7 +244,7 @@ def build():
     
     # 1. Generar standalone HTML para cada pantalla
     for s in SCREENS:
-        body_content = get_screen_body(s['folder'])
+        body_content = clean_and_transform_screen(s['folder'], s['id'])
         enriched_content = enrich_screen_html(s['id'], body_content)
         
         # Navigation header for standalone
@@ -294,7 +295,7 @@ def build():
     
     views_containers = []
     for s in SCREENS:
-        body_content = get_screen_body(s['folder'])
+        body_content = clean_and_transform_screen(s['folder'], s['id'])
         enriched_content = enrich_screen_html(s['id'], body_content)
         hidden_class = "" if s['id'] == 'tablero' else "hidden"
         views_containers.append(f'''
