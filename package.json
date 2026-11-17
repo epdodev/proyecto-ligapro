@@ -1,0 +1,25 @@
+{
+  "name": "sigec-lp",
+  "version": "1.0.0",
+  "description": "Sistema Integral de Gestión de Competiciones — Liga Profesional de Fútbol del Ecuador (LigaPro)",
+  "type": "module",
+  "scripts": {
+    "dev": "python -m http.server 8080",
+    "build": "python scripts/build_full_app.py",
+    "seed": "echo 'Seed SQL located in supabase/migrations/20261106000001_sigec_lp_seed.sql'"
+  },
+  "keywords": [
+    "ligapro",
+    "ecuador",
+    "football",
+    "competition-management",
+    "supabase",
+    "wcag-aaa",
+    "matchday"
+  ],
+  "author": "LigaPro Ecuador",
+  "license": "Proprietary",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.0"
+  }
+}

@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tablero General — SIGEC-LP LigaPro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"border-subtle":"#E2E8F0","on-tertiary-container":"#0090ae","secondary-fixed-dim":"#b6c4ff","on-secondary":"#ffffff","on-primary-fixed":"#101c2e","surface":"#f8f9ff","on-secondary-fixed-variant":"#0039b3","on-background":"#0b1c30","on-tertiary-fixed-variant":"#004e5f","surface-container-low":"#eff4ff","sport-warning":"#FFD100","on-tertiary-fixed":"#001f27","sport-success":"#00A859","on-surface":"#0b1c30","on-error-container":"#93000a","secondary-container":"#0356ff","surface-base":"#F8FAFC","error-container":"#ffdad6","inverse-primary":"#bbc7df","primary-fixed":"#d7e3fc","sport-danger":"#D92D20","surface-dim":"#cbdbf5","surface-container-lowest":"#ffffff","border-strong":"#CBD5E1","inverse-on-surface":"#eaf1ff","on-primary-container":"#79849b","on-primary-fixed-variant":"#3c475b","primary-fixed-dim":"#bbc7df","text-secondary":"#334155","surface-container":"#e5eeff","outline":"#75777d","inverse-surface":"#213145","secondary":"#0041c9","high-contrast-bg":"#000000","on-primary":"#ffffff","outline-variant":"#c5c6cd","on-secondary-fixed":"#001551","secondary-fixed":"#dce1ff","error":"#ba1a1a","high-contrast-accent":"#FFE600","primary":"#000000","on-surface-variant":"#45474c","surface-card":"#FFFFFF","surface-container-highest":"#d3e4fe","on-tertiary":"#ffffff","text-primary":"#0F172A","surface-tint":"#535f74","on-error":"#ffffff","background":"#f8f9ff","surface-container-high":"#dce9ff","surface-bright":"#f8f9ff","tertiary":"#000000","tertiary-container":"#001f27","tertiary-fixed":"#b4ebff","tertiary-fixed-dim":"#3cd7ff","surface-variant":"#d3e4fe","primary-container":"#101c2e","on-secondary-container":"#e4e7ff"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"margin-md":"1.5rem","space-2xl":"3rem","space-lg":"1.5rem","margin":"1rem","space-xs":"0.25rem","gutter":"1rem","space-sm":"0.5rem","space-md":"1rem","margin-lg":"2rem","space-xl":"2rem","gutter-lg":"1.5rem"},fontFamily:{"label-caps":["Plus Jakarta Sans"],"display-lg-mobile":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"mono-matchday":["JetBrains Mono"],"mono-metric":["JetBrains Mono"],"headline-sm":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"mono-table":["JetBrains Mono"],"body-md":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"]},fontSize:{"label-caps":["11px",{lineHeight:"14px",letterSpacing:"0.06em",fontWeight:"700"}],"display-lg-mobile":["30px",{lineHeight:"36px",letterSpacing:"-0.01em",fontWeight:"800"}],"body-sm":["12px",{lineHeight:"16px",fontWeight:"400"}],"mono-matchday":["20px",{lineHeight:"28px",fontWeight:"600"}],"mono-metric":["32px",{lineHeight:"36px",fontWeight:"700"}],"headline-sm":["20px",{lineHeight:"28px",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"24px",fontWeight:"400"}],"display-lg":["40px",{lineHeight:"48px",letterSpacing:"-0.02em",fontWeight:"800"}],"headline-md":["24px",{lineHeight:"32px",fontWeight:"700"}],"mono-table":["13px",{lineHeight:"18px",fontWeight:"500"}],"body-md":["14px",{lineHeight:"20px",fontWeight:"400"}],"title-md":["16px",{lineHeight:"24px",fontWeight:"600"}],"headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.01em",fontWeight:"700"}]}}}}</script>
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+    }
+    ::-webkit-scrollbar { display: none; }
+    .high-contrast-mode {
+      background-color: #000000 !important;
+      color: #FFFFFF !important;
+    }
+  </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased min-h-screen">
+  
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs px-4 py-2.5">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+        <!-- Logo & Brand -->
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-md border border-amber-400">
+            <span class="text-amber-400 text-lg">⚡</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-extrabold text-sm tracking-tight text-slate-900">LIGAPRO ECUABET</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 uppercase">SIGEC-LP</span>
+              <span class="hidden sm:inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Supabase Conectado</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-500 font-medium">Sistema Integral de Gestión de Competiciones — Rige Reglamento 2023</p>
+          </div>
+        </div>
+
+        <!-- Live Match Banner & Controls -->
+        <div class="flex items-center flex-wrap gap-2">
+          <!-- Live Match Score Widget -->
+          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-2 bg-slate-900 text-white px-3 py-1.5 rounded-lg border border-slate-800 text-xs shadow-sm hover:border-amber-400 transition-colors">
+            <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+            <span class="font-bold text-amber-400">EN VIVO:</span>
+            <span class="font-bold" id="header-match-local">LDU Quito</span>
+            <span class="font-mono bg-slate-800 px-1.5 py-0.5 rounded font-bold text-amber-300" id="header-score">1 - 1</span>
+            <span class="font-bold" id="header-match-visitante">Barcelona SC</span>
+            <span class="font-mono text-slate-400 text-[10px]" id="header-match-min">68' 2T</span>
+          </div>
+
+          <!-- Role Selector -->
+          <div class="relative inline-block text-left">
+            <select id="global-role-select" onchange="onRoleChange(this.value)" class="text-xs bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none cursor-pointer">
+              <option value="DIR_COMP">Dirección de Competiciones</option>
+              <option value="COMISARIO">Comisario de Partido (Matchday)</option>
+              <option value="CLUB_ADMIN_LDU">Club Admin: LDU Quito</option>
+              <option value="CLUB_ADMIN_BSC">Club Admin: Barcelona SC</option>
+              <option value="OF_VAR">Oficial Técnico VAR</option>
+              <option value="DEL_SEG">Delegado de Seguridad</option>
+              <option value="MED_CAMPO">Médico de Campo</option>
+              <option value="ADM_SIS">Administrador del Sistema</option>
+            </select>
+          </div>
+
+          <!-- WCAG AAA High Contrast Toggle -->
+          <button onclick="toggleGlobalHighContrast()" id="btn-toggle-contrast" class="p-1.5 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-700 transition-colors" title="Modo Alto Contraste WCAG AAA (Negro / Amarillo)">
+            <span class="material-symbols-outlined text-lg">contrast</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs Bar -->
+      <div class="max-w-7xl mx-auto mt-2 pt-2 border-t border-slate-100 flex items-center gap-1 overflow-x-auto pb-1 scrollbar-none">
+        
+        <button onclick="navigateView('tablero')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all bg-secondary text-white font-bold shadow-sm" title="Tablero General — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">dashboard</span>
+          <span>Tablero General</span>
+        </button>
+        <button onclick="navigateView('posiciones')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Posiciones & Resultados — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">leaderboard</span>
+          <span>Posiciones & Fixture</span>
+        </button>
+        <button onclick="navigateView('clubes')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Portal de Clubes (Trámites) — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">folder_shared</span>
+          <span>Portal Clubes</span>
+        </button>
+        <button onclick="navigateView('uniformes')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Asistente de Uniformes 48h — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">checkroom</span>
+          <span>Uniformes 48h</span>
+        </button>
+        <button onclick="navigateView('estadios')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Inspección de Escenarios & VAR — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">stadium</span>
+          <span>Escenarios & VAR</span>
+        </button>
+        <button onclick="navigateView('consola')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Consola de Comisario (Matchday) — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">sports</span>
+          <span>Consola Comisario</span>
+        </button>
+        <button onclick="navigateView('consola_alto_contraste')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Consola Alto Contraste (WCAG AAA) — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">contrast</span>
+          <span>Consola WCAG AAA</span>
+        </button>
+        <button onclick="navigateView('consola_tablet')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Consola Tablet de Campo — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">tablet_mac</span>
+          <span>Consola Tablet</span>
+        </button>
+        <button onclick="navigateView('auth')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Inicio de Sesión & Roles — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">lock</span>
+          <span>Acceso / Roles</span>
+        </button>
+      </div>
+    </header>
+    
+  <main class="w-full">
+    <header class="fixed top-0 left-0 right-0 h-16 bg-primary-container z-50 shadow-[0_1px_8px_rgba(0,0,0,0.12)] flex items-center justify-between px-gutter-lg border-b border-inverse-surface"><div class="flex items-center gap-space-md"><img alt="LigaPro SIGEC-LP Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrB3xiEylcx8yxJh6M0sxga_M-fXg3HhJAh-c_WafR2xlAx2wzR2gW-EWvL9b81FalXdOh7N_hJv71x919_6-MkML-_I57QuSQfmNcU47upNCPTsHk-jHNIR0eFE50TAVGVOFawUEeFY2h_dbVd8Wf0M00VDnA7Dqk5qZSBbsLUhZyBg1z01cqnbFuWed9-erP4VveSFUiRSVCtDSWhlcKm93rFf2C53DFEDGEi09-_u"/><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-title-md text-title-md text-on-primary font-bold tracking-tight">SIGEC-LP</span><span class="bg-secondary text-on-secondary font-label-caps text-label-caps px-space-xs py-0.5 rounded">PRO</span></div><span class="font-body-sm text-[10px] text-on-primary-container leading-none uppercase tracking-wider">Sistema Integral de Competiciones</span></div><div class="hidden xl:block h-6 w-px bg-inverse-surface mx-space-xs"></div><div class="hidden xl:flex items-center bg-inverse-surface/60 rounded px-space-sm py-1"><span class="material-symbols-outlined text-on-primary-container text-sm mr-1.5">trophy</span><span class="font-label-caps text-label-caps text-on-primary uppercase tracking-wide">Temporada 2025 - Serie A / Serie B</span></div></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs bg-inverse-surface/80 px-space-sm py-1 rounded"><span class="material-symbols-outlined text-sport-success text-sm">schedule</span><span class="font-label-caps text-label-caps text-on-primary-container mr-1">UTC-5 EC:</span><span class="font-mono-table text-mono-table text-on-primary font-bold tracking-wider">18:42:09</span></div><div class="hidden md:flex items-center bg-inverse-surface/50 rounded p-0.5 gap-0.5"><button class="p-1 text-on-primary-container hover:text-high-contrast-accent hover:bg-inverse-surface rounded transition-colors" title="Modo Alto Contraste" type="button"><span class="material-symbols-outlined text-base">contrast</span></button><button class="px-1.5 py-0.5 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded font-label-caps text-label-caps" title="Reducir Texto A-" type="button">A-</button><button class="px-1.5 py-0.5 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded font-label-caps text-label-caps" title="Aumentar Texto A+" type="button">A+</button><button class="p-1 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded transition-colors" title="Alertas Visuales Accesibles" type="button"><span class="material-symbols-outlined text-base">hearing</span></button></div><button class="relative p-1.5 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded transition-colors" title="Notificaciones Reglamentarias" type="button"><span class="material-symbols-outlined text-xl">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-sport-danger"></span></button><div class="flex items-center gap-space-sm pl-space-xs border-l border-inverse-surface"><div class="flex flex-col text-right hidden sm:flex"><span class="font-title-md text-body-sm text-on-primary font-semibold leading-tight">Ab. Comisario LigaPro</span><span class="font-label-caps text-[10px] text-on-primary-container uppercase">Dirección de Competiciones</span></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-secondary" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSacWCeuAAENmbzFg-bZ637A1mJFVBa6rvFnexwNvRQQbAF3HGnomjFNfqL1zzok3CW0J3fVxMC2Cu5dfwlKJ5_VPOG6EtKPSvimhHMOq9qs3SPMY8KqUsxyiQE2kGe2hzAazL-tvwBW9vFW25MR6aH_AOmV4scZcuUqiihEdXV8eV5daHsOzd6ZjOSXm4WsHBROJQ0IX02JSNn2Ib5I6IUeUMiVOW7zl07vOg3myw"/></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-72 bg-surface-card z-40 flex flex-col border-r border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.02)]"><div class="p-space-md border-b border-border-subtle"><div class="flex items-center justify-between bg-surface-container-low px-space-sm py-2 rounded border border-border-subtle"><div class="flex items-center gap-space-xs"><span class="inline-block w-2.5 h-2.5 rounded-full bg-sport-success animate-pulse"></span><span class="font-label-caps text-label-caps text-text-primary uppercase">COMET Enlace Activo</span></div><span class="font-mono-table text-[11px] text-sport-success font-semibold">SYNC</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-xs"><div class="px-space-sm py-1 font-label-caps text-label-caps text-text-secondary uppercase tracking-wider">Administración LigaPro</div><nav class="flex flex-col gap-0.5 mt-1" data-active-classes="bg-secondary text-on-secondary font-semibold shadow-sm"><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2.5 rounded transition-colors bg-secondary text-on-secondary font-semibold shadow-sm" data-path="tablero-general" href="#"><span class="material-symbols-outlined text-xl">space_dashboard</span><span>Tablero General</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="competiciones-formatos" href="#"><span class="material-symbols-outlined text-xl">emoji_events</span><span>Competiciones &amp; Formatos</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="calificacion-escenarios" href="#"><span class="material-symbols-outlined text-xl">stadium</span><span>Escenarios &amp; VAR (Z)</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="designacion-uniformes" href="#"><span class="material-symbols-outlined text-xl">checkroom</span><span>Designación de Uniformes</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="consola-matchday" href="#"><span class="material-symbols-outlined text-xl">sports_soccer</span><span>Consola Comisario Matchday</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="portal-clubes" href="#"><span class="material-symbols-outlined text-xl">shield_person</span><span>Portal Clubes &amp; Trámites</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="posiciones-fair-play" href="#"><span class="material-symbols-outlined text-xl">leaderboard</span><span>Posiciones &amp; Fair Play</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="seguridad-criptografica" href="#"><span class="material-symbols-outlined text-xl">verified_user</span><span>Seguridad SHA-256</span></a></nav></div><div class="p-space-sm border-t border-border-subtle bg-surface-container-low/50"><div class="flex items-center justify-between text-text-secondary font-label-caps text-[10px]"><span>VERSION 4.2.1-SEC</span><span class="font-mono-table text-text-secondary">ID: LIGAPRO-EC</span></div></div></aside><div class="pl-72"><main class="relative w-full pt-16 bg-surface min-h-screen px-gutter-lg py-margin-md"><div class="flex flex-col w-full">
+<!-- Operational Broadcast Notice / Unified Schedule Banner -->
+<div class="relative w-full overflow-hidden rounded-xl bg-primary-container text-on-primary shadow-xl mb-space-lg">
+<div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-secondary-container/20 blur-3xl pointer-events-none"></div>
+<div class="relative p-space-md lg:p-space-lg flex flex-col xl:flex-row xl:items-center xl:justify-between gap-space-md">
+<div class="flex items-start sm:items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-sport-warning flex items-center justify-center text-primary-container shrink-0 shadow-md">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">timer</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-sport-danger text-on-error font-label-caps text-label-caps uppercase tracking-wider">
+<span class="material-symbols-outlined text-xs">priority_high</span> REGLAMENTO ART. 49
+            </span>
+<span class="font-label-caps text-label-caps text-primary-fixed uppercase tracking-wider">Protocolo de Cierre de Fase</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-primary font-bold tracking-tight mt-0.5">
+            Ventana Oficial de Horario Unificado: Fechas 14 &amp; 15
+          </h2>
+<p class="font-body-md text-body-md text-on-primary-container max-w-3xl mt-0.5">
+            Sincronización de kickoff vinculante a las 18:00 (UTC-5) para los 4 encuentros con incidencia directa en clasificación internacional y cuadrangulares. Prohibido diferir sin aval del Consejo de Presidentes.
+          </p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm bg-inverse-surface/80 rounded-lg p-space-sm xl:p-space-md shrink-0 border border-inverse-surface">
+<div class="flex flex-col text-right">
+<span class="font-label-caps text-label-caps text-sport-warning uppercase">Cierre Planillas COMET</span>
+<span class="font-mono-metric text-mono-metric text-on-primary font-bold tracking-tight" id="countdown-timer">02:44:18</span>
+</div>
+<button class="h-10 px-space-md rounded bg-secondary text-on-secondary font-title-md text-body-sm font-semibold hover:bg-secondary-container transition-colors flex items-center gap-1.5 shadow-sm" type="button">
+<span class="material-symbols-outlined text-sm">lock_clock</span> Sincronizar Árbitros
+        </button>
+</div>
+</div>
+</div>
+<!-- Header Executive Bar & Category Selector -->
+<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-space-md mb-space-lg bg-surface-card p-space-md lg:p-space-lg rounded-xl shadow-sm">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-xl">admin_panel_settings</span>
+<span class="font-label-caps text-label-caps text-text-secondary uppercase">Dirección de Competiciones &amp; Licenciamiento</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight font-extrabold">
+        Consola Ejecutiva de Torneos LigaPro
+      </h1>
+<p class="font-body-md text-body-md text-text-secondary">
+        Monitoreo en vivo de operativos de partido, elegibilidad COMET, uniformidad TV y gobernanza de campo.
+      </p>
+</div>
+<!-- Segmented Tournament Selector Switch -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-xs bg-surface-container-low p-1.5 rounded-lg border border-border-subtle self-start lg:self-center">
+<button class="flex items-center justify-center gap-2 px-space-md py-2 rounded bg-surface-card text-secondary font-title-md text-body-sm font-bold shadow-sm border border-secondary/20 transition-all" type="button">
+<span class="w-2.5 h-2.5 rounded-full bg-sport-success inline-block"></span>
+<span>Serie A 2025: Fase Inicial</span>
+<span class="font-mono-table text-[11px] px-1.5 py-0.2 rounded bg-secondary/10 text-secondary">F-14 / 30</span>
+</button>
+<button class="flex items-center justify-center gap-2 px-space-md py-2 rounded text-text-secondary hover:text-text-primary hover:bg-surface-card/60 font-body-md text-body-sm transition-all" type="button">
+<span class="w-2 h-2 rounded bg-outline inline-block"></span>
+<span>Serie B (Fase Clasificación)</span>
+<span class="font-mono-table text-[11px] px-1.5 py-0.2 rounded bg-surface-container text-text-secondary">F-11</span>
+</button>
+<button class="p-2 text-text-secondary hover:text-text-primary rounded hover:bg-surface-container transition-colors" title="Filtro Avanzado de Jornada" type="button">
+<span class="material-symbols-outlined text-lg">calendar_month</span>
+</button>
+</div>
+</div>
+<!-- Regulatory Multi-Sensory KPIs (Accessible: Shape + Color + Label) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md mb-space-xl">
+<!-- KPI 1: Clubes Habilitados -->
+<div class="bg-surface-card p-space-md rounded-xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-text-secondary uppercase">Elegibilidad Financiera</span>
+<span class="font-mono-metric text-mono-metric text-text-primary font-extrabold mt-1">16 / 16</span>
+</div>
+<!-- Shape: Filled Circle (Valid / Compliant) -->
+<div class="w-10 h-10 rounded-full bg-sport-success/15 text-sport-success flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="mt-space-md">
+<div class="flex items-center justify-between text-body-sm mb-1.5">
+<span class="font-body-sm text-body-sm text-text-secondary font-medium">Control Económico DNCF</span>
+<span class="font-mono-table text-mono-table text-sport-success font-bold">100% Cumplido</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-sport-success rounded-full w-full"></div>
+</div>
+<div class="mt-2.5 flex items-center gap-1.5 font-label-caps text-[10px] text-text-secondary">
+<span class="inline-block w-2 h-2 rounded-full bg-sport-success"></span>
+<span>CERO SANCIONES DE PUNTOS VIGENTES</span>
+</div>
+</div>
+</div>
+<!-- KPI 2: Estadios Calificados -->
+<div class="bg-surface-card p-space-md rounded-xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-text-secondary uppercase">Inspección de Escenarios</span>
+<span class="font-mono-metric text-mono-metric text-text-primary font-extrabold mt-1">18 / 18</span>
+</div>
+<!-- Shape: Triangle / Warning Symbol -->
+<div class="w-10 h-10 rounded-lg bg-sport-warning/20 text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+</div>
+<div class="mt-space-md">
+<div class="flex items-center justify-between text-body-sm mb-1">
+<span class="font-body-sm text-body-sm text-text-secondary font-medium">15 FIFA Quality Pro</span>
+<span class="font-mono-table text-[11px] text-sport-danger font-semibold">3 Advertidos</span>
+</div>
+<div class="flex items-center gap-1 w-full h-1.5 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-sport-success rounded-l-full w-[83%]"></div>
+<div class="h-full bg-sport-warning rounded-r-full w-[17%]"></div>
+</div>
+<div class="mt-2.5 flex items-center gap-1.5 font-label-caps text-[10px] text-text-secondary">
+<span class="inline-block w-2 h-2 bg-sport-warning rotate-45"></span>
+<span>CORTE DE CÉSPED: 3 CANCHAS EN 24.8mm (LÍM. 25)</span>
+</div>
+</div>
+</div>
+<!-- KPI 3: Partidos en Fecha Actual -->
+<div class="bg-surface-card p-space-md rounded-xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-text-secondary uppercase">Jornada 14 - Disputa</span>
+<span class="font-mono-metric text-mono-metric text-text-primary font-extrabold mt-1">8 Partidos</span>
+</div>
+<!-- Shape: Hexagon / Shield for Tech -->
+<div class="w-10 h-10 rounded-lg bg-secondary-container/10 text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">videocam</span>
+</div>
+</div>
+<div class="mt-space-md">
+<div class="flex items-center justify-between text-body-sm mb-1.5">
+<span class="font-body-sm text-body-sm text-text-secondary">Soporte VAR Hawkeye</span>
+<span class="font-mono-table text-mono-table text-secondary font-bold">100% Cobertura</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 bg-surface-container-low text-text-primary font-label-caps text-[10px] rounded font-bold">4 CONFIRMADOS</span>
+<span class="px-2 py-0.5 bg-sport-danger/10 text-sport-danger font-label-caps text-[10px] rounded font-bold">2 UNIFICADOS FIFA</span>
+</div>
+<div class="mt-2.5 flex items-center gap-1.5 font-label-caps text-[10px] text-text-secondary">
+<span class="inline-block w-2 h-2 rounded bg-secondary"></span>
+<span>FIBRA ÓPTICA Y VOR ACTIVOS</span>
+</div>
+</div>
+</div>
+<!-- KPI 4: Multas y Recaudación Disciplinaria -->
+<div class="bg-surface-card p-space-md rounded-xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-text-secondary uppercase">Régimen Disciplinario Actas</span>
+<span class="font-mono-metric text-mono-metric text-sport-danger font-extrabold mt-1">$14,500</span>
+</div>
+<!-- Shape: Square / Disciplinary Block -->
+<div class="w-10 h-10 rounded-lg bg-sport-danger/10 text-sport-danger flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">gavel</span>
+</div>
+</div>
+<div class="mt-space-md">
+<div class="flex items-center justify-between text-body-sm text-text-secondary mb-1">
+<span>Amarillas ($20 c/u)</span>
+<span class="font-mono-table text-text-primary font-semibold">$3,200</span>
+</div>
+<div class="flex items-center justify-between text-body-sm text-text-secondary mb-1">
+<span>Atraso Salida ($500 c/min)</span>
+<span class="font-mono-table text-text-primary font-semibold">$4,500</span>
+</div>
+<div class="flex items-center justify-between text-body-sm text-text-secondary">
+<span>Pirotecnia no autorizada</span>
+<span class="font-mono-table text-sport-danger font-bold">$6,800</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Grid: Partidos de la Fecha & Operaciones Críticas -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg mb-space-xl">
+<!-- Left Column (8 Cols): Matchday Broadcast Command Console -->
+<div class="xl:col-span-8 flex flex-col gap-space-md">
+<div class="flex items-center justify-between bg-surface-card p-space-md rounded-xl shadow-sm">
+<div class="flex items-center gap-space-sm">
+<span class="p-2 bg-secondary/10 text-secondary rounded-lg">
+<span class="material-symbols-outlined text-xl">sports_soccer</span>
+</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary font-bold">
+              Programación de Partidos Oficiales
+            </h3>
+<span class="font-body-sm text-body-sm text-text-secondary">
+              Auditoría previa a 3 horas de pitazo inicial. Protocolo COMET-LigaPro.
+            </span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded bg-surface-container-low text-text-secondary hover:text-text-primary font-label-caps text-label-caps uppercase transition-colors" type="button">
+            Filtrar por Estadio
+          </button>
+<button class="px-3 py-1.5 rounded bg-secondary text-on-secondary font-label-caps text-label-caps uppercase font-bold flex items-center gap-1 shadow-sm" type="button">
+<span class="material-symbols-outlined text-xs">download</span> Descargar Planilla Matchday
+          </button>
+</div>
+</div>
+<!-- Match Card 1: LDU Quito vs Barcelona SC (Clásico Nacional) -->
+<div class="bg-surface-card rounded-xl p-space-md lg:p-space-lg shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-secondary"></div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pb-space-md border-b border-border-subtle">
+<!-- Game Category & Venue -->
+<div class="flex items-center gap-2 flex-wrap">
+<span class="px-2 py-0.5 rounded bg-secondary text-on-secondary font-label-caps text-[10px] font-bold uppercase tracking-wider">
+              PARTIDO CLASE A - ALTO RIESGO
+            </span>
+<span class="flex items-center gap-1 font-body-sm text-body-sm text-text-secondary">
+<span class="material-symbols-outlined text-sm">stadium</span>
+              Estadio Rodrigo Paz Delgado (Quito, 2,850m)
+            </span>
+<span class="font-mono-table text-body-sm text-text-secondary">| Césped: 21mm (OK)</span>
+</div>
+<!-- Timing & Status -->
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-sport-success/10 text-sport-success font-label-caps text-label-caps uppercase font-bold">
+<span class="w-2 h-2 rounded-full bg-sport-success"></span> COMET OK: EN REVISIÓN 60 MIN
+            </span>
+<span class="font-mono-metric text-headline-sm text-secondary font-black">HOY 18:00</span>
+</div>
+</div>
+<!-- Teams Scoreboard and Details -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md my-space-md items-center">
+<!-- Home Team: LDU Quito -->
+<div class="md:col-span-5 flex items-center justify-end gap-space-md text-right">
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-text-primary font-black tracking-tight leading-tight">LDU Quito</span>
+<span class="font-label-caps text-label-caps text-text-secondary">Local (Blanco Tradicional)</span>
+<div class="flex items-center justify-end gap-1 mt-1">
+<span class="inline-block w-4 h-4 rounded-full bg-[#FFFFFF] border border-border-strong" title="Camiseta Blanca"></span>
+<span class="inline-block w-4 h-4 rounded-full bg-[#FFFFFF] border border-border-strong" title="Pantaloneta Blanca"></span>
+<span class="inline-block w-4 h-4 rounded-full bg-[#FFFFFF] border border-border-strong" title="Polainas Blancas"></span>
+<span class="font-label-caps text-[10px] text-sport-success ml-1 font-bold">WCAG 12.8:1</span>
+</div>
+</div>
+<img class="w-14 h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-sm shrink-0" data-alt="Official soccer crest shield of Liga Deportiva Universitaria LDU Quito with red university U letter on sharp white background and four championship stars, vector football emblem style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAanpgjHnIwtRRzoXtxHB7AlXF98yl6VKDwnK-y91gSYCB4f0PBBW9VJLQ6HHeH1x59w7DdLD7PVnMJ0GvqSBOs3Uq1Kz8sdeEcv3fArOJKx6TR1FB_7sGVLvlitfCdrmNMvfeefkP7Y9O-E4lk24zG5ejS2nWH3VWx19-HrDSjfcw3M5ZL3nGYe0re6fnQpUP062TYDHFb7ObGdjTi5n0UFtxYmTXiXGphUeOiUdbG"/>
+</div>
+<!-- VS Badge / Broadcast Window -->
+<div class="md:col-span-2 flex flex-col items-center justify-center text-center py-2">
+<span class="font-mono-table text-xs text-text-secondary uppercase tracking-widest font-bold">FECHA 14</span>
+<div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-body-md text-text-primary font-extrabold my-1 shadow-inner">
+              VS
+            </div>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-text-secondary font-label-caps text-[10px]">TV CH-1 GOLTV</span>
+</div>
+<!-- Away Team: Barcelona SC -->
+<div class="md:col-span-5 flex items-center justify-start gap-space-md text-left">
+<img class="w-14 h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-sm shrink-0" data-alt="Official soccer club crest shield of Barcelona Sporting Club Guayaquil with vertical yellow and red stripes and black accents, modern professional sports emblem vector style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQm5q3g_LQy_pAgqBzeIZrPmAoI0QMAt__1U-5DN2lix5AmwzLt4DeC6nqcpgh3K_ixEeYrxbd7IBrpNzeBBKYfCaWMhl7nzViIu4Ec7jSEJ8OguQiq8FnEXLaX8S4vJne7_HxU92qnaGEa0bx5opARAytdA-DC08vTTKKef-_G8Is4MmDnddHfc_hoyw8lC2BGEAhEpk6ZSShPKfWciIdjNvntEXVFjXMMvzR2QJN"/>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-text-primary font-black tracking-tight leading-tight">Barcelona SC</span>
+<span class="font-label-caps text-label-caps text-text-secondary">Visitante (Alterna Naranja/Gris)</span>
+<div class="flex items-center justify-start gap-1 mt-1">
+<span class="inline-block w-4 h-4 rounded-full bg-[#FF7900]" title="Camiseta Naranja Especial"></span>
+<span class="inline-block w-4 h-4 rounded-full bg-[#1A1A1A]" title="Pantaloneta Negra"></span>
+<span class="inline-block w-4 h-4 rounded-full bg-[#FF7900]" title="Polainas Naranjas"></span>
+<span class="font-label-caps text-[10px] text-sport-success ml-1 font-bold">WCAG 8.4:1</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Official Match Crew Accordion / Metadata -->
+<div class="bg-surface-container-low/70 rounded-lg p-space-sm flex flex-col md:flex-row items-center justify-between gap-space-sm text-text-secondary font-body-sm text-body-sm">
+<div class="flex items-center gap-space-md flex-wrap">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-base">badge</span>
+<span><strong>Comisario LigaPro:</strong> Ab. Carlos Morales V.</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sport-warning text-base">sports</span>
+<span><strong>Árbitro Central:</strong> Augusto Aragón (FIFA)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-base">support_agent</span>
+<span><strong>VAR:</strong> Bryan Loayza</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-[10px] text-sport-success font-bold uppercase tracking-wider bg-sport-success/15 px-2 py-0.5 rounded">
+              Pasabolas: 12 acreditados
+            </span>
+<button class="text-secondary hover:text-secondary-container font-label-caps text-label-caps uppercase font-bold flex items-center" type="button">
+              Revisar Acta <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Match Card 2: Independiente del Valle vs Emelec -->
+<div class="bg-surface-card rounded-xl p-space-md lg:p-space-lg shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-secondary"></div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pb-space-md border-b border-border-subtle">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="px-2 py-0.5 rounded bg-surface-container text-text-primary font-label-caps text-[10px] font-bold uppercase tracking-wider">
+              PARTIDO CLASE B
+            </span>
+<span class="flex items-center gap-1 font-body-sm text-body-sm text-text-secondary">
+<span class="material-symbols-outlined text-sm">stadium</span>
+              Estadio Banco Guayaquil (Sangolquí)
+            </span>
+<span class="font-mono-table text-body-sm text-text-secondary">| Césped: 22mm</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-sport-warning/20 text-on-surface font-label-caps text-label-caps uppercase font-bold">
+<span class="w-2 h-2 rounded bg-sport-warning"></span> UNIFORME ÁRBITRO EN VALIDACIÓN
+            </span>
+<span class="font-mono-metric text-headline-sm text-secondary font-black">HOY 20:30</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md my-space-md items-center">
+<!-- Home Team: IDV -->
+<div class="md:col-span-5 flex items-center justify-end gap-space-md text-right">
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-text-primary font-black tracking-tight leading-tight">Ind. del Valle</span>
+<span class="font-label-caps text-label-caps text-text-secondary">Local (Negro y Rosa Fucsia)</span>
+<div class="flex items-center justify-end gap-1 mt-1">
+<span class="inline-block w-4 h-4 rounded-full bg-[#000000]" title="Camiseta Negra con Fucsia"></span>
+<span class="inline-block w-4 h-4 rounded-full bg-[#000000]" title="Pantaloneta Negra"></span>
+<span class="inline-block w-4 h-4 rounded-full bg-[#FF007F]" title="Polainas Rosa"></span>
+<span class="font-label-caps text-[10px] text-sport-success ml-1 font-bold">WCAG 10.1:1</span>
+</div>
+</div>
+<img class="w-14 h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-sm shrink-0" data-alt="Official soccer crest shield of Independiente del Valle club with classic black and bright magenta shield stripes and bold IDV lettering, modern vector sports crest." src="https://lh3.googleusercontent.com/aida-public/AB6AXuARukmE4j4H_Yp5zt-T4AsyD3dGSa7UkE8XlKfIcZ7GAWSHyxy0qlUFO1ttrkuZ_GAvz-QoeaKA3wllcdhcqttaOLsEjASCVkY9T8EclU78FqaWRL32D0Iwqzcry5ukWVt2q6viZAM3cvVhrBEZc_A0ZKXjGz9eVaSKITjbJKgq5nGDbzgylLJIHKC2jsxUb_3K7mGSauwDB33j4SvBQ-d8vF5P2F7zusv9Zj8PuMJx"/>
+</div>
+<div class="md:col-span-2 flex flex-col items-center justify-center text-center py-2">
+<span class="font-mono-table text-xs text-text-secondary uppercase tracking-widest font-bold">FECHA 14</span>
+<div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-body-md text-text-primary font-extrabold my-1 shadow-inner">
+              VS
+            </div>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-text-secondary font-label-caps text-[10px]">TV CH-2 STAR+</span>
+</div>
+<!-- Away Team: CS Emelec -->
+<div class="md:col-span-5 flex items-center justify-start gap-space-md text-left">
+<img class="w-14 h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-sm shrink-0" data-alt="Official soccer crest of Club Sport Emelec featuring deep blue shield with diagonal silver sash and bright stars, authentic Ecuadorian football badge design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqc9z1vS4k5o9CDE9WCdMbsB7-Ibrdi4zlzKuz9R8VITUiiuEsTo5uW0H_pearm9q03wshHSGBlAHK5sNOBpJGszH1JPCfNkJ9DXF2ruerGVHsggpsjRORxobhCDA4vQdCzrF5v5O3cntZfKXb_EYbZlawHveekMTTBc0q20xn_tG9A3kOjO-4wOVCHv32_dZg462UsHJchgOWlZIFkK_XHWqzn8O0wpQhugL8319g"/>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-text-primary font-black tracking-tight leading-tight">CS Emelec</span>
+<span class="font-label-caps text-label-caps text-text-secondary">Visitante (Celeste / Blanco)</span>
+<div class="flex items-center justify-start gap-1 mt-1">
+<span class="inline-block w-4 h-4 rounded-full bg-[#75AADB]" title="Camiseta Celeste Claro"></span>
+<span class="inline-block w-4 h-4 rounded-full bg-[#FFFFFF] border border-border-subtle" title="Pantaloneta Blanca"></span>
+<span class="inline-block w-4 h-4 rounded-full bg-[#75AADB]" title="Polainas Celestes"></span>
+<span class="font-label-caps text-[10px] text-sport-warning ml-1 font-bold">WCAG 5.2:1</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low/70 rounded-lg p-space-sm flex flex-col md:flex-row items-center justify-between gap-space-sm text-text-secondary font-body-sm text-body-sm">
+<div class="flex items-center gap-space-md flex-wrap">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-base">badge</span>
+<span><strong>Comisario LigaPro:</strong> Ing. Mayra Cajas</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sport-warning text-base">sports</span>
+<span><strong>Árbitro Central:</strong> Guillermo Guerrero</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-[10px] text-sport-success font-bold uppercase tracking-wider bg-sport-success/15 px-2 py-0.5 rounded">
+              Pasabolas: 8 acreditados
+            </span>
+<button class="text-secondary hover:text-secondary-container font-label-caps text-label-caps uppercase font-bold flex items-center" type="button">
+              Aprobar Uniforme Árbitro <span class="material-symbols-outlined text-sm">done_all</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Match Card 3: Aucas vs El Nacional -->
+<div class="bg-surface-card rounded-xl p-space-md lg:p-space-lg shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-text-secondary"></div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pb-space-md border-b border-border-subtle">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="px-2 py-0.5 rounded bg-surface-container text-text-primary font-label-caps text-[10px] font-bold uppercase tracking-wider">
+              CLÁSICO DE QUITO SUR
+            </span>
+<span class="flex items-center gap-1 font-body-sm text-body-sm text-text-secondary">
+<span class="material-symbols-outlined text-sm">stadium</span>
+              Estadio Gonzalo Pozo Ripalda (Chillogallo)
+            </span>
+<span class="font-mono-table text-body-sm text-sport-warning font-semibold">| Advertencia Césped: 24.9mm</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-sport-success/10 text-sport-success font-label-caps text-label-caps uppercase font-bold">
+<span class="w-2 h-2 rounded-full bg-sport-success"></span> AUDITORÍA COMPLETA
+            </span>
+<span class="font-mono-metric text-headline-sm text-text-primary font-black">DOM 13:00</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md my-space-md items-center">
+<div class="md:col-span-5 flex items-center justify-end gap-space-md text-right">
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-text-primary font-black tracking-tight leading-tight">SD Aucas</span>
+<span class="font-label-caps text-label-caps text-text-secondary">Local (Amarillo Oro / Rojo)</span>
+<div class="flex items-center justify-end gap-1 mt-1">
+<span class="inline-block w-4 h-4 rounded-full bg-[#FFD100]" title="Camiseta Amarilla"></span>
+<span class="inline-block w-4 h-4 rounded-full bg-[#D92D20]" title="Pantaloneta Roja"></span>
+<span class="inline-block w-4 h-4 rounded-full bg-[#FFD100]" title="Polainas Amarillas"></span>
+<span class="font-label-caps text-[10px] text-sport-success ml-1 font-bold">WCAG 9.2:1</span>
+</div>
+</div>
+<img class="w-14 h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-sm shrink-0" data-alt="Official soccer crest shield of Sociedad Deportiva Aucas with yellow and red native warrior face profile mascot, Ecuadorian historical football emblem vector." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF2haVEBhO5ujy-DgHHevPGi67bHLWL5WlNLwUbjhc_ye9Pg-2-kb1DQyskzbxHjlzujpgvZ2vqGQEM0BOrfYHrAwhNlknmBuZ9nLqEMKa1mlHYQPvh8G09Qe3sC40FGtwJFpppjLxr5ae5i32smVshNeMFWHVk-WJzkK1hEkdJi3vX7Hn-FXPtENg1lUWzsLIcwNnFysr5pakPENKO7mtGa6sHaj9huxG6zNkDkkO"/>
+</div>
+<div class="md:col-span-2 flex flex-col items-center justify-center text-center py-2">
+<span class="font-mono-table text-xs text-text-secondary uppercase tracking-widest font-bold">FECHA 14</span>
+<div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-body-md text-text-primary font-extrabold my-1 shadow-inner">
+              VS
+            </div>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-text-secondary font-label-caps text-[10px]">TV ABIERTA TELEAMAZONAS</span>
+</div>
+<div class="md:col-span-5 flex items-center justify-start gap-space-md text-left">
+<img class="w-14 h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-sm shrink-0" data-alt="Official soccer crest shield of Club Deportivo El Nacional with military tri-color red skyblue and darkblue sash, Ecuador armed forces team emblem vector design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADXvXQePSLnd36UQOXETOsY-nwiVrfPPCK5Bo5ostN2tbz0uQGjmXx-Fb05o8EzlxxZU16s7-TLKwp49zTGhyMbCBnBQpM3RTUBkgrUBl-wivs_gaV5ySxYl7NnBRdObb2SfuZHbr3HRv5eFGK_780GN9iSxCm5wP3A600RNlKtsHqqF7Vi7xIqDvz_-7Y6o--ymYxeb8K-8hr3WY4jG_qdoN4jdi_994ZM6wKgZTr"/>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-text-primary font-black tracking-tight leading-tight">CD El Nacional</span>
+<span class="font-label-caps text-label-caps text-text-secondary">Visitante (Rojo Carmesí)</span>
+<div class="flex items-center justify-start gap-1 mt-1">
+<span class="inline-block w-4 h-4 rounded-full bg-[#8B0000]" title="Camiseta Carmesí"></span>
+<span class="inline-block w-4 h-4 rounded-full bg-[#8B0000]" title="Pantaloneta Carmesí"></span>
+<span class="inline-block w-4 h-4 rounded-full bg-[#001F3F]" title="Polainas Azul Marino"></span>
+<span class="font-label-caps text-[10px] text-sport-success ml-1 font-bold">WCAG 7.1:1</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low/70 rounded-lg p-space-sm flex flex-col md:flex-row items-center justify-between gap-space-sm text-text-secondary font-body-sm text-body-sm">
+<div class="flex items-center gap-space-md flex-wrap">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-base">badge</span>
+<span><strong>Comisario LigaPro:</strong> Lcdo. Patricio Sánchez</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sport-warning text-base">sports</span>
+<span><strong>Árbitro Central:</strong> Franklin Congo</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-[10px] text-sport-success font-bold uppercase tracking-wider bg-sport-success/15 px-2 py-0.5 rounded">
+              Pasabolas: 12 autorizados
+            </span>
+<button class="text-secondary hover:text-secondary-container font-label-caps text-label-caps uppercase font-bold flex items-center" type="button">
+              Revisar Acta <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (4 Cols): Regulatory Tools & Inspection Monitors -->
+<div class="xl:col-span-4 flex flex-col gap-space-md">
+<!-- Quick Action Tools Accordion / Launcher -->
+<div class="bg-surface-card p-space-md rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-space-sm pb-space-xs border-b border-border-subtle">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-xl">bolt</span>
+<h3 class="font-title-md text-title-md text-text-primary font-bold">Herramientas Oficiales</h3>
+</div>
+<span class="font-label-caps text-[10px] text-text-secondary uppercase">Acceso Rápido</span>
+</div>
+<div class="grid grid-cols-1 gap-2.5">
+<!-- Tool 1: Calificación en Z -->
+<a class="group p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-all flex items-center justify-between border border-transparent hover:border-secondary/20" href="#">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-secondary text-on-secondary flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-xl">stadium</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-body-sm text-text-primary font-bold group-hover:text-secondary transition-colors">
+                  Calificación Escenarios (Muestreo en Z)
+                </span>
+<span class="font-body-sm text-[11px] text-text-secondary">
+                  5 puntos de altimetría y tracción botín
+                </span>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-secondary group-hover:text-secondary group-hover:translate-x-1 transition-all">chevron_right</span>
+</a>
+<!-- Tool 2: Asistente de Uniformes 48h -->
+<a class="group p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-all flex items-center justify-between border border-transparent hover:border-secondary/20" href="#">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-xl">checkroom</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-body-sm text-text-primary font-bold group-hover:text-secondary transition-colors">
+                  Asistente de Uniformes 48h
+                </span>
+<span class="font-body-sm text-[11px] text-text-secondary">
+                  Matriz de contraste cromático TV WCAG
+                </span>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-secondary group-hover:text-secondary group-hover:translate-x-1 transition-all">chevron_right</span>
+</a>
+<!-- Tool 3: Pasabolas Reglamentarios -->
+<a class="group p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-all flex items-center justify-between border border-transparent hover:border-secondary/20" href="#">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-inverse-surface text-on-primary flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-xl">groups</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-body-sm text-text-primary font-bold group-hover:text-secondary transition-colors">
+                  Designación Pasabolas (8 o 12)
+                </span>
+<span class="font-body-sm text-[11px] text-text-secondary">
+                  Cédulas, edades y ubicación perimetral
+                </span>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-secondary group-hover:text-secondary group-hover:translate-x-1 transition-all">chevron_right</span>
+</a>
+<!-- Tool 4: Gestión Disciplinaria -->
+<a class="group p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-all flex items-center justify-between border border-transparent hover:border-secondary/20" href="#">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-sport-danger text-on-error flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-xl">gavel</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-body-sm text-text-primary font-bold group-hover:text-secondary transition-colors">
+                  Gestión Disciplinaria &amp; Multas
+                </span>
+<span class="font-body-sm text-[11px] text-text-secondary">
+                  Liquidación automática COMET a Clubes
+                </span>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-secondary group-hover:text-secondary group-hover:translate-x-1 transition-all">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Pitch "Z-Pattern" Inspection Visual Widget -->
+<div class="bg-surface-card p-space-md rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sport-success text-xl">grass</span>
+<h3 class="font-title-md text-title-md text-text-primary font-bold">Muestreo en Z (Césped)</h3>
+</div>
+<span class="font-mono-table text-[11px] px-2 py-0.5 rounded bg-sport-success/15 text-sport-success font-bold">NORMA 20-25mm</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mb-space-sm">
+          Monitoreo de altimetría láser en 5 vértices antes del calentamiento oficial:
+        </p>
+<!-- Pitch Vector Graphic with Z-Path -->
+<div class="relative w-full h-44 bg-surface-container-high rounded-lg overflow-hidden p-2 flex items-center justify-center border border-border-subtle">
+<!-- Football Pitch Lines SVG -->
+<svg class="w-full h-full text-on-surface/15" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 300 180">
+<!-- Outer Field & Midline -->
+<rect height="160" rx="4" stroke="currentColor" width="280" x="10" y="10"></rect>
+<line stroke="currentColor" x1="150" x2="150" y1="10" y2="170"></line>
+<circle cx="150" cy="90" r="26" stroke="currentColor"></circle>
+<!-- Penalty Areas -->
+<rect height="90" stroke="currentColor" width="40" x="10" y="45"></rect>
+<rect height="90" stroke="currentColor" width="40" x="250" y="45"></rect>
+<!-- Z Path overlay in High Contrast Blue -->
+<path d="M 30 30 L 270 30 L 30 150 L 270 150" fill="none" stroke="#0041c9" stroke-dasharray="6 4" stroke-width="3"></path>
+<!-- 5 Sampling Nodes -->
+<circle cx="30" cy="30" fill="#00A859" r="6" stroke="#ffffff" stroke-width="2"></circle>
+<circle cx="270" cy="30" fill="#00A859" r="6" stroke="#ffffff" stroke-width="2"></circle>
+<circle cx="150" cy="90" fill="#00A859" r="6" stroke="#ffffff" stroke-width="2"></circle>
+<circle cx="30" cy="150" fill="#FFD100" r="6" stroke="#ffffff" stroke-width="2"></circle>
+<circle cx="270" cy="150" fill="#00A859" r="6" stroke="#ffffff" stroke-width="2"></circle>
+</svg>
+<!-- Floating Badges over nodes -->
+<div class="absolute top-2.5 left-5 bg-surface-card shadow-sm px-1.5 py-0.5 rounded text-[10px] font-mono-table font-bold text-sport-success">P1: 21mm</div>
+<div class="absolute top-2.5 right-5 bg-surface-card shadow-sm px-1.5 py-0.5 rounded text-[10px] font-mono-table font-bold text-sport-success">P2: 22mm</div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface-card shadow-sm px-1.5 py-0.5 rounded text-[10px] font-mono-table font-bold text-sport-success">Centro: 23mm</div>
+<div class="absolute bottom-2.5 left-5 bg-surface-card shadow-sm px-1.5 py-0.5 rounded text-[10px] font-mono-table font-bold text-on-surface bg-sport-warning/40">P4: 24.9mm !</div>
+<div class="absolute bottom-2.5 right-5 bg-surface-card shadow-sm px-1.5 py-0.5 rounded text-[10px] font-mono-table font-bold text-sport-success">P5: 22.5mm</div>
+</div>
+<div class="mt-space-sm flex items-center justify-between text-body-sm">
+<span class="font-body-sm text-[11px] text-text-secondary">Última medición: Chillogallo 11:30 AM</span>
+<span class="font-label-caps text-[11px] text-sport-warning font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">warning</span> Corte Exigido
+          </span>
+</div>
+</div>
+<!-- Quick Regulatory Log & Signature Verification -->
+<div class="bg-surface-card p-space-md rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-xl">verified</span>
+<h3 class="font-title-md text-title-md text-text-primary font-bold">Sellos Criptográficos</h3>
+</div>
+<span class="font-mono-table text-[11px] text-text-secondary">SHA-256</span>
+</div>
+<div class="space-y-2">
+<div class="p-2 rounded bg-surface-container-low text-xs flex flex-col gap-0.5">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-text-primary font-bold">Acta #1401 LDU vs BSC</span>
+<span class="font-label-caps text-sport-success font-bold">FIRMADA</span>
+</div>
+<span class="font-mono-table text-[10px] text-text-secondary truncate">7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069</span>
+</div>
+<div class="p-2 rounded bg-surface-container-low text-xs flex flex-col gap-0.5">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-text-primary font-bold">Acta #1402 IDV vs CSE</span>
+<span class="font-label-caps text-secondary font-bold">EN PROCESO</span>
+</div>
+<span class="font-mono-table text-[10px] text-text-secondary truncate">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Disciplinary Audit & Ball-Boys Perimeter Verification -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg mb-space-lg">
+<!-- Ball Boys & Match Protocol Protocol -->
+<div class="lg:col-span-6 bg-surface-card p-space-md lg:p-space-lg rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-2xl">sports_handball</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary font-bold">
+              Despliegue Perimetral de Pasabolas
+            </h3>
+<span class="font-body-sm text-body-sm text-text-secondary">
+              Esquema de neutralidad (Reglamento General LigaPro Art. 67)
+            </span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded bg-secondary-container/10 text-secondary font-label-caps text-label-caps font-bold">
+          ESTÁNDAR FIFA 12 BALONES
+        </span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm mb-space-md">
+<div class="bg-surface-container-low p-space-sm rounded-lg text-center">
+<span class="font-label-caps text-[10px] text-text-secondary block">LÍNEA LATERAL OESTE</span>
+<span class="font-mono-metric text-headline-sm font-bold text-text-primary">3</span>
+<span class="font-body-sm text-[10px] text-sport-success block font-semibold">Equidistantes</span>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-lg text-center">
+<span class="font-label-caps text-[10px] text-text-secondary block">LÍNEA LATERAL ESTE</span>
+<span class="font-mono-metric text-headline-sm font-bold text-text-primary">3</span>
+<span class="font-body-sm text-[10px] text-sport-success block font-semibold">Equidistantes</span>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-lg text-center">
+<span class="font-label-caps text-[10px] text-text-secondary block">FONDO NORTE</span>
+<span class="font-mono-metric text-headline-sm font-bold text-text-primary">3</span>
+<span class="font-body-sm text-[10px] text-sport-success block font-semibold">1 tras arco / 2 esquinas</span>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-lg text-center">
+<span class="font-label-caps text-[10px] text-text-secondary block">FONDO SUR</span>
+<span class="font-mono-metric text-headline-sm font-bold text-text-primary">3</span>
+<span class="font-body-sm text-[10px] text-sport-success block font-semibold">1 tras arco / 2 esquinas</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low text-text-secondary text-body-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sport-success text-base">check_circle</span>
+<span>Indumentaria neutra fluorescente entregada por el Comisario</span>
+</div>
+<button class="text-secondary font-label-caps text-label-caps font-bold uppercase hover:underline" type="button">
+          Ver Registro Fotográfico
+        </button>
+</div>
+</div>
+<!-- Live Compliance Log & Direct Resolution Stream -->
+<div class="lg:col-span-6 bg-surface-card p-space-md lg:p-space-lg rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sport-danger text-2xl">campaign</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary font-bold">
+              Alertas Disciplinarias &amp; Sanciones en Vivo
+            </h3>
+<span class="font-body-sm text-body-sm text-text-secondary">
+              Actas automáticas emitidas en la jornada actual
+            </span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-text-secondary font-mono-table text-xs font-bold">
+          ACTUALIZACIÓN DIRECTA
+        </span>
+</div>
+<div class="space-y-space-xs">
+<div class="p-space-sm rounded-lg bg-surface-container-low/70 flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-sport-danger text-lg shrink-0 mt-0.5">notification_important</span>
+<div class="flex flex-col">
+<span class="font-title-md text-body-sm text-text-primary font-bold">Multa por Ingreso Tardío al Campo (2do Tiempo)</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Club Deportivo Cuenca (2 minutos de retraso reglamentario)</span>
+</div>
+</div>
+<span class="font-mono-table text-body-sm text-sport-danger font-bold shrink-0">-$1,000 USD</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low/70 flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-sport-warning text-lg shrink-0 mt-0.5">warning</span>
+<div class="flex flex-col">
+<span class="font-title-md text-body-sm text-text-primary font-bold">Uso Indebido de Megafonía / Sonido Local</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Orense SC vs Macará - Reincidencia en advertencia previa</span>
+</div>
+</div>
+<span class="font-mono-table text-body-sm text-sport-danger font-bold shrink-0">-$800 USD</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low/70 flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-sport-success text-lg shrink-0 mt-0.5">check_circle</span>
+<div class="flex flex-col">
+<span class="font-title-md text-body-sm text-text-primary font-bold">Prueba de Luces LED 1300 Lux Superada</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Estadio Monumental Banco Pichincha - Transmisión 4K HDR</span>
+</div>
+</div>
+<span class="font-mono-table text-body-sm text-sport-success font-bold shrink-0">APROBADO</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple countdown timer micro-interaction for match kickoff deadline
+  (function initMatchdayCountdown() {
+    let secondsLeft = 2 * 3600 + 44 * 60 + 18;
+    const timerElem = document.getElementById('countdown-timer');
+    if (!timerElem) return;
+
+    setInterval(() => {
+      if (secondsLeft > 0) {
+        secondsLeft--;
+        const hrs = Math.floor(secondsLeft / 3600).toString().padStart(2, '0');
+        const mins = Math.floor((secondsLeft % 3600) / 60).toString().padStart(2, '0');
+        const secs = (secondsLeft % 60).toString().padStart(2, '0');
+        timerElem.textContent = `${hrs}:${mins}:${secs}`;
+      }
+    }, 1000);
+  })();
+</script></main></div>
+  </main>
+  <script type="module" src="src/lib/interactive.js"></script>
+</body>
+</html>

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"border-subtle":"#E2E8F0","on-tertiary-container":"#0090ae","secondary-fixed-dim":"#b6c4ff","on-secondary":"#ffffff","on-primary-fixed":"#101c2e","surface":"#f8f9ff","on-secondary-fixed-variant":"#0039b3","on-background":"#0b1c30","on-tertiary-fixed-variant":"#004e5f","surface-container-low":"#eff4ff","sport-warning":"#FFD100","on-tertiary-fixed":"#001f27","sport-success":"#00A859","on-surface":"#0b1c30","on-error-container":"#93000a","secondary-container":"#0356ff","surface-base":"#F8FAFC","error-container":"#ffdad6","inverse-primary":"#bbc7df","primary-fixed":"#d7e3fc","sport-danger":"#D92D20","surface-dim":"#cbdbf5","surface-container-lowest":"#ffffff","border-strong":"#CBD5E1","inverse-on-surface":"#eaf1ff","on-primary-container":"#79849b","on-primary-fixed-variant":"#3c475b","primary-fixed-dim":"#bbc7df","text-secondary":"#334155","surface-container":"#e5eeff","outline":"#75777d","inverse-surface":"#213145","secondary":"#0041c9","high-contrast-bg":"#000000","on-primary":"#ffffff","outline-variant":"#c5c6cd","on-secondary-fixed":"#001551","secondary-fixed":"#dce1ff","error":"#ba1a1a","high-contrast-accent":"#FFE600","primary":"#000000","on-surface-variant":"#45474c","surface-card":"#FFFFFF","surface-container-highest":"#d3e4fe","on-tertiary":"#ffffff","text-primary":"#0F172A","surface-tint":"#535f74","on-error":"#ffffff","background":"#f8f9ff","surface-container-high":"#dce9ff","surface-bright":"#f8f9ff","tertiary":"#000000","tertiary-container":"#001f27","tertiary-fixed":"#b4ebff","tertiary-fixed-dim":"#3cd7ff","surface-variant":"#d3e4fe","primary-container":"#101c2e","on-secondary-container":"#e4e7ff"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"margin-md":"1.5rem","space-2xl":"3rem","space-lg":"1.5rem","margin":"1rem","space-xs":"0.25rem","gutter":"1rem","space-sm":"0.5rem","space-md":"1rem","margin-lg":"2rem","space-xl":"2rem","gutter-lg":"1.5rem"},fontFamily:{"label-caps":["Plus Jakarta Sans"],"display-lg-mobile":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"mono-matchday":["JetBrains Mono"],"mono-metric":["JetBrains Mono"],"headline-sm":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"mono-table":["JetBrains Mono"],"body-md":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"]},fontSize:{"label-caps":["11px",{lineHeight:"14px",letterSpacing:"0.06em",fontWeight:"700"}],"display-lg-mobile":["30px",{lineHeight:"36px",letterSpacing:"-0.01em",fontWeight:"800"}],"body-sm":["12px",{lineHeight:"16px",fontWeight:"400"}],"mono-matchday":["20px",{lineHeight:"28px",fontWeight:"600"}],"mono-metric":["32px",{lineHeight:"36px",fontWeight:"700"}],"headline-sm":["20px",{lineHeight:"28px",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"24px",fontWeight:"400"}],"display-lg":["40px",{lineHeight:"48px",letterSpacing:"-0.02em",fontWeight:"800"}],"headline-md":["24px",{lineHeight:"32px",fontWeight:"700"}],"mono-table":["13px",{lineHeight:"18px",fontWeight:"500"}],"body-md":["14px",{lineHeight:"20px",fontWeight:"400"}],"title-md":["16px",{lineHeight:"24px",fontWeight:"600"}],"headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.01em",fontWeight:"700"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 h-16 bg-primary-container z-50 shadow-[0_1px_8px_rgba(0,0,0,0.12)] flex items-center justify-between px-gutter-lg border-b border-inverse-surface"><div class="flex items-center gap-space-md"><img alt="LigaPro SIGEC-LP Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrB3xiEylcx8yxJh6M0sxga_M-fXg3HhJAh-c_WafR2xlAx2wzR2gW-EWvL9b81FalXdOh7N_hJv71x919_6-MkML-_I57QuSQfmNcU47upNCPTsHk-jHNIR0eFE50TAVGVOFawUEeFY2h_dbVd8Wf0M00VDnA7Dqk5qZSBbsLUhZyBg1z01cqnbFuWed9-erP4VveSFUiRSVCtDSWhlcKm93rFf2C53DFEDGEi09-_u"/><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-title-md text-title-md text-on-primary font-bold tracking-tight">SIGEC-LP</span><span class="bg-secondary text-on-secondary font-label-caps text-label-caps px-space-xs py-0.5 rounded">PRO</span></div><span class="font-body-sm text-[10px] text-on-primary-container leading-none uppercase tracking-wider">Sistema Integral de Competiciones</span></div><div class="hidden xl:block h-6 w-px bg-inverse-surface mx-space-xs"></div><div class="hidden xl:flex items-center bg-inverse-surface/60 rounded px-space-sm py-1"><span class="material-symbols-outlined text-on-primary-container text-sm mr-1.5">trophy</span><span class="font-label-caps text-label-caps text-on-primary uppercase tracking-wide">Temporada 2025 - Serie A / Serie B</span></div></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs bg-inverse-surface/80 px-space-sm py-1 rounded"><span class="material-symbols-outlined text-sport-success text-sm">schedule</span><span class="font-label-caps text-label-caps text-on-primary-container mr-1">UTC-5 EC:</span><span class="font-mono-table text-mono-table text-on-primary font-bold tracking-wider">18:42:09</span></div><div class="hidden md:flex items-center bg-inverse-surface/50 rounded p-0.5 gap-0.5"><button class="p-1 text-on-primary-container hover:text-high-contrast-accent hover:bg-inverse-surface rounded transition-colors" title="Modo Alto Contraste" type="button"><span class="material-symbols-outlined text-base">contrast</span></button><button class="px-1.5 py-0.5 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded font-label-caps text-label-caps" title="Reducir Texto A-" type="button">A-</button><button class="px-1.5 py-0.5 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded font-label-caps text-label-caps" title="Aumentar Texto A+" type="button">A+</button><button class="p-1 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded transition-colors" title="Alertas Visuales Accesibles" type="button"><span class="material-symbols-outlined text-base">hearing</span></button></div><button class="relative p-1.5 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded transition-colors" title="Notificaciones Reglamentarias" type="button"><span class="material-symbols-outlined text-xl">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-sport-danger"></span></button><div class="flex items-center gap-space-sm pl-space-xs border-l border-inverse-surface"><div class="flex flex-col text-right hidden sm:flex"><span class="font-title-md text-body-sm text-on-primary font-semibold leading-tight">Ab. Comisario LigaPro</span><span class="font-label-caps text-[10px] text-on-primary-container uppercase">Dirección de Competiciones</span></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-secondary" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSacWCeuAAENmbzFg-bZ637A1mJFVBa6rvFnexwNvRQQbAF3HGnomjFNfqL1zzok3CW0J3fVxMC2Cu5dfwlKJ5_VPOG6EtKPSvimhHMOq9qs3SPMY8KqUsxyiQE2kGe2hzAazL-tvwBW9vFW25MR6aH_AOmV4scZcuUqiihEdXV8eV5daHsOzd6ZjOSXm4WsHBROJQ0IX02JSNn2Ib5I6IUeUMiVOW7zl07vOg3myw"/></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-72 bg-surface-card z-40 flex flex-col border-r border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.02)]"><div class="p-space-md border-b border-border-subtle"><div class="flex items-center justify-between bg-surface-container-low px-space-sm py-2 rounded border border-border-subtle"><div class="flex items-center gap-space-xs"><span class="inline-block w-2.5 h-2.5 rounded-full bg-sport-success animate-pulse"></span><span class="font-label-caps text-label-caps text-text-primary uppercase">COMET Enlace Activo</span></div><span class="font-mono-table text-[11px] text-sport-success font-semibold">SYNC</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-xs"><div class="px-space-sm py-1 font-label-caps text-label-caps text-text-secondary uppercase tracking-wider">Administración LigaPro</div><nav class="flex flex-col gap-0.5 mt-1" data-active-classes="bg-secondary text-on-secondary font-semibold shadow-sm"><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="tablero-general" href="#"><span class="material-symbols-outlined text-xl">space_dashboard</span><span>Tablero General</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="competiciones-formatos" href="#"><span class="material-symbols-outlined text-xl">emoji_events</span><span>Competiciones &amp; Formatos</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="calificacion-escenarios" href="#"><span class="material-symbols-outlined text-xl">stadium</span><span>Escenarios &amp; VAR (Z)</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="designacion-uniformes" href="#"><span class="material-symbols-outlined text-xl">checkroom</span><span>Designación de Uniformes</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2.5 rounded transition-colors bg-secondary text-on-secondary font-semibold shadow-sm" data-path="consola-matchday" href="#"><span class="material-symbols-outlined text-xl">sports_soccer</span><span>Consola Comisario Matchday</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="portal-clubes" href="#"><span class="material-symbols-outlined text-xl">shield_person</span><span>Portal Clubes &amp; Trámites</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="posiciones-fair-play" href="#"><span class="material-symbols-outlined text-xl">leaderboard</span><span>Posiciones &amp; Fair Play</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="seguridad-criptografica" href="#"><span class="material-symbols-outlined text-xl">verified_user</span><span>Seguridad SHA-256</span></a></nav></div><div class="p-space-sm border-t border-border-subtle bg-surface-container-low/50"><div class="flex items-center justify-between text-text-secondary font-label-caps text-[10px]"><span>VERSION 4.2.1-SEC</span><span class="font-mono-table text-text-secondary">ID: LIGAPRO-EC</span></div></div></aside><div class="pl-72"><main class="relative w-full pt-16 bg-surface min-h-screen px-gutter-lg py-margin-md"><div class="flex flex-col w-full gap-space-lg">
+<!-- Operational Context Header Ribbon -->
+<div class="w-full bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-space-md">
+<div class="flex flex-wrap items-center gap-space-md">
+<div class="flex items-center gap-space-xs bg-primary-container text-on-primary px-space-sm py-1.5 rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-sport-warning text-base" style="font-variation-settings: 'FILL' 1;">sports</span>
+<span class="font-label-caps text-label-caps tracking-wider uppercase">FECHA 12 • FASE 1 • SERIE A</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-sport-success animate-pulse"></span>
+<span class="font-body-md text-body-md font-bold text-text-primary">LDU Quito <span class="text-text-secondary font-normal">vs</span> Barcelona SC</span>
+</div>
+<span class="text-border-strong text-body-sm hidden sm:inline">|</span>
+<div class="flex items-center gap-1.5 text-text-secondary font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-base">stadium</span>
+<span>Estadio Rodrigo Paz Delgado • Altitud: 2,850m</span>
+</div>
+</div>
+<!-- Matchday Accessibility & COMET Sync Health -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="flex items-center gap-1.5 bg-surface-container-low px-space-sm py-1 rounded-lg">
+<span class="material-symbols-outlined text-secondary text-sm">enhanced_encryption</span>
+<span class="font-mono-table text-mono-table text-text-secondary font-semibold">SIGEC-SEC://PKI-COM-883</span>
+</div>
+<div class="flex items-center gap-1.5 bg-sport-success/15 px-space-sm py-1 rounded-lg">
+<span class="w-2 h-2 rounded-full bg-sport-success"></span>
+<span class="font-label-caps text-label-caps text-sport-success uppercase font-bold">Planilla COMET OK</span>
+</div>
+<button class="flex items-center gap-1.5 bg-secondary text-on-secondary px-space-sm py-1.5 rounded font-label-caps text-label-caps uppercase hover:bg-on-secondary-fixed-variant transition-colors shadow-sm" id="contrastFlashBtn" onclick="toggleScreenFlasher()">
+<span class="material-symbols-outlined text-base">visibility</span>
+<span>Prueba Alerta Óptica</span>
+</button>
+</div>
+</div>
+<!-- Hero Grid: Countdown Display + Audio-Visual Sensory Beacon + Protocol Timeline -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- Central Official Regenerative Chronometer & Audio-Accessibility Beacon (7 cols) -->
+<div class="xl:col-span-7 flex flex-col gap-space-md">
+<div class="bg-primary-container text-on-primary rounded-xl p-space-lg shadow-md relative overflow-hidden flex flex-col justify-between min-h-[380px]">
+<!-- Decorative Ambient Graphic -->
+<div class="absolute -right-12 -top-12 w-64 h-64 bg-secondary-container/20 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex items-center justify-between relative z-10">
+<div class="flex items-center gap-space-sm">
+<span class="px-2 py-0.5 rounded bg-sport-warning text-primary-container font-label-caps text-label-caps font-bold">
+              FASE EN VIVO
+            </span>
+<span class="font-label-caps text-label-caps text-on-primary-container uppercase tracking-wider">
+              Protocolo Reglamentario T-Minus
+            </span>
+</div>
+<div class="flex items-center gap-space-xs font-mono-table text-mono-table bg-inverse-surface/80 px-space-sm py-1 rounded text-on-primary">
+<span class="w-2 h-2 rounded-full bg-sport-warning animate-ping"></span>
+<span>CRONO OFICIAL LIGAPRO</span>
+</div>
+</div>
+<!-- Big Mono Metric Clock Display -->
+<div class="my-space-md flex flex-col items-center justify-center text-center relative z-10">
+<div class="font-mono-metric text-[58px] sm:text-[76px] xl:text-[88px] font-extrabold tracking-tight leading-none text-on-primary select-none drop-shadow-sm flex items-baseline gap-2">
+<span class="text-sport-warning text-[40px] sm:text-[50px] font-semibold">-</span>
+<span id="countdownMinutes">44</span><span class="animate-pulse text-on-primary-container">:</span><span id="countdownSeconds">38</span>
+</div>
+<p class="font-label-caps text-label-caps text-on-primary-container uppercase tracking-widest mt-2">
+            Tiempo Restante Para el Pitazo Inicial (19:00:00 UTC-5)
+          </p>
+</div>
+<!-- Current Ongoing Official Event Card -->
+<div class="bg-inverse-surface/90 rounded-xl p-space-md relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm shadow-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-sport-warning/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sport-warning text-2xl">fitness_center</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-title-md text-title-md text-on-primary font-bold">Hito Actual: T -45:00</span>
+<span class="bg-sport-success/20 text-sport-success font-label-caps text-[10px] px-1.5 py-0.5 rounded uppercase font-bold">En Curso</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-primary-container mt-0.5">
+                Calentamiento reglamentario en campo (Máx 30 min) • Chalecos oficiales numerados obligatorios.
+              </p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs self-end sm:self-center">
+<button class="bg-secondary px-3 py-2 rounded text-on-secondary font-label-caps text-label-caps uppercase hover:bg-on-secondary-fixed-variant transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">timer</span>
+<span>Forzar Sincro</span>
+</button>
+</div>
+</div>
+<!-- Triple Sensory Alert Beacon for Hearing & Visually Impaired -->
+<div class="mt-space-sm bg-surface-card rounded-lg p-space-sm flex items-center justify-between gap-space-sm relative z-10 shadow-inner" id="protocolSensoryBanner">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-secondary text-2xl animate-pulse">hearing</span>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-[10px] px-1.5 py-0.2 rounded bg-surface-container font-bold text-text-primary uppercase">Alerta Sensorial Accesible</span>
+<span class="font-mono-table text-[11px] text-secondary font-bold">T -09:20 PRÓXIMA</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-primary font-semibold truncate">
+                Subtítulo Visual: «Canción Oficial LigaPro (Ecualizador Audio-Visual en Pantalla Central)»
+              </span>
+</div>
+</div>
+<span class="material-symbols-outlined text-sport-success text-xl">check_circle</span>
+</div>
+</div>
+</div>
+<!-- Official Matchday Protocol Milestones Checklist (5 cols) -->
+<div class="xl:col-span-5 bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary">checklist</span>
+<h2 class="font-title-md text-title-md font-bold text-text-primary">Hitos Reglamentarios Obligatorios</h2>
+</div>
+<span class="font-label-caps text-label-caps text-text-secondary bg-surface-container-low px-2 py-1 rounded">Reglamento 2025</span>
+</div>
+<div class="flex flex-col gap-2 mt-space-sm max-h-[380px] overflow-y-auto pr-1">
+<!-- Milestone -90m: Completed -->
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low/70">
+<div class="mt-0.5">
+<span class="material-symbols-outlined text-sport-success text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-mono-table text-mono-table font-bold text-text-primary">-90:00</span>
+<span class="font-mono-table text-[11px] text-sport-success font-semibold">17:30:12 REGISTRADO</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+                Llegada oficial de delegaciones, escolta policial y validación biométrica de credenciales.
+              </p>
+</div>
+</div>
+<!-- Milestone -70m: Completed -->
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low/70">
+<div class="mt-0.5">
+<span class="material-symbols-outlined text-sport-success text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-mono-table text-mono-table font-bold text-text-primary">-70:00</span>
+<span class="font-mono-table text-[11px] text-sport-success font-semibold">17:50:04 FIRMADO</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+                Entrega de alineación oficial COMET firmada por ambos DT y Médicos registrados.
+              </p>
+</div>
+</div>
+<!-- Milestone -45m: Active -->
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-secondary-fixed/30 ring-2 ring-secondary">
+<div class="mt-0.5">
+<span class="material-symbols-outlined text-secondary text-xl animate-spin">progress_activity</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-mono-table text-mono-table font-bold text-secondary">-45:00 (ACTUAL)</span>
+<span class="font-label-caps text-label-caps text-secondary font-bold uppercase">En Progreso</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-primary font-medium mt-0.5">
+                Salida a calentamiento reglamentario (30 min máx). Inspector de cancha en túnel.
+              </p>
+</div>
+</div>
+<!-- Milestone -09m:20s: Scheduled -->
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low">
+<div class="mt-0.5">
+<span class="material-symbols-outlined text-sport-warning text-xl">radio_button_unchecked</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-mono-table text-mono-table font-bold text-text-primary">-09:20</span>
+<span class="font-label-caps text-label-caps text-sport-warning font-bold uppercase">Óptica / Audio</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+                Canción Oficial LigaPro. Alerta visual de alto contraste y subtitulado simultáneo.
+              </p>
+</div>
+</div>
+<!-- Milestone -08m:01s: Scheduled -->
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low">
+<div class="mt-0.5">
+<span class="material-symbols-outlined text-text-secondary text-xl">radio_button_unchecked</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-mono-table text-mono-table font-bold text-text-primary">-08:01</span>
+<span class="font-label-caps text-label-caps text-text-secondary">PROGRAMADO</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+                Himno Nacional de la República del Ecuador. Cuarteto arbitral en cabecera de hilera.
+              </p>
+</div>
+</div>
+<!-- Milestone -07m:58s: Scheduled -->
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low">
+<div class="mt-0.5">
+<span class="material-symbols-outlined text-text-secondary text-xl">radio_button_unchecked</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-mono-table text-mono-table font-bold text-text-primary">-07:58</span>
+<span class="font-label-caps text-label-caps text-text-secondary">PROGRAMADO</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+                Ingreso simultáneo al terreno de juego y sorteo de capitanes con moneda conmemorativa.
+              </p>
+</div>
+</div>
+<!-- Milestone 00:00: Kickoff -->
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low">
+<div class="mt-0.5">
+<span class="material-symbols-outlined text-text-secondary text-xl">sports_soccer</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-mono-table text-mono-table font-bold text-text-primary">00:00</span>
+<span class="font-label-caps text-label-caps text-text-secondary">INICIO</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+                Pitazo inicial autorizado por comisaría y cabina VAR centralizada.
+              </p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-text-secondary">Tolerancia Reglamento: ±30s</span>
+<button class="bg-surface-container-low text-text-primary hover:bg-surface-container px-3 py-1.5 rounded font-label-caps text-label-caps uppercase font-semibold transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">history</span>
+<span>Auditoría de Marcas</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Operational Middle Section: Tactical Incident Pad + Alignment Verification Panel -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- Quick-Action Field Incident Buttons (Min Touch Target: 48px, High-Contrast) (5 cols) -->
+<div class="xl:col-span-5 bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-sport-danger">gavel</span>
+<h2 class="font-title-md text-title-md font-bold text-text-primary">Botonera Táctica de Cancha: Incidentes</h2>
+</div>
+<span class="bg-sport-danger/10 text-sport-danger font-label-caps text-label-caps px-2 py-0.5 rounded font-bold uppercase">
+            Acción Inmediata
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mb-space-md">
+          Presione para registrar con marca de tiempo precisa en acta arbitral e informar a veedores de seguridad.
+        </p>
+<!-- Touch Optimized Grid (min-h: 48px) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<!-- Incident 1 -->
+<button class="min-h-[56px] w-full p-space-sm bg-surface-container-low hover:bg-sport-warning/20 active:scale-[0.98] transition-all rounded-lg text-left flex items-start gap-space-xs shadow-sm" onclick="registerIncident('Lanzamiento de Objetos sin impacto', 200)">
+<div class="w-8 h-8 rounded bg-sport-warning/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary-container text-lg">sports_baseball</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-[13px] font-bold text-text-primary leading-tight">Lanzamiento Objetos</span>
+<span class="font-body-sm text-[11px] text-text-secondary leading-none mt-0.5">Sin impacto a protagonistas</span>
+<span class="font-mono-table text-[12px] font-bold text-sport-danger mt-1">$200 USD Sanción</span>
+</div>
+</button>
+<!-- Incident 2 -->
+<button class="min-h-[56px] w-full p-space-sm bg-surface-container-low hover:bg-sport-danger/15 active:scale-[0.98] transition-all rounded-lg text-left flex items-start gap-space-xs shadow-sm" onclick="registerIncident('Bengalas / Pirotecnia', 500)">
+<div class="w-8 h-8 rounded bg-sport-danger/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sport-danger text-lg">local_fire_department</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-[13px] font-bold text-text-primary leading-tight">Bengalas / Pirotecnia</span>
+<span class="font-body-sm text-[11px] text-text-secondary leading-none mt-0.5">Encendido en gradas/cancha</span>
+<span class="font-mono-table text-[12px] font-bold text-sport-danger mt-1">$500 USD Sanción</span>
+</div>
+</button>
+<!-- Incident 3 -->
+<button class="min-h-[56px] w-full p-space-sm bg-surface-container-low hover:bg-sport-danger/15 active:scale-[0.98] transition-all rounded-lg text-left flex items-start gap-space-xs shadow-sm" onclick="registerIncident('Invasión de Público', 1200)">
+<div class="w-8 h-8 rounded bg-sport-danger/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sport-danger text-lg">directions_run</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-[13px] font-bold text-text-primary leading-tight">Invasión de Público</span>
+<span class="font-body-sm text-[11px] text-text-secondary leading-none mt-0.5">Vulneración de perímetro</span>
+<span class="font-mono-table text-[12px] font-bold text-sport-danger mt-1">Grave • Notificar Policía</span>
+</div>
+</button>
+<!-- Incident 4 -->
+<button class="min-h-[56px] w-full p-space-sm bg-surface-container-low hover:bg-sport-warning/20 active:scale-[0.98] transition-all rounded-lg text-left flex items-start gap-space-xs shadow-sm" onclick="registerIncident('Retraso Reanudación 2do Tiempo', 400)">
+<div class="w-8 h-8 rounded bg-sport-warning/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary-container text-lg">more_time</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-[13px] font-bold text-text-primary leading-tight">Retraso Reanudación</span>
+<span class="font-body-sm text-[11px] text-text-secondary leading-none mt-0.5">&gt;15 min (Tolerancia 5 min)</span>
+<span class="font-mono-table text-[12px] font-bold text-sport-warning text-text-primary mt-1">Art. 82 Código Disciplinario</span>
+</div>
+</button>
+</div>
+<!-- Real-time Incident Feed -->
+<div class="mt-space-md">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-label-caps text-label-caps text-text-secondary uppercase">Bitácora de Campo en Vivo (3)</span>
+<span class="font-mono-table text-[11px] text-secondary font-bold">Auto-sync COMET</span>
+</div>
+<div class="flex flex-col gap-1.5 max-h-36 overflow-y-auto pr-1" id="incidentsList">
+<div class="flex items-center justify-between p-2 bg-surface-container-low rounded text-body-sm text-text-primary">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-sport-danger"></span>
+<span class="font-semibold text-xs">Pirotecnia General Sur</span>
+<span class="text-text-secondary text-[11px]">(Bengala de humo rojo)</span>
+</div>
+<span class="font-mono-table text-xs font-bold text-text-secondary">18:12:05</span>
+</div>
+<div class="flex items-center justify-between p-2 bg-surface-container-low rounded text-body-sm text-text-primary">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-sport-warning"></span>
+<span class="font-semibold text-xs">Retraso en Salida a Calentamiento</span>
+<span class="text-text-secondary text-[11px]">(LDUQ +2 min)</span>
+</div>
+<span class="font-mono-table text-xs font-bold text-text-secondary">18:15:32</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between text-text-secondary font-label-caps text-[10px]">
+<span>REGISTRO GEOLOCALIZADO (GPS ESTADIO)</span>
+<span>AUDITORÍA LIGAPRO-COM</span>
+</div>
+</div>
+<!-- Alignment Sheet Control & Critical Protocol Verification (7 cols) -->
+<div class="xl:col-span-7 bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary">badge</span>
+<div>
+<h2 class="font-title-md text-title-md font-bold text-text-primary">Planilla de Alineación &amp; Protocolo Sanitario</h2>
+<p class="font-body-sm text-body-sm text-text-secondary">23 Jugadores (11 Titulares + 12 Suplentes) • 10 Oficiales de Cuerpo Técnico</p>
+</div>
+</div>
+<!-- Club Switcher Segmented Control -->
+<div class="flex items-center bg-surface-container-low p-0.5 rounded-lg">
+<button class="px-space-sm py-1 rounded bg-secondary text-on-secondary font-label-caps text-label-caps uppercase transition-colors shadow-sm" id="clubLDUBtn" onclick="switchClubTab('ldu')">
+              LDU Quito
+            </button>
+<button class="px-space-sm py-1 rounded text-text-secondary hover:text-text-primary font-label-caps text-label-caps uppercase transition-colors" id="clubBSCBtn" onclick="switchClubTab('bsc')">
+              Barcelona SC
+            </button>
+</div>
+</div>
+<!-- Mandatory Verification Highlights (Doctor & Ball Kids) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm my-space-sm">
+<!-- Mandatory Bench Doctor Card -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-text-secondary uppercase">Médico en Banca Obligatorio</span>
+<span class="flex items-center gap-1 text-sport-success font-label-caps text-[10px] font-bold bg-sport-success/15 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-xs">verified</span>
+<span>HABILITADO</span>
+</span>
+</div>
+<div class="flex items-center gap-space-sm mt-2">
+<div class="w-10 h-10 rounded-full bg-surface-card flex items-center justify-center text-secondary font-bold shrink-0">
+<span class="material-symbols-outlined">medical_services</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-[14px] font-bold text-text-primary truncate" id="docName">Dr. Marco Antonio Caicedo</span>
+<span class="font-mono-table text-[11px] text-text-secondary" id="docLicense">Reg. Colegiatura: MED-PICH-04921</span>
+<span class="font-label-caps text-[10px] text-secondary font-semibold mt-0.5">Certificación ACLS Vigente LigaPro</span>
+</div>
+</div>
+</div>
+<!-- Ball Boys (Pasabolas) Regulation Card -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-text-secondary uppercase">Pasabolas Oficiales (Serie A)</span>
+<span class="flex items-center gap-1 text-sport-success font-label-caps text-[10px] font-bold bg-sport-success/15 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-xs">check</span>
+<span>12 / 12 CHALECOS</span>
+</span>
+</div>
+<div class="flex items-center gap-space-sm mt-2">
+<div class="w-10 h-10 rounded-full bg-surface-card flex items-center justify-center text-sport-warning font-bold shrink-0">
+<span class="material-symbols-outlined text-text-primary">checkroom</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-[14px] font-bold text-text-primary">12 Pasabolas Identificados</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Chalecos Oficiales Verde Flúor LigaPro numerados 1 al 12</span>
+<span class="font-label-caps text-[10px] text-text-secondary mt-0.5">(Serie B exige 8 mínimo reglamentario)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Alignment Roster Micro-Table -->
+<div class="mt-space-sm overflow-x-auto rounded-lg">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-container-low text-text-secondary font-label-caps text-label-caps uppercase">
+<tr>
+<th class="py-2 px-space-sm">Dorsal</th>
+<th class="py-2 px-space-sm">Jugador Oficial COMET</th>
+<th class="py-2 px-space-sm">Posición</th>
+<th class="py-2 px-space-sm">Rol</th>
+<th class="py-2 px-space-sm text-right">Estatus Ficha</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-subtle bg-surface-card" id="rosterTableBody">
+<tr class="hover:bg-surface-base transition-colors">
+<td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#22</td>
+<td class="py-1.5 px-space-sm font-bold text-text-primary flex items-center gap-1.5">
+<span>Alexander Domínguez</span>
+<span class="px-1 py-0.2 rounded bg-surface-container font-label-caps text-[9px] uppercase font-bold">C</span>
+</td>
+<td class="py-1.5 px-space-sm text-text-secondary">Arquero</td>
+<td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
+<td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
+</tr>
+<tr class="hover:bg-surface-base transition-colors">
+<td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#14</td>
+<td class="py-1.5 px-space-sm text-text-primary">José Quintero</td>
+<td class="py-1.5 px-space-sm text-text-secondary">Lateral Der</td>
+<td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
+<td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
+</tr>
+<tr class="hover:bg-surface-base transition-colors">
+<td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#3</td>
+<td class="py-1.5 px-space-sm text-text-primary">Ricardo Adé</td>
+<td class="py-1.5 px-space-sm text-text-secondary">Defensa Cen</td>
+<td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
+<td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
+</tr>
+<tr class="hover:bg-surface-base transition-colors">
+<td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#8</td>
+<td class="py-1.5 px-space-sm text-text-primary">Ezequiel Piovi</td>
+<td class="py-1.5 px-space-sm text-text-secondary">Volante Cen</td>
+<td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
+<td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
+</tr>
+<tr class="hover:bg-surface-base transition-colors">
+<td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#19</td>
+<td class="py-1.5 px-space-sm text-text-primary">Alex Arce</td>
+<td class="py-1.5 px-space-sm text-text-secondary">Delantero Cen</td>
+<td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
+<td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="mt-space-sm flex flex-wrap items-center justify-between gap-space-sm pt-space-xs">
+<div class="flex items-center gap-space-xs text-text-secondary font-body-sm text-[12px]">
+<span class="material-symbols-outlined text-sport-success text-base">fact_check</span>
+<span>Alineaciones homologadas por Árbitro Central y Cabina VOR</span>
+</div>
+<button class="bg-surface-container-low hover:bg-surface-container text-text-primary px-3 py-1.5 rounded font-label-caps text-label-caps uppercase font-bold transition-colors">
+          Ver Nómina Completa (33 Integrantes)
+        </button>
+</div>
+</div>
+</div>
+<!-- Final Cryptographic Seal & Protocol Sign-off Drawer (WCAG AA High-Impact Block) -->
+<div class="w-full bg-primary-container text-on-primary rounded-xl p-space-md xl:p-space-lg shadow-lg relative overflow-hidden">
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md">
+<!-- Informational Seal Metadata -->
+<div class="flex items-start gap-space-md max-w-3xl">
+<div class="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center shrink-0 shadow-md">
+<span class="material-symbols-outlined text-on-secondary text-2xl">verified_user</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-primary">Sellado de Acta &amp; Firma Digital del Comisario</span>
+<span class="bg-sport-success text-on-primary font-label-caps text-[10px] px-2 py-0.5 rounded font-bold uppercase">Validez Jurídica</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-primary-container mt-1">
+            Generación de cadena criptográfica inalterable con sellado de tiempo UTC-5. Los registros de incidentes y planillas verificadas adquieren plena validez probatoria ante la Comisión Disciplinaria de LigaPro.
+          </p>
+<div class="flex flex-wrap items-center gap-x-space-md gap-y-1 mt-2 text-on-primary-container font-mono-table text-[11px]">
+<span>COMISARIO: Ab. Carlos V. Zambrano (ID: LP-COM-092)</span>
+<span>•</span>
+<span>ALGORITMO: SHA-256 / RSA-4096</span>
+<span>•</span>
+<span class="text-sport-success">SELLO SEGURO: ACTIVO</span>
+</div>
+</div>
+</div>
+<!-- Action Trigger & Hash Generator -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-sm w-full lg:w-auto shrink-0">
+<button class="min-h-[48px] px-space-lg bg-sport-success hover:bg-sport-success/90 active:scale-[0.98] text-on-primary font-title-md text-title-md font-bold rounded-lg transition-all flex items-center justify-center gap-2 shadow-md" id="signActBtn" onclick="generateCryptographicSeal()">
+<span class="material-symbols-outlined text-xl">draw</span>
+<span>Firmar y Sellar Acta Previa</span>
+</button>
+<button class="min-h-[48px] px-space-md bg-inverse-surface hover:bg-inverse-surface/80 text-on-primary font-title-md text-body-md font-semibold rounded-lg transition-colors flex items-center justify-center gap-2" onclick="exportMatchJson()">
+<span class="material-symbols-outlined text-xl">download</span>
+<span>Exportar JSON</span>
+</button>
+</div>
+</div>
+<!-- Live Cryptographic Fingerprint String Box -->
+<div class="mt-space-md pt-space-sm bg-inverse-surface/60 rounded-lg p-space-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-label-caps text-label-caps text-on-primary-container uppercase shrink-0">HASH SHA-256 ACTA:</span>
+<span class="font-mono-table text-[12px] text-sport-warning font-semibold truncate select-all" id="cryptoHashDisplay">
+          e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+        </span>
+</div>
+<div class="flex items-center gap-space-xs shrink-0 text-on-primary-container font-label-caps text-[10px]">
+<span class="material-symbols-outlined text-sm text-sport-success">lock</span>
+<span>AUDITADO LIGAPRO BLOCKSTORE</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Client-side Interactive Logic & Audio-Visual Sensory Simulation -->
+<script>
+  let secondsRemaining = 44 * 60 + 38;
+  const minutesEl = document.getElementById('countdownMinutes');
+  const secondsEl = document.getElementById('countdownSeconds');
+  const hashEl = document.getElementById('cryptoHashDisplay');
+  let flashInterval = null;
+
+  // Real-time ticking countdown simulation
+  setInterval(() => {
+    if (secondsRemaining > 0) {
+      secondsRemaining--;
+      const m = Math.floor(secondsRemaining / 60);
+      const s = secondsRemaining % 60;
+      minutesEl.textContent = m < 10 ? '0' + m : m;
+      secondsEl.textContent = s < 10 ? '0' + s : s;
+    }
+  }, 1000);
+
+  // Optical sensory alert for visual/hearing accommodation
+  function toggleScreenFlasher() {
+    const banner = document.getElementById('protocolSensoryBanner');
+    let count = 0;
+    if (flashInterval) {
+      clearInterval(flashInterval);
+      flashInterval = null;
+      banner.classList.remove('bg-sport-warning', 'text-primary-container');
+      banner.classList.add('bg-surface-card');
+      return;
+    }
+    flashInterval = setInterval(() => {
+      count++;
+      if (count % 2 === 0) {
+        banner.classList.remove('bg-surface-card');
+        banner.classList.add('bg-sport-warning', 'text-primary-container');
+      } else {
+        banner.classList.remove('bg-sport-warning', 'text-primary-container');
+        banner.classList.add('bg-surface-card');
+      }
+      if (count > 7) {
+        clearInterval(flashInterval);
+        flashInterval = null;
+        banner.classList.remove('bg-sport-warning', 'text-primary-container');
+        banner.classList.add('bg-surface-card');
+      }
+    }, 280);
+  }
+
+  // Rapid field incident logging
+  function registerIncident(title, fine) {
+    const list = document.getElementById('incidentsList');
+    const now = new Date();
+    const timeStr = now.toTimeString().split(' ')[0];
+    
+    const row = document.createElement('div');
+    row.className = 'flex items-center justify-between p-2 bg-sport-danger/10 rounded text-body-sm text-text-primary animate-pulse';
+    row.innerHTML = `
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-sport-danger"></span>
+        <span class="font-semibold text-xs text-sport-danger">${title}</span>
+        <span class="text-text-secondary text-[11px]">($${fine} USD)</span>
+      </div>
+      <span class="font-mono-table text-xs font-bold text-text-primary">${timeStr}</span>
+    `;
+    list.prepend(row);
+
+    // Refresh hash display to mirror immutable tamper-proof state
+    updateDynamicHash();
+  }
+
+  // Club selector tab switch
+  function switchClubTab(club) {
+    const btnLdu = document.getElementById('clubLDUBtn');
+    const btnBsc = document.getElementById('clubBSCBtn');
+    const docName = document.getElementById('docName');
+    const docLicense = document.getElementById('docLicense');
+    const rosterTable = document.getElementById('rosterTableBody');
+
+    if (club === 'bsc') {
+      btnBsc.className = 'px-space-sm py-1 rounded bg-secondary text-on-secondary font-label-caps text-label-caps uppercase transition-colors shadow-sm';
+      btnLdu.className = 'px-space-sm py-1 rounded text-text-secondary hover:text-text-primary font-label-caps text-label-caps uppercase transition-colors';
+      docName.textContent = 'Dr. Andrés Arce Morales';
+      docLicense.textContent = 'Reg. Colegiatura: MED-GUAYAS-07823';
+
+      rosterTable.innerHTML = `
+        <tr class="hover:bg-surface-base transition-colors">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#1</td>
+          <td class="py-1.5 px-space-sm font-bold text-text-primary flex items-center gap-1.5">
+            <span>Javier Burrai</span>
+            <span class="px-1 py-0.2 rounded bg-surface-container font-label-caps text-[9px] uppercase font-bold">C</span>
+          </td>
+          <td class="py-1.5 px-space-sm text-text-secondary">Arquero</td>
+          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
+          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
+        </tr>
+        <tr class="hover:bg-surface-base transition-colors">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#4</td>
+          <td class="py-1.5 px-space-sm text-text-primary">Carlos Rodríguez</td>
+          <td class="py-1.5 px-space-sm text-text-secondary">Defensa Cen</td>
+          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
+          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
+        </tr>
+        <tr class="hover:bg-surface-base transition-colors">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#20</td>
+          <td class="py-1.5 px-space-sm text-text-primary">Jesús Trindade</td>
+          <td class="py-1.5 px-space-sm text-text-secondary">Volante Cen</td>
+          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
+          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
+        </tr>
+        <tr class="hover:bg-surface-base transition-colors">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#10</td>
+          <td class="py-1.5 px-space-sm text-text-primary">Damián Díaz</td>
+          <td class="py-1.5 px-space-sm text-text-secondary">Enganche</td>
+          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
+          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
+        </tr>
+        <tr class="hover:bg-surface-base transition-colors">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#9</td>
+          <td class="py-1.5 px-space-sm text-text-primary">Octavio Rivero</td>
+          <td class="py-1.5 px-space-sm text-text-secondary">Delantero Cen</td>
+          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
+          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
+        </tr>
+      `;
+    } else {
+      btnLdu.className = 'px-space-sm py-1 rounded bg-secondary text-on-secondary font-label-caps text-label-caps uppercase transition-colors shadow-sm';
+      btnBsc.className = 'px-space-sm py-1 rounded text-text-secondary hover:text-text-primary font-label-caps text-label-caps uppercase transition-colors';
+      docName.textContent = 'Dr. Marco Antonio Caicedo';
+      docLicense.textContent = 'Reg. Colegiatura: MED-PICH-04921';
+
+      rosterTable.innerHTML = `
+        <tr class="hover:bg-surface-base transition-colors">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#22</td>
+          <td class="py-1.5 px-space-sm font-bold text-text-primary flex items-center gap-1.5">
+            <span>Alexander Domínguez</span>
+            <span class="px-1 py-0.2 rounded bg-surface-container font-label-caps text-[9px] uppercase font-bold">C</span>
+          </td>
+          <td class="py-1.5 px-space-sm text-text-secondary">Arquero</td>
+          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
+          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
+        </tr>
+        <tr class="hover:bg-surface-base transition-colors">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#14</td>
+          <td class="py-1.5 px-space-sm text-text-primary">José Quintero</td>
+          <td class="py-1.5 px-space-sm text-text-secondary">Lateral Der</td>
+          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
+          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
+        </tr>
+        <tr class="hover:bg-surface-base transition-colors">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#3</td>
+          <td class="py-1.5 px-space-sm text-text-primary">Ricardo Adé</td>
+          <td class="py-1.5 px-space-sm text-text-secondary">Defensa Cen</td>
+          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
+          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
+        </tr>
+        <tr class="hover:bg-surface-base transition-colors">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#8</td>
+          <td class="py-1.5 px-space-sm text-text-primary">Ezequiel Piovi</td>
+          <td class="py-1.5 px-space-sm text-text-secondary">Volante Cen</td>
+          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
+          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
+        </tr>
+        <tr class="hover:bg-surface-base transition-colors">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#19</td>
+          <td class="py-1.5 px-space-sm text-text-primary">Alex Arce</td>
+          <td class="py-1.5 px-space-sm text-text-secondary">Delantero Cen</td>
+          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
+          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
+        </tr>
+      `;
+    }
+  }
+
+  // Simulate cryptographic SHA-256 seal generation
+  function generateCryptographicSeal() {
+    const chars = '0123456789abcdef';
+    let newHash = '';
+    for (let i = 0; i < 64; i++) {
+      newHash += chars[Math.floor(Math.random() * chars.length)];
+    }
+    hashEl.textContent = newHash;
+
+    const btn = document.getElementById('signActBtn');
+    btn.innerHTML = `<span class="material-symbols-outlined text-xl">task_alt</span><span>Acta Sellada y Firmada</span>`;
+    btn.classList.remove('bg-sport-success');
+    btn.classList.add('bg-secondary');
+  }
+
+  function updateDynamicHash() {
+    const chars = '0123456789abcdef';
+    let dynamicSnippet = '';
+    for (let i = 0; i < 8; i++) {
+      dynamicSnippet += chars[Math.floor(Math.random() * chars.length)];
+    }
+    hashEl.textContent = hashEl.textContent.slice(0, 56) + dynamicSnippet;
+  }
+
+  function exportMatchJson() {
+    const data = {
+      matchId: "LP-2025-F12-LDU-BSC",
+      timestamp: new Date().toISOString(),
+      countdownStatus: document.getElementById('countdownMinutes').innerText + ":" + document.getElementById('countdownSeconds').innerText,
+      currentMilestone: "T-45:00 Calentamiento",
+      ballBoysVerified: 12,
+      doctorVerified: true,
+      sha256Hash: hashEl.textContent.trim()
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `acta_previa_${data.matchId}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+</script></main></div></body></html>

@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Asistente de Uniformes 48h — SIGEC-LP LigaPro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"border-subtle":"#E2E8F0","on-tertiary-container":"#0090ae","secondary-fixed-dim":"#b6c4ff","on-secondary":"#ffffff","on-primary-fixed":"#101c2e","surface":"#f8f9ff","on-secondary-fixed-variant":"#0039b3","on-background":"#0b1c30","on-tertiary-fixed-variant":"#004e5f","surface-container-low":"#eff4ff","sport-warning":"#FFD100","on-tertiary-fixed":"#001f27","sport-success":"#00A859","on-surface":"#0b1c30","on-error-container":"#93000a","secondary-container":"#0356ff","surface-base":"#F8FAFC","error-container":"#ffdad6","inverse-primary":"#bbc7df","primary-fixed":"#d7e3fc","sport-danger":"#D92D20","surface-dim":"#cbdbf5","surface-container-lowest":"#ffffff","border-strong":"#CBD5E1","inverse-on-surface":"#eaf1ff","on-primary-container":"#79849b","on-primary-fixed-variant":"#3c475b","primary-fixed-dim":"#bbc7df","text-secondary":"#334155","surface-container":"#e5eeff","outline":"#75777d","inverse-surface":"#213145","secondary":"#0041c9","high-contrast-bg":"#000000","on-primary":"#ffffff","outline-variant":"#c5c6cd","on-secondary-fixed":"#001551","secondary-fixed":"#dce1ff","error":"#ba1a1a","high-contrast-accent":"#FFE600","primary":"#000000","on-surface-variant":"#45474c","surface-card":"#FFFFFF","surface-container-highest":"#d3e4fe","on-tertiary":"#ffffff","text-primary":"#0F172A","surface-tint":"#535f74","on-error":"#ffffff","background":"#f8f9ff","surface-container-high":"#dce9ff","surface-bright":"#f8f9ff","tertiary":"#000000","tertiary-container":"#001f27","tertiary-fixed":"#b4ebff","tertiary-fixed-dim":"#3cd7ff","surface-variant":"#d3e4fe","primary-container":"#101c2e","on-secondary-container":"#e4e7ff"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"margin-md":"1.5rem","space-2xl":"3rem","space-lg":"1.5rem","margin":"1rem","space-xs":"0.25rem","gutter":"1rem","space-sm":"0.5rem","space-md":"1rem","margin-lg":"2rem","space-xl":"2rem","gutter-lg":"1.5rem"},fontFamily:{"label-caps":["Plus Jakarta Sans"],"display-lg-mobile":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"mono-matchday":["JetBrains Mono"],"mono-metric":["JetBrains Mono"],"headline-sm":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"mono-table":["JetBrains Mono"],"body-md":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"]},fontSize:{"label-caps":["11px",{lineHeight:"14px",letterSpacing:"0.06em",fontWeight:"700"}],"display-lg-mobile":["30px",{lineHeight:"36px",letterSpacing:"-0.01em",fontWeight:"800"}],"body-sm":["12px",{lineHeight:"16px",fontWeight:"400"}],"mono-matchday":["20px",{lineHeight:"28px",fontWeight:"600"}],"mono-metric":["32px",{lineHeight:"36px",fontWeight:"700"}],"headline-sm":["20px",{lineHeight:"28px",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"24px",fontWeight:"400"}],"display-lg":["40px",{lineHeight:"48px",letterSpacing:"-0.02em",fontWeight:"800"}],"headline-md":["24px",{lineHeight:"32px",fontWeight:"700"}],"mono-table":["13px",{lineHeight:"18px",fontWeight:"500"}],"body-md":["14px",{lineHeight:"20px",fontWeight:"400"}],"title-md":["16px",{lineHeight:"24px",fontWeight:"600"}],"headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.01em",fontWeight:"700"}]}}}}</script>
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+    }
+    ::-webkit-scrollbar { display: none; }
+    .high-contrast-mode {
+      background-color: #000000 !important;
+      color: #FFFFFF !important;
+    }
+  </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased min-h-screen">
+  
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs px-4 py-2.5">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+        <!-- Logo & Brand -->
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-md border border-amber-400">
+            <span class="text-amber-400 text-lg">⚡</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-extrabold text-sm tracking-tight text-slate-900">LIGAPRO ECUABET</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 uppercase">SIGEC-LP</span>
+              <span class="hidden sm:inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Supabase Conectado</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-500 font-medium">Sistema Integral de Gestión de Competiciones — Rige Reglamento 2023</p>
+          </div>
+        </div>
+
+        <!-- Live Match Banner & Controls -->
+        <div class="flex items-center flex-wrap gap-2">
+          <!-- Live Match Score Widget -->
+          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-2 bg-slate-900 text-white px-3 py-1.5 rounded-lg border border-slate-800 text-xs shadow-sm hover:border-amber-400 transition-colors">
+            <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+            <span class="font-bold text-amber-400">EN VIVO:</span>
+            <span class="font-bold" id="header-match-local">LDU Quito</span>
+            <span class="font-mono bg-slate-800 px-1.5 py-0.5 rounded font-bold text-amber-300" id="header-score">1 - 1</span>
+            <span class="font-bold" id="header-match-visitante">Barcelona SC</span>
+            <span class="font-mono text-slate-400 text-[10px]" id="header-match-min">68' 2T</span>
+          </div>
+
+          <!-- Role Selector -->
+          <div class="relative inline-block text-left">
+            <select id="global-role-select" onchange="onRoleChange(this.value)" class="text-xs bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none cursor-pointer">
+              <option value="DIR_COMP">Dirección de Competiciones</option>
+              <option value="COMISARIO">Comisario de Partido (Matchday)</option>
+              <option value="CLUB_ADMIN_LDU">Club Admin: LDU Quito</option>
+              <option value="CLUB_ADMIN_BSC">Club Admin: Barcelona SC</option>
+              <option value="OF_VAR">Oficial Técnico VAR</option>
+              <option value="DEL_SEG">Delegado de Seguridad</option>
+              <option value="MED_CAMPO">Médico de Campo</option>
+              <option value="ADM_SIS">Administrador del Sistema</option>
+            </select>
+          </div>
+
+          <!-- WCAG AAA High Contrast Toggle -->
+          <button onclick="toggleGlobalHighContrast()" id="btn-toggle-contrast" class="p-1.5 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-700 transition-colors" title="Modo Alto Contraste WCAG AAA (Negro / Amarillo)">
+            <span class="material-symbols-outlined text-lg">contrast</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs Bar -->
+      <div class="max-w-7xl mx-auto mt-2 pt-2 border-t border-slate-100 flex items-center gap-1 overflow-x-auto pb-1 scrollbar-none">
+        
+        <button onclick="navigateView('tablero')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Tablero General — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">dashboard</span>
+          <span>Tablero General</span>
+        </button>
+        <button onclick="navigateView('posiciones')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Posiciones & Resultados — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">leaderboard</span>
+          <span>Posiciones & Fixture</span>
+        </button>
+        <button onclick="navigateView('clubes')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Portal de Clubes (Trámites) — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">folder_shared</span>
+          <span>Portal Clubes</span>
+        </button>
+        <button onclick="navigateView('uniformes')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all bg-secondary text-white font-bold shadow-sm" title="Asistente de Uniformes 48h — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">checkroom</span>
+          <span>Uniformes 48h</span>
+        </button>
+        <button onclick="navigateView('estadios')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Inspección de Escenarios & VAR — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">stadium</span>
+          <span>Escenarios & VAR</span>
+        </button>
+        <button onclick="navigateView('consola')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Consola de Comisario (Matchday) — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">sports</span>
+          <span>Consola Comisario</span>
+        </button>
+        <button onclick="navigateView('consola_alto_contraste')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Consola Alto Contraste (WCAG AAA) — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">contrast</span>
+          <span>Consola WCAG AAA</span>
+        </button>
+        <button onclick="navigateView('consola_tablet')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Consola Tablet de Campo — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">tablet_mac</span>
+          <span>Consola Tablet</span>
+        </button>
+        <button onclick="navigateView('auth')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900" title="Inicio de Sesión & Roles — SIGEC-LP LigaPro">
+          <span class="material-symbols-outlined text-sm">lock</span>
+          <span>Acceso / Roles</span>
+        </button>
+      </div>
+    </header>
+    
+  <main class="w-full">
+    
+        <div class="mb-4 bg-white p-3 rounded-xl border border-slate-200 flex flex-wrap items-center justify-between gap-2 shadow-xs">
+          <div>
+            <h3 class="font-bold text-slate-900 text-xs">Asistente Técnico 48h de Indumentaria (Art. 29, 30, 31, 32)</h3>
+            <p class="text-[11px] text-slate-500">Cálculo de luminancia WCAG y diferenciación con cuaterna arbitral y guardametas</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="actualizarKitsUniformes()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-xs font-bold flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">refresh</span> Reevaluar Contraste
+            </button>
+            <button onclick="sellarActaUniformes()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold flex items-center gap-1 shadow-sm">
+              <span class="material-symbols-outlined text-sm">verified</span> Sellar Acta Oficial (Art. 30)
+            </button>
+          </div>
+        </div>
+        <header class="fixed top-0 left-0 right-0 h-16 bg-primary-container z-50 shadow-[0_1px_8px_rgba(0,0,0,0.12)] flex items-center justify-between px-gutter-lg border-b border-inverse-surface"><div class="flex items-center gap-space-md"><img alt="LigaPro SIGEC-LP Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrB3xiEylcx8yxJh6M0sxga_M-fXg3HhJAh-c_WafR2xlAx2wzR2gW-EWvL9b81FalXdOh7N_hJv71x919_6-MkML-_I57QuSQfmNcU47upNCPTsHk-jHNIR0eFE50TAVGVOFawUEeFY2h_dbVd8Wf0M00VDnA7Dqk5qZSBbsLUhZyBg1z01cqnbFuWed9-erP4VveSFUiRSVCtDSWhlcKm93rFf2C53DFEDGEi09-_u"/><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-title-md text-title-md text-on-primary font-bold tracking-tight">SIGEC-LP</span><span class="bg-secondary text-on-secondary font-label-caps text-label-caps px-space-xs py-0.5 rounded">PRO</span></div><span class="font-body-sm text-[10px] text-on-primary-container leading-none uppercase tracking-wider">Sistema Integral de Competiciones</span></div><div class="hidden xl:block h-6 w-px bg-inverse-surface mx-space-xs"></div><div class="hidden xl:flex items-center bg-inverse-surface/60 rounded px-space-sm py-1"><span class="material-symbols-outlined text-on-primary-container text-sm mr-1.5">trophy</span><span class="font-label-caps text-label-caps text-on-primary uppercase tracking-wide">Temporada 2025 - Serie A / Serie B</span></div></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs bg-inverse-surface/80 px-space-sm py-1 rounded"><span class="material-symbols-outlined text-sport-success text-sm">schedule</span><span class="font-label-caps text-label-caps text-on-primary-container mr-1">UTC-5 EC:</span><span class="font-mono-table text-mono-table text-on-primary font-bold tracking-wider">18:42:09</span></div><div class="hidden md:flex items-center bg-inverse-surface/50 rounded p-0.5 gap-0.5"><button class="p-1 text-on-primary-container hover:text-high-contrast-accent hover:bg-inverse-surface rounded transition-colors" title="Modo Alto Contraste" type="button"><span class="material-symbols-outlined text-base">contrast</span></button><button class="px-1.5 py-0.5 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded font-label-caps text-label-caps" title="Reducir Texto A-" type="button">A-</button><button class="px-1.5 py-0.5 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded font-label-caps text-label-caps" title="Aumentar Texto A+" type="button">A+</button><button class="p-1 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded transition-colors" title="Alertas Visuales Accesibles" type="button"><span class="material-symbols-outlined text-base">hearing</span></button></div><button class="relative p-1.5 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded transition-colors" title="Notificaciones Reglamentarias" type="button"><span class="material-symbols-outlined text-xl">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-sport-danger"></span></button><div class="flex items-center gap-space-sm pl-space-xs border-l border-inverse-surface"><div class="flex flex-col text-right hidden sm:flex"><span class="font-title-md text-body-sm text-on-primary font-semibold leading-tight">Ab. Comisario LigaPro</span><span class="font-label-caps text-[10px] text-on-primary-container uppercase">Dirección de Competiciones</span></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-secondary" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSacWCeuAAENmbzFg-bZ637A1mJFVBa6rvFnexwNvRQQbAF3HGnomjFNfqL1zzok3CW0J3fVxMC2Cu5dfwlKJ5_VPOG6EtKPSvimhHMOq9qs3SPMY8KqUsxyiQE2kGe2hzAazL-tvwBW9vFW25MR6aH_AOmV4scZcuUqiihEdXV8eV5daHsOzd6ZjOSXm4WsHBROJQ0IX02JSNn2Ib5I6IUeUMiVOW7zl07vOg3myw"/></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-72 bg-surface-card z-40 flex flex-col border-r border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.02)]"><div class="p-space-md border-b border-border-subtle"><div class="flex items-center justify-between bg-surface-container-low px-space-sm py-2 rounded border border-border-subtle"><div class="flex items-center gap-space-xs"><span class="inline-block w-2.5 h-2.5 rounded-full bg-sport-success animate-pulse"></span><span class="font-label-caps text-label-caps text-text-primary uppercase">COMET Enlace Activo</span></div><span class="font-mono-table text-[11px] text-sport-success font-semibold">SYNC</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-xs"><div class="px-space-sm py-1 font-label-caps text-label-caps text-text-secondary uppercase tracking-wider">Administración LigaPro</div><nav class="flex flex-col gap-0.5 mt-1" data-active-classes="bg-secondary text-on-secondary font-semibold shadow-sm"><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="tablero-general" href="#"><span class="material-symbols-outlined text-xl">space_dashboard</span><span>Tablero General</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="competiciones-formatos" href="#"><span class="material-symbols-outlined text-xl">emoji_events</span><span>Competiciones &amp; Formatos</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="calificacion-escenarios" href="#"><span class="material-symbols-outlined text-xl">stadium</span><span>Escenarios &amp; VAR (Z)</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="designacion-uniformes" href="#"><span class="material-symbols-outlined text-xl">checkroom</span><span>Designación de Uniformes</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="consola-matchday" href="#"><span class="material-symbols-outlined text-xl">sports_soccer</span><span>Consola Comisario Matchday</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="portal-clubes" href="#"><span class="material-symbols-outlined text-xl">shield_person</span><span>Portal Clubes &amp; Trámites</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="posiciones-fair-play" href="#"><span class="material-symbols-outlined text-xl">leaderboard</span><span>Posiciones &amp; Fair Play</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="seguridad-criptografica" href="#"><span class="material-symbols-outlined text-xl">verified_user</span><span>Seguridad SHA-256</span></a></nav></div><div class="p-space-sm border-t border-border-subtle bg-surface-container-low/50"><div class="flex items-center justify-between text-text-secondary font-label-caps text-[10px]"><span>VERSION 4.2.1-SEC</span><span class="font-mono-table text-text-secondary">ID: LIGAPRO-EC</span></div></div></aside><div class="pl-72"><main class="relative w-full pt-16 bg-surface min-h-screen px-gutter-lg py-margin-md"><div class="flex flex-col w-full">
+<!-- Top Operational Banner & Match Metadata -->
+<div class="bg-primary-container text-on-primary rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md mb-space-lg relative overflow-hidden">
+<div class="absolute -right-12 -top-12 w-64 h-64 bg-secondary/15 rounded-full pointer-events-none blur-3xl"></div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md relative z-10">
+<div class="flex flex-col gap-1">
+<div class="flex flex-wrap items-center gap-space-xs text-secondary-fixed">
+<span class="font-label-caps text-label-caps uppercase tracking-wider bg-inverse-surface/80 px-2 py-0.5 rounded">Serie A 2025 • Fase Inicial</span>
+<span class="text-on-primary-container text-xs">•</span>
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-sport-warning flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">event_repeat</span> Reunión Técnica de Coordinación 48H
+          </span>
+<span class="text-on-primary-container text-xs">•</span>
+<span class="font-mono-table text-mono-table text-on-primary-container font-semibold">ACTA #UNI-2025-1488</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-primary tracking-tight">LDU Quito vs Barcelona SC</h1>
+<div class="flex flex-wrap items-center gap-y-1 gap-x-space-md text-on-primary-container font-body-sm text-body-sm">
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">stadium</span> Estadio Rodrigo Paz Delgado (Ponciano, Quito)</span>
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">schedule</span> 18:00 UTC-5 (Temperatura est.: 14°C)</span>
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">gavel</span> Reglamento LigaPro Art. 52-58 (Cap. VII)</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<button class="flex items-center gap-1.5 bg-inverse-surface/80 hover:bg-inverse-surface text-on-primary font-title-md text-body-sm px-3.5 py-2.5 rounded transition-colors shadow-sm" id="toggleLightingBtn" type="button">
+<span class="material-symbols-outlined text-sport-warning text-lg" id="lightIcon">wb_sunny</span>
+<span id="lightingLabel">Modo: Luz Natural 18:00</span>
+</button>
+<button class="flex items-center gap-1.5 bg-inverse-surface/80 hover:bg-inverse-surface text-on-primary font-title-md text-body-sm px-3.5 py-2.5 rounded transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-lg">picture_as_pdf</span>
+<span>Acta Oficial PDF</span>
+</button>
+<button class="flex items-center gap-1.5 bg-secondary-container hover:bg-secondary text-on-primary font-title-md text-body-sm px-4 py-2.5 rounded transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-lg">verified</span>
+<span>Homologar Combinación</span>
+</button>
+</div>
+</div>
+<!-- Triple Status Verification Ribbon -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm pt-space-xs relative z-10">
+<div class="bg-inverse-surface/50 rounded-lg p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-sport-success animate-ping"></span>
+<span class="font-label-caps text-label-caps text-on-primary">Sincronización COMET</span>
+</div>
+<span class="font-mono-table text-mono-table text-sport-success font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">sync</span> LIVE-2025.14
+        </span>
+</div>
+<div class="bg-inverse-surface/50 rounded-lg p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sport-success text-base">draw</span>
+<span class="font-label-caps text-label-caps text-on-primary">Firma Comisario &amp; Delegados</span>
+</div>
+<span class="bg-sport-success/20 text-sport-success font-label-caps text-label-caps px-2 py-0.5 rounded">4/4 CERTIFICADOS</span>
+</div>
+<div class="bg-inverse-surface/50 rounded-lg p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sport-warning text-base">rule</span>
+<span class="font-label-caps text-label-caps text-on-primary">Resolución CNA / IFAB</span>
+</div>
+<span class="text-on-secondary-container font-mono-table text-mono-table font-semibold">HOMOLOGADO OK</span>
+</div>
+</div>
+</div>
+<!-- Primary Interactive Kit Visualizer (4 Entities) -->
+<section class="flex flex-col gap-space-md mb-space-lg">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
+<div>
+<span class="font-label-caps text-label-caps text-text-secondary uppercase">Inspección Cromática 360°</span>
+<h2 class="font-headline-md text-headline-md text-text-primary tracking-tight">Kits Autorizados para Matchday</h2>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg">
+<span class="font-label-caps text-label-caps text-text-secondary px-2">Simular Visión:</span>
+<select class="bg-surface-card text-text-primary font-body-sm text-body-sm px-2.5 py-1 rounded shadow-sm focus:outline-none focus:bg-surface-container" id="visionFilter">
+<option value="standard">Tricromática (Normal)</option>
+<option value="protanopia">Protanopía (Rojo débil)</option>
+<option value="deuteranopia">Deuteranopía (Verde débil)</option>
+<option value="tritanopia">Tritanopía (Azul débil)</option>
+<option value="monochrome">Broadcast B/W (Luminancia)</option>
+</select>
+</div>
+</div>
+<!-- Visual Kit Display Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-md transition-all duration-300" id="kitContainer">
+<!-- Card A: LDU Quito (Home) -->
+<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-start justify-between mb-space-sm">
+<div>
+<span class="bg-primary text-on-primary font-label-caps text-label-caps px-2 py-0.5 rounded">CLUB LOCAL</span>
+<h3 class="font-title-md text-title-md text-text-primary mt-1">LDU Quito</h3>
+<p class="font-body-sm text-body-sm text-text-secondary">Indumentaria Titular Homologada</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center font-bold text-xs text-primary shadow-inner">
+              LDU
+            </div>
+</div>
+<!-- Kit SVG Illustration: Pure White with Dark Accents -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col items-center justify-center gap-space-sm my-space-sm relative">
+<span class="absolute top-2 left-2 font-mono-table text-[10px] text-text-secondary">K-01 FIELD</span>
+<!-- Custom Vector Kit -->
+<svg class="w-32 h-44 drop-shadow-sm" fill="none" viewbox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+<!-- Jersey -->
+<path d="M35 15 L20 38 L36 48 L42 32 L42 80 L78 80 L78 32 L84 48 L100 38 L85 15 L68 20 C64 24 56 24 52 20 Z" fill="#FFFFFF"></path>
+<!-- Red/Navy trim -->
+<path d="M52 20 C56 24 64 24 68 20" stroke="#001551" stroke-width="2"></path>
+<rect fill="#D92D20" height="4" rx="1" width="32" x="44" y="24"></rect>
+<!-- Sponsor mock -->
+<rect fill="#101c2e" height="6" rx="1" width="28" x="46" y="44"></rect>
+<text fill="#001551" font-family="'JetBrains Mono'" font-size="14" font-weight="bold" text-anchor="middle" x="60" y="66">10</text>
+<!-- LigaPro sleeve patch right -->
+<rect fill="#FFD100" height="5" width="5" x="90" y="32"></rect>
+<!-- Shorts -->
+<path d="M42 84 L78 84 L78 116 L62 116 L60 98 L58 116 L42 116 Z" fill="#FFFFFF"></path>
+<line stroke="#CBD5E1" stroke-width="1" x1="42" x2="78" y1="84" y2="84"></line>
+<!-- Socks -->
+<rect fill="#FFFFFF" height="26" rx="2" width="10" x="45" y="120"></rect>
+<rect fill="#FFFFFF" height="26" rx="2" width="10" x="65" y="120"></rect>
+<!-- Sock tape rule match -->
+<rect fill="#FFFFFF" height="3" width="10" x="45" y="134"></rect>
+<rect fill="#FFFFFF" height="3" width="10" x="65" y="134"></rect>
+</svg>
+<!-- Technical Swatch Breakdown -->
+<div class="w-full flex items-center justify-between pt-space-xs font-mono-table text-[11px] text-text-secondary">
+<span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-full bg-white shadow-inner"></span> Camiseta: Blanco #FFF</span>
+<span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-full bg-white shadow-inner"></span> Pant: #FFF</span>
+<span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-full bg-white shadow-inner"></span> Med: #FFF</span>
+</div>
+</div>
+<!-- Goalkeeper Mini Kit -->
+<div class="bg-surface-container-high/40 rounded-lg p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded bg-[#39FF14] flex items-center justify-center font-bold text-[10px] text-black shadow-sm">GK</div>
+<div class="flex flex-col">
+<span class="font-title-md text-body-sm text-text-primary">Arquero Titular LDU</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Verde Flúor Neón (#39FF14)</span>
+</div>
+</div>
+<span class="font-label-caps text-[10px] bg-sport-success/20 text-sport-success px-2 py-0.5 rounded font-bold">APROBADO</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low/60 rounded p-space-xs flex items-center justify-between font-label-caps text-label-caps">
+<span class="text-text-secondary">PARCHES: ECUABET (DER)</span>
+<span class="text-sport-success font-bold flex items-center gap-0.5"><span class="material-symbols-outlined text-sm">check_circle</span> VERIFICADO</span>
+</div>
+</div>
+<!-- Card B: Barcelona SC (Away - Kit Alterno 1) -->
+<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-start justify-between mb-space-sm">
+<div>
+<span class="bg-secondary-container text-on-secondary font-label-caps text-label-caps px-2 py-0.5 rounded">CLUB VISITANTE</span>
+<h3 class="font-title-md text-title-md text-text-primary mt-1">Barcelona SC</h3>
+<p class="font-body-sm text-body-sm text-text-secondary">Kit Alterno 1 (Evita conflicto de fondo)</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center font-bold text-xs text-primary shadow-inner">
+              BSC
+            </div>
+</div>
+<!-- Kit SVG Illustration: Electric Orange / Dark Anthracite -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col items-center justify-center gap-space-sm my-space-sm relative">
+<span class="absolute top-2 left-2 font-mono-table text-[10px] text-text-secondary">K-02 AWAY</span>
+<svg class="w-32 h-44 drop-shadow-sm" fill="none" viewbox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+<!-- Jersey Orange with Anthracite sleeves -->
+<path d="M35 15 L20 38 L36 48 L42 32 L42 80 L78 80 L78 32 L84 48 L100 38 L85 15 L68 20 C64 24 56 24 52 20 Z" fill="#FF6A00"></path>
+<!-- Anthracite sleeves -->
+<path d="M35 15 L20 38 L36 48 L42 32 Z" fill="#2B2D42"></path>
+<path d="M85 15 L100 38 L84 48 L78 32 Z" fill="#2B2D42"></path>
+<rect fill="#FFFFFF" height="6" rx="1" width="28" x="46" y="44"></rect>
+<text fill="#FFFFFF" font-family="'JetBrains Mono'" font-size="14" font-weight="bold" text-anchor="middle" x="60" y="66">09</text>
+<rect fill="#FFD100" height="5" width="5" x="90" y="32"></rect>
+<!-- Shorts Black -->
+<path d="M42 84 L78 84 L78 116 L62 116 L60 98 L58 116 L42 116 Z" fill="#1A1A1A"></path>
+<!-- Socks Orange -->
+<rect fill="#FF6A00" height="26" rx="2" width="10" x="45" y="120"></rect>
+<rect fill="#FF6A00" height="26" rx="2" width="10" x="65" y="120"></rect>
+<rect fill="#FF6A00" height="3" width="10" x="45" y="134"></rect>
+<rect fill="#FF6A00" height="3" width="10" x="65" y="134"></rect>
+</svg>
+<!-- Technical Swatch Breakdown -->
+<div class="w-full flex items-center justify-between pt-space-xs font-mono-table text-[11px] text-text-secondary">
+<span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-full bg-[#FF6A00]"></span> Naranja #FF6A00</span>
+<span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-full bg-[#1A1A1A]"></span> Pant: #1A1A1A</span>
+<span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-full bg-[#FF6A00]"></span> Med: #FF6A00</span>
+</div>
+</div>
+<!-- Goalkeeper Mini Kit -->
+<div class="bg-surface-container-high/40 rounded-lg p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded bg-[#00A6FB] flex items-center justify-center font-bold text-[10px] text-white shadow-sm">GK</div>
+<div class="flex flex-col">
+<span class="font-title-md text-body-sm text-text-primary">Arquero BSC</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Azul Cielo (#00A6FB)</span>
+</div>
+</div>
+<span class="font-label-caps text-[10px] bg-sport-success/20 text-sport-success px-2 py-0.5 rounded font-bold">APROBADO</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low/60 rounded p-space-xs flex items-center justify-between font-label-caps text-label-caps">
+<span class="text-text-secondary">CAMBIO AMARILLO TITULAR</span>
+<span class="text-secondary font-bold flex items-center gap-0.5"><span class="material-symbols-outlined text-sm">swap_horiz</span> REEMPLAZO AUTORIZADO</span>
+</div>
+</div>
+<!-- Card C: Match Officials CNA / FIFA -->
+<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-start justify-between mb-space-sm">
+<div>
+<span class="bg-sport-danger text-on-error font-label-caps text-label-caps px-2 py-0.5 rounded">CUARTETO ARBITRAL</span>
+<h3 class="font-title-md text-title-md text-text-primary mt-1">CNA / FIFA Match</h3>
+<p class="font-body-sm text-body-sm text-text-secondary">Diferenciación Óptica Total</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center font-bold text-xs text-primary shadow-inner">
+              CNA
+            </div>
+</div>
+<!-- Kit SVG Illustration: Magenta Fluo / Black -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col items-center justify-center gap-space-sm my-space-sm relative">
+<span class="absolute top-2 left-2 font-mono-table text-[10px] text-text-secondary">CNA-REF</span>
+<svg class="w-32 h-44 drop-shadow-sm" fill="none" viewbox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+<!-- Jersey Magenta Fluo -->
+<path d="M35 15 L20 38 L36 48 L42 32 L42 80 L78 80 L78 32 L84 48 L100 38 L85 15 L68 20 C64 24 56 24 52 20 Z" fill="#FF007F"></path>
+<!-- Referee Pockets -->
+<rect fill="#D6006B" height="12" rx="1" width="10" x="48" y="38"></rect>
+<rect fill="#D6006B" height="12" rx="1" width="10" x="62" y="38"></rect>
+<circle cx="53" cy="42" fill="#FFFFFF" r="1.5"></circle>
+<!-- Shorts Black -->
+<path d="M42 84 L78 84 L78 116 L62 116 L60 98 L58 116 L42 116 Z" fill="#111827"></path>
+<!-- Socks Black -->
+<rect fill="#111827" height="26" rx="2" width="10" x="45" y="120"></rect>
+<rect fill="#111827" height="26" rx="2" width="10" x="65" y="120"></rect>
+<line stroke="#FF007F" stroke-width="2" x1="45" x2="55" y1="126" y2="126"></line>
+<line stroke="#FF007F" stroke-width="2" x1="65" x2="75" y1="126" y2="126"></line>
+</svg>
+<!-- Technical Swatch Breakdown -->
+<div class="w-full flex items-center justify-between pt-space-xs font-mono-table text-[11px] text-text-secondary">
+<span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-full bg-[#FF007F]"></span> Magenta #FF007F</span>
+<span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-full bg-[#111827]"></span> Pant: #111</span>
+<span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded-full bg-[#111827]"></span> Med: #111</span>
+</div>
+</div>
+<!-- CNA Reserve Kit Reference -->
+<div class="bg-surface-container-high/40 rounded-lg p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded bg-[#00E5FF] flex items-center justify-center font-bold text-[10px] text-black shadow-sm">ALT</div>
+<div class="flex flex-col">
+<span class="font-title-md text-body-sm text-text-primary">Indumentaria Emergencia</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Cyan Eléctrico (#00E5FF)</span>
+</div>
+</div>
+<span class="font-label-caps text-[10px] text-text-secondary px-2 py-0.5 rounded">STANDBY</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low/60 rounded p-space-xs flex items-center justify-between font-label-caps text-label-caps">
+<span class="text-text-secondary">AUDIORADIOS &amp; VAR (Z)</span>
+<span class="text-sport-success font-bold flex items-center gap-0.5"><span class="material-symbols-outlined text-sm">wifi_tethering</span> ENLACE OK</span>
+</div>
+</div>
+<!-- Card D: Bibs & Ball Crew Designation -->
+<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-start justify-between mb-space-sm">
+<div>
+<span class="bg-inverse-surface text-on-primary font-label-caps text-label-caps px-2 py-0.5 rounded">BANQUILLOS &amp; CAMPO</span>
+<h3 class="font-title-md text-title-md text-text-primary mt-1">Chalecos &amp; Pasabolas</h3>
+<p class="font-body-sm text-body-sm text-text-secondary">Protocolo Técnico Perimetral</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center font-bold text-xs text-primary shadow-inner">
+              ZONA
+            </div>
+</div>
+<!-- Bibs Matrix Graphic -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-2 my-space-sm">
+<div class="bg-surface-card rounded p-2 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-4 h-5 rounded-sm bg-[#00FF87] border border-black/10 inline-block shadow-sm"></span>
+<div class="flex flex-col">
+<span class="font-title-md text-body-sm text-text-primary">Suplentes Local (LDU)</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Verde Menta Neón (100% contraste)</span>
+</div>
+</div>
+<span class="font-mono-table text-[11px] text-sport-success font-semibold">12 CHALECOS</span>
+</div>
+<div class="bg-surface-card rounded p-2 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-4 h-5 rounded-sm bg-[#0055FF] border border-black/10 inline-block shadow-sm"></span>
+<div class="flex flex-col">
+<span class="font-title-md text-body-sm text-text-primary">Suplentes Visita (BSC)</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Azul Royal Eléctrico</span>
+</div>
+</div>
+<span class="font-mono-table text-[11px] text-sport-success font-semibold">12 CHALECOS</span>
+</div>
+<div class="bg-surface-card rounded p-2 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-4 h-5 rounded-sm bg-[#FFD100] border border-black/10 inline-block shadow-sm"></span>
+<div class="flex flex-col">
+<span class="font-title-md text-body-sm text-text-primary">Pasabolas Oficiales</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Amarillo Oro Reflectivo LigaPro</span>
+</div>
+</div>
+<span class="font-mono-table text-[11px] text-sport-success font-semibold">N° 1 a 12</span>
+</div>
+</div>
+<div class="bg-surface-container-high/40 rounded-lg p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-text-primary text-base">emergency</span>
+<div class="flex flex-col">
+<span class="font-title-md text-body-sm text-text-primary">Personal Médico &amp; Camilla</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Rojo Bermellón con Cruz Blanca</span>
+</div>
+</div>
+<span class="font-label-caps text-[10px] text-sport-success bg-sport-success/20 px-2 py-0.5 rounded font-bold">NORMATIVO</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-low/60 rounded p-space-xs flex items-center justify-between font-label-caps text-label-caps">
+<span class="text-text-secondary">FOTÓGRAFOS Y TV CREW</span>
+<span class="text-text-primary font-bold">PETO GRIS REFLECTIVO</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Chromatic Contrast Engine & WCAG Compliance Table -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-md mb-space-lg">
+<!-- Real-time Cross Matrix (8 cols) -->
+<div class="lg:col-span-8 bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-space-sm border-b border-border-subtle gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-2xl">contrast</span>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-text-primary">Matriz de Contraste Óptico Cruzado</h2>
+<p class="font-body-sm text-body-sm text-text-secondary">Estándar ISO/IEC &amp; WCAG 2.1 aplicable a transmisiones 4K HDR</p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="bg-sport-success/20 text-sport-success font-label-caps text-label-caps px-2 py-1 rounded font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">task_alt</span> REQUISITO &gt; 4.5:1 SUPERADO
+            </span>
+</div>
+</div>
+<!-- Data Dense Table -->
+<div class="overflow-x-auto mt-space-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low font-label-caps text-label-caps text-text-secondary uppercase">
+<th class="py-2.5 px-3">Cruce de Indumentarias</th>
+<th class="py-2.5 px-3">Valores Cromáticos (Hex)</th>
+<th class="py-2.5 px-3 text-right">Ratio Calculado</th>
+<th class="py-2.5 px-3">Nivel WCAG</th>
+<th class="py-2.5 px-3 text-center">Estado Oficial</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-subtle font-body-sm text-body-sm">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3 px-3 font-semibold text-text-primary flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-white shadow-sm border border-black/20"></span>
+<span>Local Campo vs Visitante Campo</span>
+</td>
+<td class="py-3 px-3 font-mono-table text-[12px] text-text-secondary">#FFFFFF vs #FF6A00 / #1A1A1A</td>
+<td class="py-3 px-3 text-right font-mono-metric text-lg text-sport-success font-bold">12.8:1</td>
+<td class="py-3 px-3">
+<span class="bg-sport-success/20 text-sport-success font-label-caps text-label-caps px-2 py-0.5 rounded font-bold">AAA ÓPTIMO</span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center gap-1 text-sport-success font-label-caps text-label-caps font-bold">
+<span class="material-symbols-outlined text-sm">verified</span> CERTIFICADO
+                  </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3 px-3 font-semibold text-text-primary flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-white shadow-sm border border-black/20"></span>
+<span>Local Campo vs Cuarteto Arbitral</span>
+</td>
+<td class="py-3 px-3 font-mono-table text-[12px] text-text-secondary">#FFFFFF vs #FF007F (Magenta)</td>
+<td class="py-3 px-3 text-right font-mono-metric text-lg text-sport-success font-bold">9.4:1</td>
+<td class="py-3 px-3">
+<span class="bg-sport-success/20 text-sport-success font-label-caps text-label-caps px-2 py-0.5 rounded font-bold">AAA ÓPTIMO</span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center gap-1 text-sport-success font-label-caps text-label-caps font-bold">
+<span class="material-symbols-outlined text-sm">verified</span> CERTIFICADO
+                  </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3 px-3 font-semibold text-text-primary flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#FF6A00]"></span>
+<span>Visitante Campo vs Cuarteto Arbitral</span>
+</td>
+<td class="py-3 px-3 font-mono-table text-[12px] text-text-secondary">#FF6A00 vs #FF007F</td>
+<td class="py-3 px-3 text-right font-mono-metric text-lg text-secondary-container font-bold">6.8:1</td>
+<td class="py-3 px-3">
+<span class="bg-secondary-container/20 text-secondary font-label-caps text-label-caps px-2 py-0.5 rounded font-bold">AA CONFORME</span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center gap-1 text-sport-success font-label-caps text-label-caps font-bold">
+<span class="material-symbols-outlined text-sm">verified</span> CERTIFICADO
+                  </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3 px-3 font-semibold text-text-primary flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#39FF14]"></span>
+<span>Arquero LDU vs Todos los Jugadores</span>
+</td>
+<td class="py-3 px-3 font-mono-table text-[12px] text-text-secondary">#39FF14 (Verde Flúor) vs Resto</td>
+<td class="py-3 px-3 text-right font-mono-metric text-lg text-sport-success font-bold">8.2:1</td>
+<td class="py-3 px-3">
+<span class="bg-sport-success/20 text-sport-success font-label-caps text-label-caps px-2 py-0.5 rounded font-bold">AAA ÓPTIMO</span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center gap-1 text-sport-success font-label-caps text-label-caps font-bold">
+<span class="material-symbols-outlined text-sm">verified</span> CERTIFICADO
+                  </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3 px-3 font-semibold text-text-primary flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#00A6FB]"></span>
+<span>Arquero BSC vs Todos los Jugadores</span>
+</td>
+<td class="py-3 px-3 font-mono-table text-[12px] text-text-secondary">#00A6FB (Cielo) vs Resto</td>
+<td class="py-3 px-3 text-right font-mono-metric text-lg text-sport-success font-bold">10.1:1</td>
+<td class="py-3 px-3">
+<span class="bg-sport-success/20 text-sport-success font-label-caps text-label-caps px-2 py-0.5 rounded font-bold">AAA ÓPTIMO</span>
+</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center gap-1 text-sport-success font-label-caps text-label-caps font-bold">
+<span class="material-symbols-outlined text-sm">verified</span> CERTIFICADO
+                  </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Real-time Broadcast Notice -->
+<div class="mt-space-md p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-lg">videocam</span>
+<span class="font-body-sm text-body-sm text-text-primary">
+            Aprobación para transmisión internacional oficial <strong>LigaPro / GolTV / Disney+ Plan Premium</strong> sin interferencia de canal de color.
+          </span>
+</div>
+<span class="font-mono-table text-xs text-text-secondary">HD/4K-REC709</span>
+</div>
+</div>
+<!-- Lighting condition simulator & Lux metric card (4 cols) -->
+<div class="lg:col-span-4 bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-sm border-b border-border-subtle">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sport-warning text-2xl">lightbulb</span>
+<div>
+<h3 class="font-title-md text-title-md text-text-primary">Condición Lumínica</h3>
+<p class="font-body-sm text-body-sm text-text-secondary">Rodrigo Paz Delgado (2,850 msnm)</p>
+</div>
+</div>
+<span class="bg-sport-warning/20 text-on-surface font-label-caps text-label-caps px-2 py-0.5 rounded font-bold" id="lightBadge">NATURAL</span>
+</div>
+<div class="py-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-text-secondary">Nivel de Iluminancia Vertical:</span>
+<span class="font-mono-metric text-headline-sm text-text-primary" id="luxValue">1,420 Lux</span>
+</div>
+<!-- Interactive Bar representing lux adequacy -->
+<div class="w-full bg-surface-container-low rounded-full h-3 overflow-hidden">
+<div class="bg-sport-success h-full rounded-full transition-all duration-500" id="luxBar" style="width: 88%;"></div>
+</div>
+<div class="flex justify-between font-mono-table text-[10px] text-text-secondary">
+<span>Mín. FIFA 1,200 Lux</span>
+<span>Estadio 1,600 Lux Max</span>
+</div>
+<!-- Environmental notes -->
+<div class="bg-surface-container-low rounded-lg p-space-sm mt-space-xs flex flex-col gap-1">
+<div class="flex justify-between font-body-sm text-body-sm">
+<span class="text-text-secondary">Puesta de sol prevista:</span>
+<span class="font-mono-table text-text-primary font-semibold">18:22 UTC-5</span>
+</div>
+<div class="flex justify-between font-body-sm text-body-sm">
+<span class="text-text-secondary">Encendido de Luminarias LED:</span>
+<span class="font-mono-table text-sport-success font-semibold">17:15 UTC-5 (Programado)</span>
+</div>
+<div class="flex justify-between font-body-sm text-body-sm">
+<span class="text-text-secondary">Uniformidad Luminosa (U1):</span>
+<span class="font-mono-table text-text-primary font-semibold">0.74 (&gt; 0.60 Aprobado)</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-space-sm rounded bg-surface-container-low/70 border-l-4 border-sport-success flex items-start gap-2">
+<span class="material-symbols-outlined text-sport-success text-base mt-0.5">check</span>
+<p class="font-body-sm text-[12px] text-text-primary">
+          Ambas combinaciones garantizan visibilidad óptima bajo transición de atardecer a luz artificial LED fría de 5,700K.
+        </p>
+</div>
+</div>
+</section>
+<!-- Technical Uniform Checklist (Cap. VII Art. 54-56) & Dorsal Typography -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-md mb-space-lg">
+<!-- Checklist items (7 cols) -->
+<div class="lg:col-span-7 bg-surface-card rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-sm border-b border-border-subtle mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">fact_check</span>
+<div>
+<h3 class="font-title-md text-title-md text-text-primary">Checklist Reglamentario LigaPro</h3>
+<p class="font-body-sm text-body-sm text-text-secondary">Cumplimiento formal de indumentaria y sponsoreo</p>
+</div>
+</div>
+<span class="font-mono-table text-xs text-sport-success font-bold">6/6 COMPLETO</span>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Item 1 -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-sport-success text-lg">check_circle</span>
+<div>
+<span class="font-title-md text-body-sm text-text-primary block">Parche Oficial LigaPro Ecuabet</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Manga derecha, dimensión exacta 70x70 mm verificado en ambos clubes.</span>
+</div>
+</div>
+<span class="font-mono-table text-[11px] text-text-primary bg-surface-card px-2 py-1 rounded shadow-sm">Art. 54.1</span>
+</div>
+<!-- Item 2 -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-sport-success text-lg">check_circle</span>
+<div>
+<span class="font-title-md text-body-sm text-text-primary block">Tipografía &amp; Dorsales Homologados</span>
+<span class="font-body-sm text-body-sm text-text-secondary">25 cm de altura dorsal, 10 cm pantaloneta, borde de contraste activo (&gt;4.5:1).</span>
+</div>
+</div>
+<span class="font-mono-table text-[11px] text-text-primary bg-surface-card px-2 py-1 rounded shadow-sm">Art. 55.2</span>
+</div>
+<!-- Item 3 -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-sport-success text-lg">check_circle</span>
+<div>
+<span class="font-title-md text-body-sm text-text-primary block">Nombres / Apodos autorizados en COMET</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Lista de habilitaciones registradas para el partido (ej. "Dida", "Kitu").</span>
+</div>
+</div>
+<span class="font-mono-table text-[11px] text-text-primary bg-surface-card px-2 py-1 rounded shadow-sm">Art. 55.8</span>
+</div>
+<!-- Item 4 -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-sport-success text-lg">check_circle</span>
+<div>
+<span class="font-title-md text-body-sm text-text-primary block">Áreas de Publicidad &amp; Patrocinadores</span>
+<span class="font-body-sm text-body-sm text-text-secondary">Pecho central no excede 350 cm²; espalda alta no excede 200 cm².</span>
+</div>
+</div>
+<span class="font-mono-table text-[11px] text-text-primary bg-surface-card px-2 py-1 rounded shadow-sm">Art. 56.4</span>
+</div>
+<!-- Item 5 -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-sport-success text-lg">check_circle</span>
+<div>
+<span class="font-title-md text-body-sm text-text-primary block">Cinta Adhesiva &amp; Medias Cortadas (IFAB Regla 4)</span>
+<span class="font-body-sm text-body-sm text-text-secondary">El vendaje perimetral coincide 100% con el color de la media (Blanco LDU / Naranja BSC).</span>
+</div>
+</div>
+<span class="font-mono-table text-[11px] text-text-primary bg-surface-card px-2 py-1 rounded shadow-sm">IFAB R4</span>
+</div>
+</div>
+</div>
+<!-- Dorsal Typography Spec & Contrast Preview (5 cols) -->
+<div class="lg:col-span-5 bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-sm border-b border-border-subtle mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-xl">format_size</span>
+<h3 class="font-title-md text-title-md text-text-primary">Especificación Tipográfica Dorsal</h3>
+</div>
+<span class="font-label-caps text-label-caps bg-surface-container-low text-text-secondary px-2 py-0.5 rounded">OFICIAL 2025</span>
+</div>
+<!-- Visual Dorsal Sample Local vs Visitante -->
+<div class="grid grid-cols-2 gap-space-sm my-space-sm">
+<!-- LDU Dorsal Mock -->
+<div class="bg-white rounded-lg p-space-md shadow-sm border border-border-subtle flex flex-col items-center justify-center relative">
+<span class="font-label-caps text-[10px] text-text-secondary absolute top-2 left-2">DORSAL LDU</span>
+<div class="my-2 text-center">
+<span class="font-label-caps text-xs tracking-widest text-[#001551] block uppercase font-bold">ALVARADO</span>
+<span class="font-mono-metric text-5xl text-[#001551] font-extrabold tracking-tighter" style="text-shadow: 1px 1px 0 #CBD5E1, -1px -1px 0 #CBD5E1;">10</span>
+</div>
+<div class="w-full pt-1 border-t border-border-subtle flex justify-between font-mono-table text-[10px] text-text-secondary">
+<span>Fondo: #FFF</span>
+<span class="text-sport-success font-bold">Ratio 14.1:1</span>
+</div>
+</div>
+<!-- BSC Dorsal Mock -->
+<div class="bg-[#FF6A00] rounded-lg p-space-md shadow-sm flex flex-col items-center justify-center relative">
+<span class="font-label-caps text-[10px] text-white/80 absolute top-2 left-2">DORSAL BSC</span>
+<div class="my-2 text-center">
+<span class="font-label-caps text-xs tracking-widest text-white block uppercase font-bold">DÍAZ</span>
+<span class="font-mono-metric text-5xl text-white font-extrabold tracking-tighter" style="text-shadow: 1px 1px 0 #1A1A1A, -1px -1px 0 #1A1A1A;">10</span>
+</div>
+<div class="w-full pt-1 border-t border-white/20 flex justify-between font-mono-table text-[10px] text-white/90">
+<span>Fondo: #FF6A00</span>
+<span class="text-white font-bold">Ratio 8.9:1</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm space-y-1 font-body-sm text-[12px] text-text-secondary">
+<div class="flex justify-between">
+<span>Altura Nombre Dorsal:</span>
+<span class="font-mono-table text-text-primary font-semibold">7.5 cm (Tipografía Oficial LP)</span>
+</div>
+<div class="flex justify-between">
+<span>Grosor Trazo Número:</span>
+<span class="font-mono-table text-text-primary font-semibold">3.5 cm c/filete de 3 mm</span>
+</div>
+<div class="flex justify-between">
+<span>Identificador LigaPro Ecuabet:</span>
+<span class="font-mono-table text-text-primary font-semibold">Base de número (Micro-logo troquelado)</span>
+</div>
+</div>
+</div>
+<div class="mt-space-sm p-space-xs bg-sport-danger/10 text-sport-danger rounded flex items-center gap-2 text-xs font-semibold">
+<span class="material-symbols-outlined text-base">warning</span>
+<span>Art. 112: Sanción de $1,000 USD por modificación no homologada de números.</span>
+</div>
+</div>
+</section>
+<!-- Cryptographic Sign-Off & Attendance Registry -->
+<section class="bg-surface-card rounded-xl p-space-md shadow-sm mb-space-md">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between pb-space-sm border-b border-border-subtle gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-text-primary text-xl">fingerprint</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-text-primary">Acta de Conformidad y Firma Criptográfica SHA-256</h3>
+<p class="font-body-sm text-body-sm text-text-secondary">Sesión Técnica 48h finalizada con quórum reglamentario completo</p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs font-mono-table text-xs text-text-secondary bg-surface-container-low px-3 py-1.5 rounded">
+<span>HASH BLOQUE:</span>
+<span class="text-text-primary font-semibold">e4b10884d5b27e8a93e8...71f92</span>
+</div>
+</div>
+<!-- Attendance Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-sm my-space-md">
+<!-- Person 1 -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col justify-between">
+<div>
+<span class="font-label-caps text-[10px] text-text-secondary uppercase">Comisario LigaPro</span>
+<h4 class="font-title-md text-body-sm text-text-primary mt-0.5">Ab. Carlos Zambrano</h4>
+<span class="font-body-sm text-[11px] text-text-secondary">Director de Mesa Técnica</span>
+</div>
+<div class="mt-space-sm pt-space-xs border-t border-border-subtle flex items-center justify-between">
+<span class="font-mono-table text-[10px] text-sport-success font-semibold">FIRMA OK</span>
+<span class="material-symbols-outlined text-sport-success text-sm">verified_user</span>
+</div>
+</div>
+<!-- Person 2 -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col justify-between">
+<div>
+<span class="font-label-caps text-[10px] text-text-secondary uppercase">Delegado LDU Quito</span>
+<h4 class="font-title-md text-body-sm text-text-primary mt-0.5">Ing. Santiago Jácome</h4>
+<span class="font-body-sm text-[11px] text-text-secondary">Coordinador Deportivo</span>
+</div>
+<div class="mt-space-sm pt-space-xs border-t border-border-subtle flex items-center justify-between">
+<span class="font-mono-table text-[10px] text-sport-success font-semibold">FIRMA OK</span>
+<span class="material-symbols-outlined text-sport-success text-sm">verified_user</span>
+</div>
+</div>
+<!-- Person 3 -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col justify-between">
+<div>
+<span class="font-label-caps text-[10px] text-text-secondary uppercase">Delegado Barcelona SC</span>
+<h4 class="font-title-md text-body-sm text-text-primary mt-0.5">Lcdo. Luigi Macchiavello</h4>
+<span class="font-body-sm text-[11px] text-text-secondary">Gerente de Operaciones</span>
+</div>
+<div class="mt-space-sm pt-space-xs border-t border-border-subtle flex items-center justify-between">
+<span class="font-mono-table text-[10px] text-sport-success font-semibold">FIRMA OK</span>
+<span class="material-symbols-outlined text-sport-success text-sm">verified_user</span>
+</div>
+</div>
+<!-- Person 4 -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col justify-between">
+<div>
+<span class="font-label-caps text-[10px] text-text-secondary uppercase">4to Árbitro CNA</span>
+<h4 class="font-title-md text-body-sm text-text-primary mt-0.5">Yerson Zambrano</h4>
+<span class="font-body-sm text-[11px] text-text-secondary">Colegiado Nacional</span>
+</div>
+<div class="mt-space-sm pt-space-xs border-t border-border-subtle flex items-center justify-between">
+<span class="font-mono-table text-[10px] text-sport-success font-semibold">FIRMA OK</span>
+<span class="material-symbols-outlined text-sport-success text-sm">verified_user</span>
+</div>
+</div>
+<!-- Person 5 -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col justify-between">
+<div>
+<span class="font-label-caps text-[10px] text-text-secondary uppercase">Oficial de Seguridad</span>
+<h4 class="font-title-md text-body-sm text-text-primary mt-0.5">Crnl. Fausto Buenaño</h4>
+<span class="font-body-sm text-[11px] text-text-secondary">Policía Nacional / LP</span>
+</div>
+<div class="mt-space-sm pt-space-xs border-t border-border-subtle flex items-center justify-between">
+<span class="font-mono-table text-[10px] text-sport-success font-semibold">FIRMA OK</span>
+<span class="material-symbols-outlined text-sport-success text-sm">verified_user</span>
+</div>
+</div>
+</div>
+<!-- Cryptographic Verification Footnote -->
+<div class="bg-surface-container-high/30 rounded-lg p-space-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs text-text-secondary font-mono-table text-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-sport-success">lock</span>
+<span>Certificado SSL/TLS RFC-3161 Timestamp Token: 2025-05-16T18:42:09-05:00</span>
+</div>
+<div>
+<span>ID REGISTRO: <span class="text-text-primary font-bold">LP-ECU-2025-ACTA-1488</span></span>
+</div>
+</div>
+</section>
+<!-- Interactive JavaScript for Live Lighting Simulation and Colorblind Filters -->
+<script>
+    (function initDesignacionUniformes() {
+      // Toggle Lighting Simulation (Daylight 18:00 vs LED Floodlights 1,400 Lux)
+      const toggleLightingBtn = document.getElementById('toggleLightingBtn');
+      const lightIcon = document.getElementById('lightIcon');
+      const lightingLabel = document.getElementById('lightingLabel');
+      const lightBadge = document.getElementById('lightBadge');
+      const luxValue = document.getElementById('luxValue');
+      const luxBar = document.getElementById('luxBar');
+
+      let isFloodlight = false;
+
+      if (toggleLightingBtn) {
+        toggleLightingBtn.addEventListener('click', () => {
+          isFloodlight = !isFloodlight;
+          if (isFloodlight) {
+            lightIcon.textContent = 'flashlight_on';
+            lightingLabel.textContent = 'Modo: LED Focos 1,400 Lux';
+            lightBadge.textContent = 'ARTIFICIAL LED';
+            lightBadge.className = 'bg-secondary-container/20 text-secondary font-label-caps text-label-caps px-2 py-0.5 rounded font-bold';
+            luxValue.textContent = '1,580 Lux';
+            luxBar.style.width = '96%';
+          } else {
+            lightIcon.textContent = 'wb_sunny';
+            lightingLabel.textContent = 'Modo: Luz Natural 18:00';
+            lightBadge.textContent = 'NATURAL';
+            lightBadge.className = 'bg-sport-warning/20 text-on-surface font-label-caps text-label-caps px-2 py-0.5 rounded font-bold';
+            luxValue.textContent = '1,420 Lux';
+            luxBar.style.width = '88%';
+          }
+        });
+      }
+
+      // Accessibility Colorblind Simulator Filter
+      const visionFilter = document.getElementById('visionFilter');
+      const kitContainer = document.getElementById('kitContainer');
+
+      if (visionFilter && kitContainer) {
+        visionFilter.addEventListener('change', (e) => {
+          const mode = e.target.value;
+          switch (mode) {
+            case 'protanopia':
+              kitContainer.style.filter = 'url(#protanopia-filter)';
+              kitContainer.style.filter = 'sepia(0.6) hue-rotate(-20deg) saturate(1.2)';
+              break;
+            case 'deuteranopia':
+              kitContainer.style.filter = 'sepia(0.5) hue-rotate(60deg) saturate(0.8)';
+              break;
+            case 'tritanopia':
+              kitContainer.style.filter = 'sepia(0.6) hue-rotate(180deg) saturate(0.9)';
+              break;
+            case 'monochrome':
+              kitContainer.style.filter = 'grayscale(100%) contrast(1.15)';
+              break;
+            default:
+              kitContainer.style.filter = 'none';
+              break;
+          }
+        });
+      }
+    })();
+  </script>
+</div></main></div>
+  </main>
+  <script type="module" src="src/lib/interactive.js"></script>
+</body>
+</html>

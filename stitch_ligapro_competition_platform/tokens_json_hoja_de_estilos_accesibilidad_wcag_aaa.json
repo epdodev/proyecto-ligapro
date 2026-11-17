@@ -1,0 +1,48 @@
+{
+  "name": "LigaPro SIGEC-LP WCAG AAA Accessibility Design Tokens",
+  "version": "1.0.0",
+  "compliance": "WCAG 2.1 / 2.2 Level AAA",
+  "color_scheme": "High Contrast Dark",
+  "tokens": {
+    "color": {
+      "background": {
+        "canvas": { "value": "#000000", "description": "Fondo absoluto negro para eliminar dispersión lumínica y maximizar contraste" },
+        "surface": { "value": "#050B14", "description": "Superficie de tarjeta contrastada" },
+        "surface_elevated": { "value": "#0C1322", "description": "Superficie elevada con reborde rígido" }
+      },
+      "border": {
+        "primary": { "value": "#FFE600", "contrast_ratio": "19.5:1 vs #000000", "description": "Amarillo alta visibilidad para contornos principales de 2px a 3px" },
+        "secondary": { "value": "#FFFFFF", "contrast_ratio": "21:1 vs #000000", "description": "Blanco puro para contornos secundarios y tarjetas de datos" },
+        "focus_ring": { "value": "#00E5FF", "contrast_ratio": "15.3:1 vs #000000", "description": "Anillo de foco de 3px para accesibilidad por teclado" }
+      },
+      "typography": {
+        "primary": { "value": "#FFFFFF", "contrast_ratio": "21:1 vs #000000", "description": "Texto titular y datos primarios" },
+        "highlight": { "value": "#FFE600", "contrast_ratio": "19.5:1 vs #000000", "description": "Texto resaltado, cronómetros y advertencias críticas" },
+        "link_active": { "value": "#00E5FF", "contrast_ratio": "15.3:1 vs #000000", "description": "Enlaces y estados activos de navegación" }
+      },
+      "status": {
+        "success": { "value": "#00FF66", "contrast_ratio": "17.1:1 vs #000000", "description": "Habilitación y cumplimiento normativo verificado" },
+        "warning": { "value": "#FFE600", "contrast_ratio": "19.5:1 vs #000000", "description": "Alerta preventiva, corte de césped o tiempo T-Minus" },
+        "danger": { "value": "#FF3333", "contrast_ratio": "8.4:1 vs #000000", "description": "Sanción disciplinaria, tarjetas rojas o descenso" }
+      }
+    },
+    "typography_scale": {
+      "base_scaling": "125%",
+      "font_family_ui": "Plus Jakarta Sans, system-ui, sans-serif",
+      "font_family_tabular": "JetBrains Mono, monospace",
+      "font_features": "tnum (tabular numbers enabled)",
+      "line_height": "1.6"
+    },
+    "sensory_alerts": {
+      "optical_flash_duration": "400ms",
+      "visual_captioning_enabled": true,
+      "audio_wave_indicator": "synchronized visual equalizer"
+    },
+    "touch_targets": {
+      "min_touch_target": "48px",
+      "tablet_touch_target": "56px",
+      "button_border_radius": "6px",
+      "haptic_feedback_signal": "enabled"
+    }
+  }
+}

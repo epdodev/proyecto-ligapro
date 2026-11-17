@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"border-subtle":"#E2E8F0","on-tertiary-container":"#0090ae","secondary-fixed-dim":"#b6c4ff","on-secondary":"#ffffff","on-primary-fixed":"#101c2e","surface":"#f8f9ff","on-secondary-fixed-variant":"#0039b3","on-background":"#0b1c30","on-tertiary-fixed-variant":"#004e5f","surface-container-low":"#eff4ff","sport-warning":"#FFD100","on-tertiary-fixed":"#001f27","sport-success":"#00A859","on-surface":"#0b1c30","on-error-container":"#93000a","secondary-container":"#0356ff","surface-base":"#F8FAFC","error-container":"#ffdad6","inverse-primary":"#bbc7df","primary-fixed":"#d7e3fc","sport-danger":"#D92D20","surface-dim":"#cbdbf5","surface-container-lowest":"#ffffff","border-strong":"#CBD5E1","inverse-on-surface":"#eaf1ff","on-primary-container":"#79849b","on-primary-fixed-variant":"#3c475b","primary-fixed-dim":"#bbc7df","text-secondary":"#334155","surface-container":"#e5eeff","outline":"#75777d","inverse-surface":"#213145","secondary":"#0041c9","high-contrast-bg":"#000000","on-primary":"#ffffff","outline-variant":"#c5c6cd","on-secondary-fixed":"#001551","secondary-fixed":"#dce1ff","error":"#ba1a1a","high-contrast-accent":"#FFE600","primary":"#000000","on-surface-variant":"#45474c","surface-card":"#FFFFFF","surface-container-highest":"#d3e4fe","on-tertiary":"#ffffff","text-primary":"#0F172A","surface-tint":"#535f74","on-error":"#ffffff","background":"#f8f9ff","surface-container-high":"#dce9ff","surface-bright":"#f8f9ff","tertiary":"#000000","tertiary-container":"#001f27","tertiary-fixed":"#b4ebff","tertiary-fixed-dim":"#3cd7ff","surface-variant":"#d3e4fe","primary-container":"#101c2e","on-secondary-container":"#e4e7ff"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{"margin-md":"1.5rem","space-2xl":"3rem","space-lg":"1.5rem","margin":"1rem","space-xs":"0.25rem","gutter":"1rem","space-sm":"0.5rem","space-md":"1rem","margin-lg":"2rem","space-xl":"2rem","gutter-lg":"1.5rem"},fontFamily:{"label-caps":["Plus Jakarta Sans"],"display-lg-mobile":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"mono-matchday":["JetBrains Mono"],"mono-metric":["JetBrains Mono"],"headline-sm":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"mono-table":["JetBrains Mono"],"body-md":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"]},fontSize:{"label-caps":["11px",{lineHeight:"14px",letterSpacing:"0.06em",fontWeight:"700"}],"display-lg-mobile":["30px",{lineHeight:"36px",letterSpacing:"-0.01em",fontWeight:"800"}],"body-sm":["12px",{lineHeight:"16px",fontWeight:"400"}],"mono-matchday":["20px",{lineHeight:"28px",fontWeight:"600"}],"mono-metric":["32px",{lineHeight:"36px",fontWeight:"700"}],"headline-sm":["20px",{lineHeight:"28px",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"24px",fontWeight:"400"}],"display-lg":["40px",{lineHeight:"48px",letterSpacing:"-0.02em",fontWeight:"800"}],"headline-md":["24px",{lineHeight:"32px",fontWeight:"700"}],"mono-table":["13px",{lineHeight:"18px",fontWeight:"500"}],"body-md":["14px",{lineHeight:"20px",fontWeight:"400"}],"title-md":["16px",{lineHeight:"24px",fontWeight:"600"}],"headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.01em",fontWeight:"700"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 h-16 bg-primary-container z-50 shadow-[0_1px_8px_rgba(0,0,0,0.12)] flex items-center justify-between px-gutter-lg border-b border-inverse-surface"><div class="flex items-center gap-space-md"><img alt="LigaPro SIGEC-LP Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrB3xiEylcx8yxJh6M0sxga_M-fXg3HhJAh-c_WafR2xlAx2wzR2gW-EWvL9b81FalXdOh7N_hJv71x919_6-MkML-_I57QuSQfmNcU47upNCPTsHk-jHNIR0eFE50TAVGVOFawUEeFY2h_dbVd8Wf0M00VDnA7Dqk5qZSBbsLUhZyBg1z01cqnbFuWed9-erP4VveSFUiRSVCtDSWhlcKm93rFf2C53DFEDGEi09-_u"/><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-title-md text-title-md text-on-primary font-bold tracking-tight">SIGEC-LP</span><span class="bg-secondary text-on-secondary font-label-caps text-label-caps px-space-xs py-0.5 rounded">PRO</span></div><span class="font-body-sm text-[10px] text-on-primary-container leading-none uppercase tracking-wider">Sistema Integral de Competiciones</span></div><div class="hidden xl:block h-6 w-px bg-inverse-surface mx-space-xs"></div><div class="hidden xl:flex items-center bg-inverse-surface/60 rounded px-space-sm py-1"><span class="material-symbols-outlined text-on-primary-container text-sm mr-1.5">trophy</span><span class="font-label-caps text-label-caps text-on-primary uppercase tracking-wide">Temporada 2025 - Serie A / Serie B</span></div></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs bg-inverse-surface/80 px-space-sm py-1 rounded"><span class="material-symbols-outlined text-sport-success text-sm">schedule</span><span class="font-label-caps text-label-caps text-on-primary-container mr-1">UTC-5 EC:</span><span class="font-mono-table text-mono-table text-on-primary font-bold tracking-wider">18:42:09</span></div><div class="hidden md:flex items-center bg-inverse-surface/50 rounded p-0.5 gap-0.5"><button class="p-1 text-on-primary-container hover:text-high-contrast-accent hover:bg-inverse-surface rounded transition-colors" title="Modo Alto Contraste" type="button"><span class="material-symbols-outlined text-base">contrast</span></button><button class="px-1.5 py-0.5 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded font-label-caps text-label-caps" title="Reducir Texto A-" type="button">A-</button><button class="px-1.5 py-0.5 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded font-label-caps text-label-caps" title="Aumentar Texto A+" type="button">A+</button><button class="p-1 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded transition-colors" title="Alertas Visuales Accesibles" type="button"><span class="material-symbols-outlined text-base">hearing</span></button></div><button class="relative p-1.5 text-on-primary-container hover:text-on-primary hover:bg-inverse-surface rounded transition-colors" title="Notificaciones Reglamentarias" type="button"><span class="material-symbols-outlined text-xl">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-sport-danger"></span></button><div class="flex items-center gap-space-sm pl-space-xs border-l border-inverse-surface"><div class="flex flex-col text-right hidden sm:flex"><span class="font-title-md text-body-sm text-on-primary font-semibold leading-tight">Ab. Comisario LigaPro</span><span class="font-label-caps text-[10px] text-on-primary-container uppercase">Dirección de Competiciones</span></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-secondary" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSacWCeuAAENmbzFg-bZ637A1mJFVBa6rvFnexwNvRQQbAF3HGnomjFNfqL1zzok3CW0J3fVxMC2Cu5dfwlKJ5_VPOG6EtKPSvimhHMOq9qs3SPMY8KqUsxyiQE2kGe2hzAazL-tvwBW9vFW25MR6aH_AOmV4scZcuUqiihEdXV8eV5daHsOzd6ZjOSXm4WsHBROJQ0IX02JSNn2Ib5I6IUeUMiVOW7zl07vOg3myw"/></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-72 bg-surface-card z-40 flex flex-col border-r border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.02)]"><div class="p-space-md border-b border-border-subtle"><div class="flex items-center justify-between bg-surface-container-low px-space-sm py-2 rounded border border-border-subtle"><div class="flex items-center gap-space-xs"><span class="inline-block w-2.5 h-2.5 rounded-full bg-sport-success animate-pulse"></span><span class="font-label-caps text-label-caps text-text-primary uppercase">COMET Enlace Activo</span></div><span class="font-mono-table text-[11px] text-sport-success font-semibold">SYNC</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-xs"><div class="px-space-sm py-1 font-label-caps text-label-caps text-text-secondary uppercase tracking-wider">Administración LigaPro</div><nav class="flex flex-col gap-0.5 mt-1" data-active-classes="bg-secondary text-on-secondary font-semibold shadow-sm"><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="tablero-general" href="#"><span class="material-symbols-outlined text-xl">space_dashboard</span><span>Tablero General</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="competiciones-formatos" href="#"><span class="material-symbols-outlined text-xl">emoji_events</span><span>Competiciones &amp; Formatos</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="calificacion-escenarios" href="#"><span class="material-symbols-outlined text-xl">stadium</span><span>Escenarios &amp; VAR (Z)</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="designacion-uniformes" href="#"><span class="material-symbols-outlined text-xl">checkroom</span><span>Designación de Uniformes</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="consola-matchday" href="#"><span class="material-symbols-outlined text-xl">sports_soccer</span><span>Consola Comisario Matchday</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="portal-clubes" href="#"><span class="material-symbols-outlined text-xl">shield_person</span><span>Portal Clubes &amp; Trámites</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2.5 rounded transition-colors bg-secondary text-on-secondary font-semibold shadow-sm" data-path="posiciones-fair-play" href="#"><span class="material-symbols-outlined text-xl">leaderboard</span><span>Posiciones &amp; Fair Play</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md" data-path="seguridad-criptografica" href="#"><span class="material-symbols-outlined text-xl">verified_user</span><span>Seguridad SHA-256</span></a></nav></div><div class="p-space-sm border-t border-border-subtle bg-surface-container-low/50"><div class="flex items-center justify-between text-text-secondary font-label-caps text-[10px]"><span>VERSION 4.2.1-SEC</span><span class="font-mono-table text-text-secondary">ID: LIGAPRO-EC</span></div></div></aside><div class="pl-72"><main class="relative w-full pt-16 bg-surface min-h-screen px-gutter-lg py-margin-md"><div class="flex flex-col w-full">
+<!-- Live Broadcast Header & Quick Controls -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md mb-space-lg">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-xs">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-sport-success/15 text-sport-success font-label-caps text-label-caps">
+<span class="w-2 h-2 rounded-full bg-sport-success animate-pulse"></span>
+          CENTRO OFICIAL DE COMPETICIONES
+        </span>
+<span class="text-on-surface-variant font-label-caps text-label-caps">|</span>
+<span class="text-on-surface-variant font-label-caps text-label-caps tracking-wider">HOMOLOGADO DIRECCIÓN DEPORTIVA</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight font-bold">
+        Tablas de Clasificación &amp; Fair Play Oficial
+      </h1>
+<p class="font-body-md text-body-md text-text-secondary">
+        Datos oficiales COMET en tiempo real. Validación de puntos, gol diferencia reglamentario y balance disciplinario FIFA/LigaPro 2025.
+      </p>
+</div>
+<!-- Quick Action / Rules Drawer Trigger -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<button aria-controls="modal-criterios" aria-haspopup="dialog" class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded bg-surface-card text-text-primary shadow-sm hover:bg-surface-container-low transition-all font-title-md text-title-md" id="btn-open-criterios" type="button">
+<span class="material-symbols-outlined text-secondary">balance</span>
+<span>5 Criterios de Desempate</span>
+<span class="inline-block px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-mono-table text-[10px] font-bold">REG. ART 18</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded bg-secondary text-on-secondary shadow hover:bg-on-secondary-fixed-variant transition-all font-title-md text-title-md" id="btn-print-acta" onclick="window.print()" type="button">
+<span class="material-symbols-outlined text-lg">download</span>
+<span>Descargar Acta Certificada</span>
+</button>
+</div>
+</div>
+<!-- Tournament & Stage Navigation Rail -->
+<div class="bg-surface-card rounded-xl shadow-sm p-space-md mb-space-lg flex flex-col gap-space-md">
+<!-- Division Toggle -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm">
+<div aria-label="División de Torneo" class="inline-flex p-1 rounded-lg bg-surface-container-low" role="tablist">
+<button aria-selected="true" class="division-tab px-space-md py-2 rounded-md font-title-md text-title-md font-bold bg-secondary text-on-secondary shadow-sm transition-all" data-division="serie-a" role="tab" type="button">
+          LigaPro Ecuabet Serie A 2025
+        </button>
+<button aria-selected="false" class="division-tab px-space-md py-2 rounded-md font-title-md text-title-md text-text-secondary hover:text-text-primary transition-all" data-division="serie-b" role="tab" type="button">
+          LigaPro Ecuabet Serie B 2025
+        </button>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant font-mono-table text-mono-table">
+<span class="material-symbols-outlined text-sport-success text-base">verified</span>
+<span>HASH COMET: <strong class="text-text-primary">8F9D...E412A</strong></span>
+</div>
+</div>
+<!-- Phase Selector (Segmented buttons) -->
+<div aria-label="Fase de Competición" class="flex items-center gap-2 overflow-x-auto pb-1" role="tablist">
+<button aria-selected="true" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-primary-container text-on-primary shadow-sm flex items-center gap-2 transition-all" data-phase="fase-inicial" role="tab" type="button">
+<span class="w-2 h-2 rounded-full bg-high-contrast-accent"></span>
+<span>Fase Inicial (30 Fechas Acumuladas)</span>
+</button>
+<button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2" data-phase="hex-1" role="tab" type="button">
+<span class="material-symbols-outlined text-xs text-sport-success">stars</span>
+<span>1° Hexagonal (Puestos 1-6 Título &amp; Libertadores)</span>
+</button>
+<button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2" data-phase="hex-2" role="tab" type="button">
+<span class="material-symbols-outlined text-xs text-secondary">diamond</span>
+<span>2° Hexagonal (Puestos 7-12 Sudamericana)</span>
+</button>
+<button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2" data-phase="cuadrangular" role="tab" type="button">
+<span class="material-symbols-outlined text-xs text-sport-danger">warning</span>
+<span>Cuadrangular Descenso (Puestos 13-16)</span>
+</button>
+</div>
+</div>
+<!-- Accessible Broadcast Legend (Triple-Encoded) -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm mb-space-md">
+<!-- Libertadores -->
+<div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-sport-success/15 flex items-center justify-center text-sport-success flex-shrink-0">
+<span class="material-symbols-outlined text-xl">stars</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-sport-success"></span>
+<span class="font-label-caps text-label-caps text-text-primary uppercase">Copa Libertadores</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-secondary truncate">Puestos 1 al 4 | Fase Directa / Fase Previa</span>
+</div>
+</div>
+<!-- Sudamericana -->
+<div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-secondary/15 flex items-center justify-center text-secondary flex-shrink-0">
+<span class="material-symbols-outlined text-xl">diamond</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 bg-secondary rotate-45"></span>
+<span class="font-label-caps text-label-caps text-text-primary uppercase">Copa Sudamericana</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-secondary truncate">Puestos 5 al 8 | Fase Nacional Previa</span>
+</div>
+</div>
+<!-- Descenso -->
+<div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-sport-danger/15 flex items-center justify-center text-sport-danger flex-shrink-0">
+<span class="material-symbols-outlined text-xl">warning</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-b-[9px] border-b-sport-danger"></span>
+<span class="font-label-caps text-label-caps text-text-primary uppercase">Zona de Descenso</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-secondary truncate">Puestos 15 y 16 | Pérdida de Categoría Serie B</span>
+</div>
+</div>
+</div>
+<!-- Standings Table Container -->
+<div class="bg-surface-card rounded-xl shadow-md overflow-hidden mb-space-xl">
+<!-- Table Header Toolbar -->
+<div class="p-space-md bg-surface-container-low flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary">table_chart</span>
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-bold">
+          Clasificación General Acumulada
+        </h2>
+<span class="px-2 py-0.5 rounded bg-primary-container text-on-primary font-mono-table text-xs">Jornada 24 de 30</span>
+</div>
+<div class="flex items-center gap-space-xs text-text-secondary font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-base">info</span>
+<span>PJ: Jugados | GD: Gol Diferencia | Forma: Últimos 5 encuentros</span>
+</div>
+</div>
+<!-- Responsive Table -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse" id="standings-table">
+<thead>
+<tr class="bg-surface-container/60 text-text-secondary font-label-caps text-label-caps uppercase tracking-wider">
+<th class="py-3 px-3 text-center w-14" scope="col">POS</th>
+<th class="py-3 px-3 w-12 text-center" scope="col">ZONA</th>
+<th class="py-3 px-4 min-w-[220px]" scope="col">CLUB</th>
+<th class="py-3 px-3 text-right" scope="col">PJ</th>
+<th class="py-3 px-3 text-right" scope="col">G</th>
+<th class="py-3 px-3 text-right" scope="col">E</th>
+<th class="py-3 px-3 text-right" scope="col">P</th>
+<th class="py-3 px-3 text-right" scope="col">GF</th>
+<th class="py-3 px-3 text-right" scope="col">GC</th>
+<th class="py-3 px-3 text-right font-bold text-text-primary" scope="col">GD</th>
+<th class="py-3 px-4 text-right font-extrabold text-secondary bg-secondary/5" scope="col">PTS</th>
+<th class="py-3 px-4 text-center min-w-[140px]" scope="col">FORMA</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-text-primary divide-y-0">
+<!-- Row 1: Libertadores Group -->
+<tr class="bg-surface-card hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">1</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-success/15 text-sport-success" title="Zona Conmebol Libertadores (Fase de Grupos)">
+<span class="material-symbols-outlined text-lg">stars</span>
+</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+                  LDU
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md font-bold text-text-primary group-hover:text-secondary transition-colors">Liga Deportiva Universitaria</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Quito • Estadio Rodrigo Paz Delgado</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right font-mono-table">24</td>
+<td class="py-3 px-3 text-right font-mono-table">16</td>
+<td class="py-3 px-3 text-right font-mono-table">5</td>
+<td class="py-3 px-3 text-right font-mono-table">3</td>
+<td class="py-3 px-3 text-right font-mono-table">44</td>
+<td class="py-3 px-3 text-right font-mono-table">18</td>
+<td class="py-3 px-3 text-right font-mono-table font-bold text-sport-success">+26</td>
+<td class="py-3 px-4 text-right font-mono-matchday font-extrabold text-secondary bg-secondary/5">53</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+</div>
+</td>
+</tr>
+<!-- Row 2: Libertadores Group -->
+<tr class="bg-surface-base hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">2</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-success/15 text-sport-success" title="Zona Conmebol Libertadores (Fase de Grupos)">
+<span class="material-symbols-outlined text-lg">stars</span>
+</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+                  IDV
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md font-bold text-text-primary group-hover:text-secondary transition-colors">Independiente del Valle</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Sangolquí • Banco Guayaquil</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right font-mono-table">24</td>
+<td class="py-3 px-3 text-right font-mono-table">15</td>
+<td class="py-3 px-3 text-right font-mono-table">6</td>
+<td class="py-3 px-3 text-right font-mono-table">3</td>
+<td class="py-3 px-3 text-right font-mono-table">42</td>
+<td class="py-3 px-3 text-right font-mono-table">19</td>
+<td class="py-3 px-3 text-right font-mono-table font-bold text-sport-success">+23</td>
+<td class="py-3 px-4 text-right font-mono-matchday font-extrabold text-secondary bg-secondary/5">51</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+</div>
+</td>
+</tr>
+<!-- Row 3: Libertadores Previa -->
+<tr class="bg-surface-card hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">3</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-success/15 text-sport-success" title="Zona Conmebol Libertadores (Fases Clasificatorias)">
+<span class="material-symbols-outlined text-lg">verified</span>
+</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+                  BSC
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md font-bold text-text-primary group-hover:text-secondary transition-colors">Barcelona Sporting Club</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Guayaquil • Monumental Banco Pichincha</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right font-mono-table">24</td>
+<td class="py-3 px-3 text-right font-mono-table">14</td>
+<td class="py-3 px-3 text-right font-mono-table">5</td>
+<td class="py-3 px-3 text-right font-mono-table">5</td>
+<td class="py-3 px-3 text-right font-mono-table">39</td>
+<td class="py-3 px-3 text-right font-mono-table">24</td>
+<td class="py-3 px-3 text-right font-mono-table font-bold text-sport-success">+15</td>
+<td class="py-3 px-4 text-right font-mono-matchday font-extrabold text-secondary bg-secondary/5">47</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+</div>
+</td>
+</tr>
+<!-- Row 4: Libertadores Previa -->
+<tr class="bg-surface-base hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">4</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-success/15 text-sport-success" title="Zona Conmebol Libertadores (Fases Clasificatorias)">
+<span class="material-symbols-outlined text-lg">verified</span>
+</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+                  AUC
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md font-bold text-text-primary group-hover:text-secondary transition-colors">S.D. Aucas</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Quito • Gonzalo Pozo Ripalda</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right font-mono-table">24</td>
+<td class="py-3 px-3 text-right font-mono-table">12</td>
+<td class="py-3 px-3 text-right font-mono-table">7</td>
+<td class="py-3 px-3 text-right font-mono-table">5</td>
+<td class="py-3 px-3 text-right font-mono-table">36</td>
+<td class="py-3 px-3 text-right font-mono-table">25</td>
+<td class="py-3 px-3 text-right font-mono-table font-bold text-sport-success">+11</td>
+<td class="py-3 px-4 text-right font-mono-matchday font-extrabold text-secondary bg-secondary/5">43</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+</div>
+</td>
+</tr>
+<!-- Row 5: Sudamericana -->
+<tr class="bg-surface-card hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">5</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-secondary/15 text-secondary" title="Zona Conmebol Sudamericana">
+<span class="material-symbols-outlined text-lg">diamond</span>
+</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+                  UCAT
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md font-bold text-text-primary group-hover:text-secondary transition-colors">Universidad Católica</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Quito • Olímpico Atahualpa</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right font-mono-table">24</td>
+<td class="py-3 px-3 text-right font-mono-table">11</td>
+<td class="py-3 px-3 text-right font-mono-table">8</td>
+<td class="py-3 px-3 text-right font-mono-table">5</td>
+<td class="py-3 px-3 text-right font-mono-table">38</td>
+<td class="py-3 px-3 text-right font-mono-table">26</td>
+<td class="py-3 px-3 text-right font-mono-table font-bold text-sport-success">+12</td>
+<td class="py-3 px-4 text-right font-mono-matchday font-extrabold text-secondary bg-secondary/5">41</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+</div>
+</td>
+</tr>
+<!-- Row 6: Sudamericana -->
+<tr class="bg-surface-base hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">6</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-secondary/15 text-secondary" title="Zona Conmebol Sudamericana">
+<span class="material-symbols-outlined text-lg">diamond</span>
+</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+                  EME
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md font-bold text-text-primary group-hover:text-secondary transition-colors">C.S. Emelec</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Guayaquil • George Capwell</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right font-mono-table">24</td>
+<td class="py-3 px-3 text-right font-mono-table">10</td>
+<td class="py-3 px-3 text-right font-mono-table">8</td>
+<td class="py-3 px-3 text-right font-mono-table">6</td>
+<td class="py-3 px-3 text-right font-mono-table">29</td>
+<td class="py-3 px-3 text-right font-mono-table">22</td>
+<td class="py-3 px-3 text-right font-mono-table font-bold text-sport-success">+7</td>
+<td class="py-3 px-4 text-right font-mono-matchday font-extrabold text-secondary bg-secondary/5">38</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+</div>
+</td>
+</tr>
+<!-- Row 7: Sudamericana -->
+<tr class="bg-surface-card hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">7</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-secondary/15 text-secondary" title="Zona Conmebol Sudamericana">
+<span class="material-symbols-outlined text-lg">diamond</span>
+</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+                  ORE
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md font-bold text-text-primary group-hover:text-secondary transition-colors">Orense S.C.</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Machala • 9 de Mayo</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right font-mono-table">24</td>
+<td class="py-3 px-3 text-right font-mono-table">9</td>
+<td class="py-3 px-3 text-right font-mono-table">8</td>
+<td class="py-3 px-3 text-right font-mono-table">7</td>
+<td class="py-3 px-3 text-right font-mono-table">27</td>
+<td class="py-3 px-3 text-right font-mono-table">25</td>
+<td class="py-3 px-3 text-right font-mono-table font-bold text-sport-success">+2</td>
+<td class="py-3 px-4 text-right font-mono-matchday font-extrabold text-secondary bg-secondary/5">35</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+</div>
+</td>
+</tr>
+<!-- Row 8: Sudamericana -->
+<tr class="bg-surface-base hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">8</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-secondary/15 text-secondary" title="Zona Conmebol Sudamericana">
+<span class="material-symbols-outlined text-lg">diamond</span>
+</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+                  MAC
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md font-bold text-text-primary group-hover:text-secondary transition-colors">C.D. Macará</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Ambato • Bellavista</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right font-mono-table">24</td>
+<td class="py-3 px-3 text-right font-mono-table">9</td>
+<td class="py-3 px-3 text-right font-mono-table">6</td>
+<td class="py-3 px-3 text-right font-mono-table">9</td>
+<td class="py-3 px-3 text-right font-mono-table">28</td>
+<td class="py-3 px-3 text-right font-mono-table">27</td>
+<td class="py-3 px-3 text-right font-mono-table font-bold text-sport-success">+1</td>
+<td class="py-3 px-4 text-right font-mono-matchday font-extrabold text-secondary bg-secondary/5">33</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+</div>
+</td>
+</tr>
+<!-- Mid Table: Zona Neutra -->
+<tr class="bg-surface-card hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">9</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-block w-2.5 h-0.5 bg-outline-variant rounded" title="Posición Neutra"></span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+                  CUE
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md font-bold text-text-primary group-hover:text-secondary transition-colors">Deportivo Cuenca</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Cuenca • Alejandro Serrano Aguilar</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right font-mono-table">24</td>
+<td class="py-3 px-3 text-right font-mono-table">8</td>
+<td class="py-3 px-3 text-right font-mono-table">7</td>
+<td class="py-3 px-3 text-right font-mono-table">9</td>
+<td class="py-3 px-3 text-right font-mono-table">31</td>
+<td class="py-3 px-3 text-right font-mono-table">32</td>
+<td class="py-3 px-3 text-right font-mono-table font-bold text-sport-danger">-1</td>
+<td class="py-3 px-4 text-right font-mono-matchday font-extrabold text-secondary bg-secondary/5">31</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+</div>
+</td>
+</tr>
+<!-- Row 10 -->
+<tr class="bg-surface-base hover:bg-surface-container-low transition-colors group">
+<td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary">10</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-block w-2.5 h-0.5 bg-outline-variant rounded" title="Posición Neutra"></span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-text-primary text-xs shadow-sm">
+                  MUS
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md font-bold text-text-primary group-hover:text-secondary transition-colors">Mushuc Runa S.C.</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Echaleche • Cooperativa Mushuc Runa</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right font-mono-table">24</td>
+<td class="py-3 px-3 text-right font-mono-table">7</td>
+<td class="py-3 px-3 text-right font-mono-table">9</td>
+<td class="py-3 px-3 text-right font-mono-table">8</td>
+<td class="py-3 px-3 text-right font-mono-table">30</td>
+<td class="py-3 px-3 text-right font-mono-table">33</td>
+<td class="py-3 px-3 text-right font-mono-table font-bold text-sport-danger">-3</td>
+<td class="py-3 px-4 text-right font-mono-matchday font-extrabold text-secondary bg-secondary/5">30</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Victoria">V</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+</div>
+</td>
+</tr>
+<!-- Row 15: Zona de Descenso Directo -->
+<tr class="bg-sport-danger/5 hover:bg-sport-danger/10 transition-colors group">
+<td class="py-3 px-3 text-center font-mono-table font-bold text-base text-sport-danger">15</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-danger/15 text-sport-danger" title="Zona de Descenso a Serie B">
+<span class="material-symbols-outlined text-lg">warning</span>
+</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-sport-danger text-xs shadow-sm">
+                  CUM
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md font-bold text-sport-danger group-hover:text-sport-danger transition-colors">Cumbayá F.C.</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Quito • Olímpico Atahualpa</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right font-mono-table">24</td>
+<td class="py-3 px-3 text-right font-mono-table">3</td>
+<td class="py-3 px-3 text-right font-mono-table">7</td>
+<td class="py-3 px-3 text-right font-mono-table">14</td>
+<td class="py-3 px-3 text-right font-mono-table">16</td>
+<td class="py-3 px-3 text-right font-mono-table">38</td>
+<td class="py-3 px-3 text-right font-mono-table font-bold text-sport-danger">-22</td>
+<td class="py-3 px-4 text-right font-mono-matchday font-extrabold text-sport-danger bg-sport-danger/10">16</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+</div>
+</td>
+</tr>
+<!-- Row 16: Zona de Descenso Directo -->
+<tr class="bg-sport-danger/5 hover:bg-sport-danger/10 transition-colors group">
+<td class="py-3 px-3 text-center font-mono-table font-bold text-base text-sport-danger">16</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-danger/15 text-sport-danger" title="Zona de Descenso a Serie B">
+<span class="material-symbols-outlined text-lg">warning</span>
+</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-sport-danger text-xs shadow-sm">
+                  LIB
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md font-bold text-sport-danger group-hover:text-sport-danger transition-colors">Libertad F.C.</span>
+<span class="font-body-sm text-[11px] text-text-secondary">Loja • Reina del Cisne (-4 Pts sanción)</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right font-mono-table">24</td>
+<td class="py-3 px-3 text-right font-mono-table">3</td>
+<td class="py-3 px-3 text-right font-mono-table">6</td>
+<td class="py-3 px-3 text-right font-mono-table">15</td>
+<td class="py-3 px-3 text-right font-mono-table">15</td>
+<td class="py-3 px-3 text-right font-mono-table">42</td>
+<td class="py-3 px-3 text-right font-mono-table font-bold text-sport-danger">-27</td>
+<td class="py-3 px-4 text-right font-mono-matchday font-extrabold text-sport-danger bg-sport-danger/10">11</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center" title="Empate">E</span>
+<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center" title="Derrota">D</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Regulatory Note -->
+<div class="p-space-sm bg-surface-container-low flex flex-col sm:flex-row items-start sm:items-center justify-between text-on-surface-variant font-body-sm text-body-sm gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sport-warning text-base">gavel</span>
+<span>Resolución Tribunal de Disciplina LP-2024-88: Libertad F.C. sancionado con -4 puntos en la tabla acumulada.</span>
+</div>
+<div class="font-mono-table text-xs text-text-secondary">
+        Cálculo automatizado conforme Art. 18 de las Bases de Competición LigaPro 2025.
+      </div>
+</div>
+</div>
+<!-- Fair Play, Cards & Financial Sanctions Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg mb-space-xl">
+<!-- Fair Play & Yellow/Red Cards Table -->
+<div class="lg:col-span-8 bg-surface-card rounded-xl shadow-md overflow-hidden">
+<div class="p-space-md bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary">sports</span>
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-bold">
+            Tabla Fair Play &amp; Control Disciplinario
+          </h2>
+</div>
+<span class="font-label-caps text-label-caps px-2 py-1 rounded bg-secondary text-on-secondary uppercase">
+          COEFICIENTE FIFA FP
+        </span>
+</div>
+<div class="p-space-md">
+<p class="font-body-md text-body-md text-text-secondary mb-space-md">
+          El sistema de ponderación asigna 1 pt por tarjeta amarilla, 3 pts por doble amonestación y 5 pts por roja directa. A menor puntaje, mayor deportividad.
+        </p>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container/50 text-text-secondary font-label-caps text-label-caps uppercase">
+<th class="py-2.5 px-3 w-12 text-center" scope="col">RANK</th>
+<th class="py-2.5 px-3 min-w-[180px]" scope="col">CLUB</th>
+<th class="py-2.5 px-3 text-center" scope="col">
+<span class="inline-flex items-center gap-1">
+<span class="w-2.5 h-3.5 bg-sport-warning rounded-[1px]"></span>
+<span>TA</span>
+</span>
+</th>
+<th class="py-2.5 px-3 text-center" scope="col">
+<span class="inline-flex items-center gap-1">
+<span class="w-2.5 h-3.5 bg-sport-danger rounded-[1px]"></span>
+<span>TR</span>
+</span>
+</th>
+<th class="py-2.5 px-3 text-right" scope="col">PTS PENALIZADOS</th>
+<th class="py-2.5 px-3 text-right font-bold text-text-primary" scope="col">MULTAS LIQUIDADAS</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md divide-y-0">
+<!-- Fair Play 1 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-2.5 px-3 text-center font-mono-table font-bold text-sport-success">1</td>
+<td class="py-2.5 px-3 font-title-md text-title-md font-semibold text-text-primary">Independiente del Valle</td>
+<td class="py-2.5 px-3 text-center font-mono-table">38</td>
+<td class="py-2.5 px-3 text-center font-mono-table">1</td>
+<td class="py-2.5 px-3 text-right font-mono-table font-bold text-sport-success">43 pts</td>
+<td class="py-2.5 px-3 text-right font-mono-table text-text-secondary">$ 4.250,00</td>
+</tr>
+<!-- Fair Play 2 -->
+<tr class="bg-surface-base hover:bg-surface-container-low transition-colors">
+<td class="py-2.5 px-3 text-center font-mono-table font-bold text-sport-success">2</td>
+<td class="py-2.5 px-3 font-title-md text-title-md font-semibold text-text-primary">Universidad Católica</td>
+<td class="py-2.5 px-3 text-center font-mono-table">42</td>
+<td class="py-2.5 px-3 text-center font-mono-table">2</td>
+<td class="py-2.5 px-3 text-right font-mono-table font-bold text-sport-success">52 pts</td>
+<td class="py-2.5 px-3 text-right font-mono-table text-text-secondary">$ 5.800,00</td>
+</tr>
+<!-- Fair Play 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-2.5 px-3 text-center font-mono-table font-bold">3</td>
+<td class="py-2.5 px-3 font-title-md text-title-md font-semibold text-text-primary">Liga Deportiva Universitaria</td>
+<td class="py-2.5 px-3 text-center font-mono-table">48</td>
+<td class="py-2.5 px-3 text-center font-mono-table">3</td>
+<td class="py-2.5 px-3 text-right font-mono-table font-bold">63 pts</td>
+<td class="py-2.5 px-3 text-right font-mono-table text-text-secondary">$ 8.100,00</td>
+</tr>
+<!-- Fair Play 4 -->
+<tr class="bg-surface-base hover:bg-surface-container-low transition-colors">
+<td class="py-2.5 px-3 text-center font-mono-table font-bold">4</td>
+<td class="py-2.5 px-3 font-title-md text-title-md font-semibold text-text-primary">S.D. Aucas</td>
+<td class="py-2.5 px-3 text-center font-mono-table">51</td>
+<td class="py-2.5 px-3 text-center font-mono-table">4</td>
+<td class="py-2.5 px-3 text-right font-mono-table font-bold">71 pts</td>
+<td class="py-2.5 px-3 text-right font-mono-table text-text-secondary">$ 9.400,00</td>
+</tr>
+<!-- Fair Play 16 -->
+<tr class="bg-sport-danger/5 hover:bg-sport-danger/10 transition-colors">
+<td class="py-2.5 px-3 text-center font-mono-table font-bold text-sport-danger">16</td>
+<td class="py-2.5 px-3 font-title-md text-title-md font-semibold text-sport-danger">C.S. Emelec</td>
+<td class="py-2.5 px-3 text-center font-mono-table text-sport-danger">74</td>
+<td class="py-2.5 px-3 text-center font-mono-table text-sport-danger">8</td>
+<td class="py-2.5 px-3 text-right font-mono-table font-bold text-sport-danger">114 pts</td>
+<td class="py-2.5 px-3 text-right font-mono-table font-bold text-sport-danger">$ 18.650,00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Sanctions & Financial Summary KPI -->
+<div class="lg:col-span-4 flex flex-col gap-space-md">
+<!-- Total League Discipline Card -->
+<div class="bg-primary-container text-on-primary rounded-xl shadow-md p-space-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-caps text-label-caps uppercase text-high-contrast-accent tracking-wider">
+              BALANCE REGLAMENTARIO TOTAL
+            </span>
+<span class="material-symbols-outlined text-high-contrast-accent">monetization_on</span>
+</div>
+<div class="font-mono-metric text-mono-metric font-extrabold text-on-primary mb-1">
+            $ 142.850<span class="text-secondary-fixed-dim text-lg">.00</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-primary-container">
+            Total recaudado por concepto de amonestaciones, demoras en reanudación y expedientes disciplinarios acumulados a la fecha 24.
+          </p>
+</div>
+<div class="grid grid-cols-2 gap-space-sm pt-space-md mt-space-md bg-inverse-surface/40 p-space-sm rounded-lg">
+<div>
+<span class="font-label-caps text-[10px] text-on-primary-container uppercase block">Tarjetas Amarillas</span>
+<span class="font-mono-matchday font-bold text-sport-warning">712</span>
+<span class="font-body-sm text-[11px] text-on-primary-container block">x $100 LP art. 54</span>
+</div>
+<div>
+<span class="font-label-caps text-[10px] text-on-primary-container uppercase block">Tarjetas Rojas</span>
+<span class="font-mono-matchday font-bold text-sport-danger">49</span>
+<span class="font-body-sm text-[11px] text-on-primary-container block">x $400 LP art. 58</span>
+</div>
+</div>
+</div>
+<!-- Quick Fair Play Criteria Graphic -->
+<div class="bg-surface-card rounded-xl shadow-md p-space-md flex flex-col gap-space-sm">
+<h3 class="font-title-md text-title-md font-bold text-text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-sport-success">eco</span>
+<span>Premio al Juego Limpio 2025</span>
+</h3>
+<p class="font-body-sm text-body-sm text-text-secondary">
+          El club con mejor coeficiente al cierre de las 30 fechas recibirá la Copa Fair Play LigaPro y la exoneración del 30% en costos de inscripción de nómina 2026.
+        </p>
+<!-- Visual Progress Mini-Chart -->
+<div class="flex flex-col gap-1.5 pt-2">
+<div class="flex justify-between font-label-caps text-[10px] text-text-secondary uppercase">
+<span>IDV (Líder Actual)</span>
+<span class="font-mono-table text-sport-success">43 / 150 umbral</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-sport-success rounded-full" style="width: 28%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between font-label-caps text-[10px] text-text-secondary uppercase">
+<span>Promedio Liga</span>
+<span class="font-mono-table text-text-primary">78.5 pts</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 52%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal / Flyout: 5 Criterios Oficiales de Desempate -->
+<div aria-labelledby="modal-criterios-title" aria-modal="true" class="fixed inset-0 z-50 flex items-center justify-center p-space-md bg-primary-container/80 backdrop-blur-sm hidden" id="modal-criterios" role="dialog">
+<div class="bg-surface-card rounded-xl shadow-2xl max-w-2xl w-full overflow-hidden flex flex-col max-h-[921px]">
+<!-- Modal Header -->
+<div class="p-space-md bg-primary-container text-on-primary flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-high-contrast-accent text-2xl">balance</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-primary" id="modal-criterios-title">
+              Criterios Oficiales de Desempate
+            </h3>
+<span class="font-label-caps text-[10px] text-on-primary-container uppercase tracking-wider">
+              Reglamento de Competiciones LigaPro 2025 • Artículo 18
+            </span>
+</div>
+</div>
+<button aria-label="Cerrar ventana de criterios" class="p-1 rounded text-on-primary-container hover:text-on-primary hover:bg-inverse-surface transition-colors" id="btn-close-criterios" type="button">
+<span class="material-symbols-outlined text-2xl">close</span>
+</button>
+</div>
+<!-- Modal Body (Strict 5 Criteria in sequential order) -->
+<div class="p-space-lg overflow-y-auto flex flex-col gap-space-md">
+<p class="font-body-md text-body-md text-text-secondary">
+          En caso de igualdad de puntos en la tabla de posiciones al término de la fase correspondiente, las posiciones se definirán aplicando en estricto orden excluyente los siguientes cinco parámetros:
+        </p>
+<div class="flex flex-col gap-space-sm">
+<!-- Criterio 1 -->
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<span class="w-8 h-8 rounded-full bg-secondary text-on-secondary font-mono-table font-bold flex items-center justify-center flex-shrink-0">
+              1
+            </span>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-bold text-text-primary">
+                Mayor Gol Diferencia General (GD)
+              </span>
+<p class="font-body-sm text-body-sm text-text-secondary">
+                Diferencia entre los goles a favor anotados y los goles recibidos durante la totalidad de los partidos de la fase en disputa (GF menos GC).
+              </p>
+</div>
+</div>
+<!-- Criterio 2 -->
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<span class="w-8 h-8 rounded-full bg-secondary text-on-secondary font-mono-table font-bold flex items-center justify-center flex-shrink-0">
+              2
+            </span>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-bold text-text-primary">
+                Mayor Cantidad de Goles a Favor (GF)
+              </span>
+<p class="font-body-sm text-body-sm text-text-secondary">
+                Se privilegiará al club que haya convertido el mayor número de tantos a favor acumulados en el desarrollo del torneo.
+              </p>
+</div>
+</div>
+<!-- Criterio 3 -->
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<span class="w-8 h-8 rounded-full bg-secondary text-on-secondary font-mono-table font-bold flex items-center justify-center flex-shrink-0">
+              3
+            </span>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-bold text-text-primary">
+                Mayor Cantidad de Goles en Condición de Visitante
+              </span>
+<p class="font-body-sm text-body-sm text-text-secondary">
+                Mayor número de goles marcados fuera de su sede deportiva registrada ante el Comité Ejecutivo de LigaPro.
+              </p>
+</div>
+</div>
+<!-- Criterio 4 -->
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<span class="w-8 h-8 rounded-full bg-secondary text-on-secondary font-mono-table font-bold flex items-center justify-center flex-shrink-0">
+              4
+            </span>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-bold text-text-primary">
+                Resultado Particular entre los Clubes Empatados
+              </span>
+<p class="font-body-sm text-body-sm text-text-secondary">
+                Puntos obtenidos exclusivamente en los enfrentamientos directos entre los clubes en igualdad de condiciones en la fase actual.
+              </p>
+</div>
+</div>
+<!-- Criterio 5 -->
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-sport-warning/15 hover:bg-sport-warning/20 transition-colors">
+<span class="w-8 h-8 rounded-full bg-primary-container text-high-contrast-accent font-mono-table font-bold flex items-center justify-center flex-shrink-0">
+              5
+            </span>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md font-bold text-text-primary">
+                  Sorteo Público ante Notario
+                </span>
+<span class="px-1.5 py-0.2 rounded bg-primary-container text-on-primary font-label-caps text-[9px] uppercase">
+                  Instancia Definitiva
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary">
+                Sorteo presencial formalizado en la Sede Matriz de LigaPro en Guayaquil, con presencia obligatoria de los delegados oficiales de los clubes empatados y fe pública de un Notario del Cantón.
+              </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="p-space-md bg-surface-container-low flex justify-end">
+<button class="px-space-md py-2 rounded bg-primary-container text-on-primary font-title-md text-title-md hover:bg-inverse-surface transition-colors" id="btn-close-criterios-footer" type="button">
+          Entendido / Cerrar
+        </button>
+</div>
+</div>
+</div>
+<!-- Inline Script for Interactive Micro-interactions (Phase Toggles & Modal) -->
+<script>
+    (function() {
+      // Modal Logic
+      const modal = document.getElementById('modal-criterios');
+      const openBtn = document.getElementById('btn-open-criterios');
+      const closeBtn = document.getElementById('btn-close-criterios');
+      const closeFooterBtn = document.getElementById('btn-close-criterios-footer');
+
+      function openModal() {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+
+      openBtn.addEventListener('click', openModal);
+      closeBtn.addEventListener('click', closeModal);
+      closeFooterBtn.addEventListener('click', closeModal);
+
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+          closeModal();
+        }
+      });
+
+      // Tournament Division Tabs
+      const divisionTabs = document.querySelectorAll('.division-tab');
+      divisionTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          divisionTabs.forEach(t => {
+            t.setAttribute('aria-selected', 'false');
+            t.classList.remove('bg-secondary', 'text-on-secondary', 'shadow-sm', 'font-bold');
+            t.classList.add('text-text-secondary');
+          });
+          this.setAttribute('aria-selected', 'true');
+          this.classList.add('bg-secondary', 'text-on-secondary', 'shadow-sm', 'font-bold');
+          this.classList.remove('text-text-secondary');
+        });
+      });
+
+      // Phase Selector Buttons
+      const phaseBtns = document.querySelectorAll('.phase-btn');
+      phaseBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          phaseBtns.forEach(b => {
+            b.setAttribute('aria-selected', 'false');
+            b.classList.remove('bg-primary-container', 'text-on-primary', 'shadow-sm');
+            b.classList.add('bg-surface-container-low', 'text-text-secondary');
+          });
+          this.setAttribute('aria-selected', 'true');
+          this.classList.add('bg-primary-container', 'text-on-primary', 'shadow-sm');
+          this.classList.remove('bg-surface-container-low', 'text-text-secondary');
+        });
+      });
+    })();
+  </script>
+</div></main></div></body></html>
