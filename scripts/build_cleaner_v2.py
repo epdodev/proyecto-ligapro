@@ -298,8 +298,48 @@ def clean_and_transform_screen(folder, screen_id):
     # 4. Eliminar cualquier referencia residual hardcodeada a 'Ab. Comisario LigaPro'
     body_content = body_content.replace('Ab. Comisario LigaPro', 'Comisario Oficial LigaPro')
 
-    # 5. Agregar soporte de modo oscuro (dark:...) a contenedores con fondo blanco fijo (bg-white / bg-surface)
-    body_content = re.sub(r'\bclass=(["\'])([^"\']*\bbg-white\b[^"\']*)\1', lambda m: 'class=' + m.group(1) + (m.group(2) if 'dark:bg-' in m.group(2) else m.group(2) + ' dark:bg-slate-900 dark:text-slate-100 dark:border-slate-800') + m.group(1), body_content)
-    body_content = re.sub(r'\bclass=(["\'])([^"\']*\bbg-surface\b[^"\']*)\1', lambda m: 'class=' + m.group(1) + (m.group(2) if 'dark:bg-' in m.group(2) else m.group(2) + ' dark:bg-slate-950 dark:text-slate-100') + m.group(1), body_content)
+    # 5. Soporte de Paleta Oscura Moderna (Midnight Broadcast)
+    # Contenedores bg-white y bg-surface
+    body_content = re.sub(
+        r'\bclass=(["\'])([^"\']*\bbg-white\b[^"\']*)\1',
+        lambda m: 'class=' + m.group(1) + (m.group(2) if 'dark:bg-' in m.group(2) else m.group(2) + ' dark:bg-[#111827] dark:text-[#F8FAFC] dark:border-[#1E293B]') + m.group(1),
+        body_content
+    )
+    body_content = re.sub(
+        r'\bclass=(["\'])([^"\']*\bbg-surface\b[^"\']*)\1',
+        lambda m: 'class=' + m.group(1) + (m.group(2) if 'dark:bg-' in m.group(2) else m.group(2) + ' dark:bg-[#0B0F19] dark:text-[#F8FAFC]') + m.group(1),
+        body_content
+    )
+
+    # Reemplazo de bordes amarillos chillones por bordes sutiles slate-800
+    body_content = re.sub(r'\b(border-yellow-400|border-amber-400)\b', r'border-slate-200 dark:border-slate-800', body_content)
+
+    # Métricas y contadores grandes (16 / 16, 18 / 18, 8 Partidos)
+    body_content = re.sub(
+        r'\bclass=(["\'])([^"\']*\bfont-mono-metric\b[^"\']*)\1',
+        lambda m: 'class=' + m.group(1) + (m.group(2) if 'dark:text-' in m.group(2) else m.group(2) + ' dark:text-white') + m.group(1),
+        body_content
+    )
+
+    # Encabezados h1, h2, h3
+    body_content = re.sub(
+        r'<(h[1-3])\b([^>]*\bclass=["\'])([^"\']*)(["\'])',
+        lambda m: f'<{m.group(1)}{m.group(2)}{m.group(3)}' + ('' if 'dark:text-' in m.group(3) else ' dark:text-white') + m.group(4),
+        body_content
+    )
+
+    # Textos oscuros primarios (text-text-primary, text-slate-900, text-gray-900)
+    body_content = re.sub(
+        r'\bclass=(["\'])([^"\']*\b(?:text-text-primary|text-slate-900|text-gray-900|text-slate-800|text-gray-800)\b[^"\']*)\1',
+        lambda m: 'class=' + m.group(1) + (m.group(2) if 'dark:text-' in m.group(2) else m.group(2) + ' dark:text-[#F8FAFC]') + m.group(1),
+        body_content
+    )
+
+    # Textos secundarios (text-text-secondary, text-slate-600, text-slate-500, text-gray-600, text-gray-500)
+    body_content = re.sub(
+        r'\bclass=(["\'])([^"\']*\b(?:text-text-secondary|text-slate-600|text-slate-500|text-gray-600|text-gray-500)\b[^"\']*)\1',
+        lambda m: 'class=' + m.group(1) + (m.group(2) if 'dark:text-' in m.group(2) else m.group(2) + ' dark:text-[#CBD5E1]') + m.group(1),
+        body_content
+    )
 
     return body_content

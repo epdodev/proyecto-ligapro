@@ -16,7 +16,7 @@
       try {
         var theme = localStorage.getItem('sigec_theme') || (localStorage.getItem('sigec_high_contrast') === 'true' ? 'dark' : null);
         if (theme === 'dark') {
-          document.documentElement.classList.add('dark', 'high-contrast');
+          document.documentElement.classList.add('dark');
         }
         var scale = localStorage.getItem('sigec_font_scale');
         if (scale) {
@@ -25,6 +25,7 @@
       } catch (e) {}
     })();
   </script>
+  <link rel="stylesheet" href="/src/index.css"/>
   <style>
     @layer base {
       html, body { margin: 0; padding: 0; transition: background-color 0.15s ease, color 0.15s ease; }
@@ -32,98 +33,115 @@
     }
     ::-webkit-scrollbar { display: none; }
 
-    /* MODO OSCURO (Tailwind dark: y soporte directo) */
+    /* PALETA OSCURA MODERNA (MIDNIGHT BROADCAST) */
     html.dark {
       color-scheme: dark;
+      background-color: #0B0F19;
     }
     html.dark body {
-      background-color: #0b1329 !important;
-      color: #f1f5f9 !important;
+      background-color: #0B0F19 !important;
+      color: #F8FAFC !important;
     }
     html.dark header {
-      background-color: rgba(15, 23, 42, 0.95) !important;
-      border-color: #1e293b !important;
-      color: #f1f5f9 !important;
+      background-color: #111827 !important;
+      border-color: #1E293B !important;
+      color: #F8FAFC !important;
     }
     html.dark aside {
-      background-color: #0f172a !important;
-      border-color: #1e293b !important;
-      color: #f1f5f9 !important;
+      background-color: #111827 !important;
+      border-color: #1E293B !important;
+      color: #CBD5E1 !important;
+    }
+    html.dark main {
+      background-color: #0B0F19 !important;
     }
     html.dark aside a, html.dark aside button {
-      color: #cbd5e1 !important;
+      color: #CBD5E1 !important;
     }
     html.dark aside a:hover, html.dark aside button:hover {
-      background-color: #1e293b !important;
-      color: #ffffff !important;
+      background-color: #1E293B !important;
+      color: #FFFFFF !important;
     }
-    html.dark .bg-white {
-      background-color: #0f172a !important;
-      color: #f1f5f9 !important;
-      border-color: #1e293b !important;
+    html.dark .bg-white, html.dark .bg-surface-card, html.dark .bg-surface-container-lowest {
+      background-color: #111827 !important;
+      color: #F8FAFC !important;
+      border-color: #1E293B !important;
     }
-    html.dark .bg-surface, html.dark .bg-surface-container-low, html.dark .bg-surface-container {
-      background-color: #0b1329 !important;
-      color: #f1f5f9 !important;
+    html.dark .bg-surface, html.dark .bg-surface-base {
+      background-color: #0B0F19 !important;
+      color: #F8FAFC !important;
     }
-    html.dark .bg-slate-50, html.dark .bg-slate-100 {
-      background-color: #1e293b !important;
-      color: #e2e8f0 !important;
-      border-color: #334155 !important;
-    }
-    html.dark .text-slate-900, html.dark .text-slate-800, html.dark .text-slate-700 {
-      color: #f8fafc !important;
-    }
-    html.dark .text-slate-600, html.dark .text-slate-500 {
-      color: #94a3b8 !important;
-    }
-    html.dark .border-slate-100, html.dark .border-slate-200, html.dark .border-slate-300 {
-      border-color: #334155 !important;
-    }
-    html.dark input, html.dark select, html.dark textarea {
-      background-color: #1e293b !important;
-      border-color: #475569 !important;
-      color: #f8fafc !important;
+    html.dark .bg-slate-50, html.dark .bg-slate-100, html.dark .bg-gray-50, html.dark .bg-gray-100,
+    html.dark .bg-surface-container, html.dark .bg-surface-container-low, html.dark .bg-surface-container-high, html.dark .bg-surface-container-highest {
+      background-color: #1E293B !important;
+      color: #E2E8F0 !important;
+      border-color: #1E293B !important;
     }
 
-    /* MODO ALTO CONTRASTE WCAG AAA (Negro / Amarillo #FFE600 / 21:1) */
-    html.high-contrast {
-      color-scheme: dark;
+    /* REGLA GLOBAL DE LEGIBILIDAD EN .dark: TEXTOS OSCUROS A BLANCO SUAVE (#F8FAFC) */
+    html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6,
+    html.dark .text-slate-900, html.dark .text-slate-800,
+    html.dark .text-gray-900, html.dark .text-gray-800,
+    html.dark .text-black, html.dark .text-on-surface,
+    html.dark .text-text-primary, html.dark .text-on-background {
+      color: #F8FAFC !important;
     }
-    html.high-contrast body {
-      background-color: #000000 !important;
+
+    /* CONTADORES Y MÉTRICAS GRANDES DE TARJETAS (16 / 16, 18 / 18, 8 Partidos, etc.) */
+    html.dark .font-mono-metric,
+    html.dark [class*="font-mono-metric"],
+    html.dark [class*="text-mono-metric"] {
       color: #FFFFFF !important;
     }
-    html.high-contrast header, html.high-contrast aside, html.high-contrast .bg-white, html.high-contrast .bg-surface, html.high-contrast .bg-slate-50, html.high-contrast .bg-slate-100 {
-      background-color: #000000 !important;
-      border-color: #FFE600 !important;
-      color: #FFFFFF !important;
+
+    /* TEXTOS MEDIOS Y SECUNDARIOS A GRIS CLARO LEGIBLE (#CBD5E1 / #94A3B8) */
+    html.dark .text-slate-600, html.dark .text-slate-500,
+    html.dark .text-gray-600, html.dark .text-gray-500,
+    html.dark .text-text-secondary, html.dark .text-on-surface-variant {
+      color: #CBD5E1 !important;
     }
-    html.high-contrast button {
-      border-color: #FFE600 !important;
+    html.dark .text-slate-400, html.dark .text-gray-400 {
+      color: #94A3B8 !important;
     }
-    html.high-contrast a, html.high-contrast .text-amber-400, html.high-contrast .text-amber-500 {
-      color: #FFE600 !important;
+
+    /* BORDES SUTILES SLATE-800 (#1E293B) — Reemplazo de amarillos y bordes claros */
+    html.dark .border-slate-100, html.dark .border-slate-200, html.dark .border-slate-300,
+    html.dark .border-gray-100, html.dark .border-gray-200, html.dark .border-gray-300,
+    html.dark .border-yellow-400, html.dark .border-amber-400,
+    html.dark .border-border-subtle, html.dark .border-strong,
+    html.dark .border-outline, html.dark .border-outline-variant {
+      border-color: #1E293B !important;
     }
-    html.high-contrast .text-slate-900, html.high-contrast .text-slate-800, html.high-contrast .text-slate-700, html.high-contrast .text-slate-600, html.high-contrast .text-slate-500 {
-      color: #FFFFFF !important;
+
+    /* TABLAS Y FORMULARIOS */
+    html.dark table thead tr {
+      background-color: #1E293B !important;
+      color: #F8FAFC !important;
     }
-    html.high-contrast .border-slate-100, html.high-contrast .border-slate-200, html.high-contrast .border-slate-300 {
-      border-color: #FFE600 !important;
+    html.dark table tbody tr {
+      border-color: #1E293B !important;
+      color: #CBD5E1 !important;
     }
-    .high-contrast-mode {
-      background-color: #000000 !important;
-      color: #FFFFFF !important;
+    html.dark table tbody tr:hover {
+      background-color: rgba(30, 41, 59, 0.7) !important;
+    }
+    html.dark input, html.dark select, html.dark textarea {
+      background-color: #111827 !important;
+      border-color: #1E293B !important;
+      color: #F8FAFC !important;
+    }
+    html.dark input::placeholder, html.dark textarea::placeholder {
+      color: #64748B !important;
     }
   </style>
 </head>
 <body class="bg-surface font-body-md text-on-surface antialiased min-h-screen">
   
-    <header class="fixed top-0 left-0 right-0 h-16 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50 shadow-xs px-4 sm:px-6 transition-colors">
+    <header class="fixed top-0 left-0 right-0 h-16 bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50 shadow-xs px-4 sm:px-6 transition-colors">
       <div class="w-full h-full flex items-center justify-between gap-2 sm:gap-4">
         <!-- Logo & Brand (Compacto) -->
         <div class="flex items-center gap-2.5 shrink-0">
-          <div onclick="navigateView('tablero')" class="cursor-pointer w-8 h-8 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-sm border border-amber-400">
+          <div onclick="navigateView('tablero')" class="cursor-pointer w-8 h-8 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-sm border border-slate-700">
             <span class="text-amber-400 text-sm">⚡</span>
           </div>
           <div class="flex items-center gap-2">
@@ -134,7 +152,7 @@
 
         <!-- Centro: Marcador En Vivo + Reloj UTC-5 -->
         <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-1.5 sm:gap-2 bg-slate-900 text-white px-2.5 py-1.5 rounded-lg border border-slate-800 text-[11px] sm:text-xs shadow-sm hover:border-amber-400 transition-colors" title="Ver Consola de Comisario">
+          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-1.5 sm:gap-2 bg-slate-900 text-white px-2.5 py-1.5 rounded-lg border border-slate-800 text-[11px] sm:text-xs shadow-sm hover:border-slate-600 transition-colors" title="Ver Consola de Comisario">
             <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
             <span class="font-bold text-amber-400 hidden sm:inline">EN VIVO:</span>
             <span class="font-bold">LDU</span>
@@ -172,7 +190,7 @@
             </button>
 
             <!-- Dropdown Panel de Notificaciones -->
-            <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
+            <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-[#111827] rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
               <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800 mb-2">
                 <span class="font-bold text-slate-900 dark:text-white flex items-center gap-1">
                   <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">notifications_active</span> Notificaciones Oficiales
@@ -221,7 +239,7 @@
             </div>
 
             <!-- Menú Desplegable de Usuario y Cierre de Sesión -->
-            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
+            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white dark:bg-[#111827] rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
               <div class="pb-3 border-b border-slate-100 dark:border-slate-800 mb-3">
                 <div class="font-bold text-slate-900 dark:text-white" id="dropdown-user-name">Invitado General</div>
                 <div class="text-[11px] text-slate-500 dark:text-slate-400 truncate" id="dropdown-user-email">publico@ligapro.ec</div>
@@ -273,9 +291,9 @@
             <button onclick="registrarTarjetaEnVivo('roja', 'visitante')" class="px-2 py-1 bg-red-700 rounded text-white text-[11px]">Roja</button>
           </div>
         </div>
-        <aside class="fixed left-0 top-16 bottom-0 w-20 bg-surface-container-lowest z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between py-space-md items-center dark:bg-slate-950 dark:text-slate-100"><nav class="flex flex-col gap-space-sm w-full px-space-xs" data-active-classes="bg-primary text-on-primary font-bold"><a aria-current="page" class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg transition-colors bg-primary text-on-primary font-bold" data-path="consola-operativa" href="javascript:void(0)" onclick="navigateView('consola')"><span class="material-symbols-outlined text-[24px]">dashboard</span><span class="font-label-caps text-[10px] mt-0.5">Control</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors dark:bg-slate-950 dark:text-slate-100" data-path="inspeccion-terreno" href="javascript:void(0)" onclick="navigateView('estadios')"><span class="material-symbols-outlined text-[24px]">grid_on</span><span class="font-label-caps text-[10px] mt-0.5">Cancha</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors dark:bg-slate-950 dark:text-slate-100" data-path="validador-uniformes" href="javascript:void(0)" onclick="navigateView('uniformes')"><span class="material-symbols-outlined text-[24px]">checkroom</span><span class="font-label-caps text-[10px] mt-0.5">Kits</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors dark:bg-slate-950 dark:text-slate-100" data-path="planilla-comet" href="javascript:void(0)" onclick="navigateView('consola')"><span class="material-symbols-outlined text-[24px]">assignment_turned_in</span><span class="font-label-caps text-[10px] mt-0.5">COMET</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors dark:bg-slate-950 dark:text-slate-100" data-path="cuenta-regresiva" href="javascript:void(0)" onclick="navigateView('consola')"><span class="material-symbols-outlined text-[24px]">timer</span><span class="font-label-caps text-[10px] mt-0.5">Protocolo</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors dark:bg-slate-950 dark:text-slate-100" data-path="informe-disciplinario" href="javascript:void(0)" onclick="navigateView('clubes')"><span class="material-symbols-outlined text-[24px]">report</span><span class="font-label-caps text-[10px] mt-0.5">Actas</span></a></nav><div class="flex flex-col gap-space-xs items-center w-full px-space-xs"><button class="min-h-[48px] w-full flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors dark:bg-slate-950 dark:text-slate-100" title="Modo Alto Contraste" type="button" onclick="toggleGlobalHighContrast()"><span class="material-symbols-outlined text-[22px]">contrast</span></button><button class="min-h-[48px] w-full flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors dark:bg-slate-950 dark:text-slate-100" title="Configuración Local y Caché" type="button" onclick="navigateView(\'consola\')"><span class="material-symbols-outlined text-[22px]">tune</span></button></div></aside><div class="pl-20"><main class="relative pt-16 w-full min-h-screen bg-surface px-gutter py-space-md dark:bg-slate-950 dark:text-slate-100"><div class="flex flex-col w-full">
+        <aside class="fixed left-0 top-16 bottom-0 w-20 bg-surface-container-lowest z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between py-space-md items-center dark:bg-[#0B0F19] dark:text-[#F8FAFC]"><nav class="flex flex-col gap-space-sm w-full px-space-xs" data-active-classes="bg-primary text-on-primary font-bold"><a aria-current="page" class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg transition-colors bg-primary text-on-primary font-bold" data-path="consola-operativa" href="javascript:void(0)" onclick="navigateView('consola')"><span class="material-symbols-outlined text-[24px]">dashboard</span><span class="font-label-caps text-[10px] mt-0.5">Control</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="inspeccion-terreno" href="javascript:void(0)" onclick="navigateView('estadios')"><span class="material-symbols-outlined text-[24px]">grid_on</span><span class="font-label-caps text-[10px] mt-0.5">Cancha</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="validador-uniformes" href="javascript:void(0)" onclick="navigateView('uniformes')"><span class="material-symbols-outlined text-[24px]">checkroom</span><span class="font-label-caps text-[10px] mt-0.5">Kits</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="planilla-comet" href="javascript:void(0)" onclick="navigateView('consola')"><span class="material-symbols-outlined text-[24px]">assignment_turned_in</span><span class="font-label-caps text-[10px] mt-0.5">COMET</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="cuenta-regresiva" href="javascript:void(0)" onclick="navigateView('consola')"><span class="material-symbols-outlined text-[24px]">timer</span><span class="font-label-caps text-[10px] mt-0.5">Protocolo</span></a><a class="min-h-[56px] w-full flex flex-col items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="informe-disciplinario" href="javascript:void(0)" onclick="navigateView('clubes')"><span class="material-symbols-outlined text-[24px]">report</span><span class="font-label-caps text-[10px] mt-0.5">Actas</span></a></nav><div class="flex flex-col gap-space-xs items-center w-full px-space-xs"><button class="min-h-[48px] w-full flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" title="Modo Alto Contraste" type="button" onclick="toggleGlobalHighContrast()"><span class="material-symbols-outlined text-[22px]">contrast</span></button><button class="min-h-[48px] w-full flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" title="Configuración Local y Caché" type="button" onclick="navigateView(\'consola\')"><span class="material-symbols-outlined text-[22px]">tune</span></button></div></aside><div class="pl-20"><main class="relative pt-16 w-full min-h-screen bg-surface px-gutter py-space-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]"><div class="flex flex-col w-full">
 <!-- Tablet Tactical Operational Header: Sun-glare resistant & High Contrast -->
-<section class="w-full bg-surface-container-lowest rounded-xl shadow-md p-space-md mb-space-md dark:bg-slate-950 dark:text-slate-100">
+<section class="w-full bg-surface-container-lowest rounded-xl shadow-md p-space-md mb-space-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-space-md">
 <!-- Match Identification with Broadcast Identity -->
 <div class="flex items-center gap-space-md min-w-0">
@@ -284,20 +302,20 @@
 </div>
 <div class="flex flex-col min-w-0">
 <div class="flex items-center gap-space-xs flex-wrap">
-<span class="font-label-caps text-label-caps uppercase bg-surface-container-high px-space-xs py-0.5 rounded text-on-surface dark:bg-slate-950 dark:text-slate-100">Serie A • Fecha 18</span>
-<span class="font-label-caps text-label-caps uppercase bg-surface-container-low px-space-xs py-0.5 rounded text-text-secondary flex items-center gap-1 dark:bg-slate-950 dark:text-slate-100">
+<span class="font-label-caps text-label-caps uppercase bg-surface-container-high px-space-xs py-0.5 rounded text-on-surface dark:bg-[#0B0F19] dark:text-[#F8FAFC]">Serie A • Fecha 18</span>
+<span class="font-label-caps text-label-caps uppercase bg-surface-container-low px-space-xs py-0.5 rounded text-text-secondary flex items-center gap-1 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <span class="material-symbols-outlined text-[13px]">stadium</span> Estadio Rodrigo Paz Delgado
             </span>
 </div>
-<h1 class="font-headline-md text-headline-md text-on-surface tracking-tight truncate mt-0.5">
+<h1 class="font-headline-md text-headline-md text-on-surface tracking-tight truncate mt-0.5 dark:text-white">
             LDU Quito <span class="text-secondary font-mono-matchday text-[20px] font-bold">vs</span> Barcelona SC
           </h1>
-<span class="font-body-sm text-body-sm text-text-secondary">Inicio Oficial: 19:00 UTC-5 • Árbitro Central: Augusto Aragón</span>
+<span class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">Inicio Oficial: 19:00 UTC-5 • Árbitro Central: Augusto Aragón</span>
 </div>
 </div>
 <!-- Sync Status & Forced COMET Action: Min touch targets 52px -->
 <div class="flex flex-wrap sm:flex-nowrap items-center gap-space-sm">
-<div class="flex items-center gap-space-sm bg-surface-container-low px-space-md py-space-xs rounded-xl flex-1 sm:flex-none dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-center gap-space-sm bg-surface-container-low px-space-md py-space-xs rounded-xl flex-1 sm:flex-none dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="relative flex items-center justify-center">
 <div class="w-3.5 h-3.5 rounded-full bg-sport-success animate-ping absolute opacity-75"></div>
 <div class="w-3.5 h-3.5 rounded-full bg-sport-success relative"></div>
@@ -322,7 +340,7 @@
 </div>
 </section>
 <!-- Large Tactile Segmented Navigation (Optimized for Thumb Reach on Tablet) -->
-<nav class="w-full bg-surface-container-lowest rounded-xl shadow-sm p-space-xs mb-space-md overflow-x-auto dark:bg-slate-950 dark:text-slate-100">
+<nav class="w-full bg-surface-container-lowest rounded-xl shadow-sm p-space-xs mb-space-md overflow-x-auto dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-stretch gap-space-xs min-w-[700px]">
 <!-- Tab 1 (Active) -->
 <button class="min-h-[54px] flex-1 px-space-md bg-primary text-on-primary rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md shadow-sm transition-transform active:scale-[0.99]" type="button" onclick="navigateView('consola')">
@@ -330,24 +348,24 @@
 <span>Cuenta Regresiva &amp; Hitos</span>
 </button>
 <!-- Tab 2 -->
-<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors dark:bg-slate-950 dark:text-slate-100" type="button" onclick="mostrarNominaCompleta()">
+<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="button" onclick="mostrarNominaCompleta()">
 <span class="material-symbols-outlined text-[22px]">medical_services</span>
 <span>Planilla &amp; Médicos</span>
 <span class="w-2 h-2 rounded-full bg-sport-success"></span>
 </button>
 <!-- Tab 3 -->
-<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors dark:bg-slate-950 dark:text-slate-100" type="button" onclick="registrarIncidenteEnVivo()">
+<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="button" onclick="registrarIncidenteEnVivo()">
 <span class="material-symbols-outlined text-[22px]">crisis_alert</span>
 <span>Incidentes Rápidos</span>
 <span class="bg-sport-danger text-on-error font-mono-table text-[11px] px-1.5 py-0.5 rounded-full font-bold">2</span>
 </button>
 <!-- Tab 4 -->
-<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors dark:bg-slate-950 dark:text-slate-100" type="button" onclick="mostrarModalPasabolas()">
+<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="button" onclick="mostrarModalPasabolas()">
 <span class="material-symbols-outlined text-[22px]">shield_person</span>
 <span>Pasabolas &amp; Perímetro</span>
 </button>
 <!-- Tab 5 -->
-<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors dark:bg-slate-950 dark:text-slate-100" type="button" onclick="sellarPlanillaJuego()">
+<button class="min-h-[54px] flex-1 px-space-md bg-surface-container-lowest hover:bg-surface-container-low text-text-secondary hover:text-on-surface rounded-lg flex items-center justify-center gap-space-sm font-title-md text-title-md transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="button" onclick="sellarPlanillaJuego()">
 <span class="material-symbols-outlined text-[22px]">verified_user</span>
 <span>Cierre de Acta</span>
 </button>
@@ -379,7 +397,7 @@
 </div>
 <!-- Master Clock Display -->
 <div class="my-space-sm flex items-baseline gap-space-sm flex-wrap">
-<div class="flex items-center font-mono-metric text-on-primary text-[48px] sm:text-[64px] tracking-tight leading-none font-extrabold select-all">
+<div class="flex items-center font-mono-metric text-on-primary text-[48px] sm:text-[64px] tracking-tight leading-none font-extrabold select-all dark:text-white">
 <span id="regressive-clock">- 44 : 20</span>
 </div>
 <div class="flex flex-col">
@@ -412,7 +430,7 @@
 </div>
 </div>
 <!-- Optical & Sensory Accessibility Alert Box -->
-<div class="bg-surface-container-high rounded-xl p-space-md shadow-sm transition-all duration-300 dark:bg-slate-950 dark:text-slate-100" id="sensory-banner">
+<div class="bg-surface-container-high rounded-xl p-space-md shadow-sm transition-all duration-300 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" id="sensory-banner">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
 <div class="flex items-start gap-space-sm">
 <div class="w-12 h-12 rounded-xl bg-secondary text-on-secondary flex-shrink-0 flex items-center justify-center">
@@ -423,16 +441,16 @@
 <span class="font-label-caps text-label-caps uppercase bg-secondary-fixed text-on-secondary-fixed px-space-xs py-0.5 rounded font-bold">Protocolo Inclusivo</span>
 <span class="font-mono-table text-mono-table font-bold text-secondary">T -09:20 Próxima Alerta</span>
 </div>
-<h2 class="font-title-md text-title-md text-on-surface font-bold mt-0.5">
+<h2 class="font-title-md text-title-md text-on-surface font-bold mt-0.5 dark:text-white">
                 Canción Oficial LigaPro &amp; Salida de Equipos
               </h2>
-<p class="font-body-sm text-body-sm text-text-secondary">
+<p class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">
                 Alerta háptica/vibratoria activada para delegados con hipoacusia y aviso estroboscópico de túnel.
               </p>
 </div>
 </div>
 <!-- Tactile Trigger Test Lumínico: 52px Touch Target -->
-<button class="min-h-[52px] px-space-md bg-surface-container-lowest hover:bg-surface-container active:scale-95 text-on-surface rounded-lg flex items-center justify-center gap-space-xs font-title-md text-title-md transition-colors flex-shrink-0 shadow-sm dark:bg-slate-950 dark:text-slate-100" id="btn-test-optic" type="button" onclick="testAlertaLuminica()">
+<button class="min-h-[52px] px-space-md bg-surface-container-lowest hover:bg-surface-container active:scale-95 text-on-surface rounded-lg flex items-center justify-center gap-space-xs font-title-md text-title-md transition-colors flex-shrink-0 shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]" id="btn-test-optic" type="button" onclick="testAlertaLuminica()">
 <span class="material-symbols-outlined text-sport-warning text-[24px]">light_mode</span>
 <span>Test Alerta Lumínica</span>
 </button>
@@ -442,25 +460,25 @@
 <!-- Right Column: Visual Pitch & Ball Boys + Medical Checklist (5 cols) -->
 <div class="xl:col-span-5 flex flex-col gap-space-md">
 <!-- Medical Safety Validation Card -->
-<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div>
 <div class="flex items-center justify-between mb-space-sm">
 <div class="flex items-center gap-space-xs">
 <span class="material-symbols-outlined text-sport-success text-[20px]">health_and_safety</span>
-<span class="font-label-caps text-label-caps uppercase text-text-secondary font-bold">Garantía Médica de Emergencia</span>
+<span class="font-label-caps text-label-caps uppercase text-text-secondary font-bold dark:text-[#CBD5E1]">Garantía Médica de Emergencia</span>
 </div>
-<span class="font-label-caps text-label-caps uppercase bg-surface-container-low text-sport-success px-2 py-0.5 rounded font-bold flex items-center gap-1 dark:bg-slate-950 dark:text-slate-100">
+<span class="font-label-caps text-label-caps uppercase bg-surface-container-low text-sport-success px-2 py-0.5 rounded font-bold flex items-center gap-1 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <span class="w-2 h-2 rounded-full bg-sport-success"></span> ACLS Válido
             </span>
 </div>
-<div class="flex items-center gap-space-md p-space-sm bg-surface-container-low rounded-xl dark:bg-slate-950 dark:text-slate-100">
-<div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center text-secondary flex-shrink-0 dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-center gap-space-md p-space-sm bg-surface-container-low rounded-xl dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center text-secondary flex-shrink-0 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <span class="material-symbols-outlined text-[28px]">account_box</span>
 </div>
 <div class="min-w-0 flex-1">
 <div class="font-title-md text-title-md text-on-surface font-bold truncate">Dr. Marco Caicedo</div>
-<div class="font-body-sm text-body-sm text-text-secondary truncate">Médico de Campo Designado • Hosp. Vozandes</div>
-<div class="font-mono-table text-[11px] text-text-secondary mt-0.5 flex items-center gap-2">
+<div class="font-body-sm text-body-sm text-text-secondary truncate dark:text-[#CBD5E1]">Médico de Campo Designado • Hosp. Vozandes</div>
+<div class="font-mono-table text-[11px] text-text-secondary mt-0.5 flex items-center gap-2 dark:text-[#CBD5E1]">
 <span>Colegiado: #17-8902</span>
 <span class="text-sport-success font-semibold">Ambulancia Alfa-1 en Cancha</span>
 </div>
@@ -468,27 +486,27 @@
 </div>
 </div>
 <div class="mt-space-sm pt-space-xs flex items-center justify-between text-body-sm">
-<span class="text-text-secondary flex items-center gap-1">
+<span class="text-text-secondary flex items-center gap-1 dark:text-[#CBD5E1]">
 <span class="material-symbols-outlined text-[16px] text-sport-success">check</span> Desfibrilador DEA Verificado
           </span>
 <span class="font-mono-table text-[12px] text-sport-success font-bold">17:15 OK</span>
 </div>
 </div>
 <!-- Perimeter & 12 Ball Boys (Pasabolas) Diagram Card -->
-<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex-1 flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex-1 flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div>
 <div class="flex items-center justify-between mb-space-sm">
 <div class="flex items-center gap-space-xs">
 <span class="material-symbols-outlined text-secondary text-[20px]">sports</span>
-<span class="font-label-caps text-label-caps uppercase text-text-secondary font-bold">Control Perimetral • 12 Pasabolas</span>
+<span class="font-label-caps text-label-caps uppercase text-text-secondary font-bold dark:text-[#CBD5E1]">Control Perimetral • 12 Pasabolas</span>
 </div>
-<span class="font-label-caps text-label-caps uppercase bg-surface-container-high text-on-surface px-2 py-0.5 rounded font-bold dark:bg-slate-950 dark:text-slate-100">
+<span class="font-label-caps text-label-caps uppercase bg-surface-container-high text-on-surface px-2 py-0.5 rounded font-bold dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
               12/12 Posicionados
             </span>
 </div>
 <!-- Stylized Mini-Pitch Inspection Graphic -->
-<div class="w-full bg-surface-container-low rounded-xl p-space-sm relative overflow-hidden flex flex-col items-center justify-center my-space-xs dark:bg-slate-950 dark:text-slate-100">
-<div class="w-full h-28 bg-surface-container rounded-lg relative flex items-center justify-center dark:bg-slate-950 dark:text-slate-100">
+<div class="w-full bg-surface-container-low rounded-xl p-space-sm relative overflow-hidden flex flex-col items-center justify-center my-space-xs dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+<div class="w-full h-28 bg-surface-container rounded-lg relative flex items-center justify-center dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <!-- Pitch Lines -->
 <div class="absolute inset-2 border-2 border-dashed border-outline-variant opacity-40 rounded"></div>
 <div class="absolute top-2 bottom-2 left-1/2 w-0.5 bg-outline-variant opacity-40"></div>
@@ -506,21 +524,21 @@
 <div class="absolute bottom-1 right-4 w-4 h-4 bg-secondary text-on-secondary rounded-full flex items-center justify-center font-mono-table text-[9px] font-bold shadow" title="P10">10</div>
 <div class="absolute left-1 top-1/2 -translate-y-1/2 w-4 h-4 bg-secondary text-on-secondary rounded-full flex items-center justify-center font-mono-table text-[9px] font-bold shadow" title="P11">11</div>
 <div class="absolute right-1 top-1/2 -translate-y-1/2 w-4 h-4 bg-secondary text-on-secondary rounded-full flex items-center justify-center font-mono-table text-[9px] font-bold shadow" title="P12">12</div>
-<span class="font-label-caps text-[10px] text-text-secondary uppercase tracking-widest bg-surface-container-lowest/80 px-2 py-0.5 rounded dark:bg-slate-950 dark:text-slate-100">Zona de Seguridad Césped</span>
+<span class="font-label-caps text-[10px] text-text-secondary uppercase tracking-widest bg-surface-container-lowest/80 px-2 py-0.5 rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">Zona de Seguridad Césped</span>
 </div>
 </div>
 <div class="grid grid-cols-2 gap-space-xs mt-space-xs text-body-sm">
-<div class="flex items-center gap-1.5 text-text-secondary">
+<div class="flex items-center gap-1.5 text-text-secondary dark:text-[#CBD5E1]">
 <span class="material-symbols-outlined text-[16px] text-sport-success">check_circle</span>
 <span class="truncate">Chalecos Flúor Entregados</span>
 </div>
-<div class="flex items-center gap-1.5 text-text-secondary">
+<div class="flex items-center gap-1.5 text-text-secondary dark:text-[#CBD5E1]">
 <span class="material-symbols-outlined text-[16px] text-sport-success">check_circle</span>
 <span class="truncate">Balones Puma Pro: 10 unds</span>
 </div>
 </div>
 </div>
-<button class="min-h-[48px] w-full mt-space-sm bg-surface-container-high hover:bg-surface-container text-on-surface rounded-lg flex items-center justify-center gap-space-xs font-title-md text-title-md transition-colors dark:bg-slate-950 dark:text-slate-100" type="button" onclick="evaluarEscenarioEnVivo()">
+<button class="min-h-[48px] w-full mt-space-sm bg-surface-container-high hover:bg-surface-container text-on-surface rounded-lg flex items-center justify-center gap-space-xs font-title-md text-title-md transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="button" onclick="evaluarEscenarioEnVivo()">
 <span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
 <span>Re-inspeccionar Perímetro</span>
 </button>
@@ -528,20 +546,20 @@
 </div>
 </div>
 <!-- Incident Rapid Keypad (Botonera Táctica de Incidentes) - 56px Touch Action Surfaces -->
-<section class="w-full bg-surface-container-lowest rounded-xl shadow-md p-space-md mb-space-md dark:bg-slate-950 dark:text-slate-100">
+<section class="w-full bg-surface-container-lowest rounded-xl shadow-md p-space-md mb-space-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
 <div>
 <div class="flex items-center gap-space-xs">
 <span class="material-symbols-outlined text-sport-danger text-[22px]">warning</span>
 <span class="font-label-caps text-label-caps uppercase text-sport-danger font-bold">Botonera Táctica de Cancha • Disparo con un Dedo</span>
 </div>
-<h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight mt-0.5">
+<h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight mt-0.5 dark:text-white">
           Registro Inmediato de Incidentes Disciplinarios
         </h2>
 </div>
 <div class="flex items-center gap-space-xs">
-<span class="font-label-caps text-label-caps uppercase text-text-secondary">Sector Preseleccionado:</span>
-<select class="bg-surface-container-low text-on-surface font-title-md text-title-md px-space-sm py-1.5 rounded-lg border-0 focus:ring-2 focus:ring-secondary dark:bg-slate-950 dark:text-slate-100" id="quick-sector">
+<span class="font-label-caps text-label-caps uppercase text-text-secondary dark:text-[#CBD5E1]">Sector Preseleccionado:</span>
+<select class="bg-surface-container-low text-on-surface font-title-md text-title-md px-space-sm py-1.5 rounded-lg border-0 focus:ring-2 focus:ring-secondary dark:bg-[#0B0F19] dark:text-[#F8FAFC]" id="quick-sector">
 <option value="General Sur">General Sur (LDU)</option>
 <option value="Tribuna Occidental">Tribuna Occidental</option>
 <option value="General Norte">General Norte (Visita)</option>
@@ -553,7 +571,7 @@
 <!-- 4 Massive Tactile Buttons (56px minimum height) -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-sm mb-space-md">
 <!-- Incident 1: Lanzamiento de Objetos -->
-<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-error-container hover:text-on-error-container active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm dark:bg-slate-950 dark:text-slate-100" data-incident="Lanzamiento de Objetos" type="button" onclick="registrarIncidenteEnVivo(\'Lanzamiento de Objetos (Art. 73)\')">
+<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-error-container hover:text-on-error-container active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-incident="Lanzamiento de Objetos" type="button" onclick="registrarIncidenteEnVivo(\'Lanzamiento de Objetos (Art. 73)\')">
 <div class="flex items-center gap-space-sm">
 <div class="w-10 h-10 rounded-lg bg-sport-warning text-on-primary flex items-center justify-center flex-shrink-0">
 <span class="material-symbols-outlined text-[24px]">front_hand</span>
@@ -566,7 +584,7 @@
 <span class="material-symbols-outlined text-[20px]">add_circle</span>
 </button>
 <!-- Incident 2: Bengalas / Pirotecnia -->
-<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-error-container hover:text-on-error-container active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm dark:bg-slate-950 dark:text-slate-100" data-incident="Uso de Bengalas / Pirotecnia" type="button" onclick="registrarIncidenteEnVivo(\'Uso de Bengalas / Pirotecnia (Art. 73)\')">
+<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-error-container hover:text-on-error-container active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-incident="Uso de Bengalas / Pirotecnia" type="button" onclick="registrarIncidenteEnVivo(\'Uso de Bengalas / Pirotecnia (Art. 73)\')">
 <div class="flex items-center gap-space-sm">
 <div class="w-10 h-10 rounded-lg bg-sport-danger text-on-error flex items-center justify-center flex-shrink-0">
 <span class="material-symbols-outlined text-[24px]">local_fire_department</span>
@@ -579,7 +597,7 @@
 <span class="material-symbols-outlined text-[20px]">add_circle</span>
 </button>
 <!-- Incident 3: Invasión de Terreno -->
-<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-error-container hover:text-on-error-container active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm dark:bg-slate-950 dark:text-slate-100" data-incident="Invasión de Terreno de Juego" type="button" onclick="registrarIncidenteEnVivo(\'Invasión de Terreno de Juego (Art. 73)\')">
+<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-error-container hover:text-on-error-container active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-incident="Invasión de Terreno de Juego" type="button" onclick="registrarIncidenteEnVivo(\'Invasión de Terreno de Juego (Art. 73)\')">
 <div class="flex items-center gap-space-sm">
 <div class="w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center flex-shrink-0">
 <span class="material-symbols-outlined text-[24px]">run_circle</span>
@@ -592,7 +610,7 @@
 <span class="material-symbols-outlined text-[20px]">add_circle</span>
 </button>
 <!-- Incident 4: Demora en Reanudación -->
-<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-surface-container hover:text-on-surface active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm dark:bg-slate-950 dark:text-slate-100" data-incident="Demora en Reanudación (Art. 82)" type="button" onclick="registrarIncidenteEnVivo(\'Demora en Reanudación (Art. 82) (Art. 73)\')">
+<button class="incident-btn min-h-[58px] px-space-md bg-surface-container-low hover:bg-surface-container hover:text-on-surface active:scale-95 text-on-surface rounded-xl flex items-center justify-between gap-space-sm transition-all shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-incident="Demora en Reanudación (Art. 82)" type="button" onclick="registrarIncidenteEnVivo(\'Demora en Reanudación (Art. 82) (Art. 73)\')">
 <div class="flex items-center gap-space-sm">
 <div class="w-10 h-10 rounded-lg bg-secondary text-on-secondary flex items-center justify-center flex-shrink-0">
 <span class="material-symbols-outlined text-[24px]">hourglass_disabled</span>
@@ -606,50 +624,50 @@
 </button>
 </div>
 <!-- Live Tactile Incident Log (Bitácora en Vivo con soporte de voz y edición) -->
-<div class="bg-surface-container-low rounded-xl p-space-md dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-container-low rounded-xl p-space-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-sm">
 <div class="flex items-center gap-space-xs">
-<span class="material-symbols-outlined text-[18px] text-text-secondary">history_edu</span>
-<span class="font-label-caps text-label-caps uppercase text-text-secondary font-bold">Bitácora Instantánea en Memoria Criptográfica</span>
+<span class="material-symbols-outlined text-[18px] text-text-secondary dark:text-[#CBD5E1]">history_edu</span>
+<span class="font-label-caps text-label-caps uppercase text-text-secondary font-bold dark:text-[#CBD5E1]">Bitácora Instantánea en Memoria Criptográfica</span>
 </div>
 <!-- Dictation & Voice Assist -->
 <div class="flex items-center gap-space-xs">
-<button class="min-h-[44px] px-space-sm bg-surface-container-lowest hover:bg-surface-container text-on-surface rounded-lg flex items-center gap-1 font-body-sm text-body-sm transition-all dark:bg-slate-950 dark:text-slate-100" id="btn-voice-dictate" type="button" onclick="dictarPorVoz()">
+<button class="min-h-[44px] px-space-sm bg-surface-container-lowest hover:bg-surface-container text-on-surface rounded-lg flex items-center gap-1 font-body-sm text-body-sm transition-all dark:bg-[#0B0F19] dark:text-[#F8FAFC]" id="btn-voice-dictate" type="button" onclick="dictarPorVoz()">
 <span class="material-symbols-outlined text-sport-danger text-[18px]" id="mic-icon">mic</span>
 <span id="voice-text">Dictar por Voz</span>
 </button>
-<span class="font-mono-table text-[11px] text-text-secondary">SHA-256 Local Hash Activo</span>
+<span class="font-mono-table text-[11px] text-text-secondary dark:text-[#CBD5E1]">SHA-256 Local Hash Activo</span>
 </div>
 </div>
 <!-- Real-time Table / List -->
 <div class="space-y-space-xs max-h-48 overflow-y-auto" id="incident-log-container">
 <!-- Log Item 1 -->
-<div class="flex items-center justify-between p-space-sm bg-surface-container-lowest rounded-lg shadow-sm dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-center justify-between p-space-sm bg-surface-container-lowest rounded-lg shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center gap-space-sm min-w-0">
 <span class="font-mono-table text-mono-table font-bold text-sport-danger bg-error-container text-on-error-container px-2 py-0.5 rounded">17:35:12</span>
 <div class="min-w-0">
 <p class="font-title-md text-[14px] text-on-surface font-bold truncate">Uso de Bengalas / Pirotecnia</p>
-<p class="font-body-sm text-[12px] text-text-secondary">Sector: General Sur • Humo blanco previo a calentamiento • Sin heridos</p>
+<p class="font-body-sm text-[12px] text-text-secondary dark:text-[#CBD5E1]">Sector: General Sur • Humo blanco previo a calentamiento • Sin heridos</p>
 </div>
 </div>
 <div class="flex items-center gap-space-xs flex-shrink-0">
-<button class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-text-secondary dark:bg-slate-950 dark:text-slate-100" title="Editar Nota" type="button" onclick="navigateView(\'consola\')">
+<button class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-text-secondary dark:bg-[#0B0F19] dark:text-[#F8FAFC]" title="Editar Nota" type="button" onclick="navigateView(\'consola\')">
 <span class="material-symbols-outlined text-[18px]">edit</span>
 </button>
 <span class="material-symbols-outlined text-sport-success text-[18px]">cloud_done</span>
 </div>
 </div>
 <!-- Log Item 2 -->
-<div class="flex items-center justify-between p-space-sm bg-surface-container-lowest rounded-lg shadow-sm dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-center justify-between p-space-sm bg-surface-container-lowest rounded-lg shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center gap-space-sm min-w-0">
-<span class="font-mono-table text-mono-table font-bold text-text-secondary bg-surface-container-high px-2 py-0.5 rounded dark:bg-slate-950 dark:text-slate-100">17:10:04</span>
+<span class="font-mono-table text-mono-table font-bold text-text-secondary bg-surface-container-high px-2 py-0.5 rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">17:10:04</span>
 <div class="min-w-0">
 <p class="font-title-md text-[14px] text-on-surface font-bold truncate">Validación de Balones Oficiales Puma</p>
-<p class="font-body-sm text-[12px] text-text-secondary">Calibración a 0.9 bar certificada por 4to Árbitro Alex Cajas</p>
+<p class="font-body-sm text-[12px] text-text-secondary dark:text-[#CBD5E1]">Calibración a 0.9 bar certificada por 4to Árbitro Alex Cajas</p>
 </div>
 </div>
 <div class="flex items-center gap-space-xs flex-shrink-0">
-<button class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-text-secondary dark:bg-slate-950 dark:text-slate-100" title="Editar Nota" type="button" onclick="navigateView(\'consola\')">
+<button class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-text-secondary dark:bg-[#0B0F19] dark:text-[#F8FAFC]" title="Editar Nota" type="button" onclick="navigateView(\'consola\')">
 <span class="material-symbols-outlined text-[18px]">edit</span>
 </button>
 <span class="material-symbols-outlined text-sport-success text-[18px]">cloud_done</span>
@@ -659,17 +677,17 @@
 </div>
 </section>
 <!-- Sticky / Bottom Floating Action Bar for Regulatory Sign-off -->
-<footer class="w-full bg-surface-container-lowest rounded-xl shadow-lg p-space-md flex flex-col md:flex-row items-center justify-between gap-space-md dark:bg-slate-950 dark:text-slate-100">
+<footer class="w-full bg-surface-container-lowest rounded-xl shadow-lg p-space-md flex flex-col md:flex-row items-center justify-between gap-space-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center gap-space-md">
 <div class="w-12 h-12 rounded-xl bg-inverse-surface text-inverse-on-surface flex items-center justify-center flex-shrink-0">
 <span class="material-symbols-outlined text-[26px]">key</span>
 </div>
 <div>
 <div class="flex items-center gap-2">
-<span class="font-label-caps text-label-caps uppercase text-text-secondary font-bold">Acta Preliminar Matchday</span>
-<span class="bg-surface-container-high text-on-surface px-1.5 py-0.2 rounded font-mono-table text-[10px] dark:bg-slate-950 dark:text-slate-100">ID: EC-SERIEA-18-2025</span>
+<span class="font-label-caps text-label-caps uppercase text-text-secondary font-bold dark:text-[#CBD5E1]">Acta Preliminar Matchday</span>
+<span class="bg-surface-container-high text-on-surface px-1.5 py-0.2 rounded font-mono-table text-[10px] dark:bg-[#0B0F19] dark:text-[#F8FAFC]">ID: EC-SERIEA-18-2025</span>
 </div>
-<div class="font-mono-table text-[12px] text-text-secondary truncate mt-0.5 max-w-md">
+<div class="font-mono-table text-[12px] text-text-secondary truncate mt-0.5 max-w-md dark:text-[#CBD5E1]">
           Hash Temporal: <span class="font-bold text-on-surface">d9e4a81c...7f320b99ac4</span> (Listo para firma criptográfica)
         </div>
 </div>
@@ -785,11 +803,11 @@
               <span class="font-mono-table text-mono-table font-bold text-sport-danger bg-error-container text-on-error-container px-2 py-0.5 rounded">${timeStr}</span>
               <div class="min-w-0">
                 <p class="font-title-md text-[14px] text-on-surface font-bold truncate">${incidentName}</p>
-                <p class="font-body-sm text-[12px] text-text-secondary">Sector: ${selectedSector} • Registrado con 1-tap táctil por Comisario</p>
+                <p class="font-body-sm text-[12px] text-text-secondary dark:text-[#CBD5E1]">Sector: ${selectedSector} • Registrado con 1-tap táctil por Comisario</p>
               </div>
             </div>
             <div class="flex items-center gap-space-xs flex-shrink-0">
-              <button type="button" class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-text-secondary dark:bg-slate-950 dark:text-slate-100" onclick="navigateView(\'consola\')">
+              <button type="button" class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-text-secondary dark:bg-[#0B0F19] dark:text-[#F8FAFC]" onclick="navigateView(\'consola\')">
                 <span class="material-symbols-outlined text-[18px]">edit</span>
               </button>
               <span class="material-symbols-outlined text-sport-success text-[18px]">cloud_done</span>

@@ -269,7 +269,7 @@ def build():
       try {{
         var theme = localStorage.getItem('sigec_theme') || (localStorage.getItem('sigec_high_contrast') === 'true' ? 'dark' : null);
         if (theme === 'dark') {{
-          document.documentElement.classList.add('dark', 'high-contrast');
+          document.documentElement.classList.add('dark');
         }}
         var scale = localStorage.getItem('sigec_font_scale');
         if (scale) {{
@@ -278,6 +278,7 @@ def build():
       }} catch (e) {{}}
     }})();
   </script>
+  <link rel="stylesheet" href="/src/index.css"/>
   <style>
     @layer base {{
       html, body {{ margin: 0; padding: 0; transition: background-color 0.15s ease, color 0.15s ease; }}
@@ -285,88 +286,105 @@ def build():
     }}
     ::-webkit-scrollbar {{ display: none; }}
 
-    /* MODO OSCURO (Tailwind dark: y soporte directo) */
+    /* PALETA OSCURA MODERNA (MIDNIGHT BROADCAST) */
     html.dark {{
       color-scheme: dark;
+      background-color: #0B0F19;
     }}
     html.dark body {{
-      background-color: #0b1329 !important;
-      color: #f1f5f9 !important;
+      background-color: #0B0F19 !important;
+      color: #F8FAFC !important;
     }}
     html.dark header {{
-      background-color: rgba(15, 23, 42, 0.95) !important;
-      border-color: #1e293b !important;
-      color: #f1f5f9 !important;
+      background-color: #111827 !important;
+      border-color: #1E293B !important;
+      color: #F8FAFC !important;
     }}
     html.dark aside {{
-      background-color: #0f172a !important;
-      border-color: #1e293b !important;
-      color: #f1f5f9 !important;
+      background-color: #111827 !important;
+      border-color: #1E293B !important;
+      color: #CBD5E1 !important;
+    }}
+    html.dark main {{
+      background-color: #0B0F19 !important;
     }}
     html.dark aside a, html.dark aside button {{
-      color: #cbd5e1 !important;
+      color: #CBD5E1 !important;
     }}
     html.dark aside a:hover, html.dark aside button:hover {{
-      background-color: #1e293b !important;
-      color: #ffffff !important;
+      background-color: #1E293B !important;
+      color: #FFFFFF !important;
     }}
-    html.dark .bg-white {{
-      background-color: #0f172a !important;
-      color: #f1f5f9 !important;
-      border-color: #1e293b !important;
+    html.dark .bg-white, html.dark .bg-surface-card, html.dark .bg-surface-container-lowest {{
+      background-color: #111827 !important;
+      color: #F8FAFC !important;
+      border-color: #1E293B !important;
     }}
-    html.dark .bg-surface, html.dark .bg-surface-container-low, html.dark .bg-surface-container {{
-      background-color: #0b1329 !important;
-      color: #f1f5f9 !important;
+    html.dark .bg-surface, html.dark .bg-surface-base {{
+      background-color: #0B0F19 !important;
+      color: #F8FAFC !important;
     }}
-    html.dark .bg-slate-50, html.dark .bg-slate-100 {{
-      background-color: #1e293b !important;
-      color: #e2e8f0 !important;
-      border-color: #334155 !important;
-    }}
-    html.dark .text-slate-900, html.dark .text-slate-800, html.dark .text-slate-700 {{
-      color: #f8fafc !important;
-    }}
-    html.dark .text-slate-600, html.dark .text-slate-500 {{
-      color: #94a3b8 !important;
-    }}
-    html.dark .border-slate-100, html.dark .border-slate-200, html.dark .border-slate-300 {{
-      border-color: #334155 !important;
-    }}
-    html.dark input, html.dark select, html.dark textarea {{
-      background-color: #1e293b !important;
-      border-color: #475569 !important;
-      color: #f8fafc !important;
+    html.dark .bg-slate-50, html.dark .bg-slate-100, html.dark .bg-gray-50, html.dark .bg-gray-100,
+    html.dark .bg-surface-container, html.dark .bg-surface-container-low, html.dark .bg-surface-container-high, html.dark .bg-surface-container-highest {{
+      background-color: #1E293B !important;
+      color: #E2E8F0 !important;
+      border-color: #1E293B !important;
     }}
 
-    /* MODO ALTO CONTRASTE WCAG AAA (Negro / Amarillo #FFE600 / 21:1) */
-    html.high-contrast {{
-      color-scheme: dark;
+    /* REGLA GLOBAL DE LEGIBILIDAD EN .dark: TEXTOS OSCUROS A BLANCO SUAVE (#F8FAFC) */
+    html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6,
+    html.dark .text-slate-900, html.dark .text-slate-800,
+    html.dark .text-gray-900, html.dark .text-gray-800,
+    html.dark .text-black, html.dark .text-on-surface,
+    html.dark .text-text-primary, html.dark .text-on-background {{
+      color: #F8FAFC !important;
     }}
-    html.high-contrast body {{
-      background-color: #000000 !important;
+
+    /* CONTADORES Y MÉTRICAS GRANDES DE TARJETAS (16 / 16, 18 / 18, 8 Partidos, etc.) */
+    html.dark .font-mono-metric,
+    html.dark [class*="font-mono-metric"],
+    html.dark [class*="text-mono-metric"] {{
       color: #FFFFFF !important;
     }}
-    html.high-contrast header, html.high-contrast aside, html.high-contrast .bg-white, html.high-contrast .bg-surface, html.high-contrast .bg-slate-50, html.high-contrast .bg-slate-100 {{
-      background-color: #000000 !important;
-      border-color: #FFE600 !important;
-      color: #FFFFFF !important;
+
+    /* TEXTOS MEDIOS Y SECUNDARIOS A GRIS CLARO LEGIBLE (#CBD5E1 / #94A3B8) */
+    html.dark .text-slate-600, html.dark .text-slate-500,
+    html.dark .text-gray-600, html.dark .text-gray-500,
+    html.dark .text-text-secondary, html.dark .text-on-surface-variant {{
+      color: #CBD5E1 !important;
     }}
-    html.high-contrast button {{
-      border-color: #FFE600 !important;
+    html.dark .text-slate-400, html.dark .text-gray-400 {{
+      color: #94A3B8 !important;
     }}
-    html.high-contrast a, html.high-contrast .text-amber-400, html.high-contrast .text-amber-500 {{
-      color: #FFE600 !important;
+
+    /* BORDES SUTILES SLATE-800 (#1E293B) — Reemplazo de amarillos y bordes claros */
+    html.dark .border-slate-100, html.dark .border-slate-200, html.dark .border-slate-300,
+    html.dark .border-gray-100, html.dark .border-gray-200, html.dark .border-gray-300,
+    html.dark .border-yellow-400, html.dark .border-amber-400,
+    html.dark .border-border-subtle, html.dark .border-strong,
+    html.dark .border-outline, html.dark .border-outline-variant {{
+      border-color: #1E293B !important;
     }}
-    html.high-contrast .text-slate-900, html.high-contrast .text-slate-800, html.high-contrast .text-slate-700, html.high-contrast .text-slate-600, html.high-contrast .text-slate-500 {{
-      color: #FFFFFF !important;
+
+    /* TABLAS Y FORMULARIOS */
+    html.dark table thead tr {{
+      background-color: #1E293B !important;
+      color: #F8FAFC !important;
     }}
-    html.high-contrast .border-slate-100, html.high-contrast .border-slate-200, html.high-contrast .border-slate-300 {{
-      border-color: #FFE600 !important;
+    html.dark table tbody tr {{
+      border-color: #1E293B !important;
+      color: #CBD5E1 !important;
     }}
-    .high-contrast-mode {{
-      background-color: #000000 !important;
-      color: #FFFFFF !important;
+    html.dark table tbody tr:hover {{
+      background-color: rgba(30, 41, 59, 0.7) !important;
+    }}
+    html.dark input, html.dark select, html.dark textarea {{
+      background-color: #111827 !important;
+      border-color: #1E293B !important;
+      color: #F8FAFC !important;
+    }}
+    html.dark input::placeholder, html.dark textarea::placeholder {{
+      color: #64748B !important;
     }}
   </style>
 </head>
@@ -416,7 +434,7 @@ def build():
       try {{
         var theme = localStorage.getItem('sigec_theme') || (localStorage.getItem('sigec_high_contrast') === 'true' ? 'dark' : null);
         if (theme === 'dark') {{
-          document.documentElement.classList.add('dark', 'high-contrast');
+          document.documentElement.classList.add('dark');
         }}
         var scale = localStorage.getItem('sigec_font_scale');
         if (scale) {{
@@ -425,6 +443,7 @@ def build():
       }} catch (e) {{}}
     }})();
   </script>
+  <link rel="stylesheet" href="/src/index.css"/>
   <style>
     @layer base {{
       html, body {{ margin: 0; padding: 0; transition: background-color 0.15s ease, color 0.15s ease; }}
@@ -432,88 +451,105 @@ def build():
     }}
     ::-webkit-scrollbar {{ display: none; }}
 
-    /* MODO OSCURO (Tailwind dark: y soporte directo) */
+    /* PALETA OSCURA MODERNA (MIDNIGHT BROADCAST) */
     html.dark {{
       color-scheme: dark;
+      background-color: #0B0F19;
     }}
     html.dark body {{
-      background-color: #0b1329 !important;
-      color: #f1f5f9 !important;
+      background-color: #0B0F19 !important;
+      color: #F8FAFC !important;
     }}
     html.dark header {{
-      background-color: rgba(15, 23, 42, 0.95) !important;
-      border-color: #1e293b !important;
-      color: #f1f5f9 !important;
+      background-color: #111827 !important;
+      border-color: #1E293B !important;
+      color: #F8FAFC !important;
     }}
     html.dark aside {{
-      background-color: #0f172a !important;
-      border-color: #1e293b !important;
-      color: #f1f5f9 !important;
+      background-color: #111827 !important;
+      border-color: #1E293B !important;
+      color: #CBD5E1 !important;
+    }}
+    html.dark main {{
+      background-color: #0B0F19 !important;
     }}
     html.dark aside a, html.dark aside button {{
-      color: #cbd5e1 !important;
+      color: #CBD5E1 !important;
     }}
     html.dark aside a:hover, html.dark aside button:hover {{
-      background-color: #1e293b !important;
-      color: #ffffff !important;
+      background-color: #1E293B !important;
+      color: #FFFFFF !important;
     }}
-    html.dark .bg-white {{
-      background-color: #0f172a !important;
-      color: #f1f5f9 !important;
-      border-color: #1e293b !important;
+    html.dark .bg-white, html.dark .bg-surface-card, html.dark .bg-surface-container-lowest {{
+      background-color: #111827 !important;
+      color: #F8FAFC !important;
+      border-color: #1E293B !important;
     }}
-    html.dark .bg-surface, html.dark .bg-surface-container-low, html.dark .bg-surface-container {{
-      background-color: #0b1329 !important;
-      color: #f1f5f9 !important;
+    html.dark .bg-surface, html.dark .bg-surface-base {{
+      background-color: #0B0F19 !important;
+      color: #F8FAFC !important;
     }}
-    html.dark .bg-slate-50, html.dark .bg-slate-100 {{
-      background-color: #1e293b !important;
-      color: #e2e8f0 !important;
-      border-color: #334155 !important;
-    }}
-    html.dark .text-slate-900, html.dark .text-slate-800, html.dark .text-slate-700 {{
-      color: #f8fafc !important;
-    }}
-    html.dark .text-slate-600, html.dark .text-slate-500 {{
-      color: #94a3b8 !important;
-    }}
-    html.dark .border-slate-100, html.dark .border-slate-200, html.dark .border-slate-300 {{
-      border-color: #334155 !important;
-    }}
-    html.dark input, html.dark select, html.dark textarea {{
-      background-color: #1e293b !important;
-      border-color: #475569 !important;
-      color: #f8fafc !important;
+    html.dark .bg-slate-50, html.dark .bg-slate-100, html.dark .bg-gray-50, html.dark .bg-gray-100,
+    html.dark .bg-surface-container, html.dark .bg-surface-container-low, html.dark .bg-surface-container-high, html.dark .bg-surface-container-highest {{
+      background-color: #1E293B !important;
+      color: #E2E8F0 !important;
+      border-color: #1E293B !important;
     }}
 
-    /* MODO ALTO CONTRASTE WCAG AAA (Negro / Amarillo #FFE600 / 21:1) */
-    html.high-contrast {{
-      color-scheme: dark;
+    /* REGLA GLOBAL DE LEGIBILIDAD EN .dark: TEXTOS OSCUROS A BLANCO SUAVE (#F8FAFC) */
+    html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6,
+    html.dark .text-slate-900, html.dark .text-slate-800,
+    html.dark .text-gray-900, html.dark .text-gray-800,
+    html.dark .text-black, html.dark .text-on-surface,
+    html.dark .text-text-primary, html.dark .text-on-background {{
+      color: #F8FAFC !important;
     }}
-    html.high-contrast body {{
-      background-color: #000000 !important;
+
+    /* CONTADORES Y MÉTRICAS GRANDES DE TARJETAS (16 / 16, 18 / 18, 8 Partidos, etc.) */
+    html.dark .font-mono-metric,
+    html.dark [class*="font-mono-metric"],
+    html.dark [class*="text-mono-metric"] {{
       color: #FFFFFF !important;
     }}
-    html.high-contrast header, html.high-contrast aside, html.high-contrast .bg-white, html.high-contrast .bg-surface, html.high-contrast .bg-slate-50, html.high-contrast .bg-slate-100 {{
-      background-color: #000000 !important;
-      border-color: #FFE600 !important;
-      color: #FFFFFF !important;
+
+    /* TEXTOS MEDIOS Y SECUNDARIOS A GRIS CLARO LEGIBLE (#CBD5E1 / #94A3B8) */
+    html.dark .text-slate-600, html.dark .text-slate-500,
+    html.dark .text-gray-600, html.dark .text-gray-500,
+    html.dark .text-text-secondary, html.dark .text-on-surface-variant {{
+      color: #CBD5E1 !important;
     }}
-    html.high-contrast button {{
-      border-color: #FFE600 !important;
+    html.dark .text-slate-400, html.dark .text-gray-400 {{
+      color: #94A3B8 !important;
     }}
-    html.high-contrast a, html.high-contrast .text-amber-400, html.high-contrast .text-amber-500 {{
-      color: #FFE600 !important;
+
+    /* BORDES SUTILES SLATE-800 (#1E293B) — Reemplazo de amarillos y bordes claros */
+    html.dark .border-slate-100, html.dark .border-slate-200, html.dark .border-slate-300,
+    html.dark .border-gray-100, html.dark .border-gray-200, html.dark .border-gray-300,
+    html.dark .border-yellow-400, html.dark .border-amber-400,
+    html.dark .border-border-subtle, html.dark .border-strong,
+    html.dark .border-outline, html.dark .border-outline-variant {{
+      border-color: #1E293B !important;
     }}
-    html.high-contrast .text-slate-900, html.high-contrast .text-slate-800, html.high-contrast .text-slate-700, html.high-contrast .text-slate-600, html.high-contrast .text-slate-500 {{
-      color: #FFFFFF !important;
+
+    /* TABLAS Y FORMULARIOS */
+    html.dark table thead tr {{
+      background-color: #1E293B !important;
+      color: #F8FAFC !important;
     }}
-    html.high-contrast .border-slate-100, html.high-contrast .border-slate-200, html.high-contrast .border-slate-300 {{
-      border-color: #FFE600 !important;
+    html.dark table tbody tr {{
+      border-color: #1E293B !important;
+      color: #CBD5E1 !important;
     }}
-    .high-contrast-mode {{
-      background-color: #000000 !important;
-      color: #FFFFFF !important;
+    html.dark table tbody tr:hover {{
+      background-color: rgba(30, 41, 59, 0.7) !important;
+    }}
+    html.dark input, html.dark select, html.dark textarea {{
+      background-color: #111827 !important;
+      border-color: #1E293B !important;
+      color: #F8FAFC !important;
+    }}
+    html.dark input::placeholder, html.dark textarea::placeholder {{
+      color: #64748B !important;
     }}
   </style>
 </head>

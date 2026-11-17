@@ -1,0 +1,187 @@
+/* ==============================================================================
+   SIGEC-LP — PALETA OSCURA MODERNA (MIDNIGHT BROADCAST)
+   Estándar de legibilidad institucional LigaPro Ecuador
+   ============================================================================== */
+
+@layer base {
+  html.dark {
+    color-scheme: dark;
+    background-color: #0B0F19;
+  }
+
+  html.dark body {
+    background-color: #0B0F19 !important;
+    color: #F8FAFC !important;
+  }
+}
+
+/* 1. ESTRUCTURA: HEADER, SIDEBAR Y FONDOS PRINCIPALES */
+html.dark header,
+.dark header {
+  background-color: #111827 !important;
+  border-color: #1E293B !important;
+  color: #F8FAFC !important;
+}
+
+html.dark aside,
+.dark aside {
+  background-color: #111827 !important;
+  border-color: #1E293B !important;
+  color: #CBD5E1 !important;
+}
+
+html.dark main,
+.dark main {
+  background-color: #0B0F19 !important;
+}
+
+/* 2. TARJETAS Y CONTENEDORES (Midnight Broadcast) */
+html.dark .bg-white,
+html.dark .bg-surface-card,
+html.dark .bg-surface-container-lowest,
+.dark .bg-white,
+.dark .bg-surface-card,
+.dark .bg-surface-container-lowest {
+  background-color: #111827 !important;
+  border-color: #1E293B !important;
+  color: #F8FAFC !important;
+}
+
+html.dark .bg-surface,
+html.dark .bg-surface-base,
+.dark .bg-surface,
+.dark .bg-surface-base {
+  background-color: #0B0F19 !important;
+  color: #F8FAFC !important;
+}
+
+html.dark .bg-slate-50,
+html.dark .bg-slate-100,
+html.dark .bg-gray-50,
+html.dark .bg-gray-100,
+html.dark .bg-surface-container-low,
+html.dark .bg-surface-container,
+html.dark .bg-surface-container-high,
+html.dark .bg-surface-container-highest,
+.dark .bg-slate-50,
+.dark .bg-slate-100,
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-surface-container-low,
+.dark .bg-surface-container,
+.dark .bg-surface-container-high,
+.dark .bg-surface-container-highest {
+  background-color: #1E293B !important;
+  border-color: #1E293B !important;
+  color: #E2E8F0 !important;
+}
+
+/* 3. REGLA GLOBAL DE LEGIBILIDAD EN .dark: TEXTOS OSCUROS A BLANCO SUAVE (#F8FAFC) */
+html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6,
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6,
+html.dark .text-slate-900, html.dark .text-slate-800,
+html.dark .text-gray-900, html.dark .text-gray-800,
+html.dark .text-black, html.dark .text-on-surface,
+html.dark .text-text-primary, html.dark .text-on-background,
+.dark .text-slate-900, .dark .text-slate-800,
+.dark .text-gray-900, .dark .text-gray-800,
+.dark .text-black, .dark .text-on-surface,
+.dark .text-text-primary, .dark .text-on-background {
+  color: #F8FAFC !important;
+}
+
+/* 4. CONTADORES Y MÉTRICAS GRANDES DE TARJETAS (16 / 16, 18 / 18, 8 Partidos, etc.) */
+html.dark .font-mono-metric,
+html.dark [class*="font-mono-metric"],
+html.dark [class*="text-mono-metric"],
+.dark .font-mono-metric,
+.dark [class*="font-mono-metric"],
+.dark [class*="text-mono-metric"] {
+  color: #FFFFFF !important;
+}
+
+/* 5. TEXTOS MEDIOS Y SECUNDARIOS A GRIS CLARO LEGIBLE (#CBD5E1 / #94A3B8) */
+html.dark .text-slate-600, html.dark .text-slate-500,
+html.dark .text-gray-600, html.dark .text-gray-500,
+html.dark .text-text-secondary, html.dark .text-on-surface-variant,
+.dark .text-slate-600, .dark .text-slate-500,
+.dark .text-gray-600, .dark .text-gray-500,
+.dark .text-text-secondary, .dark .text-on-surface-variant {
+  color: #CBD5E1 !important;
+}
+
+html.dark .text-slate-400, html.dark .text-gray-400,
+.dark .text-slate-400, .dark .text-gray-400 {
+  color: #94A3B8 !important;
+}
+
+/* 6. BORDES SUTILES SLATE-800 (#1E293B) — Reemplazo de amarillos y bordes claros */
+html.dark .border-slate-100, html.dark .border-slate-200, html.dark .border-slate-300,
+html.dark .border-gray-100, html.dark .border-gray-200, html.dark .border-gray-300,
+html.dark .border-border-subtle, html.dark .border-strong,
+html.dark .border-outline, html.dark .border-outline-variant,
+.dark .border-slate-100, .dark .border-slate-200, .dark .border-slate-300,
+.dark .border-gray-100, .dark .border-gray-200, .dark .border-gray-300,
+.dark .border-border-subtle, .dark .border-strong,
+.dark .border-outline, .dark .border-outline-variant {
+  border-color: #1E293B !important;
+}
+
+/* Reemplazo de bordes amarillos chillones */
+html.dark .border-yellow-400, html.dark .border-amber-400,
+.dark .border-yellow-400, .dark .border-amber-400 {
+  border-color: #1E293B !important;
+}
+
+/* 7. NAVEGACIÓN LATERAL Y ACCIONES */
+html.dark aside a, html.dark aside button,
+.dark aside a, .dark aside button {
+  color: #CBD5E1 !important;
+}
+
+html.dark aside a:hover, html.dark aside button:hover,
+.dark aside a:hover, .dark aside button:hover {
+  background-color: #1E293B !important;
+  color: #FFFFFF !important;
+}
+
+/* 8. TABLAS Y RESULTADOS */
+html.dark table thead tr,
+.dark table thead tr {
+  background-color: #1E293B !important;
+  color: #F8FAFC !important;
+}
+
+html.dark table tbody tr,
+.dark table tbody tr {
+  border-color: #1E293B !important;
+  color: #CBD5E1 !important;
+}
+
+html.dark table tbody tr:hover,
+.dark table tbody tr:hover {
+  background-color: rgba(30, 41, 59, 0.7) !important;
+}
+
+/* 9. FORMULARIOS, INPUTS Y SELECTS */
+html.dark input, html.dark select, html.dark textarea,
+.dark input, .dark select, .dark textarea {
+  background-color: #111827 !important;
+  border-color: #1E293B !important;
+  color: #F8FAFC !important;
+}
+
+html.dark input::placeholder, html.dark textarea::placeholder,
+.dark input::placeholder, .dark textarea::placeholder {
+  color: #64748B !important;
+}
+
+/* 10. MODALES Y DROPDOWNS */
+html.dark #user-dropdown-menu,
+html.dark #notifications-panel,
+.dark #user-dropdown-menu,
+.dark #notifications-panel {
+  background-color: #111827 !important;
+  border-color: #1E293B !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7) !important;
+}

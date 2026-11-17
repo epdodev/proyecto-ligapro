@@ -66,11 +66,11 @@ SCREENS = [
 
 def generate_header(active_id):
     header_html = f'''
-    <header class="fixed top-0 left-0 right-0 h-16 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50 shadow-xs px-4 sm:px-6 transition-colors">
+    <header class="fixed top-0 left-0 right-0 h-16 bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50 shadow-xs px-4 sm:px-6 transition-colors">
       <div class="w-full h-full flex items-center justify-between gap-2 sm:gap-4">
         <!-- Logo & Brand (Compacto) -->
         <div class="flex items-center gap-2.5 shrink-0">
-          <div onclick="navigateView('tablero')" class="cursor-pointer w-8 h-8 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-sm border border-amber-400">
+          <div onclick="navigateView('tablero')" class="cursor-pointer w-8 h-8 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-sm border border-slate-700">
             <span class="text-amber-400 text-sm">⚡</span>
           </div>
           <div class="flex items-center gap-2">
@@ -81,7 +81,7 @@ def generate_header(active_id):
 
         <!-- Centro: Marcador En Vivo + Reloj UTC-5 -->
         <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-1.5 sm:gap-2 bg-slate-900 text-white px-2.5 py-1.5 rounded-lg border border-slate-800 text-[11px] sm:text-xs shadow-sm hover:border-amber-400 transition-colors" title="Ver Consola de Comisario">
+          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-1.5 sm:gap-2 bg-slate-900 text-white px-2.5 py-1.5 rounded-lg border border-slate-800 text-[11px] sm:text-xs shadow-sm hover:border-slate-600 transition-colors" title="Ver Consola de Comisario">
             <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
             <span class="font-bold text-amber-400 hidden sm:inline">EN VIVO:</span>
             <span class="font-bold">LDU</span>
@@ -119,7 +119,7 @@ def generate_header(active_id):
             </button>
 
             <!-- Dropdown Panel de Notificaciones -->
-            <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
+            <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-[#111827] rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
               <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800 mb-2">
                 <span class="font-bold text-slate-900 dark:text-white flex items-center gap-1">
                   <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">notifications_active</span> Notificaciones Oficiales
@@ -168,7 +168,7 @@ def generate_header(active_id):
             </div>
 
             <!-- Menú Desplegable de Usuario y Cierre de Sesión -->
-            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
+            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white dark:bg-[#111827] rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
               <div class="pb-3 border-b border-slate-100 dark:border-slate-800 mb-3">
                 <div class="font-bold text-slate-900 dark:text-white" id="dropdown-user-name">Invitado General</div>
                 <div class="text-[11px] text-slate-500 dark:text-slate-400 truncate" id="dropdown-user-email">publico@ligapro.ec</div>

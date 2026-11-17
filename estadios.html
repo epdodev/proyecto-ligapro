@@ -16,7 +16,7 @@
       try {
         var theme = localStorage.getItem('sigec_theme') || (localStorage.getItem('sigec_high_contrast') === 'true' ? 'dark' : null);
         if (theme === 'dark') {
-          document.documentElement.classList.add('dark', 'high-contrast');
+          document.documentElement.classList.add('dark');
         }
         var scale = localStorage.getItem('sigec_font_scale');
         if (scale) {
@@ -25,6 +25,7 @@
       } catch (e) {}
     })();
   </script>
+  <link rel="stylesheet" href="/src/index.css"/>
   <style>
     @layer base {
       html, body { margin: 0; padding: 0; transition: background-color 0.15s ease, color 0.15s ease; }
@@ -32,98 +33,115 @@
     }
     ::-webkit-scrollbar { display: none; }
 
-    /* MODO OSCURO (Tailwind dark: y soporte directo) */
+    /* PALETA OSCURA MODERNA (MIDNIGHT BROADCAST) */
     html.dark {
       color-scheme: dark;
+      background-color: #0B0F19;
     }
     html.dark body {
-      background-color: #0b1329 !important;
-      color: #f1f5f9 !important;
+      background-color: #0B0F19 !important;
+      color: #F8FAFC !important;
     }
     html.dark header {
-      background-color: rgba(15, 23, 42, 0.95) !important;
-      border-color: #1e293b !important;
-      color: #f1f5f9 !important;
+      background-color: #111827 !important;
+      border-color: #1E293B !important;
+      color: #F8FAFC !important;
     }
     html.dark aside {
-      background-color: #0f172a !important;
-      border-color: #1e293b !important;
-      color: #f1f5f9 !important;
+      background-color: #111827 !important;
+      border-color: #1E293B !important;
+      color: #CBD5E1 !important;
+    }
+    html.dark main {
+      background-color: #0B0F19 !important;
     }
     html.dark aside a, html.dark aside button {
-      color: #cbd5e1 !important;
+      color: #CBD5E1 !important;
     }
     html.dark aside a:hover, html.dark aside button:hover {
-      background-color: #1e293b !important;
-      color: #ffffff !important;
+      background-color: #1E293B !important;
+      color: #FFFFFF !important;
     }
-    html.dark .bg-white {
-      background-color: #0f172a !important;
-      color: #f1f5f9 !important;
-      border-color: #1e293b !important;
+    html.dark .bg-white, html.dark .bg-surface-card, html.dark .bg-surface-container-lowest {
+      background-color: #111827 !important;
+      color: #F8FAFC !important;
+      border-color: #1E293B !important;
     }
-    html.dark .bg-surface, html.dark .bg-surface-container-low, html.dark .bg-surface-container {
-      background-color: #0b1329 !important;
-      color: #f1f5f9 !important;
+    html.dark .bg-surface, html.dark .bg-surface-base {
+      background-color: #0B0F19 !important;
+      color: #F8FAFC !important;
     }
-    html.dark .bg-slate-50, html.dark .bg-slate-100 {
-      background-color: #1e293b !important;
-      color: #e2e8f0 !important;
-      border-color: #334155 !important;
-    }
-    html.dark .text-slate-900, html.dark .text-slate-800, html.dark .text-slate-700 {
-      color: #f8fafc !important;
-    }
-    html.dark .text-slate-600, html.dark .text-slate-500 {
-      color: #94a3b8 !important;
-    }
-    html.dark .border-slate-100, html.dark .border-slate-200, html.dark .border-slate-300 {
-      border-color: #334155 !important;
-    }
-    html.dark input, html.dark select, html.dark textarea {
-      background-color: #1e293b !important;
-      border-color: #475569 !important;
-      color: #f8fafc !important;
+    html.dark .bg-slate-50, html.dark .bg-slate-100, html.dark .bg-gray-50, html.dark .bg-gray-100,
+    html.dark .bg-surface-container, html.dark .bg-surface-container-low, html.dark .bg-surface-container-high, html.dark .bg-surface-container-highest {
+      background-color: #1E293B !important;
+      color: #E2E8F0 !important;
+      border-color: #1E293B !important;
     }
 
-    /* MODO ALTO CONTRASTE WCAG AAA (Negro / Amarillo #FFE600 / 21:1) */
-    html.high-contrast {
-      color-scheme: dark;
+    /* REGLA GLOBAL DE LEGIBILIDAD EN .dark: TEXTOS OSCUROS A BLANCO SUAVE (#F8FAFC) */
+    html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6,
+    html.dark .text-slate-900, html.dark .text-slate-800,
+    html.dark .text-gray-900, html.dark .text-gray-800,
+    html.dark .text-black, html.dark .text-on-surface,
+    html.dark .text-text-primary, html.dark .text-on-background {
+      color: #F8FAFC !important;
     }
-    html.high-contrast body {
-      background-color: #000000 !important;
+
+    /* CONTADORES Y MÉTRICAS GRANDES DE TARJETAS (16 / 16, 18 / 18, 8 Partidos, etc.) */
+    html.dark .font-mono-metric,
+    html.dark [class*="font-mono-metric"],
+    html.dark [class*="text-mono-metric"] {
       color: #FFFFFF !important;
     }
-    html.high-contrast header, html.high-contrast aside, html.high-contrast .bg-white, html.high-contrast .bg-surface, html.high-contrast .bg-slate-50, html.high-contrast .bg-slate-100 {
-      background-color: #000000 !important;
-      border-color: #FFE600 !important;
-      color: #FFFFFF !important;
+
+    /* TEXTOS MEDIOS Y SECUNDARIOS A GRIS CLARO LEGIBLE (#CBD5E1 / #94A3B8) */
+    html.dark .text-slate-600, html.dark .text-slate-500,
+    html.dark .text-gray-600, html.dark .text-gray-500,
+    html.dark .text-text-secondary, html.dark .text-on-surface-variant {
+      color: #CBD5E1 !important;
     }
-    html.high-contrast button {
-      border-color: #FFE600 !important;
+    html.dark .text-slate-400, html.dark .text-gray-400 {
+      color: #94A3B8 !important;
     }
-    html.high-contrast a, html.high-contrast .text-amber-400, html.high-contrast .text-amber-500 {
-      color: #FFE600 !important;
+
+    /* BORDES SUTILES SLATE-800 (#1E293B) — Reemplazo de amarillos y bordes claros */
+    html.dark .border-slate-100, html.dark .border-slate-200, html.dark .border-slate-300,
+    html.dark .border-gray-100, html.dark .border-gray-200, html.dark .border-gray-300,
+    html.dark .border-yellow-400, html.dark .border-amber-400,
+    html.dark .border-border-subtle, html.dark .border-strong,
+    html.dark .border-outline, html.dark .border-outline-variant {
+      border-color: #1E293B !important;
     }
-    html.high-contrast .text-slate-900, html.high-contrast .text-slate-800, html.high-contrast .text-slate-700, html.high-contrast .text-slate-600, html.high-contrast .text-slate-500 {
-      color: #FFFFFF !important;
+
+    /* TABLAS Y FORMULARIOS */
+    html.dark table thead tr {
+      background-color: #1E293B !important;
+      color: #F8FAFC !important;
     }
-    html.high-contrast .border-slate-100, html.high-contrast .border-slate-200, html.high-contrast .border-slate-300 {
-      border-color: #FFE600 !important;
+    html.dark table tbody tr {
+      border-color: #1E293B !important;
+      color: #CBD5E1 !important;
     }
-    .high-contrast-mode {
-      background-color: #000000 !important;
-      color: #FFFFFF !important;
+    html.dark table tbody tr:hover {
+      background-color: rgba(30, 41, 59, 0.7) !important;
+    }
+    html.dark input, html.dark select, html.dark textarea {
+      background-color: #111827 !important;
+      border-color: #1E293B !important;
+      color: #F8FAFC !important;
+    }
+    html.dark input::placeholder, html.dark textarea::placeholder {
+      color: #64748B !important;
     }
   </style>
 </head>
 <body class="bg-surface font-body-md text-on-surface antialiased min-h-screen">
   
-    <header class="fixed top-0 left-0 right-0 h-16 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50 shadow-xs px-4 sm:px-6 transition-colors">
+    <header class="fixed top-0 left-0 right-0 h-16 bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50 shadow-xs px-4 sm:px-6 transition-colors">
       <div class="w-full h-full flex items-center justify-between gap-2 sm:gap-4">
         <!-- Logo & Brand (Compacto) -->
         <div class="flex items-center gap-2.5 shrink-0">
-          <div onclick="navigateView('tablero')" class="cursor-pointer w-8 h-8 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-sm border border-amber-400">
+          <div onclick="navigateView('tablero')" class="cursor-pointer w-8 h-8 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-sm border border-slate-700">
             <span class="text-amber-400 text-sm">⚡</span>
           </div>
           <div class="flex items-center gap-2">
@@ -134,7 +152,7 @@
 
         <!-- Centro: Marcador En Vivo + Reloj UTC-5 -->
         <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-1.5 sm:gap-2 bg-slate-900 text-white px-2.5 py-1.5 rounded-lg border border-slate-800 text-[11px] sm:text-xs shadow-sm hover:border-amber-400 transition-colors" title="Ver Consola de Comisario">
+          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-1.5 sm:gap-2 bg-slate-900 text-white px-2.5 py-1.5 rounded-lg border border-slate-800 text-[11px] sm:text-xs shadow-sm hover:border-slate-600 transition-colors" title="Ver Consola de Comisario">
             <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
             <span class="font-bold text-amber-400 hidden sm:inline">EN VIVO:</span>
             <span class="font-bold">LDU</span>
@@ -172,7 +190,7 @@
             </button>
 
             <!-- Dropdown Panel de Notificaciones -->
-            <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
+            <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-[#111827] rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
               <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800 mb-2">
                 <span class="font-bold text-slate-900 dark:text-white flex items-center gap-1">
                   <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">notifications_active</span> Notificaciones Oficiales
@@ -221,7 +239,7 @@
             </div>
 
             <!-- Menú Desplegable de Usuario y Cierre de Sesión -->
-            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
+            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white dark:bg-[#111827] rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
               <div class="pb-3 border-b border-slate-100 dark:border-slate-800 mb-3">
                 <div class="font-bold text-slate-900 dark:text-white" id="dropdown-user-name">Invitado General</div>
                 <div class="text-[11px] text-slate-500 dark:text-slate-400 truncate" id="dropdown-user-email">publico@ligapro.ec</div>
@@ -271,31 +289,31 @@
             </button>
           </div>
         </div>
-        <aside class="fixed left-0 top-16 bottom-0 w-72 bg-surface-card z-40 flex flex-col border-r border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.02)] dark:bg-slate-950 dark:text-slate-100"><div class="p-space-md border-b border-border-subtle"><div class="flex items-center justify-between bg-surface-container-low px-space-sm py-2 rounded border border-border-subtle dark:bg-slate-950 dark:text-slate-100"><div class="flex items-center gap-space-xs"><span class="inline-block w-2.5 h-2.5 rounded-full bg-sport-success animate-pulse"></span><span class="font-label-caps text-label-caps text-text-primary uppercase">COMET Enlace Activo</span></div><span class="font-mono-table text-[11px] text-sport-success font-semibold">SYNC</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-xs"><div class="px-space-sm py-1 font-label-caps text-label-caps text-text-secondary uppercase tracking-wider">Administración LigaPro</div><nav class="flex flex-col gap-0.5 mt-1" data-active-classes="bg-secondary text-on-secondary font-semibold shadow-sm"><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="tablero-general" href="javascript:void(0)" onclick="navigateView('tablero')"><span class="material-symbols-outlined text-xl">space_dashboard</span><span>Tablero General</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="competiciones-formatos" href="javascript:void(0)" onclick="mostrarModalCompeticionesFormatos()"><span class="material-symbols-outlined text-xl">emoji_events</span><span>Competiciones &amp; Formatos</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="calificacion-escenarios" href="javascript:void(0)" onclick="navigateView('estadios')"><span class="material-symbols-outlined text-xl">stadium</span><span>Escenarios &amp; VAR (Z)</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="designacion-uniformes" href="javascript:void(0)" onclick="navigateView('uniformes')"><span class="material-symbols-outlined text-xl">checkroom</span><span>Designación de Uniformes</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="consola-matchday" href="javascript:void(0)" onclick="navigateView('consola')"><span class="material-symbols-outlined text-xl">sports_soccer</span><span>Consola Comisario Matchday</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="portal-clubes" href="javascript:void(0)" onclick="navigateView('clubes')"><span class="material-symbols-outlined text-xl">shield_person</span><span>Portal Clubes &amp; Trámites</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="posiciones-fair-play" href="javascript:void(0)" onclick="navigateView('posiciones')"><span class="material-symbols-outlined text-xl">leaderboard</span><span>Posiciones &amp; Fair Play</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="seguridad-criptografica" href="javascript:void(0)" onclick="mostrarModalSeguridadSHA256()"><span class="material-symbols-outlined text-xl">verified_user</span><span>Seguridad SHA-256</span></a></nav></div><div class="p-space-sm border-t border-border-subtle bg-surface-container-low/50 dark:bg-slate-950 dark:text-slate-100"><div class="flex items-center justify-between text-text-secondary font-label-caps text-[10px]"><span>VERSION 4.2.1-SEC</span><span class="font-mono-table text-text-secondary">ID: LIGAPRO-EC</span></div></div></aside><div class="pl-72"><main class="relative w-full pt-16 bg-surface min-h-screen px-gutter-lg py-margin-md dark:bg-slate-950 dark:text-slate-100"><div class="flex flex-col w-full">
+        <aside class="fixed left-0 top-16 bottom-0 w-72 bg-surface-card z-40 flex flex-col border-r border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.02)] dark:bg-[#0B0F19] dark:text-[#F8FAFC]"><div class="p-space-md border-b border-border-subtle"><div class="flex items-center justify-between bg-surface-container-low px-space-sm py-2 rounded border border-border-subtle dark:bg-[#0B0F19] dark:text-[#F8FAFC]"><div class="flex items-center gap-space-xs"><span class="inline-block w-2.5 h-2.5 rounded-full bg-sport-success animate-pulse"></span><span class="font-label-caps text-label-caps text-text-primary uppercase dark:text-[#F8FAFC]">COMET Enlace Activo</span></div><span class="font-mono-table text-[11px] text-sport-success font-semibold">SYNC</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-xs"><div class="px-space-sm py-1 font-label-caps text-label-caps text-text-secondary uppercase tracking-wider dark:text-[#CBD5E1]">Administración LigaPro</div><nav class="flex flex-col gap-0.5 mt-1" data-active-classes="bg-secondary text-on-secondary font-semibold shadow-sm"><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="tablero-general" href="javascript:void(0)" onclick="navigateView('tablero')"><span class="material-symbols-outlined text-xl">space_dashboard</span><span>Tablero General</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="competiciones-formatos" href="javascript:void(0)" onclick="mostrarModalCompeticionesFormatos()"><span class="material-symbols-outlined text-xl">emoji_events</span><span>Competiciones &amp; Formatos</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="calificacion-escenarios" href="javascript:void(0)" onclick="navigateView('estadios')"><span class="material-symbols-outlined text-xl">stadium</span><span>Escenarios &amp; VAR (Z)</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="designacion-uniformes" href="javascript:void(0)" onclick="navigateView('uniformes')"><span class="material-symbols-outlined text-xl">checkroom</span><span>Designación de Uniformes</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="consola-matchday" href="javascript:void(0)" onclick="navigateView('consola')"><span class="material-symbols-outlined text-xl">sports_soccer</span><span>Consola Comisario Matchday</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="portal-clubes" href="javascript:void(0)" onclick="navigateView('clubes')"><span class="material-symbols-outlined text-xl">shield_person</span><span>Portal Clubes &amp; Trámites</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="posiciones-fair-play" href="javascript:void(0)" onclick="navigateView('posiciones')"><span class="material-symbols-outlined text-xl">leaderboard</span><span>Posiciones &amp; Fair Play</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="seguridad-criptografica" href="javascript:void(0)" onclick="mostrarModalSeguridadSHA256()"><span class="material-symbols-outlined text-xl">verified_user</span><span>Seguridad SHA-256</span></a></nav></div><div class="p-space-sm border-t border-border-subtle bg-surface-container-low/50 dark:bg-[#0B0F19] dark:text-[#F8FAFC]"><div class="flex items-center justify-between text-text-secondary font-label-caps text-[10px] dark:text-[#CBD5E1]"><span>VERSION 4.2.1-SEC</span><span class="font-mono-table text-text-secondary dark:text-[#CBD5E1]">ID: LIGAPRO-EC</span></div></div></aside><div class="pl-72"><main class="relative w-full pt-16 bg-surface min-h-screen px-gutter-lg py-margin-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]"><div class="flex flex-col w-full">
 <!-- Top Command & Breadcrumb Strip -->
 <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-space-md mb-margin-md">
 <div class="flex flex-col min-w-0">
-<div class="flex items-center gap-space-xs text-text-secondary font-label-caps text-label-caps uppercase mb-1">
+<div class="flex items-center gap-space-xs text-text-secondary font-label-caps text-label-caps uppercase mb-1 dark:text-[#CBD5E1]">
 <span class="text-secondary font-bold">SIGEC-LP</span>
 <span>/</span>
 <span>Competiciones 2025</span>
 <span>/</span>
-<span class="text-text-primary">Inspección de Escenarios &amp; VAR</span>
+<span class="text-text-primary dark:text-[#F8FAFC]">Inspección de Escenarios &amp; VAR</span>
 </div>
-<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight">
+<h1 class="font-headline-lg text-headline-lg text-text-primary tracking-tight dark:text-white">
         Inspección Técnica de Escenarios Deportivos &amp; Infraestructura VAR
       </h1>
-<p class="font-body-md text-body-md text-text-secondary mt-0.5 max-w-4xl">
+<p class="font-body-md text-body-md text-text-secondary mt-0.5 max-w-4xl dark:text-[#CBD5E1]">
         Protocolo de Homologación de Cancha FIFA Quality Pro, Muestreo de Césped en “Z” (Reglamento Art. 38) y Auditoría Tecnológica VOR/Hawk-Eye.
       </p>
 </div>
 <!-- Header Operations / Actions -->
 <div class="flex flex-wrap items-center gap-space-sm self-start xl:self-auto">
-<button class="inline-flex items-center gap-space-xs px-space-md h-10 bg-surface-container-low hover:bg-surface-container text-text-primary rounded font-label-caps text-label-caps uppercase transition-colors shadow-sm dark:bg-slate-950 dark:text-slate-100" type="button" onclick="forzarSincroComet()">
+<button class="inline-flex items-center gap-space-xs px-space-md h-10 bg-surface-container-low hover:bg-surface-container text-text-primary rounded font-label-caps text-label-caps uppercase transition-colors shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="button" onclick="forzarSincroComet()">
 <span class="material-symbols-outlined text-base text-sport-success">sync</span>
 <span>Sincronizar COMET</span>
 </button>
-<button class="inline-flex items-center gap-space-xs px-space-md h-10 bg-surface-container text-text-primary hover:bg-surface-container-high rounded font-label-caps text-label-caps uppercase transition-colors shadow-sm dark:bg-slate-950 dark:text-slate-100" type="button" onclick="evaluarEscenarioEnVivo()">
+<button class="inline-flex items-center gap-space-xs px-space-md h-10 bg-surface-container text-text-primary hover:bg-surface-container-high rounded font-label-caps text-label-caps uppercase transition-colors shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="button" onclick="evaluarEscenarioEnVivo()">
 <span class="material-symbols-outlined text-base">pin_drop</span>
 <span>Nueva Medición In Situ</span>
 </button>
@@ -306,41 +324,41 @@
 </div>
 </div>
 <!-- Stadium Context & Certification Banner -->
-<div class="bg-surface-card rounded-xl p-space-md xl:p-space-lg shadow-sm mb-margin-md flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-space-lg dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-card rounded-xl p-space-md xl:p-space-lg shadow-sm mb-margin-md flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-space-lg dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex flex-col md:flex-row items-start md:items-center gap-space-lg flex-1 min-w-0">
-<div class="w-16 h-16 rounded-xl bg-surface-container-low flex items-center justify-center shrink-0 text-secondary dark:bg-slate-950 dark:text-slate-100">
+<div class="w-16 h-16 rounded-xl bg-surface-container-low flex items-center justify-center shrink-0 text-secondary dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <span class="material-symbols-outlined text-4xl">stadium</span>
 </div>
 <div class="flex flex-col min-w-0 flex-1">
 <div class="flex flex-wrap items-center gap-space-sm mb-1">
 <label class="sr-only" for="stadium-selector">Selección de Estadio</label>
 <div class="relative inline-flex items-center">
-<select class="font-headline-sm text-headline-sm text-text-primary bg-surface-container-low hover:bg-surface-container py-1 pl-3 pr-8 rounded transition-colors cursor-pointer appearance-none dark:bg-slate-950 dark:text-slate-100" id="stadium-selector">
+<select class="font-headline-sm text-headline-sm text-text-primary bg-surface-container-low hover:bg-surface-container py-1 pl-3 pr-8 rounded transition-colors cursor-pointer appearance-none dark:bg-[#0B0F19] dark:text-[#F8FAFC]" id="stadium-selector">
 <option selected="">Estadio Rodrigo Paz Delgado (LDU Quito)</option>
 <option>Estadio George Capwell (CS Emelec)</option>
 <option>Estadio Monumental Banco Pichincha (Barcelona SC)</option>
 <option>Estadio Banco Guayaquil (Independiente del Valle)</option>
 </select>
-<span class="material-symbols-outlined text-text-secondary pointer-events-none absolute right-2 text-xl">arrow_drop_down</span>
+<span class="material-symbols-outlined text-text-secondary pointer-events-none absolute right-2 text-xl dark:text-[#CBD5E1]">arrow_drop_down</span>
 </div>
-<span class="font-label-caps text-label-caps uppercase bg-surface-container px-2 py-0.5 rounded text-text-secondary dark:bg-slate-950 dark:text-slate-100">FECHA 14 - SERIE A</span>
+<span class="font-label-caps text-label-caps uppercase bg-surface-container px-2 py-0.5 rounded text-text-secondary dark:bg-[#0B0F19] dark:text-[#F8FAFC]">FECHA 14 - SERIE A</span>
 </div>
-<div class="flex flex-wrap items-center gap-y-1 gap-x-space-md font-body-sm text-body-sm text-text-secondary">
+<div class="flex flex-wrap items-center gap-y-1 gap-x-space-md font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">
 <span class="inline-flex items-center gap-1">
 <span class="material-symbols-outlined text-xs text-secondary">terrain</span>
-            Altitud: <strong class="font-mono-table text-text-primary font-bold">2,850 msnm</strong>
+            Altitud: <strong class="font-mono-table text-text-primary font-bold dark:text-[#F8FAFC]">2,850 msnm</strong>
 </span>
 <span class="inline-flex items-center gap-1">
 <span class="material-symbols-outlined text-xs text-secondary">groups</span>
-            Capacidad: <strong class="font-mono-table text-text-primary font-bold">41,575 esp.</strong>
+            Capacidad: <strong class="font-mono-table text-text-primary font-bold dark:text-[#F8FAFC]">41,575 esp.</strong>
 </span>
 <span class="inline-flex items-center gap-1">
 <span class="material-symbols-outlined text-xs text-sport-success">sports_soccer</span>
-            Próximo Encuentro: <span class="text-text-primary font-semibold">LDU vs Barcelona SC (18:00)</span>
+            Próximo Encuentro: <span class="text-text-primary font-semibold dark:text-[#F8FAFC]">LDU vs Barcelona SC (18:00)</span>
 </span>
 <span class="inline-flex items-center gap-1">
 <span class="material-symbols-outlined text-xs text-secondary">flare</span>
-            Luminarias: <strong class="font-mono-table text-text-primary font-bold">1,400 Lux (4K HDR)</strong>
+            Luminarias: <strong class="font-mono-table text-text-primary font-bold dark:text-[#F8FAFC]">1,400 Lux (4K HDR)</strong>
 </span>
 </div>
 </div>
@@ -348,19 +366,19 @@
 <!-- Triple-Encoded Certification Status Badge -->
 <div class="flex flex-col justify-center bg-sport-warning/10 rounded-xl p-space-md shrink-0 xl:min-w-[320px]">
 <div class="flex items-center justify-between mb-1">
-<span class="font-label-caps text-label-caps uppercase text-text-secondary">Dictamen Comisario LP</span>
+<span class="font-label-caps text-label-caps uppercase text-text-secondary dark:text-[#CBD5E1]">Dictamen Comisario LP</span>
 <span class="material-symbols-outlined text-xs text-on-surface-variant" title="Triple encoding: color, ícono y texto formal">rule</span>
 </div>
 <div class="flex items-center gap-space-sm">
-<div class="w-8 h-8 rounded-full bg-sport-warning flex items-center justify-center text-text-primary font-bold shrink-0">
+<div class="w-8 h-8 rounded-full bg-sport-warning flex items-center justify-center text-text-primary font-bold shrink-0 dark:text-[#F8FAFC]">
 <span class="material-symbols-outlined text-xl">warning</span>
 </div>
 <div class="flex flex-col min-w-0">
-<span class="font-title-md text-title-md text-text-primary font-bold leading-tight uppercase">
+<span class="font-title-md text-title-md text-text-primary font-bold leading-tight uppercase dark:text-[#F8FAFC]">
             HOMOLOGADO CONDICIONADO
           </span>
-<span class="font-body-sm text-body-sm text-text-secondary">
-            Re-inspección obligatoria programada <strong class="text-text-primary">T -2h (16:00)</strong>
+<span class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">
+            Re-inspección obligatoria programada <strong class="text-text-primary dark:text-[#F8FAFC]">T -2h (16:00)</strong>
 </span>
 </div>
 </div>
@@ -369,20 +387,20 @@
 <!-- Key Technical Metrics (KPI Bento Grid) -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-md mb-margin-md">
 <!-- Altura Promedio -->
-<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-start justify-between">
-<span class="font-label-caps text-label-caps uppercase text-text-secondary">Altura Promedio Corte</span>
+<span class="font-label-caps text-label-caps uppercase text-text-secondary dark:text-[#CBD5E1]">Altura Promedio Corte</span>
 <span class="material-symbols-outlined text-sport-success text-xl" title="Dentro de rango">check_circle</span>
 </div>
 <div class="my-space-sm flex items-baseline gap-1">
-<span class="font-mono-metric text-mono-metric text-text-primary">23.4</span>
-<span class="font-body-sm text-body-sm text-text-secondary font-semibold">mm</span>
+<span class="font-mono-metric text-mono-metric text-text-primary dark:text-white">23.4</span>
+<span class="font-body-sm text-body-sm text-text-secondary font-semibold dark:text-[#CBD5E1]">mm</span>
 </div>
 <div class="flex flex-col gap-1">
-<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden dark:bg-slate-950 dark:text-slate-100">
+<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="bg-sport-success h-full" style="width: 68%;"></div>
 </div>
-<div class="flex justify-between font-label-caps text-[10px] text-text-secondary">
+<div class="flex justify-between font-label-caps text-[10px] text-text-secondary dark:text-[#CBD5E1]">
 <span>Min: 20 mm</span>
 <span class="font-bold text-sport-success">CUMPLE (20-25mm)</span>
 <span>Max: 25 mm</span>
@@ -390,20 +408,20 @@
 </div>
 </div>
 <!-- Tracción Rotacional -->
-<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-start justify-between">
-<span class="font-label-caps text-label-caps uppercase text-text-secondary">Tracción Rotacional</span>
+<span class="font-label-caps text-label-caps uppercase text-text-secondary dark:text-[#CBD5E1]">Tracción Rotacional</span>
 <span class="material-symbols-outlined text-sport-success text-xl">offline_bolt</span>
 </div>
 <div class="my-space-sm flex items-baseline gap-1">
-<span class="font-mono-metric text-mono-metric text-text-primary">41</span>
-<span class="font-body-sm text-body-sm text-text-secondary font-semibold">Nm</span>
+<span class="font-mono-metric text-mono-metric text-text-primary dark:text-white">41</span>
+<span class="font-body-sm text-body-sm text-text-secondary font-semibold dark:text-[#CBD5E1]">Nm</span>
 </div>
 <div class="flex flex-col gap-1">
-<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden dark:bg-slate-950 dark:text-slate-100">
+<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="bg-sport-success h-full" style="width: 55%;"></div>
 </div>
-<div class="flex justify-between font-label-caps text-[10px] text-text-secondary">
+<div class="flex justify-between font-label-caps text-[10px] text-text-secondary dark:text-[#CBD5E1]">
 <span>35 Nm</span>
 <span class="font-bold text-sport-success">ÓPTIMO FIFA</span>
 <span>50 Nm</span>
@@ -411,41 +429,41 @@
 </div>
 </div>
 <!-- Dureza del Suelo / Clegg -->
-<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-start justify-between">
-<span class="font-label-caps text-label-caps uppercase text-text-secondary">Dureza Suelo Clegg</span>
+<span class="font-label-caps text-label-caps uppercase text-text-secondary dark:text-[#CBD5E1]">Dureza Suelo Clegg</span>
 <span class="material-symbols-outlined text-secondary text-xl">speed</span>
 </div>
 <div class="my-space-sm flex items-baseline gap-1">
-<span class="font-mono-metric text-mono-metric text-text-primary">78</span>
-<span class="font-body-sm text-body-sm text-text-secondary font-semibold">Gravities</span>
+<span class="font-mono-metric text-mono-metric text-text-primary dark:text-white">78</span>
+<span class="font-body-sm text-body-sm text-text-secondary font-semibold dark:text-[#CBD5E1]">Gravities</span>
 </div>
 <div class="flex flex-col gap-1">
-<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden dark:bg-slate-950 dark:text-slate-100">
+<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="bg-secondary-container h-full" style="width: 65%;"></div>
 </div>
-<div class="flex justify-between font-label-caps text-[10px] text-text-secondary">
+<div class="flex justify-between font-label-caps text-[10px] text-text-secondary dark:text-[#CBD5E1]">
 <span>65 G</span>
-<span class="font-bold text-text-primary">ESTÁNDAR (65-85 G)</span>
+<span class="font-bold text-text-primary dark:text-[#F8FAFC]">ESTÁNDAR (65-85 G)</span>
 <span>85 G</span>
 </div>
 </div>
 </div>
 <!-- Rebote Vertical Balón -->
-<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-start justify-between">
-<span class="font-label-caps text-label-caps uppercase text-text-secondary">Rebote Vertical FIFA</span>
+<span class="font-label-caps text-label-caps uppercase text-text-secondary dark:text-[#CBD5E1]">Rebote Vertical FIFA</span>
 <span class="material-symbols-outlined text-sport-success text-xl">sports_volleyball</span>
 </div>
 <div class="my-space-sm flex items-baseline gap-1">
-<span class="font-mono-metric text-mono-metric text-text-primary">88</span>
-<span class="font-body-sm text-body-sm text-text-secondary font-semibold">cm</span>
+<span class="font-mono-metric text-mono-metric text-text-primary dark:text-white">88</span>
+<span class="font-body-sm text-body-sm text-text-secondary font-semibold dark:text-[#CBD5E1]">cm</span>
 </div>
 <div class="flex flex-col gap-1">
-<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden dark:bg-slate-950 dark:text-slate-100">
+<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="bg-sport-success h-full" style="width: 72%;"></div>
 </div>
-<div class="flex justify-between font-label-caps text-[10px] text-text-secondary">
+<div class="flex justify-between font-label-caps text-[10px] text-text-secondary dark:text-[#CBD5E1]">
 <span>65 cm</span>
 <span class="font-bold text-sport-success">HOMOLOGADO</span>
 <span>100 cm</span>
@@ -453,22 +471,22 @@
 </div>
 </div>
 <!-- Densidad Vegetal y Especie -->
-<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-start justify-between">
-<span class="font-label-caps text-label-caps uppercase text-text-secondary">Cobertura Vegetal</span>
+<span class="font-label-caps text-label-caps uppercase text-text-secondary dark:text-[#CBD5E1]">Cobertura Vegetal</span>
 <span class="material-symbols-outlined text-sport-success text-xl">eco</span>
 </div>
 <div class="my-space-sm flex items-baseline gap-1">
-<span class="font-mono-metric text-mono-metric text-text-primary">98.2</span>
-<span class="font-body-sm text-body-sm text-text-secondary font-semibold">%</span>
+<span class="font-mono-metric text-mono-metric text-text-primary dark:text-white">98.2</span>
+<span class="font-body-sm text-body-sm text-text-secondary font-semibold dark:text-[#CBD5E1]">%</span>
 </div>
 <div class="flex flex-col gap-1">
-<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden dark:bg-slate-950 dark:text-slate-100">
+<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="bg-sport-success h-full" style="width: 98%;"></div>
 </div>
-<div class="flex justify-between font-label-caps text-[10px] text-text-secondary">
+<div class="flex justify-between font-label-caps text-[10px] text-text-secondary dark:text-[#CBD5E1]">
 <span>Híbrido</span>
-<span class="font-bold text-text-primary">Kikuyo / Rye Grass</span>
+<span class="font-bold text-text-primary dark:text-[#F8FAFC]">Kikuyo / Rye Grass</span>
 <span>95% Min</span>
 </div>
 </div>
@@ -477,22 +495,22 @@
 <!-- Interactive Pitch Inspection & Z-Pattern Section -->
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg mb-margin-md">
 <!-- Pitch Diagram & Laser Coordinates (Col 8) -->
-<div class="lg:col-span-8 bg-surface-card rounded-xl p-space-md xl:p-space-lg shadow-sm flex flex-col dark:bg-slate-950 dark:text-slate-100">
+<div class="lg:col-span-8 bg-surface-card rounded-xl p-space-md xl:p-space-lg shadow-sm flex flex-col dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-space-md gap-space-xs">
 <div class="flex items-center gap-space-sm">
 <div class="w-3 h-3 rounded-full bg-sport-success animate-pulse"></div>
 <div>
-<h2 class="font-headline-sm text-headline-sm text-text-primary font-bold">
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-bold dark:text-white">
               Muestreo Oficial de Césped en Trayectoria “Z”
             </h2>
-<span class="font-body-sm text-body-sm text-text-secondary">
+<span class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">
               Dimensiones Oficiales 105.00m x 68.00m • Tizado Reglamentario Calcio 12 cm
             </span>
 </div>
 </div>
-<div class="flex items-center gap-space-xs font-mono-table text-body-sm bg-surface-container-low px-space-sm py-1 rounded dark:bg-slate-950 dark:text-slate-100">
-<span class="text-text-secondary">METROLOGÍA:</span>
-<span class="text-text-primary font-bold">Prisma Leica Disto S910</span>
+<div class="flex items-center gap-space-xs font-mono-table text-body-sm bg-surface-container-low px-space-sm py-1 rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+<span class="text-text-secondary dark:text-[#CBD5E1]">METROLOGÍA:</span>
+<span class="text-text-primary font-bold dark:text-[#F8FAFC]">Prisma Leica Disto S910</span>
 </div>
 </div>
 <!-- Pitch Graphic with Z Overlay -->
@@ -553,15 +571,15 @@
 <text fill="#FFFFFF" font-family="JetBrains Mono" font-size="11" font-weight="700" text-anchor="middle" x="970" y="604">P5</text>
 </svg>
 <!-- Dynamic Coordinates Floating Badge Bar -->
-<div class="mt-3 flex flex-wrap items-center justify-between gap-space-sm bg-surface-container-lowest/90 backdrop-blur rounded p-space-sm dark:bg-slate-950 dark:text-slate-100">
-<div class="flex items-center gap-space-xs font-label-caps text-label-caps text-text-primary">
+<div class="mt-3 flex flex-wrap items-center justify-between gap-space-sm bg-surface-container-lowest/90 backdrop-blur rounded p-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+<div class="flex items-center gap-space-xs font-label-caps text-label-caps text-text-primary dark:text-[#F8FAFC]">
 <span class="inline-block w-3 h-3 rounded-full bg-sport-success"></span>
 <span>4 Puntos Conformes</span>
-<span class="text-text-secondary mx-1">|</span>
+<span class="text-text-secondary mx-1 dark:text-[#CBD5E1]">|</span>
 <span class="inline-block w-3 h-3 rounded-full bg-sport-warning"></span>
 <span>1 Advertencia Preventiva (P4 - Rebaje T-2h)</span>
 </div>
-<div class="font-mono-table text-body-sm text-text-secondary">
+<div class="font-mono-table text-body-sm text-text-secondary dark:text-[#CBD5E1]">
             Traza Z: <span class="text-secondary font-bold">2,482 m² evaluados</span> (5 cuadrantes)
           </div>
 </div>
@@ -569,62 +587,62 @@
 <!-- Point-by-Point Technical Audit Breakdown -->
 <div class="mt-space-md grid grid-cols-1 md:grid-cols-5 gap-space-sm">
 <!-- P1 -->
-<div class="bg-surface-container-low rounded p-2.5 flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-container-low rounded p-2.5 flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps text-text-secondary">Vértice P1</span>
+<span class="font-label-caps text-label-caps text-text-secondary dark:text-[#CBD5E1]">Vértice P1</span>
 <span class="font-label-caps text-[9px] uppercase bg-sport-success/20 text-sport-success px-1 py-0.5 rounded font-bold">OK</span>
 </div>
-<span class="font-body-sm text-text-primary font-semibold mt-1">Córner Noroccidental</span>
-<div class="mt-2 space-y-0.5 font-mono-table text-[11px] text-text-secondary">
-<div>Alt: <strong class="text-text-primary">22.1 mm</strong></div>
+<span class="font-body-sm text-text-primary font-semibold mt-1 dark:text-[#F8FAFC]">Córner Noroccidental</span>
+<div class="mt-2 space-y-0.5 font-mono-table text-[11px] text-text-secondary dark:text-[#CBD5E1]">
+<div>Alt: <strong class="text-text-primary dark:text-[#F8FAFC]">22.1 mm</strong></div>
 <div>Hum: 24% • Trac: 42Nm</div>
 </div>
 </div>
 <!-- P2 -->
-<div class="bg-surface-container-low rounded p-2.5 flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-container-low rounded p-2.5 flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps text-text-secondary">Vértice P2</span>
+<span class="font-label-caps text-label-caps text-text-secondary dark:text-[#CBD5E1]">Vértice P2</span>
 <span class="font-label-caps text-[9px] uppercase bg-sport-success/20 text-sport-success px-1 py-0.5 rounded font-bold">OK</span>
 </div>
-<span class="font-body-sm text-text-primary font-semibold mt-1">Córner Nororiental</span>
-<div class="mt-2 space-y-0.5 font-mono-table text-[11px] text-text-secondary">
-<div>Alt: <strong class="text-text-primary">21.8 mm</strong></div>
+<span class="font-body-sm text-text-primary font-semibold mt-1 dark:text-[#F8FAFC]">Córner Nororiental</span>
+<div class="mt-2 space-y-0.5 font-mono-table text-[11px] text-text-secondary dark:text-[#CBD5E1]">
+<div>Alt: <strong class="text-text-primary dark:text-[#F8FAFC]">21.8 mm</strong></div>
 <div>Hum: 25% • Trac: 40Nm</div>
 </div>
 </div>
 <!-- P3 -->
-<div class="bg-surface-container-low rounded p-2.5 flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-container-low rounded p-2.5 flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps text-text-secondary">Vértice P3</span>
+<span class="font-label-caps text-label-caps text-text-secondary dark:text-[#CBD5E1]">Vértice P3</span>
 <span class="font-label-caps text-[9px] uppercase bg-sport-success/20 text-sport-success px-1 py-0.5 rounded font-bold">OK</span>
 </div>
-<span class="font-body-sm text-text-primary font-semibold mt-1">Círculo Central</span>
-<div class="mt-2 space-y-0.5 font-mono-table text-[11px] text-text-secondary">
-<div>Alt: <strong class="text-text-primary">23.5 mm</strong></div>
+<span class="font-body-sm text-text-primary font-semibold mt-1 dark:text-[#F8FAFC]">Círculo Central</span>
+<div class="mt-2 space-y-0.5 font-mono-table text-[11px] text-text-secondary dark:text-[#CBD5E1]">
+<div>Alt: <strong class="text-text-primary dark:text-[#F8FAFC]">23.5 mm</strong></div>
 <div>Hum: 22% • Trac: 44Nm</div>
 </div>
 </div>
 <!-- P4 Warning -->
 <div class="bg-sport-warning/10 rounded p-2.5 flex flex-col justify-between">
 <div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps text-text-primary font-bold">Vértice P4</span>
-<span class="font-label-caps text-[9px] uppercase bg-sport-warning text-text-primary px-1 py-0.5 rounded font-extrabold">ALERTA</span>
+<span class="font-label-caps text-label-caps text-text-primary font-bold dark:text-[#F8FAFC]">Vértice P4</span>
+<span class="font-label-caps text-[9px] uppercase bg-sport-warning text-text-primary px-1 py-0.5 rounded font-extrabold dark:text-[#F8FAFC]">ALERTA</span>
 </div>
-<span class="font-body-sm text-text-primary font-bold mt-1">Córner Suroccidental</span>
-<div class="mt-2 space-y-0.5 font-mono-table text-[11px] text-text-secondary">
+<span class="font-body-sm text-text-primary font-bold mt-1 dark:text-[#F8FAFC]">Córner Suroccidental</span>
+<div class="mt-2 space-y-0.5 font-mono-table text-[11px] text-text-secondary dark:text-[#CBD5E1]">
 <div>Alt: <strong class="text-sport-danger font-extrabold">24.9 mm</strong> (Límite 25)</div>
 <div>Hum: 28% • Trac: 45Nm</div>
 </div>
 </div>
 <!-- P5 -->
-<div class="bg-surface-container-low rounded p-2.5 flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-container-low rounded p-2.5 flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps text-text-secondary">Vértice P5</span>
+<span class="font-label-caps text-label-caps text-text-secondary dark:text-[#CBD5E1]">Vértice P5</span>
 <span class="font-label-caps text-[9px] uppercase bg-sport-success/20 text-sport-success px-1 py-0.5 rounded font-bold">OK</span>
 </div>
-<span class="font-body-sm text-text-primary font-semibold mt-1">Córner Suroriental</span>
-<div class="mt-2 space-y-0.5 font-mono-table text-[11px] text-text-secondary">
-<div>Alt: <strong class="text-text-primary">22.6 mm</strong></div>
+<span class="font-body-sm text-text-primary font-semibold mt-1 dark:text-[#F8FAFC]">Córner Suroriental</span>
+<div class="mt-2 space-y-0.5 font-mono-table text-[11px] text-text-secondary dark:text-[#CBD5E1]">
+<div>Alt: <strong class="text-text-primary dark:text-[#F8FAFC]">22.6 mm</strong></div>
 <div>Hum: 23% • Trac: 39Nm</div>
 </div>
 </div>
@@ -633,13 +651,13 @@
 <!-- Irrigation Protocol & Stadium Aerial Feed (Col 4) -->
 <div class="lg:col-span-4 flex flex-col gap-space-md">
 <!-- Stadium Pitch Live Camera Stream Card -->
-<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center justify-between mb-space-sm">
 <div class="flex items-center gap-space-xs">
 <span class="inline-block w-2.5 h-2.5 rounded-full bg-sport-danger animate-ping"></span>
-<span class="font-label-caps text-label-caps uppercase text-text-primary">Cámara Técnica 01 - Domo Norte</span>
+<span class="font-label-caps text-label-caps uppercase text-text-primary dark:text-[#F8FAFC]">Cámara Técnica 01 - Domo Norte</span>
 </div>
-<span class="font-mono-table text-[11px] text-text-secondary">1080p 60fps</span>
+<span class="font-mono-table text-[11px] text-text-secondary dark:text-[#CBD5E1]">1080p 60fps</span>
 </div>
 <div class="relative w-full h-44 rounded overflow-hidden bg-primary-container">
 <img class="w-full h-full object-cover opacity-90" data-alt="High angle architectural view of modern South American football stadium field Rodrigo Paz Delgado in Quito Ecuador during technical pitch inspection in clear daylight with manicured patterned green turf, empty stands, illuminated floodlights and professional pitch mowing equipment visible" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5rtEFrKskwiN48v6ke1vj7UedCS3qM8ph8AXoEyfYwAMYe4yTIbtrVjv36x_8jfBCmQ8JUo1DVDpGXH5bg0FgD3CTeU1RlBJXr8I7apVYKj9E6uo_UQY8pu5H9EJM7H-Vf4b8idPPOfXFU2R8dlZBiCTtt3qv1Fn9rWHbaGZVqHJU_E4aUhrWeEJPX9iUuall4n_fJDoPGGmkaOD4E7UHaHLCVOsfuw1MxfUy5_Fj"/>
@@ -652,28 +670,28 @@
 </div>
 </div>
 <!-- Mandatory Irrigation Protocol Panel -->
-<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex-1 flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex-1 flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div>
 <div class="flex items-center justify-between pb-space-sm">
 <div class="flex items-center gap-space-xs">
 <span class="material-symbols-outlined text-secondary text-xl">water_drop</span>
-<h3 class="font-title-md text-title-md text-text-primary font-bold">
+<h3 class="font-title-md text-title-md text-text-primary font-bold dark:text-white">
                 Cronograma de Irrigación
               </h3>
 </div>
 <span class="font-label-caps text-label-caps uppercase text-sport-success bg-sport-success/10 px-2 py-0.5 rounded font-bold">NORMA ART. 41</span>
 </div>
-<p class="font-body-sm text-body-sm text-text-secondary mb-space-md">
+<p class="font-body-sm text-body-sm text-text-secondary mb-space-md dark:text-[#CBD5E1]">
             Riego por aspersores retráctiles de alta presión sincronizado según directiva reglamentaria.
           </p>
 <div class="space-y-space-sm">
 <!-- T -2h -->
-<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center gap-space-sm">
 <span class="material-symbols-outlined text-sport-success text-xl">check_circle</span>
 <div class="flex flex-col">
-<span class="font-title-md text-body-sm text-text-primary font-semibold">Irrigación Previa T -2h</span>
-<span class="font-mono-table text-[11px] text-text-secondary">16:00 • 15 min uniforme por sector</span>
+<span class="font-title-md text-body-sm text-text-primary font-semibold dark:text-[#F8FAFC]">Irrigación Previa T -2h</span>
+<span class="font-mono-table text-[11px] text-text-secondary dark:text-[#CBD5E1]">16:00 • 15 min uniforme por sector</span>
 </div>
 </div>
 <span class="font-label-caps text-[10px] text-sport-success uppercase font-bold bg-sport-success/15 px-2 py-1 rounded">
@@ -681,12 +699,12 @@
               </span>
 </div>
 <!-- T -20m -->
-<div class="flex items-center justify-between p-space-sm bg-surface-container rounded dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-center justify-between p-space-sm bg-surface-container rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center gap-space-sm">
 <span class="material-symbols-outlined text-secondary text-xl">schedule</span>
 <div class="flex flex-col">
-<span class="font-title-md text-body-sm text-text-primary font-semibold">Irrigación Final T -20m</span>
-<span class="font-mono-table text-[11px] text-text-secondary">17:40 • 8 min (con visto Comisario)</span>
+<span class="font-title-md text-body-sm text-text-primary font-semibold dark:text-[#F8FAFC]">Irrigación Final T -20m</span>
+<span class="font-mono-table text-[11px] text-text-secondary dark:text-[#CBD5E1]">17:40 • 8 min (con visto Comisario)</span>
 </div>
 </div>
 <span class="font-label-caps text-[10px] text-secondary uppercase font-bold bg-secondary/15 px-2 py-1 rounded">
@@ -696,8 +714,8 @@
 </div>
 </div>
 <div class="mt-space-md p-space-sm bg-sport-warning/15 rounded flex items-start gap-space-xs">
-<span class="material-symbols-outlined text-text-primary text-base shrink-0 mt-0.5">info</span>
-<p class="font-body-sm text-[12px] text-text-primary leading-tight">
+<span class="material-symbols-outlined text-text-primary text-base shrink-0 mt-0.5 dark:text-[#F8FAFC]">info</span>
+<p class="font-body-sm text-[12px] text-text-primary leading-tight dark:text-[#F8FAFC]">
 <strong>Instrucción al Canchero:</strong> Se requiere podado correctivo de 1.5mm en zona P4 (banda suroccidental) antes de dar apertura al riego de las 17:40.
           </p>
 </div>
@@ -707,16 +725,16 @@
 <!-- VAR Technological Certification & VOR Room Infrastructure -->
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg mb-margin-md">
 <!-- VAR Technical Checklist (Col 8) -->
-<div class="lg:col-span-8 bg-surface-card rounded-xl p-space-md xl:p-space-lg shadow-sm flex flex-col dark:bg-slate-950 dark:text-slate-100">
+<div class="lg:col-span-8 bg-surface-card rounded-xl p-space-md xl:p-space-lg shadow-sm flex flex-col dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-space-md gap-space-xs">
 <div>
 <div class="flex items-center gap-space-xs">
 <span class="material-symbols-outlined text-secondary text-2xl">videocam</span>
-<h2 class="font-headline-sm text-headline-sm text-text-primary font-bold">
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-bold dark:text-white">
               Certificación Tecnológica VAR &amp; Infraestructura VOR
             </h2>
 </div>
-<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5 dark:text-[#CBD5E1]">
             Verificación técnica protocolar bajo estándares FIFA Quality Programme for Video Assistant Referee (VAR)
           </p>
 </div>
@@ -727,68 +745,68 @@
 <!-- Checklist Items -->
 <div class="space-y-space-xs">
 <!-- Item 1: Hawk-Eye Cameras -->
-<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm dark:bg-slate-950 dark:text-slate-100">
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-start gap-space-sm min-w-0">
 <span class="material-symbols-outlined text-sport-success text-2xl shrink-0">check_circle</span>
 <div class="flex flex-col min-w-0">
-<span class="font-title-md text-title-md text-text-primary font-semibold">
+<span class="font-title-md text-title-md text-text-primary font-semibold dark:text-[#F8FAFC]">
                 8 Cámaras Oficiales Hawk-Eye Calibradas
               </span>
-<span class="font-body-sm text-body-sm text-text-secondary">
+<span class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">
                 Cámara Central a +7.5m sobre cancha. Cámaras de Fuera de Juego (16.50m) calibradas con líneas virtuales 3D validadas.
               </span>
 </div>
 </div>
 <div class="shrink-0 flex items-center gap-space-sm self-end sm:self-auto">
 <span class="font-mono-table text-body-sm text-sport-success font-bold">8/8 ACTIVAS</span>
-<span class="font-label-caps text-[10px] text-text-secondary bg-surface-container px-2 py-0.5 rounded dark:bg-slate-950 dark:text-slate-100">LATENCIA &lt; 20ms</span>
+<span class="font-label-caps text-[10px] text-text-secondary bg-surface-container px-2 py-0.5 rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">LATENCIA &lt; 20ms</span>
 </div>
 </div>
 <!-- Item 2: Optical Fiber & Ping -->
-<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm dark:bg-slate-950 dark:text-slate-100">
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-start gap-space-sm min-w-0">
 <span class="material-symbols-outlined text-sport-success text-2xl shrink-0">check_circle</span>
 <div class="flex flex-col min-w-0">
-<span class="font-title-md text-title-md text-text-primary font-semibold">
+<span class="font-title-md text-title-md text-text-primary font-semibold dark:text-[#F8FAFC]">
                 Enlace de Fibra Óptica Dedicada Redundante
               </span>
-<span class="font-body-sm text-body-sm text-text-secondary">
+<span class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">
                 Línea simétrica 100 Mbps enlace directo con Centro de Operaciones VOR (Sala Nacional Quito/Guayaquil).
               </span>
 </div>
 </div>
 <div class="shrink-0 flex items-center gap-space-sm self-end sm:self-auto">
 <span class="font-mono-table text-body-sm text-sport-success font-bold">PING 4 ms</span>
-<span class="font-label-caps text-[10px] text-text-secondary bg-surface-container px-2 py-0.5 rounded dark:bg-slate-950 dark:text-slate-100">JITTER 0.2ms</span>
+<span class="font-label-caps text-[10px] text-text-secondary bg-surface-container px-2 py-0.5 rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">JITTER 0.2ms</span>
 </div>
 </div>
 <!-- Item 3: Power Stability & UPS -->
-<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm dark:bg-slate-950 dark:text-slate-100">
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-start gap-space-sm min-w-0">
 <span class="material-symbols-outlined text-sport-success text-2xl shrink-0">check_circle</span>
 <div class="flex flex-col min-w-0">
-<span class="font-title-md text-title-md text-text-primary font-semibold">
+<span class="font-title-md text-title-md text-text-primary font-semibold dark:text-[#F8FAFC]">
                 Suministro Eléctrico Estabilizado &amp; Respaldo Autónomo
               </span>
-<span class="font-body-sm text-body-sm text-text-secondary">
+<span class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">
                 UPS On-line de doble conversión 220V verificado + Grupo Electrógeno diésel en Standby automático (conmutación &lt; 0.5s).
               </span>
 </div>
 </div>
 <div class="shrink-0 flex items-center gap-space-sm self-end sm:self-auto">
 <span class="font-mono-table text-body-sm text-sport-success font-bold">220V • 60Hz</span>
-<span class="font-label-caps text-[10px] text-text-secondary bg-surface-container px-2 py-0.5 rounded dark:bg-slate-950 dark:text-slate-100">AUTONOMÍA 120m</span>
+<span class="font-label-caps text-[10px] text-text-secondary bg-surface-container px-2 py-0.5 rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">AUTONOMÍA 120m</span>
 </div>
 </div>
 <!-- Item 4: RRA Pitchside Monitor -->
-<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm dark:bg-slate-950 dark:text-slate-100">
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-start gap-space-sm min-w-0">
 <span class="material-symbols-outlined text-sport-success text-2xl shrink-0">check_circle</span>
 <div class="flex flex-col min-w-0">
-<span class="font-title-md text-title-md text-text-primary font-semibold">
+<span class="font-title-md text-title-md text-text-primary font-semibold dark:text-[#F8FAFC]">
                 Área de Revisión del Árbitro en Cancha (RRA)
               </span>
-<span class="font-body-sm text-body-sm text-text-secondary">
+<span class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">
                 Monitor 27” Ultra-HD anti-reflejo calibrado frente a tribuna preferencial con visera solar y perímetro de 1.5m encintado.
               </span>
 </div>
@@ -798,37 +816,37 @@
 </div>
 </div>
 <!-- Item 5: Encrypted Referee Audio -->
-<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm dark:bg-slate-950 dark:text-slate-100">
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-start gap-space-sm min-w-0">
 <span class="material-symbols-outlined text-sport-success text-2xl shrink-0">check_circle</span>
 <div class="flex flex-col min-w-0">
-<span class="font-title-md text-title-md text-text-primary font-semibold">
+<span class="font-title-md text-title-md text-text-primary font-semibold dark:text-[#F8FAFC]">
                 Intercomunicador Arbitral Encriptado (Vokkero Squadra)
               </span>
-<span class="font-body-sm text-body-sm text-text-secondary">
+<span class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">
                 Audio full-duplex cifrado con cancelación de ruido estadio entre Árbitro Central, Asistentes, 4to Árbitro y Sala VOR.
               </span>
 </div>
 </div>
 <div class="shrink-0 flex items-center gap-space-sm self-end sm:self-auto">
 <span class="font-mono-table text-body-sm text-sport-success font-bold">AES-128 OK</span>
-<span class="font-label-caps text-[10px] text-text-secondary bg-surface-container px-2 py-0.5 rounded dark:bg-slate-950 dark:text-slate-100">CANAL SEG-04</span>
+<span class="font-label-caps text-[10px] text-text-secondary bg-surface-container px-2 py-0.5 rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">CANAL SEG-04</span>
 </div>
 </div>
 </div>
 </div>
 <!-- VOR Operations Console Visual & Status (Col 4) -->
-<div class="lg:col-span-4 bg-surface-card rounded-xl p-space-md xl:p-space-lg shadow-sm flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="lg:col-span-4 bg-surface-card rounded-xl p-space-md xl:p-space-lg shadow-sm flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div>
 <div class="flex items-center justify-between pb-space-sm">
-<h3 class="font-title-md text-title-md text-text-primary font-bold">
+<h3 class="font-title-md text-title-md text-text-primary font-bold dark:text-white">
             Cabina Central VOR LigaPro
           </h3>
 <span class="font-label-caps text-label-caps uppercase bg-secondary text-on-secondary px-2 py-0.5 rounded">
             CONSOLA 02
           </span>
 </div>
-<p class="font-body-sm text-body-sm text-text-secondary mb-space-md">
+<p class="font-body-sm text-body-sm text-text-secondary mb-space-md dark:text-[#CBD5E1]">
           Puesto de control de oficiales de video matchday.
         </p>
 <div class="relative w-full h-44 rounded overflow-hidden bg-primary-container mb-space-md">
@@ -840,83 +858,83 @@
 </div>
 </div>
 <div class="space-y-space-xs font-body-sm text-body-sm">
-<div class="flex justify-between py-1 bg-surface-container-low px-2 rounded dark:bg-slate-950 dark:text-slate-100">
-<span class="text-text-secondary">Software Certificado:</span>
-<span class="font-mono-table text-text-primary font-bold">Hawk-Eye SMART Replay v3.4</span>
+<div class="flex justify-between py-1 bg-surface-container-low px-2 rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+<span class="text-text-secondary dark:text-[#CBD5E1]">Software Certificado:</span>
+<span class="font-mono-table text-text-primary font-bold dark:text-[#F8FAFC]">Hawk-Eye SMART Replay v3.4</span>
 </div>
-<div class="flex justify-between py-1 bg-surface-container-low px-2 rounded dark:bg-slate-950 dark:text-slate-100">
-<span class="text-text-secondary">Prueba de Conexión de Audio:</span>
+<div class="flex justify-between py-1 bg-surface-container-low px-2 rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+<span class="text-text-secondary dark:text-[#CBD5E1]">Prueba de Conexión de Audio:</span>
 <span class="font-mono-table text-sport-success font-bold">Satisfactoria (16:10)</span>
 </div>
-<div class="flex justify-between py-1 bg-surface-container-low px-2 rounded dark:bg-slate-950 dark:text-slate-100">
-<span class="text-text-secondary">Grabación de Seguridad:</span>
-<span class="font-mono-table text-text-primary font-bold">Blackbox RAID-1 Encriptado</span>
+<div class="flex justify-between py-1 bg-surface-container-low px-2 rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+<span class="text-text-secondary dark:text-[#CBD5E1]">Grabación de Seguridad:</span>
+<span class="font-mono-table text-text-primary font-bold dark:text-[#F8FAFC]">Blackbox RAID-1 Encriptado</span>
 </div>
 </div>
 </div>
-<div class="mt-space-md pt-space-sm bg-surface-container-low p-space-sm rounded dark:bg-slate-950 dark:text-slate-100">
-<div class="flex items-center gap-space-xs text-text-primary font-label-caps text-label-caps uppercase mb-1">
+<div class="mt-space-md pt-space-sm bg-surface-container-low p-space-sm rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+<div class="flex items-center gap-space-xs text-text-primary font-label-caps text-label-caps uppercase mb-1 dark:text-[#F8FAFC]">
 <span class="material-symbols-outlined text-sport-success text-base">security</span>
 <span>Certificación FIFA No. 1044-LP-2025</span>
 </div>
-<span class="font-mono-table text-[10px] text-text-secondary block break-all">
+<span class="font-mono-table text-[10px] text-text-secondary block break-all dark:text-[#CBD5E1]">
           TOKEN: F9B1-44E2-88C0-VAR-EC-LP
         </span>
 </div>
 </div>
 </div>
 <!-- Critical Facilities & Medical/Emergency Protocol Strip -->
-<div class="bg-surface-card rounded-xl p-space-md xl:p-space-lg shadow-sm mb-margin-md dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-surface-card rounded-xl p-space-md xl:p-space-lg shadow-sm mb-margin-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center gap-space-xs mb-space-sm">
 <span class="material-symbols-outlined text-secondary text-2xl">health_and_safety</span>
-<h2 class="font-headline-sm text-headline-sm text-text-primary font-bold">
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-bold dark:text-white">
         Instalaciones Críticas, Protocolo Sanitario y Seguridad Perimetral
       </h2>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
 <!-- Antidoping Room -->
-<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div>
 <div class="flex items-center justify-between mb-2">
-<span class="font-title-md text-title-md text-text-primary font-bold">Sala Antidopaje Oficial</span>
+<span class="font-title-md text-title-md text-text-primary font-bold dark:text-[#F8FAFC]">Sala Antidopaje Oficial</span>
 <span class="font-label-caps text-label-caps uppercase text-sport-success bg-sport-success/20 px-2 py-0.5 rounded font-bold">CERTIFICADA</span>
 </div>
-<p class="font-body-sm text-body-sm text-text-secondary mb-space-sm">
+<p class="font-body-sm text-body-sm text-text-secondary mb-space-sm dark:text-[#CBD5E1]">
             Recinto climatizado independiente a 21°C con sala de espera privada, baño completo exclusivo y kits sellados WADA homologados.
           </p>
 </div>
-<div class="font-mono-table text-body-sm text-text-secondary pt-2">
-<span>Custodio Oficial: <strong class="text-text-primary">Dr. P. Alarcón (Com. Médica)</strong></span>
+<div class="font-mono-table text-body-sm text-text-secondary pt-2 dark:text-[#CBD5E1]">
+<span>Custodio Oficial: <strong class="text-text-primary dark:text-[#F8FAFC]">Dr. P. Alarcón (Com. Médica)</strong></span>
 </div>
 </div>
 <!-- Advanced Life Support Ambulance -->
-<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div>
 <div class="flex items-center justify-between mb-2">
-<span class="font-title-md text-title-md text-text-primary font-bold">Soporte Vital Avanzado (SVA)</span>
+<span class="font-title-md text-title-md text-text-primary font-bold dark:text-[#F8FAFC]">Soporte Vital Avanzado (SVA)</span>
 <span class="font-label-caps text-label-caps uppercase text-sport-success bg-sport-success/20 px-2 py-0.5 rounded font-bold">VALIDADO 16:15</span>
 </div>
-<p class="font-body-sm text-body-sm text-text-secondary mb-space-sm">
+<p class="font-body-sm text-body-sm text-text-secondary mb-space-sm dark:text-[#CBD5E1]">
             Ambulancia Tipo III apostada en rampa vehicular de vestuarios. Desfibrilador DEA operativo verificado y médico emergenciólogo en sitio.
           </p>
 </div>
-<div class="font-mono-table text-body-sm text-text-secondary pt-2">
-<span>Unidad Alfa-03 • Placas: <strong class="text-text-primary">Q-1904-LP</strong></span>
+<div class="font-mono-table text-body-sm text-text-secondary pt-2 dark:text-[#CBD5E1]">
+<span>Unidad Alfa-03 • Placas: <strong class="text-text-primary dark:text-[#F8FAFC]">Q-1904-LP</strong></span>
 </div>
 </div>
 <!-- Perimeter Clearance & Safety Zone -->
-<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div>
 <div class="flex items-center justify-between mb-2">
-<span class="font-title-md text-title-md text-text-primary font-bold">Despeje y Salidas de Evacuación</span>
+<span class="font-title-md text-title-md text-text-primary font-bold dark:text-[#F8FAFC]">Despeje y Salidas de Evacuación</span>
 <span class="font-label-caps text-label-caps uppercase text-sport-success bg-sport-success/20 px-2 py-0.5 rounded font-bold">CONFORME</span>
 </div>
-<p class="font-body-sm text-body-sm text-text-secondary mb-space-sm">
+<p class="font-body-sm text-body-sm text-text-secondary mb-space-sm dark:text-[#CBD5E1]">
             Foso perimetral libre de obstáculos, mangas de acceso a campo desplegadas, extintores vigentes y portones de escape rápido sin cerrojo fijo.
           </p>
 </div>
-<div class="font-mono-table text-body-sm text-text-secondary pt-2">
-<span>Aforo Cancha Autorizado: <strong class="text-text-primary">164 acreditados</strong></span>
+<div class="font-mono-table text-body-sm text-text-secondary pt-2 dark:text-[#CBD5E1]">
+<span>Aforo Cancha Autorizado: <strong class="text-text-primary dark:text-[#F8FAFC]">164 acreditados</strong></span>
 </div>
 </div>
 </div>
@@ -927,7 +945,7 @@
 <div class="flex flex-col sm:flex-row items-start sm:items-center gap-space-lg flex-1">
 <!-- Pitch Inspector -->
 <div class="flex items-center gap-space-sm">
-<div class="w-12 h-12 rounded-full bg-surface-container-low text-primary flex items-center justify-center font-bold dark:bg-slate-950 dark:text-slate-100">
+<div class="w-12 h-12 rounded-full bg-surface-container-low text-primary flex items-center justify-center font-bold dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <span class="material-symbols-outlined text-2xl text-secondary">verified_user</span>
 </div>
 <div class="flex flex-col">
@@ -939,7 +957,7 @@
 <div class="hidden sm:block w-px h-12 bg-inverse-surface"></div>
 <!-- VAR Technology Supervisor -->
 <div class="flex items-center gap-space-sm">
-<div class="w-12 h-12 rounded-full bg-surface-container-low text-primary flex items-center justify-center font-bold dark:bg-slate-950 dark:text-slate-100">
+<div class="w-12 h-12 rounded-full bg-surface-container-low text-primary flex items-center justify-center font-bold dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <span class="material-symbols-outlined text-2xl text-secondary">memory</span>
 </div>
 <div class="flex flex-col">

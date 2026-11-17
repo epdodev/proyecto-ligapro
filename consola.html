@@ -16,7 +16,7 @@
       try {
         var theme = localStorage.getItem('sigec_theme') || (localStorage.getItem('sigec_high_contrast') === 'true' ? 'dark' : null);
         if (theme === 'dark') {
-          document.documentElement.classList.add('dark', 'high-contrast');
+          document.documentElement.classList.add('dark');
         }
         var scale = localStorage.getItem('sigec_font_scale');
         if (scale) {
@@ -25,6 +25,7 @@
       } catch (e) {}
     })();
   </script>
+  <link rel="stylesheet" href="/src/index.css"/>
   <style>
     @layer base {
       html, body { margin: 0; padding: 0; transition: background-color 0.15s ease, color 0.15s ease; }
@@ -32,98 +33,115 @@
     }
     ::-webkit-scrollbar { display: none; }
 
-    /* MODO OSCURO (Tailwind dark: y soporte directo) */
+    /* PALETA OSCURA MODERNA (MIDNIGHT BROADCAST) */
     html.dark {
       color-scheme: dark;
+      background-color: #0B0F19;
     }
     html.dark body {
-      background-color: #0b1329 !important;
-      color: #f1f5f9 !important;
+      background-color: #0B0F19 !important;
+      color: #F8FAFC !important;
     }
     html.dark header {
-      background-color: rgba(15, 23, 42, 0.95) !important;
-      border-color: #1e293b !important;
-      color: #f1f5f9 !important;
+      background-color: #111827 !important;
+      border-color: #1E293B !important;
+      color: #F8FAFC !important;
     }
     html.dark aside {
-      background-color: #0f172a !important;
-      border-color: #1e293b !important;
-      color: #f1f5f9 !important;
+      background-color: #111827 !important;
+      border-color: #1E293B !important;
+      color: #CBD5E1 !important;
+    }
+    html.dark main {
+      background-color: #0B0F19 !important;
     }
     html.dark aside a, html.dark aside button {
-      color: #cbd5e1 !important;
+      color: #CBD5E1 !important;
     }
     html.dark aside a:hover, html.dark aside button:hover {
-      background-color: #1e293b !important;
-      color: #ffffff !important;
+      background-color: #1E293B !important;
+      color: #FFFFFF !important;
     }
-    html.dark .bg-white {
-      background-color: #0f172a !important;
-      color: #f1f5f9 !important;
-      border-color: #1e293b !important;
+    html.dark .bg-white, html.dark .bg-surface-card, html.dark .bg-surface-container-lowest {
+      background-color: #111827 !important;
+      color: #F8FAFC !important;
+      border-color: #1E293B !important;
     }
-    html.dark .bg-surface, html.dark .bg-surface-container-low, html.dark .bg-surface-container {
-      background-color: #0b1329 !important;
-      color: #f1f5f9 !important;
+    html.dark .bg-surface, html.dark .bg-surface-base {
+      background-color: #0B0F19 !important;
+      color: #F8FAFC !important;
     }
-    html.dark .bg-slate-50, html.dark .bg-slate-100 {
-      background-color: #1e293b !important;
-      color: #e2e8f0 !important;
-      border-color: #334155 !important;
-    }
-    html.dark .text-slate-900, html.dark .text-slate-800, html.dark .text-slate-700 {
-      color: #f8fafc !important;
-    }
-    html.dark .text-slate-600, html.dark .text-slate-500 {
-      color: #94a3b8 !important;
-    }
-    html.dark .border-slate-100, html.dark .border-slate-200, html.dark .border-slate-300 {
-      border-color: #334155 !important;
-    }
-    html.dark input, html.dark select, html.dark textarea {
-      background-color: #1e293b !important;
-      border-color: #475569 !important;
-      color: #f8fafc !important;
+    html.dark .bg-slate-50, html.dark .bg-slate-100, html.dark .bg-gray-50, html.dark .bg-gray-100,
+    html.dark .bg-surface-container, html.dark .bg-surface-container-low, html.dark .bg-surface-container-high, html.dark .bg-surface-container-highest {
+      background-color: #1E293B !important;
+      color: #E2E8F0 !important;
+      border-color: #1E293B !important;
     }
 
-    /* MODO ALTO CONTRASTE WCAG AAA (Negro / Amarillo #FFE600 / 21:1) */
-    html.high-contrast {
-      color-scheme: dark;
+    /* REGLA GLOBAL DE LEGIBILIDAD EN .dark: TEXTOS OSCUROS A BLANCO SUAVE (#F8FAFC) */
+    html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6,
+    html.dark .text-slate-900, html.dark .text-slate-800,
+    html.dark .text-gray-900, html.dark .text-gray-800,
+    html.dark .text-black, html.dark .text-on-surface,
+    html.dark .text-text-primary, html.dark .text-on-background {
+      color: #F8FAFC !important;
     }
-    html.high-contrast body {
-      background-color: #000000 !important;
+
+    /* CONTADORES Y MÉTRICAS GRANDES DE TARJETAS (16 / 16, 18 / 18, 8 Partidos, etc.) */
+    html.dark .font-mono-metric,
+    html.dark [class*="font-mono-metric"],
+    html.dark [class*="text-mono-metric"] {
       color: #FFFFFF !important;
     }
-    html.high-contrast header, html.high-contrast aside, html.high-contrast .bg-white, html.high-contrast .bg-surface, html.high-contrast .bg-slate-50, html.high-contrast .bg-slate-100 {
-      background-color: #000000 !important;
-      border-color: #FFE600 !important;
-      color: #FFFFFF !important;
+
+    /* TEXTOS MEDIOS Y SECUNDARIOS A GRIS CLARO LEGIBLE (#CBD5E1 / #94A3B8) */
+    html.dark .text-slate-600, html.dark .text-slate-500,
+    html.dark .text-gray-600, html.dark .text-gray-500,
+    html.dark .text-text-secondary, html.dark .text-on-surface-variant {
+      color: #CBD5E1 !important;
     }
-    html.high-contrast button {
-      border-color: #FFE600 !important;
+    html.dark .text-slate-400, html.dark .text-gray-400 {
+      color: #94A3B8 !important;
     }
-    html.high-contrast a, html.high-contrast .text-amber-400, html.high-contrast .text-amber-500 {
-      color: #FFE600 !important;
+
+    /* BORDES SUTILES SLATE-800 (#1E293B) — Reemplazo de amarillos y bordes claros */
+    html.dark .border-slate-100, html.dark .border-slate-200, html.dark .border-slate-300,
+    html.dark .border-gray-100, html.dark .border-gray-200, html.dark .border-gray-300,
+    html.dark .border-yellow-400, html.dark .border-amber-400,
+    html.dark .border-border-subtle, html.dark .border-strong,
+    html.dark .border-outline, html.dark .border-outline-variant {
+      border-color: #1E293B !important;
     }
-    html.high-contrast .text-slate-900, html.high-contrast .text-slate-800, html.high-contrast .text-slate-700, html.high-contrast .text-slate-600, html.high-contrast .text-slate-500 {
-      color: #FFFFFF !important;
+
+    /* TABLAS Y FORMULARIOS */
+    html.dark table thead tr {
+      background-color: #1E293B !important;
+      color: #F8FAFC !important;
     }
-    html.high-contrast .border-slate-100, html.high-contrast .border-slate-200, html.high-contrast .border-slate-300 {
-      border-color: #FFE600 !important;
+    html.dark table tbody tr {
+      border-color: #1E293B !important;
+      color: #CBD5E1 !important;
     }
-    .high-contrast-mode {
-      background-color: #000000 !important;
-      color: #FFFFFF !important;
+    html.dark table tbody tr:hover {
+      background-color: rgba(30, 41, 59, 0.7) !important;
+    }
+    html.dark input, html.dark select, html.dark textarea {
+      background-color: #111827 !important;
+      border-color: #1E293B !important;
+      color: #F8FAFC !important;
+    }
+    html.dark input::placeholder, html.dark textarea::placeholder {
+      color: #64748B !important;
     }
   </style>
 </head>
 <body class="bg-surface font-body-md text-on-surface antialiased min-h-screen">
   
-    <header class="fixed top-0 left-0 right-0 h-16 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50 shadow-xs px-4 sm:px-6 transition-colors">
+    <header class="fixed top-0 left-0 right-0 h-16 bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50 shadow-xs px-4 sm:px-6 transition-colors">
       <div class="w-full h-full flex items-center justify-between gap-2 sm:gap-4">
         <!-- Logo & Brand (Compacto) -->
         <div class="flex items-center gap-2.5 shrink-0">
-          <div onclick="navigateView('tablero')" class="cursor-pointer w-8 h-8 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-sm border border-amber-400">
+          <div onclick="navigateView('tablero')" class="cursor-pointer w-8 h-8 rounded-lg bg-gradient-to-br from-blue-700 via-blue-900 to-black flex items-center justify-center text-white font-black shadow-sm border border-slate-700">
             <span class="text-amber-400 text-sm">⚡</span>
           </div>
           <div class="flex items-center gap-2">
@@ -134,7 +152,7 @@
 
         <!-- Centro: Marcador En Vivo + Reloj UTC-5 -->
         <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-1.5 sm:gap-2 bg-slate-900 text-white px-2.5 py-1.5 rounded-lg border border-slate-800 text-[11px] sm:text-xs shadow-sm hover:border-amber-400 transition-colors" title="Ver Consola de Comisario">
+          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-1.5 sm:gap-2 bg-slate-900 text-white px-2.5 py-1.5 rounded-lg border border-slate-800 text-[11px] sm:text-xs shadow-sm hover:border-slate-600 transition-colors" title="Ver Consola de Comisario">
             <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
             <span class="font-bold text-amber-400 hidden sm:inline">EN VIVO:</span>
             <span class="font-bold">LDU</span>
@@ -172,7 +190,7 @@
             </button>
 
             <!-- Dropdown Panel de Notificaciones -->
-            <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
+            <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-[#111827] rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
               <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800 mb-2">
                 <span class="font-bold text-slate-900 dark:text-white flex items-center gap-1">
                   <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">notifications_active</span> Notificaciones Oficiales
@@ -221,7 +239,7 @@
             </div>
 
             <!-- Menú Desplegable de Usuario y Cierre de Sesión -->
-            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
+            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white dark:bg-[#111827] rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
               <div class="pb-3 border-b border-slate-100 dark:border-slate-800 mb-3">
                 <div class="font-bold text-slate-900 dark:text-white" id="dropdown-user-name">Invitado General</div>
                 <div class="text-[11px] text-slate-500 dark:text-slate-400 truncate" id="dropdown-user-email">publico@ligapro.ec</div>
@@ -291,9 +309,9 @@
             </button>
           </div>
         </div>
-        <aside class="fixed left-0 top-16 bottom-0 w-72 bg-surface-card z-40 flex flex-col border-r border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.02)] dark:bg-slate-950 dark:text-slate-100"><div class="p-space-md border-b border-border-subtle"><div class="flex items-center justify-between bg-surface-container-low px-space-sm py-2 rounded border border-border-subtle dark:bg-slate-950 dark:text-slate-100"><div class="flex items-center gap-space-xs"><span class="inline-block w-2.5 h-2.5 rounded-full bg-sport-success animate-pulse"></span><span class="font-label-caps text-label-caps text-text-primary uppercase">COMET Enlace Activo</span></div><span class="font-mono-table text-[11px] text-sport-success font-semibold">SYNC</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-xs"><div class="px-space-sm py-1 font-label-caps text-label-caps text-text-secondary uppercase tracking-wider">Administración LigaPro</div><nav class="flex flex-col gap-0.5 mt-1" data-active-classes="bg-secondary text-on-secondary font-semibold shadow-sm"><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="tablero-general" href="javascript:void(0)" onclick="navigateView('tablero')"><span class="material-symbols-outlined text-xl">space_dashboard</span><span>Tablero General</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="competiciones-formatos" href="javascript:void(0)" onclick="mostrarModalCompeticionesFormatos()"><span class="material-symbols-outlined text-xl">emoji_events</span><span>Competiciones &amp; Formatos</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="calificacion-escenarios" href="javascript:void(0)" onclick="navigateView('estadios')"><span class="material-symbols-outlined text-xl">stadium</span><span>Escenarios &amp; VAR (Z)</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="designacion-uniformes" href="javascript:void(0)" onclick="navigateView('uniformes')"><span class="material-symbols-outlined text-xl">checkroom</span><span>Designación de Uniformes</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2.5 rounded transition-colors bg-secondary text-on-secondary font-semibold shadow-sm" data-path="consola-matchday" href="javascript:void(0)" onclick="navigateView('consola')"><span class="material-symbols-outlined text-xl">sports_soccer</span><span>Consola Comisario Matchday</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="portal-clubes" href="javascript:void(0)" onclick="navigateView('clubes')"><span class="material-symbols-outlined text-xl">shield_person</span><span>Portal Clubes &amp; Trámites</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="posiciones-fair-play" href="javascript:void(0)" onclick="navigateView('posiciones')"><span class="material-symbols-outlined text-xl">leaderboard</span><span>Posiciones &amp; Fair Play</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-slate-950 dark:text-slate-100" data-path="seguridad-criptografica" href="javascript:void(0)" onclick="mostrarModalSeguridadSHA256()"><span class="material-symbols-outlined text-xl">verified_user</span><span>Seguridad SHA-256</span></a></nav></div><div class="p-space-sm border-t border-border-subtle bg-surface-container-low/50 dark:bg-slate-950 dark:text-slate-100"><div class="flex items-center justify-between text-text-secondary font-label-caps text-[10px]"><span>VERSION 4.2.1-SEC</span><span class="font-mono-table text-text-secondary">ID: LIGAPRO-EC</span></div></div></aside><div class="pl-72"><main class="relative w-full pt-16 bg-surface min-h-screen px-gutter-lg py-margin-md dark:bg-slate-950 dark:text-slate-100"><div class="flex flex-col w-full gap-space-lg">
+        <aside class="fixed left-0 top-16 bottom-0 w-72 bg-surface-card z-40 flex flex-col border-r border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.02)] dark:bg-[#0B0F19] dark:text-[#F8FAFC]"><div class="p-space-md border-b border-border-subtle"><div class="flex items-center justify-between bg-surface-container-low px-space-sm py-2 rounded border border-border-subtle dark:bg-[#0B0F19] dark:text-[#F8FAFC]"><div class="flex items-center gap-space-xs"><span class="inline-block w-2.5 h-2.5 rounded-full bg-sport-success animate-pulse"></span><span class="font-label-caps text-label-caps text-text-primary uppercase dark:text-[#F8FAFC]">COMET Enlace Activo</span></div><span class="font-mono-table text-[11px] text-sport-success font-semibold">SYNC</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-xs"><div class="px-space-sm py-1 font-label-caps text-label-caps text-text-secondary uppercase tracking-wider dark:text-[#CBD5E1]">Administración LigaPro</div><nav class="flex flex-col gap-0.5 mt-1" data-active-classes="bg-secondary text-on-secondary font-semibold shadow-sm"><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="tablero-general" href="javascript:void(0)" onclick="navigateView('tablero')"><span class="material-symbols-outlined text-xl">space_dashboard</span><span>Tablero General</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="competiciones-formatos" href="javascript:void(0)" onclick="mostrarModalCompeticionesFormatos()"><span class="material-symbols-outlined text-xl">emoji_events</span><span>Competiciones &amp; Formatos</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="calificacion-escenarios" href="javascript:void(0)" onclick="navigateView('estadios')"><span class="material-symbols-outlined text-xl">stadium</span><span>Escenarios &amp; VAR (Z)</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="designacion-uniformes" href="javascript:void(0)" onclick="navigateView('uniformes')"><span class="material-symbols-outlined text-xl">checkroom</span><span>Designación de Uniformes</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2.5 rounded transition-colors bg-secondary text-on-secondary font-semibold shadow-sm" data-path="consola-matchday" href="javascript:void(0)" onclick="navigateView('consola')"><span class="material-symbols-outlined text-xl">sports_soccer</span><span>Consola Comisario Matchday</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="portal-clubes" href="javascript:void(0)" onclick="navigateView('clubes')"><span class="material-symbols-outlined text-xl">shield_person</span><span>Portal Clubes &amp; Trámites</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="posiciones-fair-play" href="javascript:void(0)" onclick="navigateView('posiciones')"><span class="material-symbols-outlined text-xl">leaderboard</span><span>Posiciones &amp; Fair Play</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="seguridad-criptografica" href="javascript:void(0)" onclick="mostrarModalSeguridadSHA256()"><span class="material-symbols-outlined text-xl">verified_user</span><span>Seguridad SHA-256</span></a></nav></div><div class="p-space-sm border-t border-border-subtle bg-surface-container-low/50 dark:bg-[#0B0F19] dark:text-[#F8FAFC]"><div class="flex items-center justify-between text-text-secondary font-label-caps text-[10px] dark:text-[#CBD5E1]"><span>VERSION 4.2.1-SEC</span><span class="font-mono-table text-text-secondary dark:text-[#CBD5E1]">ID: LIGAPRO-EC</span></div></div></aside><div class="pl-72"><main class="relative w-full pt-16 bg-surface min-h-screen px-gutter-lg py-margin-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]"><div class="flex flex-col w-full gap-space-lg">
 <!-- Operational Context Header Ribbon -->
-<div class="w-full bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-space-md dark:bg-slate-950 dark:text-slate-100">
+<div class="w-full bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-space-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex flex-wrap items-center gap-space-md">
 <div class="flex items-center gap-space-xs bg-primary-container text-on-primary px-space-sm py-1.5 rounded-lg shadow-sm">
 <span class="material-symbols-outlined text-sport-warning text-base" style="font-variation-settings: 'FILL' 1;">sports</span>
@@ -301,19 +319,19 @@
 </div>
 <div class="flex items-center gap-space-xs">
 <span class="w-2.5 h-2.5 rounded-full bg-sport-success animate-pulse"></span>
-<span class="font-body-md text-body-md font-bold text-text-primary">LDU Quito <span class="text-text-secondary font-normal">vs</span> Barcelona SC</span>
+<span class="font-body-md text-body-md font-bold text-text-primary dark:text-[#F8FAFC]">LDU Quito <span class="text-text-secondary font-normal dark:text-[#CBD5E1]">vs</span> Barcelona SC</span>
 </div>
 <span class="text-border-strong text-body-sm hidden sm:inline">|</span>
-<div class="flex items-center gap-1.5 text-text-secondary font-body-sm text-body-sm">
+<div class="flex items-center gap-1.5 text-text-secondary font-body-sm text-body-sm dark:text-[#CBD5E1]">
 <span class="material-symbols-outlined text-base">stadium</span>
 <span>Estadio Rodrigo Paz Delgado • Altitud: 2,850m</span>
 </div>
 </div>
 <!-- Matchday Accessibility & COMET Sync Health -->
 <div class="flex items-center gap-space-sm flex-wrap">
-<div class="flex items-center gap-1.5 bg-surface-container-low px-space-sm py-1 rounded-lg dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-center gap-1.5 bg-surface-container-low px-space-sm py-1 rounded-lg dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <span class="material-symbols-outlined text-secondary text-sm">enhanced_encryption</span>
-<span class="font-mono-table text-mono-table text-text-secondary font-semibold">SIGEC-SEC://PKI-COM-883</span>
+<span class="font-mono-table text-mono-table text-text-secondary font-semibold dark:text-[#CBD5E1]">SIGEC-SEC://PKI-COM-883</span>
 </div>
 <div class="flex items-center gap-1.5 bg-sport-success/15 px-space-sm py-1 rounded-lg">
 <span class="w-2 h-2 rounded-full bg-sport-success"></span>
@@ -348,7 +366,7 @@
 </div>
 <!-- Big Mono Metric Clock Display -->
 <div class="my-space-md flex flex-col items-center justify-center text-center relative z-10">
-<div class="font-mono-metric text-[58px] sm:text-[76px] xl:text-[88px] font-extrabold tracking-tight leading-none text-on-primary select-none drop-shadow-sm flex items-baseline gap-2">
+<div class="font-mono-metric text-[58px] sm:text-[76px] xl:text-[88px] font-extrabold tracking-tight leading-none text-on-primary select-none drop-shadow-sm flex items-baseline gap-2 dark:text-white">
 <span class="text-sport-warning text-[40px] sm:text-[50px] font-semibold">-</span>
 <span id="countdownMinutes">44</span><span class="animate-pulse text-on-primary-container">:</span><span id="countdownSeconds">38</span>
 </div>
@@ -380,15 +398,15 @@
 </div>
 </div>
 <!-- Triple Sensory Alert Beacon for Hearing & Visually Impaired -->
-<div class="mt-space-sm bg-surface-card rounded-lg p-space-sm flex items-center justify-between gap-space-sm relative z-10 shadow-inner dark:bg-slate-950 dark:text-slate-100" id="protocolSensoryBanner">
+<div class="mt-space-sm bg-surface-card rounded-lg p-space-sm flex items-center justify-between gap-space-sm relative z-10 shadow-inner dark:bg-[#0B0F19] dark:text-[#F8FAFC]" id="protocolSensoryBanner">
 <div class="flex items-center gap-space-sm min-w-0">
 <span class="material-symbols-outlined text-secondary text-2xl animate-pulse">hearing</span>
 <div class="flex flex-col min-w-0">
 <div class="flex items-center gap-2">
-<span class="font-label-caps text-[10px] px-1.5 py-0.2 rounded bg-surface-container font-bold text-text-primary uppercase dark:bg-slate-950 dark:text-slate-100">Alerta Sensorial Accesible</span>
+<span class="font-label-caps text-[10px] px-1.5 py-0.2 rounded bg-surface-container font-bold text-text-primary uppercase dark:bg-[#0B0F19] dark:text-[#F8FAFC]">Alerta Sensorial Accesible</span>
 <span class="font-mono-table text-[11px] text-secondary font-bold">T -09:20 PRÓXIMA</span>
 </div>
-<span class="font-body-sm text-body-sm text-text-primary font-semibold truncate">
+<span class="font-body-sm text-body-sm text-text-primary font-semibold truncate dark:text-[#F8FAFC]">
                 Subtítulo Visual: «Canción Oficial LigaPro (Ecualizador Audio-Visual en Pantalla Central)»
               </span>
 </div>
@@ -398,42 +416,42 @@
 </div>
 </div>
 <!-- Official Matchday Protocol Milestones Checklist (5 cols) -->
-<div class="xl:col-span-5 bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="xl:col-span-5 bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div>
 <div class="flex items-center justify-between pb-space-sm">
 <div class="flex items-center gap-space-xs">
 <span class="material-symbols-outlined text-secondary">checklist</span>
-<h2 class="font-title-md text-title-md font-bold text-text-primary">Hitos Reglamentarios Obligatorios</h2>
+<h2 class="font-title-md text-title-md font-bold text-text-primary dark:text-white">Hitos Reglamentarios Obligatorios</h2>
 </div>
-<span class="font-label-caps text-label-caps text-text-secondary bg-surface-container-low px-2 py-1 rounded dark:bg-slate-950 dark:text-slate-100">Reglamento 2025</span>
+<span class="font-label-caps text-label-caps text-text-secondary bg-surface-container-low px-2 py-1 rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">Reglamento 2025</span>
 </div>
 <div class="flex flex-col gap-2 mt-space-sm max-h-[380px] overflow-y-auto pr-1">
 <!-- Milestone -90m: Completed -->
-<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low/70 dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low/70 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="mt-0.5">
 <span class="material-symbols-outlined text-sport-success text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
 </div>
 <div class="flex-1 min-w-0">
 <div class="flex items-center justify-between">
-<span class="font-mono-table text-mono-table font-bold text-text-primary">-90:00</span>
+<span class="font-mono-table text-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">-90:00</span>
 <span class="font-mono-table text-[11px] text-sport-success font-semibold">17:30:12 REGISTRADO</span>
 </div>
-<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5 dark:text-[#CBD5E1]">
                 Llegada oficial de delegaciones, escolta policial y validación biométrica de credenciales.
               </p>
 </div>
 </div>
 <!-- Milestone -70m: Completed -->
-<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low/70 dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low/70 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="mt-0.5">
 <span class="material-symbols-outlined text-sport-success text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
 </div>
 <div class="flex-1 min-w-0">
 <div class="flex items-center justify-between">
-<span class="font-mono-table text-mono-table font-bold text-text-primary">-70:00</span>
+<span class="font-mono-table text-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">-70:00</span>
 <span class="font-mono-table text-[11px] text-sport-success font-semibold">17:50:04 FIRMADO</span>
 </div>
-<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5 dark:text-[#CBD5E1]">
                 Entrega de alineación oficial COMET firmada por ambos DT y Médicos registrados.
               </p>
 </div>
@@ -448,67 +466,67 @@
 <span class="font-mono-table text-mono-table font-bold text-secondary">-45:00 (ACTUAL)</span>
 <span class="font-label-caps text-label-caps text-secondary font-bold uppercase">En Progreso</span>
 </div>
-<p class="font-body-sm text-body-sm text-text-primary font-medium mt-0.5">
+<p class="font-body-sm text-body-sm text-text-primary font-medium mt-0.5 dark:text-[#F8FAFC]">
                 Salida a calentamiento reglamentario (30 min máx). Inspector de cancha en túnel.
               </p>
 </div>
 </div>
 <!-- Milestone -09m:20s: Scheduled -->
-<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="mt-0.5">
 <span class="material-symbols-outlined text-sport-warning text-xl">radio_button_unchecked</span>
 </div>
 <div class="flex-1 min-w-0">
 <div class="flex items-center justify-between">
-<span class="font-mono-table text-mono-table font-bold text-text-primary">-09:20</span>
+<span class="font-mono-table text-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">-09:20</span>
 <span class="font-label-caps text-label-caps text-sport-warning font-bold uppercase">Óptica / Audio</span>
 </div>
-<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5 dark:text-[#CBD5E1]">
                 Canción Oficial LigaPro. Alerta visual de alto contraste y subtitulado simultáneo.
               </p>
 </div>
 </div>
 <!-- Milestone -08m:01s: Scheduled -->
-<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="mt-0.5">
-<span class="material-symbols-outlined text-text-secondary text-xl">radio_button_unchecked</span>
+<span class="material-symbols-outlined text-text-secondary text-xl dark:text-[#CBD5E1]">radio_button_unchecked</span>
 </div>
 <div class="flex-1 min-w-0">
 <div class="flex items-center justify-between">
-<span class="font-mono-table text-mono-table font-bold text-text-primary">-08:01</span>
-<span class="font-label-caps text-label-caps text-text-secondary">PROGRAMADO</span>
+<span class="font-mono-table text-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">-08:01</span>
+<span class="font-label-caps text-label-caps text-text-secondary dark:text-[#CBD5E1]">PROGRAMADO</span>
 </div>
-<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5 dark:text-[#CBD5E1]">
                 Himno Nacional de la República del Ecuador. Cuarteto arbitral en cabecera de hilera.
               </p>
 </div>
 </div>
 <!-- Milestone -07m:58s: Scheduled -->
-<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="mt-0.5">
-<span class="material-symbols-outlined text-text-secondary text-xl">radio_button_unchecked</span>
+<span class="material-symbols-outlined text-text-secondary text-xl dark:text-[#CBD5E1]">radio_button_unchecked</span>
 </div>
 <div class="flex-1 min-w-0">
 <div class="flex items-center justify-between">
-<span class="font-mono-table text-mono-table font-bold text-text-primary">-07:58</span>
-<span class="font-label-caps text-label-caps text-text-secondary">PROGRAMADO</span>
+<span class="font-mono-table text-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">-07:58</span>
+<span class="font-label-caps text-label-caps text-text-secondary dark:text-[#CBD5E1]">PROGRAMADO</span>
 </div>
-<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5 dark:text-[#CBD5E1]">
                 Ingreso simultáneo al terreno de juego y sorteo de capitanes con moneda conmemorativa.
               </p>
 </div>
 </div>
 <!-- Milestone 00:00: Kickoff -->
-<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="mt-0.5">
-<span class="material-symbols-outlined text-text-secondary text-xl">sports_soccer</span>
+<span class="material-symbols-outlined text-text-secondary text-xl dark:text-[#CBD5E1]">sports_soccer</span>
 </div>
 <div class="flex-1 min-w-0">
 <div class="flex items-center justify-between">
-<span class="font-mono-table text-mono-table font-bold text-text-primary">00:00</span>
-<span class="font-label-caps text-label-caps text-text-secondary">INICIO</span>
+<span class="font-mono-table text-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">00:00</span>
+<span class="font-label-caps text-label-caps text-text-secondary dark:text-[#CBD5E1]">INICIO</span>
 </div>
-<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5 dark:text-[#CBD5E1]">
                 Pitazo inicial autorizado por comisaría y cabina VAR centralizada.
               </p>
 </div>
@@ -516,8 +534,8 @@
 </div>
 </div>
 <div class="mt-space-md pt-space-sm flex items-center justify-between">
-<span class="font-label-caps text-label-caps text-text-secondary">Tolerancia Reglamento: ±30s</span>
-<button class="bg-surface-container-low text-text-primary hover:bg-surface-container px-3 py-1.5 rounded font-label-caps text-label-caps uppercase font-semibold transition-colors flex items-center gap-1 dark:bg-slate-950 dark:text-slate-100" onclick="mostrarAuditoriaMarcas()">
+<span class="font-label-caps text-label-caps text-text-secondary dark:text-[#CBD5E1]">Tolerancia Reglamento: ±30s</span>
+<button class="bg-surface-container-low text-text-primary hover:bg-surface-container px-3 py-1.5 rounded font-label-caps text-label-caps uppercase font-semibold transition-colors flex items-center gap-1 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" onclick="mostrarAuditoriaMarcas()">
 <span class="material-symbols-outlined text-sm">history</span>
 <span>Auditoría de Marcas</span>
 </button>
@@ -527,115 +545,115 @@
 <!-- Operational Middle Section: Tactical Incident Pad + Alignment Verification Panel -->
 <div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
 <!-- Quick-Action Field Incident Buttons (Min Touch Target: 48px, High-Contrast) (5 cols) -->
-<div class="xl:col-span-5 bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="xl:col-span-5 bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div>
 <div class="flex items-center justify-between pb-space-sm">
 <div class="flex items-center gap-space-xs">
 <span class="material-symbols-outlined text-sport-danger">gavel</span>
-<h2 class="font-title-md text-title-md font-bold text-text-primary">Botonera Táctica de Cancha: Incidentes</h2>
+<h2 class="font-title-md text-title-md font-bold text-text-primary dark:text-white">Botonera Táctica de Cancha: Incidentes</h2>
 </div>
 <span class="bg-sport-danger/10 text-sport-danger font-label-caps text-label-caps px-2 py-0.5 rounded font-bold uppercase">
             Acción Inmediata
           </span>
 </div>
-<p class="font-body-sm text-body-sm text-text-secondary mb-space-md">
+<p class="font-body-sm text-body-sm text-text-secondary mb-space-md dark:text-[#CBD5E1]">
           Presione para registrar con marca de tiempo precisa en acta arbitral e informar a veedores de seguridad.
         </p>
 <!-- Touch Optimized Grid (min-h: 48px) -->
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
 <!-- Incident 1 -->
-<button class="min-h-[56px] w-full p-space-sm bg-surface-container-low hover:bg-sport-warning/20 active:scale-[0.98] transition-all rounded-lg text-left flex items-start gap-space-xs shadow-sm dark:bg-slate-950 dark:text-slate-100" onclick="registerIncident('Lanzamiento de Objetos sin impacto', 200)">
+<button class="min-h-[56px] w-full p-space-sm bg-surface-container-low hover:bg-sport-warning/20 active:scale-[0.98] transition-all rounded-lg text-left flex items-start gap-space-xs shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]" onclick="registerIncident('Lanzamiento de Objetos sin impacto', 200)">
 <div class="w-8 h-8 rounded bg-sport-warning/30 flex items-center justify-center shrink-0">
 <span class="material-symbols-outlined text-primary-container text-lg">sports_baseball</span>
 </div>
 <div class="flex flex-col min-w-0">
-<span class="font-title-md text-[13px] font-bold text-text-primary leading-tight">Lanzamiento Objetos</span>
-<span class="font-body-sm text-[11px] text-text-secondary leading-none mt-0.5">Sin impacto a protagonistas</span>
+<span class="font-title-md text-[13px] font-bold text-text-primary leading-tight dark:text-[#F8FAFC]">Lanzamiento Objetos</span>
+<span class="font-body-sm text-[11px] text-text-secondary leading-none mt-0.5 dark:text-[#CBD5E1]">Sin impacto a protagonistas</span>
 <span class="font-mono-table text-[12px] font-bold text-sport-danger mt-1">$200 USD Sanción</span>
 </div>
 </button>
 <!-- Incident 2 -->
-<button class="min-h-[56px] w-full p-space-sm bg-surface-container-low hover:bg-sport-danger/15 active:scale-[0.98] transition-all rounded-lg text-left flex items-start gap-space-xs shadow-sm dark:bg-slate-950 dark:text-slate-100" onclick="registerIncident('Bengalas / Pirotecnia', 500)">
+<button class="min-h-[56px] w-full p-space-sm bg-surface-container-low hover:bg-sport-danger/15 active:scale-[0.98] transition-all rounded-lg text-left flex items-start gap-space-xs shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]" onclick="registerIncident('Bengalas / Pirotecnia', 500)">
 <div class="w-8 h-8 rounded bg-sport-danger/20 flex items-center justify-center shrink-0">
 <span class="material-symbols-outlined text-sport-danger text-lg">local_fire_department</span>
 </div>
 <div class="flex flex-col min-w-0">
-<span class="font-title-md text-[13px] font-bold text-text-primary leading-tight">Bengalas / Pirotecnia</span>
-<span class="font-body-sm text-[11px] text-text-secondary leading-none mt-0.5">Encendido en gradas/cancha</span>
+<span class="font-title-md text-[13px] font-bold text-text-primary leading-tight dark:text-[#F8FAFC]">Bengalas / Pirotecnia</span>
+<span class="font-body-sm text-[11px] text-text-secondary leading-none mt-0.5 dark:text-[#CBD5E1]">Encendido en gradas/cancha</span>
 <span class="font-mono-table text-[12px] font-bold text-sport-danger mt-1">$500 USD Sanción</span>
 </div>
 </button>
 <!-- Incident 3 -->
-<button class="min-h-[56px] w-full p-space-sm bg-surface-container-low hover:bg-sport-danger/15 active:scale-[0.98] transition-all rounded-lg text-left flex items-start gap-space-xs shadow-sm dark:bg-slate-950 dark:text-slate-100" onclick="registerIncident('Invasión de Público', 1200)">
+<button class="min-h-[56px] w-full p-space-sm bg-surface-container-low hover:bg-sport-danger/15 active:scale-[0.98] transition-all rounded-lg text-left flex items-start gap-space-xs shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]" onclick="registerIncident('Invasión de Público', 1200)">
 <div class="w-8 h-8 rounded bg-sport-danger/20 flex items-center justify-center shrink-0">
 <span class="material-symbols-outlined text-sport-danger text-lg">directions_run</span>
 </div>
 <div class="flex flex-col min-w-0">
-<span class="font-title-md text-[13px] font-bold text-text-primary leading-tight">Invasión de Público</span>
-<span class="font-body-sm text-[11px] text-text-secondary leading-none mt-0.5">Vulneración de perímetro</span>
+<span class="font-title-md text-[13px] font-bold text-text-primary leading-tight dark:text-[#F8FAFC]">Invasión de Público</span>
+<span class="font-body-sm text-[11px] text-text-secondary leading-none mt-0.5 dark:text-[#CBD5E1]">Vulneración de perímetro</span>
 <span class="font-mono-table text-[12px] font-bold text-sport-danger mt-1">Grave • Notificar Policía</span>
 </div>
 </button>
 <!-- Incident 4 -->
-<button class="min-h-[56px] w-full p-space-sm bg-surface-container-low hover:bg-sport-warning/20 active:scale-[0.98] transition-all rounded-lg text-left flex items-start gap-space-xs shadow-sm dark:bg-slate-950 dark:text-slate-100" onclick="registerIncident('Retraso Reanudación 2do Tiempo', 400)">
+<button class="min-h-[56px] w-full p-space-sm bg-surface-container-low hover:bg-sport-warning/20 active:scale-[0.98] transition-all rounded-lg text-left flex items-start gap-space-xs shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]" onclick="registerIncident('Retraso Reanudación 2do Tiempo', 400)">
 <div class="w-8 h-8 rounded bg-sport-warning/30 flex items-center justify-center shrink-0">
 <span class="material-symbols-outlined text-primary-container text-lg">more_time</span>
 </div>
 <div class="flex flex-col min-w-0">
-<span class="font-title-md text-[13px] font-bold text-text-primary leading-tight">Retraso Reanudación</span>
-<span class="font-body-sm text-[11px] text-text-secondary leading-none mt-0.5">&gt;15 min (Tolerancia 5 min)</span>
-<span class="font-mono-table text-[12px] font-bold text-sport-warning text-text-primary mt-1">Art. 82 Código Disciplinario</span>
+<span class="font-title-md text-[13px] font-bold text-text-primary leading-tight dark:text-[#F8FAFC]">Retraso Reanudación</span>
+<span class="font-body-sm text-[11px] text-text-secondary leading-none mt-0.5 dark:text-[#CBD5E1]">&gt;15 min (Tolerancia 5 min)</span>
+<span class="font-mono-table text-[12px] font-bold text-sport-warning text-text-primary mt-1 dark:text-[#F8FAFC]">Art. 82 Código Disciplinario</span>
 </div>
 </button>
 </div>
 <!-- Real-time Incident Feed -->
 <div class="mt-space-md">
 <div class="flex items-center justify-between mb-1.5">
-<span class="font-label-caps text-label-caps text-text-secondary uppercase">Bitácora de Campo en Vivo (3)</span>
+<span class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Bitácora de Campo en Vivo (3)</span>
 <span class="font-mono-table text-[11px] text-secondary font-bold">Auto-sync COMET</span>
 </div>
 <div class="flex flex-col gap-1.5 max-h-36 overflow-y-auto pr-1" id="incidentsList">
-<div class="flex items-center justify-between p-2 bg-surface-container-low rounded text-body-sm text-text-primary dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-center justify-between p-2 bg-surface-container-low rounded text-body-sm text-text-primary dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center gap-2">
 <span class="w-2 h-2 rounded-full bg-sport-danger"></span>
 <span class="font-semibold text-xs">Pirotecnia General Sur</span>
-<span class="text-text-secondary text-[11px]">(Bengala de humo rojo)</span>
+<span class="text-text-secondary text-[11px] dark:text-[#CBD5E1]">(Bengala de humo rojo)</span>
 </div>
-<span class="font-mono-table text-xs font-bold text-text-secondary">18:12:05</span>
+<span class="font-mono-table text-xs font-bold text-text-secondary dark:text-[#CBD5E1]">18:12:05</span>
 </div>
-<div class="flex items-center justify-between p-2 bg-surface-container-low rounded text-body-sm text-text-primary dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-center justify-between p-2 bg-surface-container-low rounded text-body-sm text-text-primary dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center gap-2">
 <span class="w-2 h-2 rounded-full bg-sport-warning"></span>
 <span class="font-semibold text-xs">Retraso en Salida a Calentamiento</span>
-<span class="text-text-secondary text-[11px]">(LDUQ +2 min)</span>
+<span class="text-text-secondary text-[11px] dark:text-[#CBD5E1]">(LDUQ +2 min)</span>
 </div>
-<span class="font-mono-table text-xs font-bold text-text-secondary">18:15:32</span>
-</div>
-</div>
+<span class="font-mono-table text-xs font-bold text-text-secondary dark:text-[#CBD5E1]">18:15:32</span>
 </div>
 </div>
-<div class="mt-space-sm pt-space-xs flex items-center justify-between text-text-secondary font-label-caps text-[10px]">
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between text-text-secondary font-label-caps text-[10px] dark:text-[#CBD5E1]">
 <span>REGISTRO GEOLOCALIZADO (GPS ESTADIO)</span>
 <span>AUDITORÍA LIGAPRO-COM</span>
 </div>
 </div>
 <!-- Alignment Sheet Control & Critical Protocol Verification (7 cols) -->
-<div class="xl:col-span-7 bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="xl:col-span-7 bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div>
 <div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm">
 <div class="flex items-center gap-space-xs">
 <span class="material-symbols-outlined text-secondary">badge</span>
 <div>
-<h2 class="font-title-md text-title-md font-bold text-text-primary">Planilla de Alineación &amp; Protocolo Sanitario</h2>
-<p class="font-body-sm text-body-sm text-text-secondary">23 Jugadores (11 Titulares + 12 Suplentes) • 10 Oficiales de Cuerpo Técnico</p>
+<h2 class="font-title-md text-title-md font-bold text-text-primary dark:text-white">Planilla de Alineación &amp; Protocolo Sanitario</h2>
+<p class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">23 Jugadores (11 Titulares + 12 Suplentes) • 10 Oficiales de Cuerpo Técnico</p>
 </div>
 </div>
 <!-- Club Switcher Segmented Control -->
-<div class="flex items-center bg-surface-container-low p-0.5 rounded-lg dark:bg-slate-950 dark:text-slate-100">
+<div class="flex items-center bg-surface-container-low p-0.5 rounded-lg dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <button class="px-space-sm py-1 rounded bg-secondary text-on-secondary font-label-caps text-label-caps uppercase transition-colors shadow-sm" id="clubLDUBtn" onclick="switchClubTab('ldu')">
               LDU Quito
             </button>
-<button class="px-space-sm py-1 rounded text-text-secondary hover:text-text-primary font-label-caps text-label-caps uppercase transition-colors" id="clubBSCBtn" onclick="switchClubTab('bsc')">
+<button class="px-space-sm py-1 rounded text-text-secondary hover:text-text-primary font-label-caps text-label-caps uppercase transition-colors dark:text-[#F8FAFC]" id="clubBSCBtn" onclick="switchClubTab('bsc')">
               Barcelona SC
             </button>
 </div>
@@ -643,42 +661,42 @@
 <!-- Mandatory Verification Highlights (Doctor & Ball Kids) -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm my-space-sm">
 <!-- Mandatory Bench Doctor Card -->
-<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps text-text-secondary uppercase">Médico en Banca Obligatorio</span>
+<span class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Médico en Banca Obligatorio</span>
 <span class="flex items-center gap-1 text-sport-success font-label-caps text-[10px] font-bold bg-sport-success/15 px-1.5 py-0.5 rounded">
 <span class="material-symbols-outlined text-xs">verified</span>
 <span>HABILITADO</span>
 </span>
 </div>
 <div class="flex items-center gap-space-sm mt-2">
-<div class="w-10 h-10 rounded-full bg-surface-card flex items-center justify-center text-secondary font-bold shrink-0 dark:bg-slate-950 dark:text-slate-100">
+<div class="w-10 h-10 rounded-full bg-surface-card flex items-center justify-center text-secondary font-bold shrink-0 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <span class="material-symbols-outlined">medical_services</span>
 </div>
 <div class="flex flex-col min-w-0">
-<span class="font-title-md text-[14px] font-bold text-text-primary truncate" id="docName">Dr. Marco Antonio Caicedo</span>
-<span class="font-mono-table text-[11px] text-text-secondary" id="docLicense">Reg. Colegiatura: MED-PICH-04921</span>
+<span class="font-title-md text-[14px] font-bold text-text-primary truncate dark:text-[#F8FAFC]" id="docName">Dr. Marco Antonio Caicedo</span>
+<span class="font-mono-table text-[11px] text-text-secondary dark:text-[#CBD5E1]" id="docLicense">Reg. Colegiatura: MED-PICH-04921</span>
 <span class="font-label-caps text-[10px] text-secondary font-semibold mt-0.5">Certificación ACLS Vigente LigaPro</span>
 </div>
 </div>
 </div>
 <!-- Ball Boys (Pasabolas) Regulation Card -->
-<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col justify-between dark:bg-slate-950 dark:text-slate-100">
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps text-text-secondary uppercase">Pasabolas Oficiales (Serie A)</span>
+<span class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Pasabolas Oficiales (Serie A)</span>
 <span class="flex items-center gap-1 text-sport-success font-label-caps text-[10px] font-bold bg-sport-success/15 px-1.5 py-0.5 rounded">
 <span class="material-symbols-outlined text-xs">check</span>
 <span>12 / 12 CHALECOS</span>
 </span>
 </div>
 <div class="flex items-center gap-space-sm mt-2">
-<div class="w-10 h-10 rounded-full bg-surface-card flex items-center justify-center text-sport-warning font-bold shrink-0 dark:bg-slate-950 dark:text-slate-100">
-<span class="material-symbols-outlined text-text-primary">checkroom</span>
+<div class="w-10 h-10 rounded-full bg-surface-card flex items-center justify-center text-sport-warning font-bold shrink-0 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+<span class="material-symbols-outlined text-text-primary dark:text-[#F8FAFC]">checkroom</span>
 </div>
 <div class="flex flex-col min-w-0">
-<span class="font-title-md text-[14px] font-bold text-text-primary">12 Pasabolas Identificados</span>
-<span class="font-body-sm text-[11px] text-text-secondary">Chalecos Oficiales Verde Flúor LigaPro numerados 1 al 12</span>
-<span class="font-label-caps text-[10px] text-text-secondary mt-0.5">(Serie B exige 8 mínimo reglamentario)</span>
+<span class="font-title-md text-[14px] font-bold text-text-primary dark:text-[#F8FAFC]">12 Pasabolas Identificados</span>
+<span class="font-body-sm text-[11px] text-text-secondary dark:text-[#CBD5E1]">Chalecos Oficiales Verde Flúor LigaPro numerados 1 al 12</span>
+<span class="font-label-caps text-[10px] text-text-secondary mt-0.5 dark:text-[#CBD5E1]">(Serie B exige 8 mínimo reglamentario)</span>
 </div>
 </div>
 </div>
@@ -686,7 +704,7 @@
 <!-- Alignment Roster Micro-Table -->
 <div class="mt-space-sm overflow-x-auto rounded-lg">
 <table class="w-full text-left font-body-sm text-body-sm">
-<thead class="bg-surface-container-low text-text-secondary font-label-caps text-label-caps uppercase dark:bg-slate-950 dark:text-slate-100">
+<thead class="bg-surface-container-low text-text-secondary font-label-caps text-label-caps uppercase dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <tr>
 <th class="py-2 px-space-sm">Dorsal</th>
 <th class="py-2 px-space-sm">Jugador Oficial COMET</th>
@@ -695,42 +713,42 @@
 <th class="py-2 px-space-sm text-right">Estatus Ficha</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-border-subtle bg-surface-card dark:bg-slate-950 dark:text-slate-100" id="rosterTableBody">
-<tr class="hover:bg-surface-base transition-colors dark:bg-slate-950 dark:text-slate-100">
-<td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#22</td>
-<td class="py-1.5 px-space-sm font-bold text-text-primary flex items-center gap-1.5">
+<tbody class="divide-y divide-border-subtle bg-surface-card dark:bg-[#0B0F19] dark:text-[#F8FAFC]" id="rosterTableBody">
+<tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+<td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#22</td>
+<td class="py-1.5 px-space-sm font-bold text-text-primary flex items-center gap-1.5 dark:text-[#F8FAFC]">
 <span>Alexander Domínguez</span>
-<span class="px-1 py-0.2 rounded bg-surface-container font-label-caps text-[9px] uppercase font-bold dark:bg-slate-950 dark:text-slate-100">C</span>
+<span class="px-1 py-0.2 rounded bg-surface-container font-label-caps text-[9px] uppercase font-bold dark:bg-[#0B0F19] dark:text-[#F8FAFC]">C</span>
 </td>
-<td class="py-1.5 px-space-sm text-text-secondary">Arquero</td>
+<td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Arquero</td>
 <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
 <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
 </tr>
-<tr class="hover:bg-surface-base transition-colors dark:bg-slate-950 dark:text-slate-100">
-<td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#14</td>
-<td class="py-1.5 px-space-sm text-text-primary">José Quintero</td>
-<td class="py-1.5 px-space-sm text-text-secondary">Lateral Der</td>
+<tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+<td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#14</td>
+<td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">José Quintero</td>
+<td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Lateral Der</td>
 <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
 <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
 </tr>
-<tr class="hover:bg-surface-base transition-colors dark:bg-slate-950 dark:text-slate-100">
-<td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#3</td>
-<td class="py-1.5 px-space-sm text-text-primary">Ricardo Adé</td>
-<td class="py-1.5 px-space-sm text-text-secondary">Defensa Cen</td>
+<tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+<td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#3</td>
+<td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Ricardo Adé</td>
+<td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Defensa Cen</td>
 <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
 <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
 </tr>
-<tr class="hover:bg-surface-base transition-colors dark:bg-slate-950 dark:text-slate-100">
-<td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#8</td>
-<td class="py-1.5 px-space-sm text-text-primary">Ezequiel Piovi</td>
-<td class="py-1.5 px-space-sm text-text-secondary">Volante Cen</td>
+<tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+<td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#8</td>
+<td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Ezequiel Piovi</td>
+<td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Volante Cen</td>
 <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
 <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
 </tr>
-<tr class="hover:bg-surface-base transition-colors dark:bg-slate-950 dark:text-slate-100">
-<td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#19</td>
-<td class="py-1.5 px-space-sm text-text-primary">Alex Arce</td>
-<td class="py-1.5 px-space-sm text-text-secondary">Delantero Cen</td>
+<tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+<td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#19</td>
+<td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Alex Arce</td>
+<td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Delantero Cen</td>
 <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
 <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
 </tr>
@@ -739,11 +757,11 @@
 </div>
 </div>
 <div class="mt-space-sm flex flex-wrap items-center justify-between gap-space-sm pt-space-xs">
-<div class="flex items-center gap-space-xs text-text-secondary font-body-sm text-[12px]">
+<div class="flex items-center gap-space-xs text-text-secondary font-body-sm text-[12px] dark:text-[#CBD5E1]">
 <span class="material-symbols-outlined text-sport-success text-base">fact_check</span>
 <span>Alineaciones homologadas por Árbitro Central y Cabina VOR</span>
 </div>
-<button class="bg-surface-container-low hover:bg-surface-container text-text-primary px-3 py-1.5 rounded font-label-caps text-label-caps uppercase font-bold transition-colors dark:bg-slate-950 dark:text-slate-100" onclick="mostrarNominaCompleta()">
+<button class="bg-surface-container-low hover:bg-surface-container text-text-primary px-3 py-1.5 rounded font-label-caps text-label-caps uppercase font-bold transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" onclick="mostrarNominaCompleta()">
           Ver Nómina Completa (33 Integrantes)
         </button>
 </div>
@@ -861,9 +879,9 @@
       <div class="flex items-center gap-2">
         <span class="w-2 h-2 rounded-full bg-sport-danger"></span>
         <span class="font-semibold text-xs text-sport-danger">${title}</span>
-        <span class="text-text-secondary text-[11px]">($${fine} USD)</span>
+        <span class="text-text-secondary text-[11px] dark:text-[#CBD5E1]">($${fine} USD)</span>
       </div>
-      <span class="font-mono-table text-xs font-bold text-text-primary">${timeStr}</span>
+      <span class="font-mono-table text-xs font-bold text-text-primary dark:text-[#F8FAFC]">${timeStr}</span>
     `;
     list.prepend(row);
 
@@ -886,41 +904,41 @@
       docLicense.textContent = 'Reg. Colegiatura: MED-GUAYAS-07823';
 
       rosterTable.innerHTML = `
-        <tr class="hover:bg-surface-base transition-colors dark:bg-slate-950 dark:text-slate-100">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#1</td>
-          <td class="py-1.5 px-space-sm font-bold text-text-primary flex items-center gap-1.5">
+        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#1</td>
+          <td class="py-1.5 px-space-sm font-bold text-text-primary flex items-center gap-1.5 dark:text-[#F8FAFC]">
             <span>Javier Burrai</span>
-            <span class="px-1 py-0.2 rounded bg-surface-container font-label-caps text-[9px] uppercase font-bold dark:bg-slate-950 dark:text-slate-100">C</span>
+            <span class="px-1 py-0.2 rounded bg-surface-container font-label-caps text-[9px] uppercase font-bold dark:bg-[#0B0F19] dark:text-[#F8FAFC]">C</span>
           </td>
-          <td class="py-1.5 px-space-sm text-text-secondary">Arquero</td>
+          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Arquero</td>
           <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
           <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
         </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-slate-950 dark:text-slate-100">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#4</td>
-          <td class="py-1.5 px-space-sm text-text-primary">Carlos Rodríguez</td>
-          <td class="py-1.5 px-space-sm text-text-secondary">Defensa Cen</td>
+        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#4</td>
+          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Carlos Rodríguez</td>
+          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Defensa Cen</td>
           <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
           <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
         </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-slate-950 dark:text-slate-100">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#20</td>
-          <td class="py-1.5 px-space-sm text-text-primary">Jesús Trindade</td>
-          <td class="py-1.5 px-space-sm text-text-secondary">Volante Cen</td>
+        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#20</td>
+          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Jesús Trindade</td>
+          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Volante Cen</td>
           <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
           <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
         </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-slate-950 dark:text-slate-100">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#10</td>
-          <td class="py-1.5 px-space-sm text-text-primary">Damián Díaz</td>
-          <td class="py-1.5 px-space-sm text-text-secondary">Enganche</td>
+        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#10</td>
+          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Damián Díaz</td>
+          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Enganche</td>
           <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
           <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
         </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-slate-950 dark:text-slate-100">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#9</td>
-          <td class="py-1.5 px-space-sm text-text-primary">Octavio Rivero</td>
-          <td class="py-1.5 px-space-sm text-text-secondary">Delantero Cen</td>
+        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#9</td>
+          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Octavio Rivero</td>
+          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Delantero Cen</td>
           <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
           <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
         </tr>
@@ -932,41 +950,41 @@
       docLicense.textContent = 'Reg. Colegiatura: MED-PICH-04921';
 
       rosterTable.innerHTML = `
-        <tr class="hover:bg-surface-base transition-colors dark:bg-slate-950 dark:text-slate-100">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#22</td>
-          <td class="py-1.5 px-space-sm font-bold text-text-primary flex items-center gap-1.5">
+        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#22</td>
+          <td class="py-1.5 px-space-sm font-bold text-text-primary flex items-center gap-1.5 dark:text-[#F8FAFC]">
             <span>Alexander Domínguez</span>
-            <span class="px-1 py-0.2 rounded bg-surface-container font-label-caps text-[9px] uppercase font-bold dark:bg-slate-950 dark:text-slate-100">C</span>
+            <span class="px-1 py-0.2 rounded bg-surface-container font-label-caps text-[9px] uppercase font-bold dark:bg-[#0B0F19] dark:text-[#F8FAFC]">C</span>
           </td>
-          <td class="py-1.5 px-space-sm text-text-secondary">Arquero</td>
+          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Arquero</td>
           <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
           <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
         </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-slate-950 dark:text-slate-100">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#14</td>
-          <td class="py-1.5 px-space-sm text-text-primary">José Quintero</td>
-          <td class="py-1.5 px-space-sm text-text-secondary">Lateral Der</td>
+        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#14</td>
+          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">José Quintero</td>
+          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Lateral Der</td>
           <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
           <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
         </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-slate-950 dark:text-slate-100">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#3</td>
-          <td class="py-1.5 px-space-sm text-text-primary">Ricardo Adé</td>
-          <td class="py-1.5 px-space-sm text-text-secondary">Defensa Cen</td>
+        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#3</td>
+          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Ricardo Adé</td>
+          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Defensa Cen</td>
           <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
           <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
         </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-slate-950 dark:text-slate-100">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#8</td>
-          <td class="py-1.5 px-space-sm text-text-primary">Ezequiel Piovi</td>
-          <td class="py-1.5 px-space-sm text-text-secondary">Volante Cen</td>
+        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#8</td>
+          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Ezequiel Piovi</td>
+          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Volante Cen</td>
           <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
           <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
         </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-slate-950 dark:text-slate-100">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary">#19</td>
-          <td class="py-1.5 px-space-sm text-text-primary">Alex Arce</td>
-          <td class="py-1.5 px-space-sm text-text-secondary">Delantero Cen</td>
+        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#19</td>
+          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Alex Arce</td>
+          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Delantero Cen</td>
           <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
           <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
         </tr>

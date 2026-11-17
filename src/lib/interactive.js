@@ -10,6 +10,7 @@ import { calcularFinalistasYCampeon } from '../domain/tablas/finalistas.js';
 import { evaluarAcumulacionAmarillas } from '../domain/disciplina/acumulacion.js';
 import { calcularMulta } from '../domain/multas/calculo.js';
 import { evaluarContrasteKits } from '../domain/uniformes/contraste.js';
+import '../index.css';
 
 // ==============================================================================
 // 1. GESTIÓN DE SESIÓN, ROLES Y AUTENTICACIÓN REAL
@@ -223,12 +224,13 @@ const FONT_SCALES = [100, 112.5, 125, 137.5, 150];
 
 export function aplicarTema(isDark) {
   if (isDark) {
-    document.documentElement.classList.add('dark', 'high-contrast');
-    if (document.body) document.body.classList.add('high-contrast-mode');
+    document.documentElement.classList.add('dark');
+    document.documentElement.classList.remove('high-contrast');
+    if (document.body) document.body.classList.remove('high-contrast-mode');
     store.state.highContrast = true;
     try {
       localStorage.setItem('sigec_theme', 'dark');
-      localStorage.setItem('sigec_high_contrast', 'true');
+      localStorage.setItem('sigec_high_contrast', 'false');
     } catch (e) {}
   } else {
     document.documentElement.classList.remove('dark', 'high-contrast');
