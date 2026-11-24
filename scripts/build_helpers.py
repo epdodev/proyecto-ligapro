@@ -94,131 +94,86 @@ SIGEC_LP_SVG_ISOTIPO = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3
 </svg>"""
 
 def generate_header(active_id):
+    # Minimalist navigation items
+    nav_links = [
+        {'id': 'tablero', 'label': 'Partidos', 'icon': 'sports_soccer'},
+        {'id': 'posiciones', 'label': 'Posiciones', 'icon': 'leaderboard'},
+        {'id': 'clubes', 'label': 'Clubes', 'icon': 'shield'},
+        {'id': 'consola', 'label': 'Consola En Vivo', 'icon': 'terminal'},
+    ]
+
+    nav_links_html = "".join([
+        f'''<a href="javascript:void(0)" onclick="navigateView('{item['id']}')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all {'bg-slate-900 text-white dark:bg-slate-800 dark:text-white shadow-xs' if item['id'] == active_id else 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'}">
+          <span class="material-symbols-outlined text-base">{item['icon']}</span>
+          <span>{item['label']}</span>
+        </a>'''
+        for item in nav_links
+    ])
+
     header_html = f'''
-    <header class="fixed top-0 left-0 right-0 h-16 bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50 shadow-xs px-4 sm:px-6 transition-colors">
-      <div class="w-full h-full flex items-center justify-between gap-2 sm:gap-4">
-        <!-- Isotipo SIGEC-LP & Brand -->
-        <div class="flex items-center gap-2.5 shrink-0 min-w-0">
-          {SIGEC_LP_SVG_ISOTIPO}
-          <div class="flex items-center gap-1.5 shrink-0">
-            <span id="header-brand-title" onclick="navigateView(\'tablero\')" class="cursor-pointer font-extrabold text-sm tracking-tight text-slate-900 dark:text-slate-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors whitespace-nowrap">LIGAPRO ECUABET</span>
-            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-100 dark:bg-indigo-900/60 text-indigo-800 dark:text-indigo-300 uppercase font-mono tracking-widest shrink-0">SIGEC-LP</span>
-          </div>
-        </div>
-
-        <!-- Centro: Marcador En Vivo + Reloj UTC-5 -->
-        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-          <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-1.5 sm:gap-2 bg-slate-900 text-white px-2.5 py-1.5 rounded-lg border border-slate-800 text-[11px] sm:text-xs shadow-sm hover:border-slate-600 transition-colors" title="Ver Consola de Comisario">
-            <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
-            <span class="font-bold text-amber-400 hidden sm:inline">EN VIVO:</span>
-            <span class="font-bold">LDU</span>
-            <span class="font-mono bg-slate-800 px-1 py-0.5 rounded font-bold text-amber-300" id="header-score">1 - 1</span>
-            <span class="font-bold">BSC</span>
-            <span class="font-mono text-slate-400 text-[10px]" id="header-match-min">68' 2T</span>
-          </div>
-
-          <div class="hidden md:flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md text-slate-700 dark:text-slate-200 font-mono text-[11px] border border-slate-200 dark:border-slate-700">
-            <span class="text-[10px] text-slate-400 font-sans font-bold">UTC-5:</span>
-            <span id="header-utc-clock" class="font-bold">18:42:09</span>
-          </div>
-        </div>
-
-        <!-- Derecha: Accesibilidad + Notificaciones + Perfil / Iniciar Sesión -->
-        <div class="flex items-center gap-2 shrink-0">
-          <!-- Controles Compactos de Accesibilidad (Modo Oscuro / Alto Contraste, A-, A+) -->
-          <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-200 dark:border-slate-700">
-            <button id="btn-theme-toggle" onclick="toggleGlobalHighContrast()" class="p-1.5 text-slate-700 dark:text-slate-200 hover:text-amber-500 hover:bg-white dark:hover:bg-slate-700 rounded transition-colors" title="Modo Oscuro / Alto Contraste (WCAG AAA)">
-              <span class="material-symbols-outlined text-base">contrast</span>
-            </button>
-            <button onclick="ajustarTexto('dec')" class="px-2 py-1 text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 rounded font-bold text-[11px] transition-colors" title="Reducir Texto A-">
-              A-
-            </button>
-            <button onclick="ajustarTexto('inc')" class="px-2 py-1 text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 rounded font-bold text-[11px] transition-colors" title="Aumentar Texto A+">
-              A+
-            </button>
-          </div>
-
-          <!-- Campana de Notificaciones Reglamentarias -->
-          <div class="relative">
-            <button id="btn-notificaciones" onclick="toggleNotificationsPanel()" class="relative p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors" title="Centro de Notificaciones">
-              <span class="material-symbols-outlined text-lg">notifications</span>
-              <span id="notif-badge-indicator" class="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
-            </button>
-
-            <!-- Dropdown Panel de Notificaciones -->
-            <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-[#111827] rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
-              <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800 mb-2">
-                <span class="font-bold text-slate-900 dark:text-white flex items-center gap-1">
-                  <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">notifications_active</span> Notificaciones Oficiales
-                </span>
-                <button onclick="marcarNotificacionesLeidas()" class="text-[10px] text-blue-600 dark:text-blue-400 hover:underline font-semibold">Marcar leídas</button>
-              </div>
-              <div class="space-y-2 max-h-60 overflow-y-auto">
-                <div class="p-2 bg-red-50 dark:bg-red-950/40 text-red-950 dark:text-red-200 rounded-lg border border-red-100 dark:border-red-900/50">
-                  <div class="font-bold">🔴 Minuto 68' — Partido en Disputa</div>
-                  <div class="text-[11px] text-red-800 dark:text-red-300">LDU Quito 1 - 1 Barcelona SC en Estadio Rodrigo Paz Delgado.</div>
-                </div>
-                <div class="p-2 bg-amber-50 dark:bg-amber-950/40 text-amber-950 dark:text-amber-200 rounded-lg border border-amber-100 dark:border-amber-900/50">
-                  <div class="font-bold">⚠️ Alerta Art. 91 — Tarjeta Amarilla</div>
-                  <div class="text-[11px] text-amber-800 dark:text-amber-300">Jesús Trindade (BSC) acumula 4 amarillas. Suspensión al recibir una más.</div>
-                </div>
-                <div class="p-2 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-950 dark:text-emerald-200 rounded-lg border border-emerald-100 dark:border-emerald-900/50">
-                  <div class="font-bold">✅ Trámite TRM-2025-089 Aprobado</div>
-                  <div class="text-[11px] text-emerald-800 dark:text-emerald-300">Uso de indumentaria alterna conmemorativa homologada para fecha 19.</div>
-                </div>
-                <div class="p-2 bg-blue-50 dark:bg-blue-950/40 text-blue-950 dark:text-blue-200 rounded-lg border border-blue-100 dark:border-blue-900/50">
-                  <div class="font-bold">📢 Protocolo Art. 49</div>
-                  <div class="text-[11px] text-blue-800 dark:text-blue-300">Horario unificado confirmado a las 18h00 para encuentros con incidencia.</div>
-                </div>
-              </div>
+    <header class="fixed top-0 left-0 right-0 h-14 bg-white/95 dark:bg-[#0B0F19]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50 px-4 sm:px-6 transition-colors">
+      <div class="max-w-7xl mx-auto h-full flex items-center justify-between gap-4">
+        <!-- Logo minimalista y título -->
+        <div class="flex items-center gap-6 shrink-0">
+          <div class="flex items-center gap-2 cursor-pointer select-none" onclick="navigateView('tablero')">
+            <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-black text-sm shadow-xs">LP</span>
+            <div class="flex flex-col">
+              <span class="font-extrabold text-sm tracking-tight text-slate-900 dark:text-white leading-tight">LigaPro</span>
+              <span class="text-[10px] text-slate-400 font-medium">Serie A 2025</span>
             </div>
           </div>
 
-          <!-- Botón Iniciar Sesión / Crear Cuenta (Visible cuando NO hay sesión) -->
+          <!-- Navegación central minimalista -->
+          <nav class="hidden md:flex items-center gap-1">
+            {nav_links_html}
+          </nav>
+        </div>
+
+        <!-- Centro: Marcador En Vivo sutil y elegante -->
+        <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-2 bg-slate-100 dark:bg-slate-900/80 hover:bg-slate-200/80 dark:hover:bg-slate-800/80 px-3 py-1 rounded-full text-xs transition-colors border border-slate-200 dark:border-slate-800 select-none" title="Ver Consola de Partido">
+          <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+          <span class="font-semibold text-slate-600 dark:text-slate-300">En Vivo</span>
+          <span class="font-bold text-slate-900 dark:text-white font-mono px-1" id="header-score">1 - 1</span>
+          <span class="text-[11px] text-slate-400 font-mono" id="header-match-min">68'</span>
+        </div>
+
+        <!-- Derecha: Tema + Usuario / Acceso -->
+        <div class="flex items-center gap-2 shrink-0">
+          <!-- Toggle Modo Oscuro Minimalista -->
+          <button id="btn-theme-toggle" onclick="toggleGlobalHighContrast()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Cambiar tema">
+            <span class="material-symbols-outlined text-lg">dark_mode</span>
+          </button>
+
+          <!-- Botón Iniciar Sesión (Sin sesión) -->
           <div id="header-auth-btn" class="hidden">
-            <button onclick="navigateView('auth')" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all hover:scale-[1.02]">
+            <button onclick="navigateView('auth')" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs flex items-center gap-1.5 shadow-xs transition-colors">
               <span class="material-symbols-outlined text-sm">login</span>
-              <span class="hidden sm:inline">Iniciar Sesión / Crear Cuenta</span>
-              <span class="sm:hidden">Acceso</span>
+              <span>Acceder</span>
             </button>
           </div>
 
-          <!-- Sesión de Usuario y Cambio de Rol Rápido (Visible cuando SÍ hay sesión activa) -->
+          <!-- Bloque de Usuario (Con sesión) -->
           <div id="header-user-block" class="relative">
-            <div onclick="toggleUserDropdown()" class="cursor-pointer flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-slate-700 py-1 hover:opacity-90 transition-opacity">
-              <div class="flex flex-col text-right hidden sm:flex">
-                <span id="header-user-name" class="font-bold text-xs text-slate-900 dark:text-white leading-tight">Invitado General</span>
-                <span id="header-user-role" class="text-[10px] text-blue-700 dark:text-blue-400 font-bold uppercase tracking-wider">Acceso Público</span>
-              </div>
-              <img id="header-user-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" alt="Avatar Usuario" class="w-8 h-8 rounded-full object-cover border-2 border-blue-600 shadow-xs"/>
+            <div onclick="toggleUserDropdown()" class="cursor-pointer flex items-center gap-2 py-1 px-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+              <img id="header-user-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" alt="Avatar Usuario" class="w-7 h-7 rounded-full object-cover border border-slate-300 dark:border-slate-700"/>
+              <span id="header-user-name" class="font-semibold text-xs text-slate-800 dark:text-slate-200 hidden sm:inline max-w-[120px] truncate">Usuario</span>
               <span class="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
             </div>
 
-            <!-- Menú Desplegable de Usuario y Cierre de Sesión -->
-            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white dark:bg-[#111827] rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-3 text-xs text-slate-900 dark:text-slate-100">
-              <div class="pb-3 border-b border-slate-100 dark:border-slate-800 mb-3">
-                <div class="font-bold text-slate-900 dark:text-white" id="dropdown-user-name">Usuario Conectado</div>
-                <div class="text-[11px] text-slate-500 dark:text-slate-400 truncate" id="dropdown-user-email">usuario@ligapro.ec</div>
-                <div class="mt-1 flex items-center gap-1.5 flex-wrap">
-                  <span class="inline-block px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 font-bold text-[10px]" id="dropdown-user-role">Acceso Autorizado</span>
-                  <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold text-[9px] uppercase tracking-wider">BD Conectada</span>
-                </div>
+            <!-- Menú Desplegable Minimalista -->
+            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-52 bg-white dark:bg-[#111827] rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 z-50 p-2 text-xs text-slate-900 dark:text-slate-100">
+              <div class="px-2 py-1.5 border-b border-slate-100 dark:border-slate-800 mb-1">
+                <div class="font-bold truncate" id="dropdown-user-name">Usuario</div>
+                <div class="text-[11px] text-slate-400 truncate" id="dropdown-user-email">usuario@correo.com</div>
               </div>
-
-              <!-- Acciones de Cuenta: Mi Perfil & Cerrar Sesión -->
-              <div class="space-y-1">
-                <button onclick="abrirModalPerfil()" class="w-full text-left px-2 py-2 rounded text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold flex items-center justify-between transition-colors">
-                  <span class="flex items-center gap-2">
-                    <span class="material-symbols-outlined text-base text-blue-600 dark:text-blue-400">badge</span>
-                    Mi Perfil Oficial
-                  </span>
-                  <span class="material-symbols-outlined text-xs text-slate-400">chevron_right</span>
-                </button>
-                <button onclick="cerrarSesion()" class="w-full text-left px-2 py-2 rounded text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 font-bold flex items-center gap-2 transition-colors">
-                  <span class="material-symbols-outlined text-base">logout</span>
-                  Cerrar Sesión
-                </button>
-              </div>
+              <button onclick="abrirModalPerfil()" class="w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 font-medium flex items-center gap-2 transition-colors">
+                <span class="material-symbols-outlined text-base text-slate-500">person</span>
+                <span>Mi Perfil</span>
+              </button>
+              <button onclick="cerrarSesion()" class="w-full text-left px-2.5 py-1.5 rounded-lg text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 font-medium flex items-center gap-2 transition-colors">
+                <span class="material-symbols-outlined text-base">logout</span>
+                <span>Cerrar Sesión</span>
+              </button>
             </div>
           </div>
         </div>

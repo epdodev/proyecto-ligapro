@@ -151,49 +151,50 @@ def clean_and_transform_screen(folder, screen_id):
     body_content = add_onclick_to_btn(body_content, r'Ver\s*Registro\s*Fotográfico', "navigateView('estadios')")
     body_content = add_onclick_to_btn(body_content, r'Revisar\s*Acta', "navigateView('uniformes')")
 
+    # Simplificar diseño en tablero: ocultar banner gigante invasivo de Horario Unificado para un look minimalista y limpio
+    body_content = re.sub(
+        r'<!-- Operational Broadcast Notice / Unified Schedule Banner -->.*?<!-- Header Executive Bar',
+        '<!-- Header Executive Bar',
+        body_content,
+        flags=re.DOTALL
+    )
+
     # Reemplazo de los Match Cards estáticos por el contenedor reactivo en tiempo real con filtro
     partidos_realtime_html = '''<!-- Contenedor Reactivo de Partidos Oficiales LigaPro 2025 en Tiempo Real -->
-<div class="flex items-center justify-between bg-surface-card p-space-md rounded-xl shadow-sm border border-border-subtle">
-  <div class="flex items-center gap-space-sm">
-    <span class="p-2 bg-secondary/10 text-secondary rounded-lg">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface-card p-4 rounded-xl border border-border-subtle">
+  <div class="flex items-center gap-3">
+    <div class="w-9 h-9 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">
       <span class="material-symbols-outlined text-xl">sports_soccer</span>
-    </span>
+    </div>
     <div>
       <div class="flex items-center gap-2">
-        <h3 class="font-headline-sm text-headline-sm text-text-primary font-bold">
-          Programación de Partidos Oficiales
+        <h3 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base">
+          Partidos Oficiales
         </h3>
-        <span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-label-caps text-[10px] font-bold tracking-wider">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> CONEXIÓN EN VIVO
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> EN VIVO
         </span>
       </div>
-      <span class="font-body-sm text-body-sm text-text-secondary">
-        Jornada 18 — LigaPro Ecuabet Serie A 2025 • Sincronización oficial Supabase & COMET
-      </span>
+      <p class="text-xs text-slate-500 dark:text-slate-400">
+        Jornada 18 — LigaPro Serie A 2025
+      </p>
     </div>
   </div>
-  <div class="flex items-center gap-2 flex-wrap">
-    <!-- Filtros de Estado de Partidos -->
-    <div class="inline-flex rounded-lg bg-surface-container-low p-1 border border-border-subtle text-xs font-bold" id="toolbar-filtro-partidos">
-      <button type="button" onclick="filtrarPartidosTablero('todos')" id="btn-filtro-todos" class="px-3 py-1 rounded bg-secondary text-on-secondary shadow-xs transition-all">Todos (8)</button>
-      <button type="button" onclick="filtrarPartidosTablero('en_juego')" id="btn-filtro-en_juego" class="px-3 py-1 rounded text-text-secondary hover:text-text-primary transition-all">🔴 En Vivo</button>
-      <button type="button" onclick="filtrarPartidosTablero('finalizado')" id="btn-filtro-finalizado" class="px-3 py-1 rounded text-text-secondary hover:text-text-primary transition-all">Finalizados</button>
-      <button type="button" onclick="filtrarPartidosTablero('programado')" id="btn-filtro-programado" class="px-3 py-1 rounded text-text-secondary hover:text-text-primary transition-all">Próximos</button>
-    </div>
-    <button class="px-3 py-1.5 rounded bg-surface-container-low text-text-secondary hover:text-text-primary font-label-caps text-label-caps uppercase transition-colors" type="button" onclick="navigateView('estadios')">
-      Estadios
-    </button>
-    <button class="px-3 py-1.5 rounded bg-secondary text-on-secondary font-label-caps text-label-caps uppercase font-bold flex items-center gap-1 shadow-sm" type="button" onclick="descargarPlanillaMatchday()">
-      <span class="material-symbols-outlined text-xs">download</span> Planilla
-    </button>
+
+  <!-- Filtros de Estado de Partidos -->
+  <div class="inline-flex rounded-lg bg-slate-100 dark:bg-slate-800 p-1 text-xs font-medium" id="toolbar-filtro-partidos">
+    <button type="button" onclick="filtrarPartidosTablero('todos')" id="btn-filtro-todos" class="px-3 py-1 rounded-md bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs font-semibold transition-all">Todos (8)</button>
+    <button type="button" onclick="filtrarPartidosTablero('en_juego')" id="btn-filtro-en_juego" class="px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">En Vivo</button>
+    <button type="button" onclick="filtrarPartidosTablero('finalizado')" id="btn-filtro-finalizado" class="px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">Finalizados</button>
+    <button type="button" onclick="filtrarPartidosTablero('programado')" id="btn-filtro-programado" class="px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">Próximos</button>
   </div>
 </div>
 
 <!-- Contenedor dinámico de partidos inyectado por interactive.js -->
-<div id="contenedor-partidos-realtime" class="flex flex-col gap-space-md min-h-[300px]">
-  <div class="flex items-center justify-center p-12 bg-surface-card rounded-xl text-text-secondary gap-3 border border-border-subtle">
-    <span class="material-symbols-outlined animate-spin text-2xl text-secondary">sync</span>
-    <span class="font-body-md">Sincronizando partidos oficiales de LigaPro 2025 en tiempo real...</span>
+<div id="contenedor-partidos-realtime" class="flex flex-col gap-3 min-h-[300px]">
+  <div class="flex items-center justify-center p-10 bg-surface-card rounded-xl text-slate-400 gap-2 border border-border-subtle">
+    <span class="material-symbols-outlined animate-spin text-xl text-indigo-500">sync</span>
+    <span class="text-xs">Cargando partidos oficiales...</span>
   </div>
 </div>'''
 

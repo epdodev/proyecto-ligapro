@@ -2098,86 +2098,57 @@ window.renderizarPartidosTablero = function() {
     const gv = p.goles_visitante !== null && p.goles_visitante !== undefined ? p.goles_visitante : (p.marcador?.visitante ?? '-');
 
     return `
-    <div class="bg-surface-card rounded-xl p-space-md lg:p-space-lg shadow-sm hover:shadow-md transition-all relative overflow-hidden border ${esActivo ? 'border-secondary ring-2 ring-secondary/30' : 'border-border-subtle'}">
-      <!-- Barra lateral de estado -->
-      <div class="absolute top-0 left-0 w-1.5 h-full ${esEnVivo ? 'bg-emerald-500' : esActivo ? 'bg-secondary' : 'bg-slate-400'}"></div>
-      
-      <!-- Encabezado del partido -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-space-sm border-b border-border-subtle">
-        <div class="flex items-center gap-2 flex-wrap">
-          <span class="px-2 py-0.5 rounded ${esEnVivo ? 'bg-emerald-600 text-white' : 'bg-surface-container text-text-primary'} font-label-caps text-[10px] font-bold uppercase tracking-wider">
-            ${p.categoria || 'SERIE A 2025'}
-          </span>
-          <span class="flex items-center gap-1 font-body-sm text-xs text-text-secondary">
-            <span class="material-symbols-outlined text-xs">stadium</span>
-            ${estadioNombre}${estadioCiudad}
-          </span>
-          <span class="font-mono-table text-xs text-text-secondary">| Césped: ${p.cesped || '22mm OK'}</span>
-        </div>
+    <div class="bg-surface-card rounded-xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all relative overflow-hidden border ${esActivo ? 'border-indigo-600 ring-2 ring-indigo-500/20' : 'border-slate-200 dark:border-slate-800'}">
+      <!-- Encabezado minimalista: Estadio y Estado -->
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100 dark:border-slate-800 text-xs">
+        <span class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 font-medium">
+          <span class="material-symbols-outlined text-sm">stadium</span>
+          ${estadioNombre}${estadioCiudad}
+        </span>
         <div>
           ${badgeEstado}
         </div>
       </div>
 
-      <!-- Marcador y Equipos -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-space-md my-space-md items-center">
-        <!-- Equipo Local -->
-        <div class="md:col-span-5 flex items-center justify-end gap-space-md text-right">
-          <div class="flex flex-col">
-            <span class="font-headline-md text-base sm:text-lg lg:text-xl text-text-primary font-black tracking-tight leading-tight">${local.nombre}</span>
-            <span class="font-label-caps text-xs text-text-secondary">${p.uniforme_local_desc || 'Titular Oficial'}</span>
-          </div>
-          <img class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-xs shrink-0" src="${local.escudo || ''}" alt="Escudo ${local.nombre}" onerror="this.src='https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=100'"/>
+      <!-- Fila de Partido: Equipos y Marcador -->
+      <div class="grid grid-cols-12 gap-2 sm:gap-4 items-center py-2">
+        <!-- Local -->
+        <div class="col-span-5 flex items-center justify-end gap-3 text-right">
+          <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">${local.nombre}</span>
+          <img class="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-contain p-1 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shrink-0" src="${local.escudo || ''}" alt="${local.nombre}" onerror="this.src='https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=100'"/>
         </div>
 
-        <!-- Marcador Central / VS -->
-        <div class="md:col-span-2 flex flex-col items-center justify-center text-center py-1">
-          <span class="font-mono-table text-[11px] text-text-secondary uppercase tracking-widest font-bold">FECHA 18</span>
-          <div class="px-4 py-1.5 rounded-xl bg-surface-container-low border border-border-subtle flex items-center gap-3 my-1 shadow-inner">
-            <span class="font-mono-metric text-xl sm:text-2xl font-black ${esEnVivo ? 'text-emerald-600 dark:text-emerald-400' : 'text-text-primary'}">${gl}</span>
-            <span class="text-text-secondary font-bold text-sm">:</span>
-            <span class="font-mono-metric text-xl sm:text-2xl font-black ${esEnVivo ? 'text-emerald-600 dark:text-emerald-400' : 'text-text-primary'}">${gv}</span>
+        <!-- Marcador Central -->
+        <div class="col-span-2 flex flex-col items-center justify-center">
+          <div class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-mono text-lg sm:text-xl font-black ${esEnVivo ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'} flex items-center gap-1.5">
+            <span>${gl}</span>
+            <span class="text-slate-400 text-sm">:</span>
+            <span>${gv}</span>
           </div>
-          <span class="px-2 py-0.5 rounded bg-surface-container-low text-text-secondary font-label-caps text-[10px]">${p.tv || 'TV CH-1 GOLTV / ZAPPING'}</span>
+          <span class="text-[10px] text-slate-400 mt-1 uppercase font-medium">Fecha 18</span>
         </div>
 
-        <!-- Equipo Visitante -->
-        <div class="md:col-span-5 flex items-center justify-start gap-space-md text-left">
-          <img class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-xs shrink-0" src="${visitante.escudo || ''}" alt="Escudo ${visitante.nombre}" onerror="this.src='https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=100'"/>
-          <div class="flex flex-col">
-            <span class="font-headline-md text-base sm:text-lg lg:text-xl text-text-primary font-black tracking-tight leading-tight">${visitante.nombre}</span>
-            <span class="font-label-caps text-xs text-text-secondary">${p.uniforme_visitante_desc || 'Alterna Oficial'}</span>
-          </div>
+        <!-- Visitante -->
+        <div class="col-span-5 flex items-center justify-start gap-3 text-left">
+          <img class="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-contain p-1 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shrink-0" src="${visitante.escudo || ''}" alt="${visitante.nombre}" onerror="this.src='https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=100'"/>
+          <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">${visitante.nombre}</span>
         </div>
       </div>
 
-      <!-- Pie de tarjeta con oficiales y acciones -->
-      <div class="bg-surface-container-low/70 rounded-lg p-space-sm flex flex-col md:flex-row items-center justify-between gap-space-sm text-text-secondary font-body-sm text-xs border border-border-subtle/50">
-        <div class="flex items-center gap-space-md flex-wrap">
-          <div class="flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-secondary text-sm">badge</span>
-            <span><strong>Comisario:</strong> ${p.comisario || 'Oficial LigaPro'}</span>
-          </div>
-          <div class="flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-amber-500 text-sm">sports</span>
-            <span><strong>Árbitro:</strong> ${p.arbitro || 'Designación Oficial CNA'}</span>
-          </div>
-          <div class="flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-secondary text-sm">support_agent</span>
-            <span><strong>VAR:</strong> ${p.var || 'Cabina VOR'}</span>
-          </div>
-        </div>
+      <!-- Barra de acciones minimalista -->
+      <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+        <span class="text-slate-400 text-[11px]">${p.tv || 'Transmisión Oficial LigaPro'}</span>
         <div class="flex items-center gap-2">
           ${esActivo ? `
-            <span class="px-2 py-1 rounded bg-secondary/10 text-secondary font-bold text-[11px] flex items-center gap-1">
-              <span class="material-symbols-outlined text-sm">check</span> Partido Activo en Consola
+            <span class="px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 font-semibold text-xs flex items-center gap-1">
+              <span class="material-symbols-outlined text-xs">check</span> En Consola
             </span>
           ` : `
-            <button type="button" onclick="seleccionarPartidoEnVivo('${p.id}', false)" class="px-3 py-1 rounded bg-surface-container hover:bg-surface-container-high text-text-primary font-bold text-xs transition-colors flex items-center gap-1">
-              <span class="material-symbols-outlined text-xs">radio_button_checked</span> Seleccionar
+            <button type="button" onclick="seleccionarPartidoEnVivo('${p.id}', false)" class="px-2.5 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium text-xs transition-colors">
+              Seleccionar
             </button>
           `}
-          <button type="button" onclick="seleccionarPartidoEnVivo('${p.id}', true)" class="px-3 py-1 rounded bg-secondary text-on-secondary hover:bg-secondary/90 font-bold text-xs shadow-xs transition-colors flex items-center gap-1">
+          <button type="button" onclick="seleccionarPartidoEnVivo('${p.id}', true)" class="px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs shadow-xs transition-colors flex items-center gap-1">
             <span class="material-symbols-outlined text-xs">terminal</span> Abrir Consola
           </button>
         </div>
