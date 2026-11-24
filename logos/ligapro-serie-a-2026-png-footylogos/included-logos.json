@@ -1,0 +1,98 @@
+[
+  {
+    "slug": "barcelona-sc-guayaquil",
+    "name": "Barcelona SC Guayaquil",
+    "filename": "barcelona-sc-guayaquil-logo-footylogos.png",
+    "sha256": "b1a1f8c3df5bf6b1616133c0878e4da189dc54136309b01d7211287dcc19a2ae"
+  },
+  {
+    "slug": "cd-macara",
+    "name": "CD Macará",
+    "filename": "cd-macara-logo-footylogos.png",
+    "sha256": "0a9673da19580810e0bedf7a89e28c6b931e5c7dc66defecfd6b6fe9c021668e"
+  },
+  {
+    "slug": "cd-universidad-catolica",
+    "name": "CD Universidad Católica (Quito)",
+    "filename": "cd-universidad-catolica-logo-footylogos.png",
+    "sha256": "814355cbbe5512afdc9d68eb61369d3ff9467ea850b60dbea6fcf17911d25a60"
+  },
+  {
+    "slug": "cs-emelec",
+    "name": "CS Emelec",
+    "filename": "cs-emelec-logo-footylogos.png",
+    "sha256": "fadbc7f80f9bd35bee1cd58f5772c4795602b3f5a570df0e134c10ea335e9221"
+  },
+  {
+    "slug": "delfin-sc",
+    "name": "Delfin SC",
+    "filename": "delfin-sc-logo-footylogos.png",
+    "sha256": "9b241d669ccb748b3cf9f9a0cd67202ecab5fa659df1f49a199afd5c71a4884d"
+  },
+  {
+    "slug": "deportivo-cuenca",
+    "name": "Deportivo Cuenca",
+    "filename": "deportivo-cuenca-logo-footylogos.png",
+    "sha256": "63f0d673f6428c487e735bc4936ff342a436df1af04f845dd542d03eb0e04f2b"
+  },
+  {
+    "slug": "independiente-del-valle",
+    "name": "Independiente del Valle",
+    "filename": "independiente-del-valle-logo-footylogos.png",
+    "sha256": "c53d33ac57e155e84179bdc055c83c7f5500da0fe3530af965c4f767b215cbbf"
+  },
+  {
+    "slug": "ldu-quito",
+    "name": "LDU Quito (Liga de Quito)",
+    "filename": "ldu-quito-logo-footylogos.png",
+    "sha256": "057f5dc4fcd7268acaff2d0b9130ff039679b56cffc7f5138ccb0ba7e950ce7b"
+  },
+  {
+    "slug": "libertad-fc",
+    "name": "Libertad FC",
+    "filename": "libertad-fc-logo-footylogos.png",
+    "sha256": "d3a3d99185927d6b768b36246e887bfb6fac819b7c45e6fc70cc7c4d289b5144"
+  },
+  {
+    "slug": "manta-fc",
+    "name": "Manta Fútbol Club",
+    "filename": "manta-fc-logo-footylogos.png",
+    "sha256": "33976edb9f7258d446e07e28b44d9f233e05cebbfa4c2d053dbdd2f8a2ed0835"
+  },
+  {
+    "slug": "mushuc-runa-sc",
+    "name": "Mushuc Runa SC",
+    "filename": "mushuc-runa-sc-logo-footylogos.png",
+    "sha256": "37969a9bd475d5020c4cc7b954a9bf016765b409a31f6161e2288a5435f25dd6"
+  },
+  {
+    "slug": "orense-sc",
+    "name": "Orense SC",
+    "filename": "orense-sc-logo-footylogos.png",
+    "sha256": "a09673787082c76be46bee9aef3ef86d26ad7ed28034c8ec0c6d68ed781c6202"
+  },
+  {
+    "slug": "sd-aucas",
+    "name": "SD Aucas",
+    "filename": "sd-aucas-logo-footylogos.png",
+    "sha256": "3a75d103ddcc73ba1352f5daed124793e1a4aabde847196cf0e12f84290edda0"
+  },
+  {
+    "slug": "tecnico-universitario",
+    "name": "Técnico Universitario",
+    "filename": "tecnico-universitario-logo-footylogos.png",
+    "sha256": "b68f2b567a5b6498542b4a46c824d946c6707b8172137b0d7377da8e73fc483a"
+  },
+  {
+    "slug": "guayaquil-city",
+    "name": "Guayaquil City F.C.",
+    "filename": "guayaquil-city-logo-footylogos.png",
+    "sha256": "a673e2ae1793ebb9c73b15cb9791b38b4a19632d96e610bc5c84bb2b4886865c"
+  },
+  {
+    "slug": "leones-fc",
+    "name": "Leones FC",
+    "filename": "leones-fc-logo-footylogos.png",
+    "sha256": "7435365bef55d510f25444c94bcba913c13186a8be11b449840551b79cae0de3"
+  }
+]

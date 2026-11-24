@@ -1,5 +1,9 @@
 import os
 import re
+import sys
+
+sys.path.insert(0, os.path.dirname(__file__))
+from apply_logos import get_club_logo
 
 DATA_PATH_TO_ACTION = {
     'tablero-general': "navigateView('tablero')",
@@ -211,7 +215,7 @@ def clean_and_transform_screen(folder, screen_id):
     <div class="grid grid-cols-12 gap-2 sm:gap-4 items-center py-2">
       <div class="col-span-5 flex items-center justify-end gap-3 text-right">
         <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">LDU Quito</span>
-        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-indigo-50 dark:bg-slate-800 text-indigo-700 dark:text-indigo-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">LDU</div>
+        <img src="assets/clubs/ldu-quito.png" alt="LDU Quito" class="w-10 h-10 sm:w-11 sm:h-11 object-contain shrink-0 drop-shadow-xs" />
       </div>
       <div class="col-span-2 flex flex-col items-center justify-center">
         <div class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-mono text-lg sm:text-xl font-black text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
@@ -220,7 +224,7 @@ def clean_and_transform_screen(folder, screen_id):
         <span class="text-[10px] text-slate-400 mt-1 uppercase font-medium">Fecha 18</span>
       </div>
       <div class="col-span-5 flex items-center justify-start gap-3 text-left">
-        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-amber-50 dark:bg-slate-800 text-amber-700 dark:text-amber-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">BSC</div>
+        <img src="assets/clubs/barcelona-sc.png" alt="Barcelona SC" class="w-10 h-10 sm:w-11 sm:h-11 object-contain shrink-0 drop-shadow-xs" />
         <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">Barcelona SC</span>
       </div>
     </div>
@@ -245,7 +249,7 @@ def clean_and_transform_screen(folder, screen_id):
     <div class="grid grid-cols-12 gap-2 sm:gap-4 items-center py-2">
       <div class="col-span-5 flex items-center justify-end gap-3 text-right">
         <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">Ind. del Valle</span>
-        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-indigo-50 dark:bg-slate-800 text-indigo-700 dark:text-indigo-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">IDV</div>
+        <img src="assets/clubs/independiente-del-valle.png" alt="Ind. del Valle" class="w-10 h-10 sm:w-11 sm:h-11 object-contain shrink-0 drop-shadow-xs" />
       </div>
       <div class="col-span-2 flex flex-col items-center justify-center">
         <div class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-mono text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-1.5">
@@ -254,7 +258,7 @@ def clean_and_transform_screen(folder, screen_id):
         <span class="text-[10px] text-slate-400 mt-1 uppercase font-medium">Fecha 18</span>
       </div>
       <div class="col-span-5 flex items-center justify-start gap-3 text-left">
-        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-blue-50 dark:bg-slate-800 text-blue-700 dark:text-blue-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">EME</div>
+        <img src="assets/clubs/cs-emelec.png" alt="CS Emelec" class="w-10 h-10 sm:w-11 sm:h-11 object-contain shrink-0 drop-shadow-xs" />
         <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">CS Emelec</span>
       </div>
     </div>
@@ -279,7 +283,7 @@ def clean_and_transform_screen(folder, screen_id):
     <div class="grid grid-cols-12 gap-2 sm:gap-4 items-center py-2">
       <div class="col-span-5 flex items-center justify-end gap-3 text-right">
         <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">SD Aucas</span>
-        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-amber-50 dark:bg-slate-800 text-amber-700 dark:text-amber-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">AUC</div>
+        <img src="assets/clubs/sd-aucas.png" alt="SD Aucas" class="w-10 h-10 sm:w-11 sm:h-11 object-contain shrink-0 drop-shadow-xs" />
       </div>
       <div class="col-span-2 flex flex-col items-center justify-center">
         <div class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-mono text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-1.5">
@@ -288,7 +292,7 @@ def clean_and_transform_screen(folder, screen_id):
         <span class="text-[10px] text-slate-400 mt-1 uppercase font-medium">Fecha 18</span>
       </div>
       <div class="col-span-5 flex items-center justify-start gap-3 text-left">
-        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-red-50 dark:bg-slate-800 text-red-700 dark:text-red-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">NAC</div>
+        <img src="assets/clubs/el-nacional.png" alt="El Nacional" class="w-10 h-10 sm:w-11 sm:h-11 object-contain shrink-0 drop-shadow-xs" />
         <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">El Nacional</span>
       </div>
     </div>
@@ -341,9 +345,7 @@ def clean_and_transform_screen(folder, screen_id):
           <div class="w-full max-w-lg bg-slate-900 text-white rounded-2xl shadow-2xl overflow-hidden border border-slate-800 p-6 sm:p-7">
             <!-- Cabecera -->
             <div class="flex flex-col items-center text-center mb-5">
-              <div class="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg border border-slate-700 mb-2">
-                <span class="material-symbols-outlined text-white text-2xl">shield</span>
-              </div>
+              <img src="assets/ligapro-logo.svg" alt="LigaPro" class="h-16 w-auto object-contain drop-shadow-md mb-2" />
               <h1 class="text-xl font-extrabold tracking-tight text-white">SIGEC-LP</h1>
               <p class="text-xs text-amber-400 font-bold uppercase tracking-wider">Liga Profesional de Fútbol del Ecuador</p>
               <p class="text-xs text-slate-400 mt-1">Portal Oficial de Acceso y Gestión Federativa</p>
@@ -442,6 +444,45 @@ def clean_and_transform_screen(folder, screen_id):
         </div>
         '''
         body_content = auth_card
+
+
+    # Reemplazar círculos con iniciales por escudos oficiales en Tabla de Posiciones y Uniformes
+    def replace_posiciones_crests(match):
+        club_name = match.group(2).strip()
+        logo_path = get_club_logo(club_name)
+        return f'<img src="{logo_path}" alt="{club_name}" class="w-8 h-8 object-contain shrink-0 drop-shadow-xs" />\n<div class="flex flex-col min-w-0">\n<span {match.group(1)}>{match.group(2)}</span>'
+
+    body_content = re.sub(
+        r'<div class="w-8 h-8 rounded-full bg-surface-container[^>]*>\s*[A-Za-z0-9\.\s]+?\s*</div>\s*<div class="flex flex-col min-w-0">\s*<span\b([^>]*)>(.*?)</span>',
+        replace_posiciones_crests,
+        body_content
+    )
+
+    # En Consola de Matchday: incluir escudos oficiales de los rivales
+    body_content = re.sub(
+        r'<span class="font-body-md text-body-md font-bold text-text-primary">LDU Quito <span class="text-text-secondary font-normal">vs</span> Barcelona SC</span>',
+        r'<span class="font-body-md text-body-md font-bold text-text-primary flex items-center gap-2"><img src="assets/clubs/ldu-quito.png" alt="LDU" class="w-6 h-6 object-contain shrink-0" /><span>LDU Quito</span><span class="text-text-secondary font-normal text-xs">vs</span><img src="assets/clubs/barcelona-sc.png" alt="BSC" class="w-6 h-6 object-contain shrink-0" /><span>Barcelona SC</span></span>',
+        body_content
+    )
+
+    # En Uniformes 48h: reemplazar círculos de LDU y BSC por escudos oficiales
+    body_content = re.sub(
+        r'<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center font-bold text-xs text-primary shadow-inner[^>]*>\s*LDU\s*</div>',
+        r'<img src="assets/clubs/ldu-quito.png" alt="LDU Quito" class="w-10 h-10 object-contain shrink-0 drop-shadow-xs" />',
+        body_content
+    )
+    body_content = re.sub(
+        r'<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center font-bold text-xs text-primary shadow-inner[^>]*>\s*BSC\s*</div>',
+        r'<img src="assets/clubs/barcelona-sc.png" alt="Barcelona SC" class="w-10 h-10 object-contain shrink-0 drop-shadow-xs" />',
+        body_content
+    )
+
+    # En Portal Clubes: usar escudo oficial de LDU Quito
+    body_content = re.sub(
+        r'<img class="w-full h-full object-contain" [^>]*src="https://lh3.googleusercontent.com/[^"]*"',
+        r'<img class="w-full h-full object-contain drop-shadow-sm" src="assets/clubs/ldu-quito.png"',
+        body_content
+    )
 
     # 3. Reemplazar cualquier href="#" remanente por javascript:void(0)
     body_content = body_content.replace('href="#"', 'href="javascript:void(0)"')

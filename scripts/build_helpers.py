@@ -115,9 +115,9 @@ def generate_header(active_id):
     header_html = f'''
     <header class="fixed top-0 left-0 right-0 h-14 bg-white/95 dark:bg-[#0B0F19]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-40 px-3 sm:px-6 transition-colors">
       <div class="max-w-7xl mx-auto h-full flex items-center justify-between gap-3">
-        <!-- Logo minimalista de LigaPro -->
+        <!-- Logo oficial de LigaPro -->
         <div class="flex items-center gap-2.5 cursor-pointer select-none shrink-0 hover:opacity-90 transition-opacity" onclick="navigateView('tablero')" title="LigaPro Serie A">
-          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-black text-sm shadow-xs">LP</span>
+          <img src="assets/ligapro-mini.svg" alt="LigaPro" class="h-9 w-auto object-contain drop-shadow-xs" />
           <div class="flex flex-col hidden sm:flex">
             <span class="font-extrabold text-sm tracking-tight text-slate-900 dark:text-white leading-tight">LigaPro</span>
             <span class="text-[10px] text-slate-400 font-medium">Serie A 2025</span>

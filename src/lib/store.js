@@ -9,6 +9,21 @@ import { calcularFinalistasYCampeon } from '../domain/tablas/finalistas.js';
 import { evaluarAcumulacionAmarillas } from '../domain/disciplina/acumulacion.js';
 import { calcularMulta } from '../domain/multas/calculo.js';
 
+export const CLUB_LOGOS = {"LDU Quito": "assets/clubs/ldu-quito.png", "Liga Deportiva Universitaria": "assets/clubs/ldu-quito.png", "Liga Deportiva Universitaria de Quito": "assets/clubs/ldu-quito.png", "LDU": "assets/clubs/ldu-quito.png", "Barcelona SC": "assets/clubs/barcelona-sc.png", "Barcelona Sporting Club": "assets/clubs/barcelona-sc.png", "BSC": "assets/clubs/barcelona-sc.png", "Independiente del Valle": "assets/clubs/independiente-del-valle.png", "Ind. del Valle": "assets/clubs/independiente-del-valle.png", "IDV": "assets/clubs/independiente-del-valle.png", "Universidad Católica": "assets/clubs/universidad-catolica.png", "CD Universidad Católica": "assets/clubs/universidad-catolica.png", "C.D. Universidad Católica": "assets/clubs/universidad-catolica.png", "U. Católica": "assets/clubs/universidad-catolica.png", "SD Aucas": "assets/clubs/sd-aucas.png", "Sociedad Deportiva Aucas": "assets/clubs/sd-aucas.png", "S.D. Aucas": "assets/clubs/sd-aucas.png", "Aucas": "assets/clubs/sd-aucas.png", "CS Emelec": "assets/clubs/cs-emelec.png", "Club Sport Emelec": "assets/clubs/cs-emelec.png", "C.S. Emelec": "assets/clubs/cs-emelec.png", "Emelec": "assets/clubs/cs-emelec.png", "Orense SC": "assets/clubs/orense-sc.png", "Orense Sporting Club": "assets/clubs/orense-sc.png", "Orense S.C.": "assets/clubs/orense-sc.png", "Orense": "assets/clubs/orense-sc.png", "El Nacional": "assets/clubs/el-nacional.png", "Club Deportivo El Nacional": "assets/clubs/el-nacional.png", "CD El Nacional": "assets/clubs/el-nacional.png", "Macará": "assets/clubs/macara.png", "Club Deportivo Macará": "assets/clubs/macara.png", "CD Macará": "assets/clubs/macara.png", "C.D. Macará": "assets/clubs/macara.png", "Deportivo Cuenca": "assets/clubs/deportivo-cuenca.png", "Club Deportivo Cuenca": "assets/clubs/deportivo-cuenca.png", "Dep. Cuenca": "assets/clubs/deportivo-cuenca.png", "Mushuc Runa": "assets/clubs/mushuc-runa.png", "Mushuc Runa SC": "assets/clubs/mushuc-runa.png", "Mushuc Runa S.C.": "assets/clubs/mushuc-runa.png", "Mushuc Runa Sporting Club": "assets/clubs/mushuc-runa.png", "Técnico Universitario": "assets/clubs/tecnico-universitario.png", "CD Técnico Universitario": "assets/clubs/tecnico-universitario.png", "Delfín SC": "assets/clubs/delfin-sc.png", "Delfin SC": "assets/clubs/delfin-sc.png", "Delfín S.C.": "assets/clubs/delfin-sc.png", "Delfín Sporting Club": "assets/clubs/delfin-sc.png", "Libertad FC": "assets/clubs/libertad-fc.png", "Libertad F.C.": "assets/clubs/libertad-fc.png", "Libertad Fútbol Club": "assets/clubs/libertad-fc.png", "Imbabura SC": "assets/clubs/imbabura-sc.png", "Imbabura S.C.": "assets/clubs/imbabura-sc.png", "Imbabura Sporting Club": "assets/clubs/imbabura-sc.png", "Cumbayá FC": "assets/clubs/cumbaya-fc.png", "Cumbayá F.C.": "assets/clubs/cumbaya-fc.png", "Cumbayá Fútbol Club": "assets/clubs/cumbaya-fc.png", "Manta FC": "assets/clubs/manta-fc.png", "Guayaquil City": "assets/clubs/guayaquil-city.png", "Leones FC": "assets/clubs/leones-fc.png"};
+
+export function getClubLogo(clubName) {
+  if (!clubName) return 'assets/ligapro-mini.svg';
+  if (CLUB_LOGOS[clubName]) return CLUB_LOGOS[clubName];
+  const nameNorm = clubName.toLowerCase().trim();
+  for (const [key, path] of Object.entries(CLUB_LOGOS)) {
+    if (nameNorm.includes(key.toLowerCase()) || key.toLowerCase().includes(nameNorm)) {
+      return path;
+    }
+  }
+  return 'assets/ligapro-mini.svg';
+}
+
+
 export const INITIAL_STATE = {
   activeView: 'posiciones',
   highContrast: false,
@@ -88,7 +103,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666601',
         nombre: 'Liga Deportiva Universitaria',
         nombreCorto: 'LDU Quito',
-        escudo: '⚪',
+        escudo: 'assets/clubs/ldu-quito.png',
         color: '#FFFFFF',
         camisetaColor: '#FFFFFF',
         pantalonetaColor: '#FFFFFF',
@@ -99,7 +114,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666602',
         nombre: 'Barcelona Sporting Club',
         nombreCorto: 'Barcelona SC',
-        escudo: '🟡',
+        escudo: 'assets/clubs/barcelona-sc.png',
         color: '#FFE600',
         camisetaColor: '#FF7900',
         pantalonetaColor: '#1A1A1A',
@@ -130,7 +145,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666603',
         nombre: 'Independiente del Valle',
         nombreCorto: 'IDV',
-        escudo: '⚫',
+        escudo: 'assets/clubs/independiente-del-valle.png',
         color: '#000000',
         camisetaColor: '#000000',
         pantalonetaColor: '#000000',
@@ -141,7 +156,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666604',
         nombre: 'Club Sport Emelec',
         nombreCorto: 'CS Emelec',
-        escudo: '🔵',
+        escudo: 'assets/clubs/cs-emelec.png',
         color: '#003399',
         camisetaColor: '#003399',
         pantalonetaColor: '#999999',
@@ -171,7 +186,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666606',
         nombre: 'Sociedad Deportiva Aucas',
         nombreCorto: 'SD Aucas',
-        escudo: '🟡',
+        escudo: 'assets/clubs/sd-aucas.png',
         color: '#FFCC00',
         camisetaColor: '#FFCC00',
         pantalonetaColor: '#CC0000',
@@ -182,7 +197,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666609',
         nombre: 'Club Deportivo El Nacional',
         nombreCorto: 'CD El Nacional',
-        escudo: '🔴',
+        escudo: 'assets/clubs/el-nacional.png',
         color: '#CC0000',
         camisetaColor: '#8B0000',
         pantalonetaColor: '#8B0000',
@@ -212,7 +227,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666605',
         nombre: 'Universidad Católica',
         nombreCorto: 'U. Católica',
-        escudo: '🔵',
+        escudo: 'assets/clubs/universidad-catolica.png',
         color: '#0080FF',
         camisetaColor: '#0080FF',
         pantalonetaColor: '#FFFFFF',
@@ -223,7 +238,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666607',
         nombre: 'Orense Sporting Club',
         nombreCorto: 'Orense SC',
-        escudo: '🟢',
+        escudo: 'assets/clubs/orense-sc.png',
         color: '#009933',
         camisetaColor: '#009933',
         pantalonetaColor: '#009933',
@@ -253,7 +268,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666610',
         nombre: 'Club Deportivo Cuenca',
         nombreCorto: 'Dep. Cuenca',
-        escudo: '🔴',
+        escudo: 'assets/clubs/deportivo-cuenca.png',
         color: '#CC0000',
         camisetaColor: '#CC0000',
         pantalonetaColor: '#000000',
@@ -264,7 +279,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666612',
         nombre: 'Club Deportivo Macará',
         nombreCorto: 'Macará',
-        escudo: '🔵',
+        escudo: 'assets/clubs/macara.png',
         color: '#00BFFF',
         camisetaColor: '#00BFFF',
         pantalonetaColor: '#00BFFF',
@@ -294,7 +309,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666611',
         nombre: 'Técnico Universitario',
         nombreCorto: 'Técnico Univ.',
-        escudo: '🔴',
+        escudo: 'assets/clubs/tecnico-universitario.png',
         color: '#FF0000',
         camisetaColor: '#FF0000',
         pantalonetaColor: '#FFFFFF',
@@ -305,7 +320,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666613',
         nombre: 'Mushuc Runa Sporting Club',
         nombreCorto: 'Mushuc Runa',
-        escudo: '🟢',
+        escudo: 'assets/clubs/mushuc-runa.png',
         color: '#009900',
         camisetaColor: '#009900',
         pantalonetaColor: '#FFFFFF',
@@ -335,7 +350,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666608',
         nombre: 'Delfín Sporting Club',
         nombreCorto: 'Delfín SC',
-        escudo: '🟡',
+        escudo: 'assets/clubs/delfin-sc.png',
         color: '#FFD700',
         camisetaColor: '#FFD700',
         pantalonetaColor: '#000080',
@@ -346,7 +361,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666614',
         nombre: 'Libertad Fútbol Club',
         nombreCorto: 'Libertad FC',
-        escudo: '🟠',
+        escudo: 'assets/clubs/libertad-fc.png',
         color: '#FF6600',
         camisetaColor: '#FF6600',
         pantalonetaColor: '#FFFFFF',
@@ -376,7 +391,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666616',
         nombre: 'Imbabura Sporting Club',
         nombreCorto: 'Imbabura SC',
-        escudo: '🔵',
+        escudo: 'assets/clubs/imbabura-sc.png',
         color: '#0033CC',
         camisetaColor: '#0033CC',
         pantalonetaColor: '#0033CC',
@@ -387,7 +402,7 @@ export const INITIAL_STATE = {
         id: '66666666-6666-6666-6666-666666666615',
         nombre: 'Cumbayá Fútbol Club',
         nombreCorto: 'Cumbayá FC',
-        escudo: '⚪',
+        escudo: 'assets/clubs/cumbaya-fc.png',
         color: '#0099FF',
         camisetaColor: '#0099FF',
         pantalonetaColor: '#FFFFFF',
@@ -407,14 +422,14 @@ export const INITIAL_STATE = {
       id: '66666666-6666-6666-6666-666666666601',
       nombre: 'LDU Quito',
       nombreCorto: 'LDU',
-      escudo: '⚪',
+      escudo: 'assets/clubs/ldu-quito.png',
       color: '#FFFFFF'
     },
     visitante: {
       id: '66666666-6666-6666-6666-666666666602',
       nombre: 'Barcelona SC',
       nombreCorto: 'BSC',
-      escudo: '🟡',
+      escudo: 'assets/clubs/barcelona-sc.png',
       color: '#FFE600'
     },
     estadio: 'Estadio Rodrigo Paz Delgado (Casa Blanca)',

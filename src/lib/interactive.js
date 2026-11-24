@@ -3,7 +3,7 @@
  * Conexión completa con Supabase y Estado Reactivo
  */
 
-import { store, INITIAL_STATE } from './store.js';
+import { store, INITIAL_STATE, getClubLogo, CLUB_LOGOS } from './store.js';
 import { getSupabase, safeInsert, safeQuery } from './supabase.js';
 import { ordenarTabla } from '../domain/tablas/desempates.js';
 import { calcularFinalistasYCampeon } from '../domain/tablas/finalistas.js';
@@ -2113,9 +2113,7 @@ window.renderizarPartidosTablero = function() {
         <!-- Local -->
         <div class="col-span-5 flex items-center justify-end gap-3 text-right">
           <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">${nombreLocal}</span>
-          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-indigo-50 dark:bg-slate-800 text-indigo-700 dark:text-indigo-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">
-            ${nombreLocal.substring(0, 3).toUpperCase()}
-          </div>
+          <img src="${getClubLogo(nombreLocal)}" alt="${nombreLocal}" class="w-10 h-10 sm:w-11 sm:h-11 object-contain shrink-0 drop-shadow-xs" onerror="this.src='assets/ligapro-mini.svg'" />
         </div>
 
         <!-- Marcador Central -->
@@ -2130,9 +2128,7 @@ window.renderizarPartidosTablero = function() {
 
         <!-- Visitante -->
         <div class="col-span-5 flex items-center justify-start gap-3 text-left">
-          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-amber-50 dark:bg-slate-800 text-amber-700 dark:text-amber-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">
-            ${nombreVisitante.substring(0, 3).toUpperCase()}
-          </div>
+          <img src="${getClubLogo(nombreVisitante)}" alt="${nombreVisitante}" class="w-10 h-10 sm:w-11 sm:h-11 object-contain shrink-0 drop-shadow-xs" onerror="this.src='assets/ligapro-mini.svg'" />
           <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">${nombreVisitante}</span>
         </div>
       </div>
