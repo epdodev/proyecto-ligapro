@@ -3,7 +3,7 @@
  * Conexión completa con Supabase y Estado Reactivo
  */
 
-import { store } from './store.js';
+import { store, INITIAL_STATE } from './store.js';
 import { getSupabase, safeInsert, safeQuery } from './supabase.js';
 import { ordenarTabla } from '../domain/tablas/desempates.js';
 import { calcularFinalistasYCampeon } from '../domain/tablas/finalistas.js';
@@ -2112,8 +2112,11 @@ window.renderizarPartidosTablero = function() {
     // Datos de equipos
     const local = p.local || { nombre: 'Local', nombre_corto: 'LOC', escudo: '' };
     const visitante = p.visitante || { nombre: 'Visitante', nombre_corto: 'VIS', escudo: '' };
-    const estadioNombre = p.estadio?.nombre || 'Estadio Oficial LigaPro';
-    const estadioCiudad = p.estadio?.ciudad ? ` (${p.estadio.ciudad})` : '';
+    const nombreLocal = local.nombreCorto || local.nombre || 'Local';
+    const nombreVisitante = visitante.nombreCorto || visitante.nombre || 'Visitante';
+    const estadioNombre = typeof p.estadio === 'string' ? p.estadio : (p.estadio?.nombre || 'Estadio Rodrigo Paz Delgado');
+    const ciudadEstadio = p.ciudad || (typeof p.estadio === 'object' ? p.estadio?.ciudad : '');
+    const estadioCiudad = ciudadEstadio ? ` (${ciudadEstadio})` : '';
 
     const gl = p.goles_local !== null && p.goles_local !== undefined ? p.goles_local : (p.marcador?.local ?? '-');
     const gv = p.goles_visitante !== null && p.goles_visitante !== undefined ? p.goles_visitante : (p.marcador?.visitante ?? '-');
@@ -2135,8 +2138,10 @@ window.renderizarPartidosTablero = function() {
       <div class="grid grid-cols-12 gap-2 sm:gap-4 items-center py-2">
         <!-- Local -->
         <div class="col-span-5 flex items-center justify-end gap-3 text-right">
-          <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">${local.nombre}</span>
-          <img class="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-contain p-1 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shrink-0" src="${local.escudo || ''}" alt="${local.nombre}" onerror="this.src='https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=100'"/>
+          <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">${nombreLocal}</span>
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-indigo-50 dark:bg-slate-800 text-indigo-700 dark:text-indigo-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">
+            ${nombreLocal.substring(0, 3).toUpperCase()}
+          </div>
         </div>
 
         <!-- Marcador Central -->
@@ -2151,8 +2156,10 @@ window.renderizarPartidosTablero = function() {
 
         <!-- Visitante -->
         <div class="col-span-5 flex items-center justify-start gap-3 text-left">
-          <img class="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-contain p-1 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shrink-0" src="${visitante.escudo || ''}" alt="${visitante.nombre}" onerror="this.src='https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=100'"/>
-          <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">${visitante.nombre}</span>
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-amber-50 dark:bg-slate-800 text-amber-700 dark:text-amber-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">
+            ${nombreVisitante.substring(0, 3).toUpperCase()}
+          </div>
+          <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">${nombreVisitante}</span>
         </div>
       </div>
 
@@ -2316,7 +2323,7 @@ function inicializarPartidosEnTiempoReal() {
 }
 
 // Reloj continuo y sincronización al cargar
-document.addEventListener('DOMContentLoaded', () => {
+function iniciarApp() {
   // 1. Sincronizar tema y accesibilidad desde localStorage / store
   try {
     const savedTheme = localStorage.getItem('sigec_theme') || (localStorage.getItem('sigec_high_contrast') === 'true' ? 'dark' : null);
@@ -2332,7 +2339,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   } catch (e) {}
 
-  // 2. Sincronizar sesión activa de Supabase si existe
+  // 2. Renderizar inmediatamente los partidos iniciales para que la pantalla no quede en blanco o con spinner
+  renderizarPartidosTablero();
+
+  // 3. Sincronizar sesión activa de Supabase si existe
   const sb = getSupabase();
   if (sb && sb.auth) {
     sb.auth.getSession().then(async ({ data: { session } }) => {
@@ -2412,4 +2422,11 @@ document.addEventListener('DOMContentLoaded', () => {
       notifPanel.classList.add('hidden');
     }
   });
-});
+}
+
+// Ejecutar inmediatamente si el DOM ya está listo, o escuchar DOMContentLoaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', iniciarApp);
+} else {
+  iniciarApp();
+}

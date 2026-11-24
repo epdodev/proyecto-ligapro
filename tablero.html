@@ -471,9 +471,106 @@
 
 <!-- Contenedor dinámico de partidos inyectado por interactive.js -->
 <div id="contenedor-partidos-realtime" class="flex flex-col gap-3 min-h-[300px]">
-  <div class="flex items-center justify-center p-10 bg-surface-card rounded-xl text-slate-400 gap-2 border border-border-subtle dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-    <span class="material-symbols-outlined animate-spin text-xl text-indigo-500">sync</span>
-    <span class="text-xs">Cargando partidos oficiales...</span>
+  <!-- Partido 1: LDU vs BSC (En Vivo) -->
+  <div class="bg-surface-card rounded-xl p-4 sm:p-5 shadow-xs border border-indigo-600 ring-2 ring-indigo-500/20 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100 dark:border-slate-800 text-xs">
+      <span class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 font-medium">
+        <span class="material-symbols-outlined text-sm">stadium</span> Estadio Rodrigo Paz Delgado (Quito)
+      </span>
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase animate-pulse">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> EN VIVO: 68' 2T
+      </span>
+    </div>
+    <div class="grid grid-cols-12 gap-2 sm:gap-4 items-center py-2">
+      <div class="col-span-5 flex items-center justify-end gap-3 text-right">
+        <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">LDU Quito</span>
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-indigo-50 dark:bg-slate-800 text-indigo-700 dark:text-indigo-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">LDU</div>
+      </div>
+      <div class="col-span-2 flex flex-col items-center justify-center">
+        <div class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-mono text-lg sm:text-xl font-black text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+          <span>1</span><span class="text-slate-400 text-sm">:</span><span>1</span>
+        </div>
+        <span class="text-[10px] text-slate-400 mt-1 uppercase font-medium">Fecha 18</span>
+      </div>
+      <div class="col-span-5 flex items-center justify-start gap-3 text-left">
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-amber-50 dark:bg-slate-800 text-amber-700 dark:text-amber-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">BSC</div>
+        <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">Barcelona SC</span>
+      </div>
+    </div>
+    <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+      <span class="text-slate-400 text-[11px]">ZAPPING SPORTS / TELEAMAZONAS</span>
+      <button type="button" onclick="navigateView('consola')" class="px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs shadow-xs transition-colors flex items-center gap-1">
+        <span class="material-symbols-outlined text-xs">terminal</span> Abrir Consola
+      </button>
+    </div>
+  </div>
+
+  <!-- Partido 2: IDV vs CS Emelec -->
+  <div class="bg-surface-card rounded-xl p-4 sm:p-5 shadow-xs border border-slate-200 dark:border-slate-800 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100 dark:border-slate-800 text-xs">
+      <span class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 font-medium">
+        <span class="material-symbols-outlined text-sm">stadium</span> Estadio Banco Guayaquil (Sangolquí)
+      </span>
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-500/15 text-slate-600 dark:text-slate-400 text-xs font-bold uppercase">
+        <span class="material-symbols-outlined text-xs">check_circle</span> FINALIZADO
+      </span>
+    </div>
+    <div class="grid grid-cols-12 gap-2 sm:gap-4 items-center py-2">
+      <div class="col-span-5 flex items-center justify-end gap-3 text-right">
+        <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">Ind. del Valle</span>
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-indigo-50 dark:bg-slate-800 text-indigo-700 dark:text-indigo-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">IDV</div>
+      </div>
+      <div class="col-span-2 flex flex-col items-center justify-center">
+        <div class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-mono text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-1.5">
+          <span>2</span><span class="text-slate-400 text-sm">:</span><span>1</span>
+        </div>
+        <span class="text-[10px] text-slate-400 mt-1 uppercase font-medium">Fecha 18</span>
+      </div>
+      <div class="col-span-5 flex items-center justify-start gap-3 text-left">
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-blue-50 dark:bg-slate-800 text-blue-700 dark:text-blue-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">EME</div>
+        <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">CS Emelec</span>
+      </div>
+    </div>
+    <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+      <span class="text-slate-400 text-[11px]">ZAPPING SPORTS / STAR+</span>
+      <button type="button" onclick="navigateView('consola')" class="px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs shadow-xs transition-colors flex items-center gap-1">
+        <span class="material-symbols-outlined text-xs">terminal</span> Abrir Consola
+      </button>
+    </div>
+  </div>
+
+  <!-- Partido 3: SD Aucas vs CD El Nacional -->
+  <div class="bg-surface-card rounded-xl p-4 sm:p-5 shadow-xs border border-slate-200 dark:border-slate-800 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100 dark:border-slate-800 text-xs">
+      <span class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 font-medium">
+        <span class="material-symbols-outlined text-sm">stadium</span> Estadio Gonzalo Pozo Ripalda (Quito)
+      </span>
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/15 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase">
+        <span class="material-symbols-outlined text-xs">schedule</span> HOY 13:00
+      </span>
+    </div>
+    <div class="grid grid-cols-12 gap-2 sm:gap-4 items-center py-2">
+      <div class="col-span-5 flex items-center justify-end gap-3 text-right">
+        <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">SD Aucas</span>
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-amber-50 dark:bg-slate-800 text-amber-700 dark:text-amber-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">AUC</div>
+      </div>
+      <div class="col-span-2 flex flex-col items-center justify-center">
+        <div class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-mono text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-1.5">
+          <span>0</span><span class="text-slate-400 text-sm">:</span><span>0</span>
+        </div>
+        <span class="text-[10px] text-slate-400 mt-1 uppercase font-medium">Fecha 18</span>
+      </div>
+      <div class="col-span-5 flex items-center justify-start gap-3 text-left">
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-red-50 dark:bg-slate-800 text-red-700 dark:text-red-400 font-black text-xs border border-slate-200 dark:border-slate-700 shrink-0">NAC</div>
+        <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">El Nacional</span>
+      </div>
+    </div>
+    <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+      <span class="text-slate-400 text-[11px]">TELEAMAZONAS / ZAPPING</span>
+      <button type="button" onclick="navigateView('consola')" class="px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs shadow-xs transition-colors flex items-center gap-1">
+        <span class="material-symbols-outlined text-xs">terminal</span> Abrir Consola
+      </button>
+    </div>
   </div>
 </div>
 </div>
