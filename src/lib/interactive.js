@@ -51,6 +51,27 @@ window.cerrarSesion = async function() {
 };
 
 // ==============================================================================
+// GESTIÓN DE MENÚ LATERAL OCULTABLE (DRAWER ADMINISTRACIÓN LIGAPRO)
+// ==============================================================================
+
+window.toggleAdminDrawer = function(force) {
+  const backdrop = document.getElementById('admin-drawer-backdrop');
+  const drawer = document.getElementById('admin-drawer');
+  if (!drawer) return;
+  const isClosed = drawer.classList.contains('-translate-x-full');
+  const shouldOpen = force !== undefined ? force : isClosed;
+  if (shouldOpen) {
+    drawer.classList.remove('-translate-x-full');
+    backdrop?.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  } else {
+    drawer.classList.add('-translate-x-full');
+    backdrop?.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+};
+
+// ==============================================================================
 // GESTIÓN DE PERFIL DE USUARIO Y PERSISTENCIA SUPABASE
 // ==============================================================================
 
