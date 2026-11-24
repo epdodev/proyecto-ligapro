@@ -59,8 +59,27 @@ CLUB_LOGOS = {
     'Cumbayá F.C.': 'assets/clubs/cumbaya-fc.png',
     'Cumbayá Fútbol Club': 'assets/clubs/cumbaya-fc.png',
     'Manta FC': 'assets/clubs/manta-fc.png',
+    'Manta F.C.': 'assets/clubs/manta-fc.png',
     'Guayaquil City': 'assets/clubs/guayaquil-city.png',
-    'Leones FC': 'assets/clubs/leones-fc.png'
+    'Guayaquil City FC': 'assets/clubs/guayaquil-city.png',
+    'Leones FC': 'assets/clubs/leones-fc.png',
+    'Gualaceo SC': 'assets/clubs/gualaceo.png',
+    'Gualaceo S.C.': 'assets/clubs/gualaceo.png',
+    'Gualaceo': 'assets/clubs/gualaceo.png',
+    '9 de Octubre': 'assets/clubs/9-de-octubre.png',
+    '9 de Octubre FC': 'assets/clubs/9-de-octubre.png',
+    'Nueve de Octubre': 'assets/clubs/9-de-octubre.png',
+    'Independiente Juniors': 'assets/clubs/independiente-juniors.png',
+    'Ind. Juniors': 'assets/clubs/independiente-juniors.png',
+    'San Antonio FC': 'assets/clubs/san-antonio.png',
+    'San Antonio': 'assets/clubs/san-antonio.png',
+    'Liga de Portoviejo': 'assets/clubs/liga-de-portoviejo.png',
+    'LDUP': 'assets/clubs/liga-de-portoviejo.png',
+    '22 de Julio': 'assets/clubs/22-de-julio.png',
+    'Cuenca Juniors': 'assets/clubs/cuenca-juniors.png',
+    'Deportivo Santo Domingo': 'assets/clubs/deportivo-santo-domingo.png',
+    'Atlético Rojiblanco': 'assets/clubs/atletico-rojiblanco.png',
+    'Vinotinto del Ecuador': 'assets/clubs/vinotinto-del-ecuador.png'
 }
 
 def get_club_logo(club_name):

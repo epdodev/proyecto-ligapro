@@ -9,7 +9,85 @@ import { calcularFinalistasYCampeon } from '../domain/tablas/finalistas.js';
 import { evaluarAcumulacionAmarillas } from '../domain/disciplina/acumulacion.js';
 import { calcularMulta } from '../domain/multas/calculo.js';
 
-export const CLUB_LOGOS = {"LDU Quito": "assets/clubs/ldu-quito.png", "Liga Deportiva Universitaria": "assets/clubs/ldu-quito.png", "Liga Deportiva Universitaria de Quito": "assets/clubs/ldu-quito.png", "LDU": "assets/clubs/ldu-quito.png", "Barcelona SC": "assets/clubs/barcelona-sc.png", "Barcelona Sporting Club": "assets/clubs/barcelona-sc.png", "BSC": "assets/clubs/barcelona-sc.png", "Independiente del Valle": "assets/clubs/independiente-del-valle.png", "Ind. del Valle": "assets/clubs/independiente-del-valle.png", "IDV": "assets/clubs/independiente-del-valle.png", "Universidad Católica": "assets/clubs/universidad-catolica.png", "CD Universidad Católica": "assets/clubs/universidad-catolica.png", "C.D. Universidad Católica": "assets/clubs/universidad-catolica.png", "U. Católica": "assets/clubs/universidad-catolica.png", "SD Aucas": "assets/clubs/sd-aucas.png", "Sociedad Deportiva Aucas": "assets/clubs/sd-aucas.png", "S.D. Aucas": "assets/clubs/sd-aucas.png", "Aucas": "assets/clubs/sd-aucas.png", "CS Emelec": "assets/clubs/cs-emelec.png", "Club Sport Emelec": "assets/clubs/cs-emelec.png", "C.S. Emelec": "assets/clubs/cs-emelec.png", "Emelec": "assets/clubs/cs-emelec.png", "Orense SC": "assets/clubs/orense-sc.png", "Orense Sporting Club": "assets/clubs/orense-sc.png", "Orense S.C.": "assets/clubs/orense-sc.png", "Orense": "assets/clubs/orense-sc.png", "El Nacional": "assets/clubs/el-nacional.png", "Club Deportivo El Nacional": "assets/clubs/el-nacional.png", "CD El Nacional": "assets/clubs/el-nacional.png", "Macará": "assets/clubs/macara.png", "Club Deportivo Macará": "assets/clubs/macara.png", "CD Macará": "assets/clubs/macara.png", "C.D. Macará": "assets/clubs/macara.png", "Deportivo Cuenca": "assets/clubs/deportivo-cuenca.png", "Club Deportivo Cuenca": "assets/clubs/deportivo-cuenca.png", "Dep. Cuenca": "assets/clubs/deportivo-cuenca.png", "Mushuc Runa": "assets/clubs/mushuc-runa.png", "Mushuc Runa SC": "assets/clubs/mushuc-runa.png", "Mushuc Runa S.C.": "assets/clubs/mushuc-runa.png", "Mushuc Runa Sporting Club": "assets/clubs/mushuc-runa.png", "Técnico Universitario": "assets/clubs/tecnico-universitario.png", "CD Técnico Universitario": "assets/clubs/tecnico-universitario.png", "Delfín SC": "assets/clubs/delfin-sc.png", "Delfin SC": "assets/clubs/delfin-sc.png", "Delfín S.C.": "assets/clubs/delfin-sc.png", "Delfín Sporting Club": "assets/clubs/delfin-sc.png", "Libertad FC": "assets/clubs/libertad-fc.png", "Libertad F.C.": "assets/clubs/libertad-fc.png", "Libertad Fútbol Club": "assets/clubs/libertad-fc.png", "Imbabura SC": "assets/clubs/imbabura-sc.png", "Imbabura S.C.": "assets/clubs/imbabura-sc.png", "Imbabura Sporting Club": "assets/clubs/imbabura-sc.png", "Cumbayá FC": "assets/clubs/cumbaya-fc.png", "Cumbayá F.C.": "assets/clubs/cumbaya-fc.png", "Cumbayá Fútbol Club": "assets/clubs/cumbaya-fc.png", "Manta FC": "assets/clubs/manta-fc.png", "Guayaquil City": "assets/clubs/guayaquil-city.png", "Leones FC": "assets/clubs/leones-fc.png"};
+export const CLUB_LOGOS = {
+  "LDU Quito": "assets/clubs/ldu-quito.png",
+  "Liga Deportiva Universitaria": "assets/clubs/ldu-quito.png",
+  "Liga Deportiva Universitaria de Quito": "assets/clubs/ldu-quito.png",
+  "LDU": "assets/clubs/ldu-quito.png",
+  "Barcelona SC": "assets/clubs/barcelona-sc.png",
+  "Barcelona Sporting Club": "assets/clubs/barcelona-sc.png",
+  "BSC": "assets/clubs/barcelona-sc.png",
+  "Independiente del Valle": "assets/clubs/independiente-del-valle.png",
+  "Ind. del Valle": "assets/clubs/independiente-del-valle.png",
+  "IDV": "assets/clubs/independiente-del-valle.png",
+  "Universidad Católica": "assets/clubs/universidad-catolica.png",
+  "CD Universidad Católica": "assets/clubs/universidad-catolica.png",
+  "C.D. Universidad Católica": "assets/clubs/universidad-catolica.png",
+  "U. Católica": "assets/clubs/universidad-catolica.png",
+  "SD Aucas": "assets/clubs/sd-aucas.png",
+  "Sociedad Deportiva Aucas": "assets/clubs/sd-aucas.png",
+  "S.D. Aucas": "assets/clubs/sd-aucas.png",
+  "Aucas": "assets/clubs/sd-aucas.png",
+  "CS Emelec": "assets/clubs/cs-emelec.png",
+  "Club Sport Emelec": "assets/clubs/cs-emelec.png",
+  "C.S. Emelec": "assets/clubs/cs-emelec.png",
+  "Emelec": "assets/clubs/cs-emelec.png",
+  "Orense SC": "assets/clubs/orense-sc.png",
+  "Orense Sporting Club": "assets/clubs/orense-sc.png",
+  "Orense S.C.": "assets/clubs/orense-sc.png",
+  "Orense": "assets/clubs/orense-sc.png",
+  "El Nacional": "assets/clubs/el-nacional.png",
+  "Club Deportivo El Nacional": "assets/clubs/el-nacional.png",
+  "CD El Nacional": "assets/clubs/el-nacional.png",
+  "Macará": "assets/clubs/macara.png",
+  "Club Deportivo Macará": "assets/clubs/macara.png",
+  "CD Macará": "assets/clubs/macara.png",
+  "C.D. Macará": "assets/clubs/macara.png",
+  "Deportivo Cuenca": "assets/clubs/deportivo-cuenca.png",
+  "Club Deportivo Cuenca": "assets/clubs/deportivo-cuenca.png",
+  "Dep. Cuenca": "assets/clubs/deportivo-cuenca.png",
+  "Mushuc Runa": "assets/clubs/mushuc-runa.png",
+  "Mushuc Runa SC": "assets/clubs/mushuc-runa.png",
+  "Mushuc Runa S.C.": "assets/clubs/mushuc-runa.png",
+  "Mushuc Runa Sporting Club": "assets/clubs/mushuc-runa.png",
+  "Técnico Universitario": "assets/clubs/tecnico-universitario.png",
+  "CD Técnico Universitario": "assets/clubs/tecnico-universitario.png",
+  "Delfín SC": "assets/clubs/delfin-sc.png",
+  "Delfin SC": "assets/clubs/delfin-sc.png",
+  "Delfín S.C.": "assets/clubs/delfin-sc.png",
+  "Delfín Sporting Club": "assets/clubs/delfin-sc.png",
+  "Libertad FC": "assets/clubs/libertad-fc.png",
+  "Libertad F.C.": "assets/clubs/libertad-fc.png",
+  "Libertad Fútbol Club": "assets/clubs/libertad-fc.png",
+  "Imbabura SC": "assets/clubs/imbabura-sc.png",
+  "Imbabura S.C.": "assets/clubs/imbabura-sc.png",
+  "Imbabura Sporting Club": "assets/clubs/imbabura-sc.png",
+  "Cumbayá FC": "assets/clubs/cumbaya-fc.png",
+  "Cumbayá F.C.": "assets/clubs/cumbaya-fc.png",
+  "Cumbayá Fútbol Club": "assets/clubs/cumbaya-fc.png",
+  "Manta FC": "assets/clubs/manta-fc.png",
+  "Manta F.C.": "assets/clubs/manta-fc.png",
+  "Guayaquil City": "assets/clubs/guayaquil-city.png",
+  "Guayaquil City FC": "assets/clubs/guayaquil-city.png",
+  "Leones FC": "assets/clubs/leones-fc.png",
+  "Gualaceo SC": "assets/clubs/gualaceo.png",
+  "Gualaceo S.C.": "assets/clubs/gualaceo.png",
+  "Gualaceo": "assets/clubs/gualaceo.png",
+  "9 de Octubre": "assets/clubs/9-de-octubre.png",
+  "9 de Octubre FC": "assets/clubs/9-de-octubre.png",
+  "Nueve de Octubre": "assets/clubs/9-de-octubre.png",
+  "Independiente Juniors": "assets/clubs/independiente-juniors.png",
+  "Ind. Juniors": "assets/clubs/independiente-juniors.png",
+  "San Antonio FC": "assets/clubs/san-antonio.png",
+  "San Antonio": "assets/clubs/san-antonio.png",
+  "Liga de Portoviejo": "assets/clubs/liga-de-portoviejo.png",
+  "LDUP": "assets/clubs/liga-de-portoviejo.png",
+  "22 de Julio": "assets/clubs/22-de-julio.png",
+  "Cuenca Juniors": "assets/clubs/cuenca-juniors.png",
+  "Deportivo Santo Domingo": "assets/clubs/deportivo-santo-domingo.png",
+  "Atlético Rojiblanco": "assets/clubs/atletico-rojiblanco.png",
+  "Vinotinto del Ecuador": "assets/clubs/vinotinto-del-ecuador.png"
+};
 
 export function getClubLogo(clubName) {
   if (!clubName) return 'assets/ligapro-mini.svg';
@@ -26,6 +104,7 @@ export function getClubLogo(clubName) {
 
 export const INITIAL_STATE = {
   activeView: 'posiciones',
+  divisionActiva: 'A',
   highContrast: false,
   fontScale: 100, // porcentaje
   audioAlerts: true,
@@ -504,6 +583,18 @@ export const INITIAL_STATE = {
     { id: '66666666-6666-6666-6666-666666666616', nombre: 'Imbabura SC', pj: 18, pg: 3, pe: 4, pp: 11, gf: 15, gc: 34, dg: -19, pts: 13, gfVisitante: 3, tendencia: 'L-L-L-D-L', estadoMatematico: 'Zona Descenso (15º)', cupo: 'Descenso a Serie B' },
     { id: '66666666-6666-6666-6666-666666666615', nombre: 'Cumbayá FC', pj: 18, pg: 2, pe: 4, pp: 12, gf: 11, gc: 35, dg: -24, pts: 10, gfVisitante: 2, tendencia: 'L-L-L-L-D', estadoMatematico: 'Zona Descenso (16º)', cupo: 'Descenso a Serie B' }
   ],
+  clubesSerieB: [
+    { id: 'sb-01', posicion: 1, nombre: 'Guayaquil City', nombreCorto: 'Guayaquil City', ciudadEstadio: 'Guayaquil • Estadio Christian Benítez', escudo: 'assets/clubs/guayaquil-city.png', pj: 11, pg: 7, pe: 3, pp: 1, gf: 18, gc: 6, dg: '+12', pts: 24, tendencia: 'W-W-D-W-W', zona: 'ascenso', zonaTexto: 'Zona Ascenso Directo (1º)' },
+    { id: 'sb-02', posicion: 2, nombre: 'Manta FC', nombreCorto: 'Manta FC', ciudadEstadio: 'Manta • Estadio Jocay', escudo: 'assets/clubs/manta-fc.png', pj: 11, pg: 6, pe: 4, pp: 1, gf: 15, gc: 7, dg: '+8', pts: 22, tendencia: 'W-D-W-W-D', zona: 'ascenso', zonaTexto: 'Zona Ascenso Directo (2º)' },
+    { id: 'sb-03', posicion: 3, nombre: 'Gualaceo SC', nombreCorto: 'Gualaceo SC', ciudadEstadio: 'Gualaceo • Estadio Gerardo León Pozo', escudo: 'assets/clubs/gualaceo.png', pj: 11, pg: 5, pe: 4, pp: 2, gf: 14, gc: 9, dg: '+5', pts: 19, tendencia: 'D-W-L-W-W', zona: 'permanencia', zonaTexto: 'Permanencia Serie B' },
+    { id: 'sb-04', posicion: 4, nombre: 'Independiente Juniors', nombreCorto: 'Independiente Jrs', ciudadEstadio: 'Sangolquí • Banco Guayaquil', escudo: 'assets/clubs/independiente-juniors.png', pj: 11, pg: 5, pe: 3, pp: 3, gf: 16, gc: 11, dg: '+5', pts: 18, tendencia: 'W-L-W-D-L', zona: 'filial', zonaTexto: 'Filial IDV (Sin ascenso Art. 13)' },
+    { id: 'sb-05', posicion: 5, nombre: '9 de Octubre', nombreCorto: '9 de Octubre', ciudadEstadio: 'Guayaquil • Estadio Los Chirijos', escudo: 'assets/clubs/9-de-octubre.png', pj: 11, pg: 4, pe: 4, pp: 3, gf: 13, gc: 12, dg: '+1', pts: 16, tendencia: 'D-W-D-L-W', zona: 'permanencia', zonaTexto: 'Permanencia Serie B' },
+    { id: 'sb-06', posicion: 6, nombre: 'San Antonio FC', nombreCorto: 'San Antonio FC', ciudadEstadio: 'Ibarra • Estadio Olímpico de Ibarra', escudo: 'assets/clubs/san-antonio.png', pj: 11, pg: 3, pe: 5, pp: 3, gf: 10, gc: 11, dg: '-1', pts: 14, tendencia: 'D-L-D-W-D', zona: 'permanencia', zonaTexto: 'Permanencia Serie B' },
+    { id: 'sb-07', posicion: 7, nombre: 'Leones FC', nombreCorto: 'Leones FC', ciudadEstadio: 'Ibarra • Estadio Olímpico de Ibarra', escudo: 'assets/clubs/leones-fc.png', pj: 11, pg: 3, pe: 4, pp: 4, gf: 11, gc: 13, dg: '-2', pts: 13, tendencia: 'L-D-W-L-D', zona: 'permanencia', zonaTexto: 'Permanencia Serie B' },
+    { id: 'sb-08', posicion: 8, nombre: 'Liga de Portoviejo', nombreCorto: 'Liga de Portoviejo', ciudadEstadio: 'Portoviejo • Reales Tamarindos', escudo: 'assets/clubs/liga-de-portoviejo.png', pj: 11, pg: 2, pe: 5, pp: 4, gf: 9, gc: 14, dg: '-5', pts: 11, tendencia: 'D-L-L-D-W', zona: 'permanencia', zonaTexto: 'Permanencia Serie B' },
+    { id: 'sb-09', posicion: 9, nombre: '22 de Julio', nombreCorto: '22 de Julio', ciudadEstadio: 'Pelileo • Ciudad de Pelileo', escudo: 'assets/clubs/22-de-julio.png', pj: 11, pg: 1, pe: 4, pp: 6, gf: 8, gc: 18, dg: '-10', pts: 7, tendencia: 'L-D-L-L-D', zona: 'descenso', zonaTexto: 'Zona de Descenso a 2ª Cat.' },
+    { id: 'sb-10', posicion: 10, nombre: 'Cuenca Juniors', nombreCorto: 'Cuenca Juniors', ciudadEstadio: 'Cuenca • Alejandro Serrano Aguilar', escudo: 'assets/clubs/cuenca-juniors.png', pj: 11, pg: 1, pe: 2, pp: 8, gf: 6, gc: 19, dg: '-13', pts: 5, tendencia: 'L-L-D-L-L', zona: 'descenso', zonaTexto: 'Zona de Descenso a 2ª Cat.' }
+  ],
   tramites: [
     {
       id: 'TRM-2025-089',
@@ -919,6 +1010,11 @@ class Store {
       if (estado) this.state.partidoActivo.estado = estado;
       this.recalcularPuntosPartidoEnVivo();
     }
+    this.notify();
+  }
+
+  setDivision(div) {
+    this.state.divisionActiva = (div === 'B' || div === 'serie-b' || div === 'b') ? 'B' : 'A';
     this.notify();
   }
 

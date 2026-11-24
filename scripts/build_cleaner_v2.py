@@ -135,31 +135,58 @@ def clean_and_transform_screen(folder, screen_id):
     )
 
     # --- POSICIONES & RESULTADOS ---
-    body_content = add_onclick_to_btn(body_content, r'Criterios\s*de\s*Desempate', 'mostrarModalCriteriosDesempate()')
-    body_content = add_onclick_to_btn(body_content, r'Serie\s*A\s*2025', "cambiarDivision('A')")
-    body_content = add_onclick_to_btn(body_content, r'Serie\s*B\s*2025', "cambiarDivision('B')")
-    body_content = add_onclick_to_btn(body_content, r'Fase\s*Inicial', "cambiarFaseTorneo('inicial')")
-    body_content = add_onclick_to_btn(body_content, r'1°\s*Hexagonal', "cambiarFaseTorneo('hex_titulo')")
-    body_content = add_onclick_to_btn(body_content, r'2°\s*Hexagonal', "cambiarFaseTorneo('hex_sudamericana')")
-    body_content = add_onclick_to_btn(body_content, r'Cuadrangular\s*Descenso', "cambiarFaseTorneo('cuad_descenso')")
-    body_content = add_onclick_to_btn(body_content, r'Entendido\s*/\s*Cerrar', 'cerrarModalCriterios()')
-    body_content = re.sub(
-        r'<button([^>]*aria-label="Cerrar ventana de criterios"[^>]*)>(.*?)</button>',
-        r'<button\1 onclick="cerrarModalCriterios()">\2</button>',
-        body_content,
-        flags=re.DOTALL
-    )
+    if screen_id == 'posiciones':
+        body_content = add_onclick_to_btn(body_content, r'Serie\s*A\s*2025', "cambiarDivision('A')")
+        body_content = add_onclick_to_btn(body_content, r'Serie\s*B\s*2025', "cambiarDivision('B')")
+        body_content = add_onclick_to_btn(body_content, r'Fase\s*Inicial', "cambiarFaseTorneo('inicial')")
+        body_content = add_onclick_to_btn(body_content, r'1°\s*Hexagonal', "cambiarFaseTorneo('hex_titulo')")
+        body_content = add_onclick_to_btn(body_content, r'2°\s*Hexagonal', "cambiarFaseTorneo('hex_sudamericana')")
+        body_content = add_onclick_to_btn(body_content, r'Cuadrangular\s*Descenso', "cambiarFaseTorneo('cuad_descenso')")
+        body_content = add_onclick_to_btn(body_content, r'Criterios\s*de\s*Desempate', 'mostrarModalCriteriosDesempate()')
+        body_content = add_onclick_to_btn(body_content, r'Entendido\s*/\s*Cerrar', 'cerrarModalCriterios()')
+        body_content = re.sub(
+            r'<button([^>]*aria-label="Cerrar ventana de criterios"[^>]*)>(.*?)</button>',
+            r'<button\1 onclick="cerrarModalCriterios()">\2</button>',
+            body_content,
+            flags=re.DOTALL
+        )
+        body_content = re.sub(
+            r'<div\b([^>]*aria-label="Fase de Competición"[^>]*)>',
+            r'<div id="posiciones-phase-container"\1>',
+            body_content
+        )
+        body_content = re.sub(
+            r'<div\b([^>]*class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm mb-space-md"[^>]*)>',
+            r'<div id="posiciones-legend-container"\1>',
+            body_content
+        )
+        body_content = re.sub(
+            r'<h2\b([^>]*class="[^"]*font-headline-sm[^"]*"[^>]*)>\s*(Clasificación General Acumulada)\s*</h2>',
+            r'<h2 id="posiciones-table-title"\1>\2</h2>',
+            body_content
+        )
+        body_content = re.sub(
+            r'<span\b([^>]*class="[^"]*bg-primary-container[^"]*font-mono-table[^"]*"[^>]*)>\s*(Jornada\s+\d+\s+de\s+\d+)\s*</span>',
+            r'<span id="posiciones-jornada-badge"\1>\2</span>',
+            body_content
+        )
+        body_content = re.sub(
+            r'(<table\b[^>]*id="standings-table"[^>]*>[\s\S]*?)<tbody\b([^>]*)>',
+            r'\1<tbody id="standings-table-body"\2>',
+            body_content
+        )
 
     # --- TABLERO GENERAL ---
-    body_content = add_onclick_to_btn(body_content, r'Sincronizar\s*Árbitros', "forzarSincroComet()")
-    body_content = add_onclick_to_btn(body_content, r'F-14\s*/\s*30', "navigateView('posiciones')")
-    body_content = add_onclick_to_btn(body_content, r'F-11', "navigateView('posiciones')")
-    body_content = add_onclick_to_btn(body_content, r'calendar_month', "navigateView('posiciones')")
-    body_content = add_onclick_to_btn(body_content, r'Filtrar\s*por\s*Estadio', "navigateView('estadios')")
-    body_content = add_onclick_to_btn(body_content, r'Descargar\s*Planilla\s*Matchday', 'descargarPlanillaMatchday()')
-    body_content = add_onclick_to_btn(body_content, r'Aprobar\s*Uniforme\s*Árbitro', 'sellarActaUniformes()')
-    body_content = add_onclick_to_btn(body_content, r'Ver\s*Registro\s*Fotográfico', "navigateView('estadios')")
-    body_content = add_onclick_to_btn(body_content, r'Revisar\s*Acta', "navigateView('uniformes')")
+    if screen_id == 'tablero':
+        body_content = add_onclick_to_btn(body_content, r'Sincronizar\s*Árbitros', "forzarSincroComet()")
+        body_content = add_onclick_to_btn(body_content, r'F-14\s*/\s*30', "navigateView('posiciones'); cambiarDivision('A');")
+        body_content = add_onclick_to_btn(body_content, r'F-11', "navigateView('posiciones'); cambiarDivision('B');")
+        body_content = add_onclick_to_btn(body_content, r'calendar_month', "navigateView('posiciones')")
+        body_content = add_onclick_to_btn(body_content, r'Filtrar\s*por\s*Estadio', "navigateView('estadios')")
+        body_content = add_onclick_to_btn(body_content, r'Descargar\s*Planilla\s*Matchday', 'descargarPlanillaMatchday()')
+        body_content = add_onclick_to_btn(body_content, r'Aprobar\s*Uniforme\s*Árbitro', 'sellarActaUniformes()')
+        body_content = add_onclick_to_btn(body_content, r'Ver\s*Registro\s*Fotográfico', "navigateView('estadios')")
+        body_content = add_onclick_to_btn(body_content, r'Revisar\s*Acta', "navigateView('uniformes')")
 
     # Simplificar diseño en tablero: ocultar banner gigante invasivo de Horario Unificado para un look minimalista y limpio
     body_content = re.sub(

@@ -1387,6 +1387,9 @@ function updateActiveViewInDOM(viewId) {
   if (viewId === 'tablero') {
     renderizarPartidosTablero();
   }
+  if (viewId === 'posiciones') {
+    window.cambiarDivision(store.state.divisionActiva || 'A');
+  }
 }
 
 function actualizarUIHeader() {
@@ -1767,12 +1770,333 @@ window.cerrarModalCriterios = function() {
   if (templateModal) templateModal.classList.add('hidden');
 };
 
+// ==============================================================================
+// GESTIÓN DE COMPETICIONES Y TABLAS DE POSICIONES (SERIE A & SERIE B OFICIALES)
+// ==============================================================================
+
+export const TABLA_SERIE_A = [
+  { pos: 1, zona: 'libertadores_directa', nombre: 'Liga Deportiva Universitaria', nombreCorto: 'LDU Quito', ciudadEstadio: 'Quito • Estadio Rodrigo Paz Delgado', escudo: 'assets/clubs/ldu-quito.png', pj: 24, pg: 16, pe: 5, pp: 3, gf: 44, gc: 18, dg: '+26', pts: 53, forma: ['V','V','E','V','V'] },
+  { pos: 2, zona: 'libertadores_directa', nombre: 'Independiente del Valle', nombreCorto: 'Independiente del Valle', ciudadEstadio: 'Sangolquí • Banco Guayaquil', escudo: 'assets/clubs/independiente-del-valle.png', pj: 24, pg: 15, pe: 6, pp: 3, gf: 42, gc: 19, dg: '+23', pts: 51, forma: ['V','E','V','D','V'] },
+  { pos: 3, zona: 'libertadores_previa', nombre: 'Barcelona Sporting Club', nombreCorto: 'Barcelona SC', ciudadEstadio: 'Guayaquil • Monumental Banco Pichincha', escudo: 'assets/clubs/barcelona-sc.png', pj: 24, pg: 14, pe: 5, pp: 5, gf: 39, gc: 24, dg: '+15', pts: 47, forma: ['E','V','V','E','D'] },
+  { pos: 4, zona: 'libertadores_previa', nombre: 'S.D. Aucas', nombreCorto: 'SD Aucas', ciudadEstadio: 'Quito • Gonzalo Pozo Ripalda', escudo: 'assets/clubs/sd-aucas.png', pj: 24, pg: 12, pe: 7, pp: 5, gf: 36, gc: 25, dg: '+11', pts: 43, forma: ['V','D','V','E','V'] },
+  { pos: 5, zona: 'sudamericana', nombre: 'Universidad Católica', nombreCorto: 'Universidad Católica', ciudadEstadio: 'Quito • Olímpico Atahualpa', escudo: 'assets/clubs/universidad-catolica.png', pj: 24, pg: 11, pe: 8, pp: 5, gf: 38, gc: 26, dg: '+12', pts: 41, forma: ['E','E','V','V','E'] },
+  { pos: 6, zona: 'sudamericana', nombre: 'C.S. Emelec', nombreCorto: 'CS Emelec', ciudadEstadio: 'Guayaquil • George Capwell', escudo: 'assets/clubs/cs-emelec.png', pj: 24, pg: 10, pe: 8, pp: 6, gf: 29, gc: 22, dg: '+7', pts: 38, forma: ['D','V','E','V','D'] },
+  { pos: 7, zona: 'sudamericana', nombre: 'Orense S.C.', nombreCorto: 'Orense SC', ciudadEstadio: 'Machala • 9 de Mayo', escudo: 'assets/clubs/orense-sc.png', pj: 24, pg: 9, pe: 8, pp: 7, gf: 28, gc: 26, dg: '+2', pts: 35, forma: ['E','E','V','V','D'] },
+  { pos: 8, zona: 'sudamericana', nombre: 'Club Deportivo El Nacional', nombreCorto: 'El Nacional', ciudadEstadio: 'Quito • Olímpico Atahualpa', escudo: 'assets/clubs/el-nacional.png', pj: 24, pg: 9, pe: 6, pp: 9, gf: 30, gc: 31, dg: '-1', pts: 33, forma: ['V','D','V','D','E'] },
+  { pos: 9, zona: 'neutral', nombre: 'Club Deportivo Macará', nombreCorto: 'Macará', ciudadEstadio: 'Ambato • Bellavista', escudo: 'assets/clubs/macara.png', pj: 24, pg: 8, pe: 8, pp: 8, gf: 25, gc: 26, dg: '-1', pts: 32, forma: ['E','D','V','E','V'] },
+  { pos: 10, zona: 'neutral', nombre: 'Club Deportivo Cuenca', nombreCorto: 'Deportivo Cuenca', ciudadEstadio: 'Cuenca • Alejandro Serrano Aguilar', escudo: 'assets/clubs/deportivo-cuenca.png', pj: 24, pg: 7, pe: 9, pp: 8, gf: 27, gc: 30, dg: '-3', pts: 30, forma: ['D','E','E','V','E'] },
+  { pos: 11, zona: 'neutral', nombre: 'Mushuc Runa S.C.', nombreCorto: 'Mushuc Runa', ciudadEstadio: 'Echaleche • COAC Mushuc Runa', escudo: 'assets/clubs/mushuc-runa.png', pj: 24, pg: 7, pe: 8, pp: 9, gf: 26, gc: 34, dg: '-8', pts: 29, forma: ['V','D','D','E','V'] },
+  { pos: 12, zona: 'neutral', nombre: 'Técnico Universitario', nombreCorto: 'Técnico Universitario', ciudadEstadio: 'Ambato • Bellavista', escudo: 'assets/clubs/tecnico-universitario.png', pj: 24, pg: 6, pe: 7, pp: 11, gf: 23, gc: 32, dg: '-9', pts: 25, forma: ['D','V','D','D','E'] },
+  { pos: 13, zona: 'neutral', nombre: 'Delfín S.C.', nombreCorto: 'Delfín SC', ciudadEstadio: 'Manta • Estadio Jocay', escudo: 'assets/clubs/delfin-sc.png', pj: 24, pg: 5, pe: 8, pp: 11, gf: 21, gc: 32, dg: '-11', pts: 23, forma: ['E','D','D','V','D'] },
+  { pos: 14, zona: 'neutral', nombre: 'Libertad Fútbol Club', nombreCorto: 'Libertad FC', ciudadEstadio: 'Loja • Estadio Reina del Cisne', escudo: 'assets/clubs/libertad-fc.png', pj: 24, pg: 4, pe: 8, pp: 12, gf: 18, gc: 34, dg: '-16', pts: 20, forma: ['D','E','D','E','D'] },
+  { pos: 15, zona: 'descenso', nombre: 'Imbabura Sporting Club', nombreCorto: 'Imbabura SC', ciudadEstadio: 'Ibarra • Olímpico de Ibarra', escudo: 'assets/clubs/imbabura-sc.png', pj: 24, pg: 4, pe: 5, pp: 15, gf: 20, gc: 45, dg: '-25', pts: 17, forma: ['D','D','D','E','D'] },
+  { pos: 16, zona: 'descenso', nombre: 'Cumbayá Fútbol Club', nombreCorto: 'Cumbayá FC', ciudadEstadio: 'Quito • Olímpico Atahualpa', escudo: 'assets/clubs/cumbaya-fc.png', pj: 24, pg: 3, pe: 5, pp: 16, gf: 15, gc: 46, dg: '-31', pts: 14, forma: ['D','D','D','D','E'] }
+];
+
+export const TABLA_SERIE_B = [
+  { pos: 1, zona: 'ascenso', nombre: 'Guayaquil City Fútbol Club', nombreCorto: 'Guayaquil City', ciudadEstadio: 'Guayaquil • Estadio Christian Benítez', escudo: 'assets/clubs/guayaquil-city.png', pj: 11, pg: 7, pe: 3, pp: 1, gf: 18, gc: 6, dg: '+12', pts: 24, forma: ['V','V','E','V','V'] },
+  { pos: 2, zona: 'ascenso', nombre: 'Manta Fútbol Club', nombreCorto: 'Manta FC', ciudadEstadio: 'Manta • Estadio Jocay', escudo: 'assets/clubs/manta-fc.png', pj: 11, pg: 6, pe: 4, pp: 1, gf: 15, gc: 7, dg: '+8', pts: 22, forma: ['V','E','V','V','E'] },
+  { pos: 3, zona: 'neutral', nombre: 'Gualaceo Sporting Club', nombreCorto: 'Gualaceo SC', ciudadEstadio: 'Gualaceo • Gerardo León Pozo', escudo: 'assets/clubs/gualaceo.png', pj: 11, pg: 5, pe: 4, pp: 2, gf: 14, gc: 9, dg: '+5', pts: 19, forma: ['E','V','D','V','V'] },
+  { pos: 4, zona: 'filial', nombre: 'Independiente Juniors', nombreCorto: 'Independiente Jrs', ciudadEstadio: 'Sangolquí • Banco Guayaquil', escudo: 'assets/clubs/independiente-juniors.png', pj: 11, pg: 5, pe: 3, pp: 3, gf: 16, gc: 11, dg: '+5', pts: 18, forma: ['V','D','V','E','D'] },
+  { pos: 5, zona: 'neutral', nombre: '9 de Octubre Fútbol Club', nombreCorto: '9 de Octubre', ciudadEstadio: 'Guayaquil • Estadio Los Chirijos', escudo: 'assets/clubs/9-de-octubre.png', pj: 11, pg: 4, pe: 4, pp: 3, gf: 13, gc: 12, dg: '+1', pts: 16, forma: ['E','V','E','D','V'] },
+  { pos: 6, zona: 'neutral', nombre: 'San Antonio Fútbol Club', nombreCorto: 'San Antonio FC', ciudadEstadio: 'Ibarra • Olímpico de Ibarra', escudo: 'assets/clubs/san-antonio.png', pj: 11, pg: 3, pe: 5, pp: 3, gf: 10, gc: 11, dg: '-1', pts: 14, forma: ['E','D','E','V','E'] },
+  { pos: 7, zona: 'neutral', nombre: 'Leones Fútbol Club', nombreCorto: 'Leones FC', ciudadEstadio: 'Ibarra • Olímpico de Ibarra', escudo: 'assets/clubs/leones-fc.png', pj: 11, pg: 3, pe: 4, pp: 4, gf: 11, gc: 13, dg: '-2', pts: 13, forma: ['D','E','V','D','E'] },
+  { pos: 8, zona: 'neutral', nombre: 'Liga Deportiva Universitaria de Portoviejo', nombreCorto: 'Liga de Portoviejo', ciudadEstadio: 'Portoviejo • Reales Tamarindos', escudo: 'assets/clubs/liga-de-portoviejo.png', pj: 11, pg: 2, pe: 5, pp: 4, gf: 9, gc: 14, dg: '-5', pts: 11, forma: ['E','D','D','E','V'] },
+  { pos: 9, zona: 'descenso_b', nombre: 'Club 22 de Julio', nombreCorto: '22 de Julio', ciudadEstadio: 'Pelileo • Ciudad de Pelileo', escudo: 'assets/clubs/22-de-julio.png', pj: 11, pg: 1, pe: 4, pp: 6, gf: 8, gc: 18, dg: '-10', pts: 7, forma: ['D','E','D','D','E'] },
+  { pos: 10, zona: 'descenso_b', nombre: 'Club Cuenca Juniors', nombreCorto: 'Cuenca Juniors', ciudadEstadio: 'Cuenca • Alejandro Serrano Aguilar', escudo: 'assets/clubs/cuenca-juniors.png', pj: 11, pg: 1, pe: 2, pp: 8, gf: 6, gc: 19, dg: '-13', pts: 5, forma: ['D','D','E','D','D'] }
+];
+
+let faseActivaActual = 'inicial';
+
+function renderFormaDots(forma) {
+  if (!Array.isArray(forma)) return '';
+  return `<div class="inline-flex items-center gap-1">` +
+    forma.map(item => {
+      if (item === 'V') {
+        return `<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center font-bold" title="Victoria">V</span>`;
+      } else if (item === 'E') {
+        return `<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center font-bold dark:text-[#F8FAFC]" title="Empate">E</span>`;
+      } else {
+        return `<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center font-bold" title="Derrota">D</span>`;
+      }
+    }).join('') +
+    `</div>`;
+}
+
+export function renderizarFilasTabla(division, filtroFase = 'all') {
+  const tableBodies = document.querySelectorAll('#standings-table tbody, #standings-table-body');
+  if (tableBodies.length === 0) return;
+
+  const rawData = division === 'B' ? TABLA_SERIE_B : TABLA_SERIE_A;
+  let filteredData = rawData;
+
+  if (division === 'A') {
+    if (filtroFase === 'hex_titulo') {
+      filteredData = rawData.slice(0, 6);
+    } else if (filtroFase === 'hex_sudamericana') {
+      filteredData = rawData.slice(6, 12);
+    } else if (filtroFase === 'cuad_descenso') {
+      filteredData = rawData.slice(12, 16);
+    }
+  } else if (division === 'B') {
+    if (filtroFase === 'zona_ascenso') {
+      filteredData = rawData.slice(0, 2);
+    } else if (filtroFase === 'zona_descenso') {
+      filteredData = rawData.slice(8, 10);
+    }
+  }
+
+  const rowsHtml = filteredData.map((club, idx) => {
+    const isEven = idx % 2 === 0;
+    const bgClass = isEven ? 'bg-surface-card' : 'bg-surface-base';
+
+    let zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 text-slate-400 dark:text-slate-600 font-mono text-sm">-</span>`;
+    if (club.zona === 'libertadores_directa') {
+      zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-success/15 text-sport-success" title="Zona Conmebol Libertadores (Fase de Grupos)"><span class="material-symbols-outlined text-lg">stars</span></span>`;
+    } else if (club.zona === 'libertadores_previa') {
+      zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-success/15 text-sport-success" title="Zona Conmebol Libertadores (Fases Clasificatorias)"><span class="material-symbols-outlined text-lg">verified</span></span>`;
+    } else if (club.zona === 'sudamericana') {
+      zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-secondary/15 text-secondary" title="Zona Conmebol Sudamericana"><span class="material-symbols-outlined text-lg">diamond</span></span>`;
+    } else if (club.zona === 'ascenso') {
+      zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-emerald-500/20 text-emerald-400 font-bold" title="Zona de Ascenso Directo a Serie A 2026"><span class="material-symbols-outlined text-lg font-bold">arrow_upward</span></span>`;
+    } else if (club.zona === 'filial') {
+      zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-amber-500/20 text-amber-400" title="Club Filial IDV — Sin derecho a ascenso según Art. 13"><span class="material-symbols-outlined text-lg">shield</span></span>`;
+    } else if (club.zona === 'descenso') {
+      zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-danger/15 text-sport-danger" title="Pérdida de Categoría Serie B"><span class="material-symbols-outlined text-lg">warning</span></span>`;
+    } else if (club.zona === 'descenso_b') {
+      zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-danger/15 text-sport-danger" title="Zona de Descenso a Segunda Categoría FEF"><span class="material-symbols-outlined text-lg">arrow_downward</span></span>`;
+    }
+
+    const gdColor = club.dg.startsWith('+') ? 'text-sport-success' : (club.dg.startsWith('-') ? 'text-sport-danger' : 'text-slate-400');
+    const formaHtml = renderFormaDots(club.forma);
+
+    return `
+      <tr class="${bgClass} hover:bg-surface-container-low transition-colors group dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+        <td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary dark:text-[#F8FAFC]">${club.pos}</td>
+        <td class="py-3 px-3 text-center">${zonaHtml}</td>
+        <td class="py-3 px-4">
+          <div class="flex items-center gap-space-sm">
+            <img src="${club.escudo}" alt="${club.nombre}" class="w-8 h-8 object-contain shrink-0 drop-shadow-xs" />
+            <div class="flex flex-col min-w-0">
+              <span class="font-title-md text-title-md font-bold text-text-primary group-hover:text-secondary transition-colors dark:text-[#F8FAFC]">${club.nombre}</span>
+              <span class="font-body-sm text-[11px] text-text-secondary dark:text-[#CBD5E1]">${club.ciudadEstadio}</span>
+            </div>
+          </div>
+        </td>
+        <td class="py-3 px-3 text-right font-mono-table">${club.pj}</td>
+        <td class="py-3 px-3 text-right font-mono-table">${club.pg}</td>
+        <td class="py-3 px-3 text-right font-mono-table">${club.pe}</td>
+        <td class="py-3 px-3 text-right font-mono-table">${club.pp}</td>
+        <td class="py-3 px-3 text-right font-mono-table">${club.gf}</td>
+        <td class="py-3 px-3 text-right font-mono-table">${club.gc}</td>
+        <td class="py-3 px-3 text-right font-mono-table font-bold ${gdColor}">${club.dg}</td>
+        <td class="py-3 px-4 text-right font-mono-matchday font-extrabold text-secondary bg-secondary/5">${club.pts}</td>
+        <td class="py-3 px-4 text-center">${formaHtml}</td>
+      </tr>
+    `;
+  }).join('');
+
+  tableBodies.forEach(tbody => {
+    tbody.innerHTML = rowsHtml;
+  });
+}
+
 window.cambiarDivision = function(div) {
-  // Cambio de división silencioso sin toast invasivo
+  const division = (div === 'B' || div === 'serie-b' || div === 'b') ? 'B' : 'A';
+  store.setDivision(division);
+  faseActivaActual = division === 'B' ? 'clasificacion' : 'inicial';
+
+  // 1. Estilos de pestañas Division
+  const tabsA = document.querySelectorAll('[data-division="serie-a"]');
+  const tabsB = document.querySelectorAll('[data-division="serie-b"]');
+
+  tabsA.forEach(tab => {
+    if (division === 'A') {
+      tab.className = "division-tab px-space-md py-2 rounded-md font-title-md text-title-md font-bold bg-secondary text-on-secondary shadow-sm transition-all";
+      tab.setAttribute('aria-selected', 'true');
+    } else {
+      tab.className = "division-tab px-space-md py-2 rounded-md font-title-md text-title-md text-text-secondary hover:text-text-primary transition-all dark:text-[#F8FAFC]";
+      tab.setAttribute('aria-selected', 'false');
+    }
+  });
+
+  tabsB.forEach(tab => {
+    if (division === 'B') {
+      tab.className = "division-tab px-space-md py-2 rounded-md font-title-md text-title-md font-bold bg-secondary text-on-secondary shadow-sm transition-all";
+      tab.setAttribute('aria-selected', 'true');
+    } else {
+      tab.className = "division-tab px-space-md py-2 rounded-md font-title-md text-title-md text-text-secondary hover:text-text-primary transition-all dark:text-[#F8FAFC]";
+      tab.setAttribute('aria-selected', 'false');
+    }
+  });
+
+  // 2. Selector de Fases
+  const phaseContainers = document.querySelectorAll('#posiciones-phase-container, [aria-label="Fase de Competición"]');
+  phaseContainers.forEach(container => {
+    if (division === 'A') {
+      container.innerHTML = `
+        <button aria-selected="true" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-primary-container text-on-primary shadow-sm flex items-center gap-2 transition-all" data-phase="fase-inicial" role="tab" type="button" onclick="cambiarFaseTorneo('inicial')">
+          <span class="w-2 h-2 rounded-full bg-high-contrast-accent"></span>
+          <span>Fase Inicial (30 Fechas Acumuladas)</span>
+        </button>
+        <button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-phase="hex-1" role="tab" type="button" onclick="cambiarFaseTorneo('hex_titulo')">
+          <span class="material-symbols-outlined text-xs text-sport-success">stars</span>
+          <span>1° Hexagonal (Puestos 1-6 Título &amp; Libertadores)</span>
+        </button>
+        <button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-phase="hex-2" role="tab" type="button" onclick="cambiarFaseTorneo('hex_sudamericana')">
+          <span class="material-symbols-outlined text-xs text-secondary">diamond</span>
+          <span>2° Hexagonal (Puestos 7-12 Sudamericana)</span>
+        </button>
+        <button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-phase="cuadrangular" role="tab" type="button" onclick="cambiarFaseTorneo('cuad_descenso')">
+          <span class="material-symbols-outlined text-xs text-sport-danger">warning</span>
+          <span>Cuadrangular Descenso (Puestos 13-16)</span>
+        </button>
+      `;
+    } else {
+      container.innerHTML = `
+        <button aria-selected="true" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-primary-container text-on-primary shadow-sm flex items-center gap-2 transition-all" data-phase="fase-clasificacion" role="tab" type="button" onclick="cambiarFaseTorneo('clasificacion')">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>Fase Clasificación (36 Fechas / 4 Ruedas)</span>
+        </button>
+        <button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-phase="zona-ascenso" role="tab" type="button" onclick="cambiarFaseTorneo('zona_ascenso')">
+          <span class="material-symbols-outlined text-xs text-emerald-400">arrow_upward</span>
+          <span>Zona de Ascenso (Puestos 1-2 Directo a Serie A)</span>
+        </button>
+        <button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-phase="zona-descenso" role="tab" type="button" onclick="cambiarFaseTorneo('zona_descenso')">
+          <span class="material-symbols-outlined text-xs text-rose-500">warning</span>
+          <span>Zona de Descenso (Puestos 9-10 a 2ª Cat.)</span>
+        </button>
+      `;
+    }
+  });
+
+  // 3. Leyendas adaptadas al torneo
+  const legendContainers = document.querySelectorAll('#posiciones-legend-container, .grid.grid-cols-1.sm\\:grid-cols-3');
+  legendContainers.forEach(container => {
+    if (division === 'A') {
+      container.innerHTML = `
+        <div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <div class="w-8 h-8 rounded bg-sport-success/15 flex items-center justify-center text-sport-success flex-shrink-0">
+            <span class="material-symbols-outlined text-xl">stars</span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-sport-success"></span>
+              <span class="font-label-caps text-label-caps text-text-primary uppercase dark:text-[#F8FAFC]">Copa Libertadores</span>
+            </div>
+            <span class="font-body-sm text-body-sm text-text-secondary truncate dark:text-[#CBD5E1]">Puestos 1 al 4 | Fase Directa / Fase Previa</span>
+          </div>
+        </div>
+        <div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <div class="w-8 h-8 rounded bg-secondary/15 flex items-center justify-center text-secondary flex-shrink-0">
+            <span class="material-symbols-outlined text-xl">diamond</span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 bg-secondary rotate-45"></span>
+              <span class="font-label-caps text-label-caps text-text-primary uppercase dark:text-[#F8FAFC]">Copa Sudamericana</span>
+            </div>
+            <span class="font-body-sm text-body-sm text-text-secondary truncate dark:text-[#CBD5E1]">Puestos 5 al 8 | Fase Nacional Previa</span>
+          </div>
+        </div>
+        <div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <div class="w-8 h-8 rounded bg-sport-danger/15 flex items-center justify-center text-sport-danger flex-shrink-0">
+            <span class="material-symbols-outlined text-xl">warning</span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span class="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-b-[9px] border-b-sport-danger"></span>
+              <span class="font-label-caps text-label-caps text-text-primary uppercase dark:text-[#F8FAFC]">Zona de Descenso</span>
+            </div>
+            <span class="font-body-sm text-body-sm text-text-secondary truncate dark:text-[#CBD5E1]">Puestos 15 y 16 | Pérdida de Categoría Serie B</span>
+          </div>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <div class="w-8 h-8 rounded bg-emerald-500/15 flex items-center justify-center text-emerald-400 flex-shrink-0">
+            <span class="material-symbols-outlined text-xl font-bold">arrow_upward</span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+              <span class="font-label-caps text-label-caps text-text-primary uppercase dark:text-[#F8FAFC]">Ascenso a Serie A</span>
+            </div>
+            <span class="font-body-sm text-body-sm text-text-secondary truncate dark:text-[#CBD5E1]">Puestos 1 y 2 | Ascenso Directo Serie A 2026</span>
+          </div>
+        </div>
+        <div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <div class="w-8 h-8 rounded bg-blue-500/15 flex items-center justify-center text-blue-400 flex-shrink-0">
+            <span class="material-symbols-outlined text-xl">shield</span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 bg-blue-400 rotate-45"></span>
+              <span class="font-label-caps text-label-caps text-text-primary uppercase dark:text-[#F8FAFC]">Zona Permanencia</span>
+            </div>
+            <span class="font-body-sm text-body-sm text-text-secondary truncate dark:text-[#CBD5E1]">Puestos 3 al 8 | Conservación de cupo Serie B</span>
+          </div>
+        </div>
+        <div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+          <div class="w-8 h-8 rounded bg-sport-danger/15 flex items-center justify-center text-sport-danger flex-shrink-0">
+            <span class="material-symbols-outlined text-xl">warning</span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span class="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-b-[9px] border-b-sport-danger"></span>
+              <span class="font-label-caps text-label-caps text-text-primary uppercase dark:text-[#F8FAFC]">Zona de Descenso</span>
+            </div>
+            <span class="font-body-sm text-body-sm text-text-secondary truncate dark:text-[#CBD5E1]">Puestos 9 y 10 | Descenso a Segunda Categoría</span>
+          </div>
+        </div>
+      `;
+    }
+  });
+
+  // 4. Título y Badge de Jornada
+  const titleEls = document.querySelectorAll('#posiciones-table-title');
+  const badgeEls = document.querySelectorAll('#posiciones-jornada-badge');
+
+  titleEls.forEach(el => {
+    el.textContent = division === 'A' ? 'Clasificación General Acumulada' : 'Clasificación Oficial — LigaPro Ecuabet Serie B';
+  });
+  badgeEls.forEach(el => {
+    el.textContent = division === 'A' ? 'Jornada 24 de 30' : 'Jornada 11 de 36';
+  });
+
+  // 5. Renderizar filas
+  renderizarFilasTabla(division, 'all');
 };
 
 window.cambiarFaseTorneo = function(fase) {
-  // Cambio de fase silencioso sin toast invasivo
+  faseActivaActual = fase;
+  const division = store.state.divisionActiva || 'A';
+
+  // Actualizar estilos activos de botones de fase
+  const phaseButtons = document.querySelectorAll('.phase-btn');
+  phaseButtons.forEach(btn => {
+    const p = btn.getAttribute('data-phase');
+    const matches = (
+      (fase === 'inicial' && p === 'fase-inicial') ||
+      (fase === 'hex_titulo' && p === 'hex-1') ||
+      (fase === 'hex_sudamericana' && p === 'hex-2') ||
+      (fase === 'cuad_descenso' && p === 'cuadrangular') ||
+      (fase === 'clasificacion' && p === 'fase-clasificacion') ||
+      (fase === 'zona_ascenso' && p === 'zona-ascenso') ||
+      (fase === 'zona_descenso' && p === 'zona-descenso')
+    );
+
+    if (matches) {
+      btn.className = "phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-primary-container text-on-primary shadow-sm flex items-center gap-2 transition-all";
+      btn.setAttribute('aria-selected', 'true');
+    } else {
+      btn.className = "phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2 dark:bg-[#0B0F19] dark:text-[#F8FAFC]";
+      btn.setAttribute('aria-selected', 'false');
+    }
+  });
+
+  renderizarFilasTabla(division, fase);
 };
 
 window.descargarPlanillaMatchday = function() {
@@ -2362,11 +2686,20 @@ function iniciarApp() {
 
   const params = new URLSearchParams(window.location.search);
   const initialView = params.get('view') || 'tablero';
+  const initialDiv = params.get('division') || (window.location.hash.toLowerCase().includes('serie-b') ? 'B' : null);
+  if (initialDiv) {
+    store.setDivision(initialDiv);
+  }
+
   if (initialView === 'perfil') {
     window.navigateView('tablero');
     window.abrirModalPerfil();
   } else {
     window.navigateView(initialView);
+  }
+
+  if (initialView === 'posiciones' || document.getElementById('standings-table')) {
+    window.cambiarDivision(store.state.divisionActiva || 'A');
   }
   actualizarUIHeader();
 

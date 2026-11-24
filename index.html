@@ -248,12 +248,12 @@
 </div>
 <!-- Segmented Tournament Selector Switch -->
 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-xs bg-surface-container-low p-1.5 rounded-lg border border-border-subtle self-start lg:self-center dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<button class="flex items-center justify-center gap-2 px-space-md py-2 rounded bg-surface-card text-secondary font-title-md text-body-sm font-bold shadow-sm border border-secondary/20 transition-all dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="button" onclick="cambiarDivision('A')">
+<button class="flex items-center justify-center gap-2 px-space-md py-2 rounded bg-surface-card text-secondary font-title-md text-body-sm font-bold shadow-sm border border-secondary/20 transition-all dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="button" onclick="navigateView('posiciones'); cambiarDivision('A');">
 <span class="w-2.5 h-2.5 rounded-full bg-sport-success inline-block"></span>
 <span>Serie A 2025: Fase Inicial</span>
 <span class="font-mono-table text-[11px] px-1.5 py-0.2 rounded bg-secondary/10 text-secondary">F-14 / 30</span>
 </button>
-<button class="flex items-center justify-center gap-2 px-space-md py-2 rounded text-text-secondary hover:text-text-primary hover:bg-surface-card/60 font-body-md text-body-sm transition-all dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="button" onclick="navigateView('posiciones')">
+<button class="flex items-center justify-center gap-2 px-space-md py-2 rounded text-text-secondary hover:text-text-primary hover:bg-surface-card/60 font-body-md text-body-sm transition-all dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="button" onclick="navigateView('posiciones'); cambiarDivision('B');">
 <span class="w-2 h-2 rounded bg-outline inline-block"></span>
 <span>Serie B (Fase Clasificación)</span>
 <span class="font-mono-table text-[11px] px-1.5 py-0.2 rounded bg-surface-container text-text-secondary dark:bg-[#0B0F19] dark:text-[#F8FAFC]">F-11</span>
@@ -858,7 +858,7 @@
 </div>
 </div>
 <!-- Phase Selector (Segmented buttons) -->
-<div aria-label="Fase de Competición" class="flex items-center gap-2 overflow-x-auto pb-1" role="tablist">
+<div id="posiciones-phase-container" aria-label="Fase de Competición" class="flex items-center gap-2 overflow-x-auto pb-1" role="tablist">
 <button aria-selected="true" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-primary-container text-on-primary shadow-sm flex items-center gap-2 transition-all" data-phase="fase-inicial" role="tab" type="button" onclick="cambiarFaseTorneo('inicial')">
 <span class="w-2 h-2 rounded-full bg-high-contrast-accent"></span>
 <span>Fase Inicial (30 Fechas Acumuladas)</span>
@@ -878,7 +878,7 @@
 </div>
 </div>
 <!-- Accessible Broadcast Legend (Triple-Encoded) -->
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm mb-space-md">
+<div id="posiciones-legend-container" class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm mb-space-md">
 <!-- Libertadores -->
 <div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="w-8 h-8 rounded bg-sport-success/15 flex items-center justify-center text-sport-success flex-shrink-0">
@@ -925,10 +925,8 @@
 <div class="p-space-md bg-surface-container-low flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <div class="flex items-center gap-space-sm">
 <span class="material-symbols-outlined text-secondary">table_chart</span>
-<h2 class="font-headline-sm text-headline-sm text-text-primary font-bold dark:text-white">
-          Clasificación General Acumulada
-        </h2>
-<span class="px-2 py-0.5 rounded bg-primary-container text-on-primary font-mono-table text-xs">Jornada 24 de 30</span>
+<h2 id="posiciones-table-title" class="font-headline-sm text-headline-sm text-text-primary font-bold dark:text-white">Clasificación General Acumulada</h2>
+<span id="posiciones-jornada-badge" class="px-2 py-0.5 rounded bg-primary-container text-on-primary font-mono-table text-xs">Jornada 24 de 30</span>
 </div>
 <div class="flex items-center gap-space-xs text-text-secondary font-body-sm text-body-sm dark:text-[#CBD5E1]">
 <span class="material-symbols-outlined text-base">info</span>
@@ -954,7 +952,7 @@
 <th class="py-3 px-4 text-center min-w-[140px]" scope="col">FORMA</th>
 </tr>
 </thead>
-<tbody class="font-body-md text-body-md text-text-primary divide-y-0 dark:text-[#F8FAFC]">
+<tbody id="standings-table-body" class="font-body-md text-body-md text-text-primary divide-y-0 dark:text-[#F8FAFC]">
 <!-- Row 1: Libertadores Group -->
 <tr class="bg-surface-card hover:bg-surface-container-low transition-colors group dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
 <td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary dark:text-[#F8FAFC]">1</td>
