@@ -105,7 +105,7 @@ def generate_header(active_id):
     ]
 
     nav_links_html = "".join([
-        f'''<a href="javascript:void(0)" onclick="navigateView('{item['id']}')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap {'bg-indigo-600 text-white shadow-xs' if item['id'] == active_id else 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'}">
+        f'''<a href="javascript:void(0)" onclick="navigateView('{item['id']}')" data-nav-id="{item['id']}" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap {'bg-indigo-600 text-white shadow-xs' if item['id'] == active_id else 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'}">
           <span class="material-symbols-outlined text-base">{item['icon']}</span>
           <span>{item['label']}</span>
         </a>'''
@@ -116,7 +116,7 @@ def generate_header(active_id):
     <header class="fixed top-0 left-0 right-0 h-14 bg-white/95 dark:bg-[#0B0F19]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-40 px-3 sm:px-6 transition-colors">
       <div class="max-w-7xl mx-auto h-full flex items-center justify-between gap-3">
         <!-- Logo minimalista de LigaPro -->
-        <div class="flex items-center gap-2.5 cursor-pointer select-none shrink-0" onclick="navigateView('tablero')">
+        <div class="flex items-center gap-2.5 cursor-pointer select-none shrink-0 hover:opacity-90 transition-opacity" onclick="navigateView('tablero')" title="LigaPro Serie A">
           <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-black text-sm shadow-xs">LP</span>
           <div class="flex flex-col hidden sm:flex">
             <span class="font-extrabold text-sm tracking-tight text-slate-900 dark:text-white leading-tight">LigaPro</span>
@@ -125,7 +125,7 @@ def generate_header(active_id):
         </div>
 
         <!-- Navegación HORIZONTAL limpia y completa -->
-        <nav class="flex items-center gap-1 overflow-x-auto no-scrollbar py-1">
+        <nav id="header-nav" class="flex items-center gap-1 overflow-x-auto no-scrollbar py-1">
           {nav_links_html}
         </nav>
 

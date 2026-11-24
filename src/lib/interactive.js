@@ -1372,13 +1372,14 @@ function updateActiveViewInDOM(viewId) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Actualizar botones de navegación
-  const navButtons = document.querySelectorAll('[onclick^="navigateView"]');
-  navButtons.forEach((btn) => {
-    if (btn.getAttribute('onclick').includes(`'${viewId}'`)) {
-      btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all bg-secondary text-white font-bold shadow-sm";
+  // Actualizar botones de navegación en el header (excluyendo el logo de la marca)
+  const navButtons = document.querySelectorAll('#header-nav [data-nav-id], nav [data-nav-id]');
+  navButtons.forEach((link) => {
+    const navId = link.getAttribute('data-nav-id');
+    if (navId === viewId) {
+      link.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow-xs";
     } else {
-      btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-slate-700 hover:bg-slate-100 hover:text-slate-900";
+      link.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60";
     }
   });
 
