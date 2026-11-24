@@ -32,8 +32,14 @@ def clean_and_transform_screen(folder, screen_id):
     # 1. Eliminar header duplicado interno si existe
     body_content = re.sub(r'<header class="fixed top-0 left-0 right-0 h-16[^>]*>.*?</header>', '', body_content, flags=re.DOTALL)
 
-    # 2. Corregir padding superior en <main> para que ningún componente quede debajo del Header fijo (pt-16 -> pt-20)
-    body_content = re.sub(r'(<main\b[^>]*\bclass=["\'][^"\']*\b)pt-16(\b[^"\']*["\'])', r'\1pt-20\2', body_content)
+    # 2. Eliminar completamente el sidebar vertical (<aside>...</aside>) y el contenedor desplazado (pl-72)
+    # para dejar una interfaz 100% limpia, minimalista y con navegación horizontal superior
+    body_content = re.sub(r'<aside\b[^>]*>.*?</aside>', '', body_content, flags=re.DOTALL)
+    body_content = re.sub(r'<div class="pl-72">\s*<main\b([^>]*)>', r'<main\1 class="max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-12 w-full">', body_content)
+    body_content = body_content.replace('class="pl-72"', 'class="w-full"')
+
+    # 3. Corregir padding superior en <main> para que ningún componente quede debajo del Header fijo (pt-16 -> pt-16)
+    body_content = re.sub(r'(<main\b[^>]*\bclass=["\'][^"\']*\b)pt-20(\b[^"\']*["\'])', r'\1pt-16\2', body_content)
 
     # 3. Transformar los enlaces del sidebar según DATA_PATH_TO_ACTION
     for dpath, target_action in DATA_PATH_TO_ACTION.items():

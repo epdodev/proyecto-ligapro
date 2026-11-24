@@ -94,16 +94,18 @@ SIGEC_LP_SVG_ISOTIPO = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3
 </svg>"""
 
 def generate_header(active_id):
-    # Minimalist navigation items
+    # Minimalist horizontal navigation items covering all main sections
     nav_links = [
         {'id': 'tablero', 'label': 'Partidos', 'icon': 'sports_soccer'},
-        {'id': 'posiciones', 'label': 'Posiciones', 'icon': 'leaderboard'},
-        {'id': 'clubes', 'label': 'Clubes', 'icon': 'shield'},
-        {'id': 'consola', 'label': 'Consola En Vivo', 'icon': 'terminal'},
+        {'id': 'posiciones', 'label': 'Posiciones & Fixture', 'icon': 'leaderboard'},
+        {'id': 'clubes', 'label': 'Clubes & Trámites', 'icon': 'shield'},
+        {'id': 'uniformes', 'label': 'Uniformes 48h', 'icon': 'checkroom'},
+        {'id': 'estadios', 'label': 'Escenarios & VAR', 'icon': 'stadium'},
+        {'id': 'consola', 'label': 'Consola de Partido', 'icon': 'terminal'},
     ]
 
     nav_links_html = "".join([
-        f'''<a href="javascript:void(0)" onclick="navigateView('{item['id']}')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all {'bg-slate-900 text-white dark:bg-slate-800 dark:text-white shadow-xs' if item['id'] == active_id else 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'}">
+        f'''<a href="javascript:void(0)" onclick="navigateView('{item['id']}')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap {'bg-indigo-600 text-white shadow-xs' if item['id'] == active_id else 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'}">
           <span class="material-symbols-outlined text-base">{item['icon']}</span>
           <span>{item['label']}</span>
         </a>'''
@@ -111,34 +113,32 @@ def generate_header(active_id):
     ])
 
     header_html = f'''
-    <header class="fixed top-0 left-0 right-0 h-14 bg-white/95 dark:bg-[#0B0F19]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50 px-4 sm:px-6 transition-colors">
-      <div class="max-w-7xl mx-auto h-full flex items-center justify-between gap-4">
-        <!-- Logo minimalista y título -->
-        <div class="flex items-center gap-6 shrink-0">
-          <div class="flex items-center gap-2 cursor-pointer select-none" onclick="navigateView('tablero')">
-            <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-black text-sm shadow-xs">LP</span>
-            <div class="flex flex-col">
-              <span class="font-extrabold text-sm tracking-tight text-slate-900 dark:text-white leading-tight">LigaPro</span>
-              <span class="text-[10px] text-slate-400 font-medium">Serie A 2025</span>
-            </div>
+    <header class="fixed top-0 left-0 right-0 h-14 bg-white/95 dark:bg-[#0B0F19]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50 px-3 sm:px-6 transition-colors">
+      <div class="max-w-7xl mx-auto h-full flex items-center justify-between gap-3">
+        <!-- Logo minimalista -->
+        <div class="flex items-center gap-2 cursor-pointer select-none shrink-0" onclick="navigateView('tablero')">
+          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-black text-sm shadow-xs">LP</span>
+          <div class="flex flex-col hidden sm:flex">
+            <span class="font-extrabold text-sm tracking-tight text-slate-900 dark:text-white leading-tight">LigaPro</span>
+            <span class="text-[10px] text-slate-400 font-medium">Serie A 2025</span>
+          </div>
+        </div>
+
+        <!-- Navegación HORIZONTAL limpia -->
+        <nav class="flex items-center gap-1 overflow-x-auto no-scrollbar py-1">
+          {nav_links_html}
+        </nav>
+
+        <!-- Derecha: Marcador En Vivo + Tema + Usuario -->
+        <div class="flex items-center gap-2 shrink-0">
+          <!-- Marcador En Vivo sutil y elegante -->
+          <div onclick="navigateView('consola')" class="cursor-pointer hidden lg:flex items-center gap-2 bg-slate-100 dark:bg-slate-900/80 hover:bg-slate-200/80 dark:hover:bg-slate-800/80 px-2.5 py-1 rounded-full text-xs transition-colors border border-slate-200 dark:border-slate-800 select-none" title="Ver Consola de Partido">
+            <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+            <span class="font-semibold text-slate-600 dark:text-slate-300">En Vivo</span>
+            <span class="font-bold text-slate-900 dark:text-white font-mono px-0.5" id="header-score">1 - 1</span>
+            <span class="text-[11px] text-slate-400 font-mono" id="header-match-min">68'</span>
           </div>
 
-          <!-- Navegación central minimalista -->
-          <nav class="hidden md:flex items-center gap-1">
-            {nav_links_html}
-          </nav>
-        </div>
-
-        <!-- Centro: Marcador En Vivo sutil y elegante -->
-        <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-2 bg-slate-100 dark:bg-slate-900/80 hover:bg-slate-200/80 dark:hover:bg-slate-800/80 px-3 py-1 rounded-full text-xs transition-colors border border-slate-200 dark:border-slate-800 select-none" title="Ver Consola de Partido">
-          <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-          <span class="font-semibold text-slate-600 dark:text-slate-300">En Vivo</span>
-          <span class="font-bold text-slate-900 dark:text-white font-mono px-1" id="header-score">1 - 1</span>
-          <span class="text-[11px] text-slate-400 font-mono" id="header-match-min">68'</span>
-        </div>
-
-        <!-- Derecha: Tema + Usuario / Acceso -->
-        <div class="flex items-center gap-2 shrink-0">
           <!-- Toggle Modo Oscuro Minimalista -->
           <button id="btn-theme-toggle" onclick="toggleGlobalHighContrast()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Cambiar tema">
             <span class="material-symbols-outlined text-lg">dark_mode</span>
@@ -154,9 +154,9 @@ def generate_header(active_id):
 
           <!-- Bloque de Usuario (Con sesión) -->
           <div id="header-user-block" class="relative">
-            <div onclick="toggleUserDropdown()" class="cursor-pointer flex items-center gap-2 py-1 px-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+            <div onclick="toggleUserDropdown()" class="cursor-pointer flex items-center gap-2 py-1 px-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               <img id="header-user-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" alt="Avatar Usuario" class="w-7 h-7 rounded-full object-cover border border-slate-300 dark:border-slate-700"/>
-              <span id="header-user-name" class="font-semibold text-xs text-slate-800 dark:text-slate-200 hidden sm:inline max-w-[120px] truncate">Usuario</span>
+              <span id="header-user-name" class="font-semibold text-xs text-slate-800 dark:text-slate-200 hidden xl:inline max-w-[120px] truncate">Usuario</span>
               <span class="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
             </div>
 

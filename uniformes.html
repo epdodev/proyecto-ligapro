@@ -142,46 +142,50 @@
 </head>
 <body class="bg-surface font-body-md text-on-surface antialiased min-h-screen">
   
-    <header class="fixed top-0 left-0 right-0 h-14 bg-white/95 dark:bg-[#0B0F19]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50 px-4 sm:px-6 transition-colors">
-      <div class="max-w-7xl mx-auto h-full flex items-center justify-between gap-4">
-        <!-- Logo minimalista y título -->
-        <div class="flex items-center gap-6 shrink-0">
-          <div class="flex items-center gap-2 cursor-pointer select-none" onclick="navigateView('tablero')">
-            <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-black text-sm shadow-xs">LP</span>
-            <div class="flex flex-col">
-              <span class="font-extrabold text-sm tracking-tight text-slate-900 dark:text-white leading-tight">LigaPro</span>
-              <span class="text-[10px] text-slate-400 font-medium">Serie A 2025</span>
-            </div>
+    <header class="fixed top-0 left-0 right-0 h-14 bg-white/95 dark:bg-[#0B0F19]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-50 px-3 sm:px-6 transition-colors">
+      <div class="max-w-7xl mx-auto h-full flex items-center justify-between gap-3">
+        <!-- Logo minimalista -->
+        <div class="flex items-center gap-2 cursor-pointer select-none shrink-0" onclick="navigateView('tablero')">
+          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-black text-sm shadow-xs">LP</span>
+          <div class="flex flex-col hidden sm:flex">
+            <span class="font-extrabold text-sm tracking-tight text-slate-900 dark:text-white leading-tight">LigaPro</span>
+            <span class="text-[10px] text-slate-400 font-medium">Serie A 2025</span>
           </div>
+        </div>
 
-          <!-- Navegación central minimalista -->
-          <nav class="hidden md:flex items-center gap-1">
-            <a href="javascript:void(0)" onclick="navigateView('tablero')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+        <!-- Navegación HORIZONTAL limpia -->
+        <nav class="flex items-center gap-1 overflow-x-auto no-scrollbar py-1">
+          <a href="javascript:void(0)" onclick="navigateView('tablero')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">sports_soccer</span>
           <span>Partidos</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('posiciones')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+        </a><a href="javascript:void(0)" onclick="navigateView('posiciones')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">leaderboard</span>
-          <span>Posiciones</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('clubes')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span>Posiciones & Fixture</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('clubes')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">shield</span>
-          <span>Clubes</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('consola')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span>Clubes & Trámites</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('uniformes')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow-xs">
+          <span class="material-symbols-outlined text-base">checkroom</span>
+          <span>Uniformes 48h</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('estadios')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span class="material-symbols-outlined text-base">stadium</span>
+          <span>Escenarios & VAR</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('consola')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">terminal</span>
-          <span>Consola En Vivo</span>
+          <span>Consola de Partido</span>
         </a>
-          </nav>
-        </div>
+        </nav>
 
-        <!-- Centro: Marcador En Vivo sutil y elegante -->
-        <div onclick="navigateView('consola')" class="cursor-pointer flex items-center gap-2 bg-slate-100 dark:bg-slate-900/80 hover:bg-slate-200/80 dark:hover:bg-slate-800/80 px-3 py-1 rounded-full text-xs transition-colors border border-slate-200 dark:border-slate-800 select-none" title="Ver Consola de Partido">
-          <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-          <span class="font-semibold text-slate-600 dark:text-slate-300">En Vivo</span>
-          <span class="font-bold text-slate-900 dark:text-white font-mono px-1" id="header-score">1 - 1</span>
-          <span class="text-[11px] text-slate-400 font-mono" id="header-match-min">68'</span>
-        </div>
-
-        <!-- Derecha: Tema + Usuario / Acceso -->
+        <!-- Derecha: Marcador En Vivo + Tema + Usuario -->
         <div class="flex items-center gap-2 shrink-0">
+          <!-- Marcador En Vivo sutil y elegante -->
+          <div onclick="navigateView('consola')" class="cursor-pointer hidden lg:flex items-center gap-2 bg-slate-100 dark:bg-slate-900/80 hover:bg-slate-200/80 dark:hover:bg-slate-800/80 px-2.5 py-1 rounded-full text-xs transition-colors border border-slate-200 dark:border-slate-800 select-none" title="Ver Consola de Partido">
+            <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+            <span class="font-semibold text-slate-600 dark:text-slate-300">En Vivo</span>
+            <span class="font-bold text-slate-900 dark:text-white font-mono px-0.5" id="header-score">1 - 1</span>
+            <span class="text-[11px] text-slate-400 font-mono" id="header-match-min">68'</span>
+          </div>
+
           <!-- Toggle Modo Oscuro Minimalista -->
           <button id="btn-theme-toggle" onclick="toggleGlobalHighContrast()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Cambiar tema">
             <span class="material-symbols-outlined text-lg">dark_mode</span>
@@ -197,9 +201,9 @@
 
           <!-- Bloque de Usuario (Con sesión) -->
           <div id="header-user-block" class="relative">
-            <div onclick="toggleUserDropdown()" class="cursor-pointer flex items-center gap-2 py-1 px-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+            <div onclick="toggleUserDropdown()" class="cursor-pointer flex items-center gap-2 py-1 px-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               <img id="header-user-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" alt="Avatar Usuario" class="w-7 h-7 rounded-full object-cover border border-slate-300 dark:border-slate-700"/>
-              <span id="header-user-name" class="font-semibold text-xs text-slate-800 dark:text-slate-200 hidden sm:inline max-w-[120px] truncate">Usuario</span>
+              <span id="header-user-name" class="font-semibold text-xs text-slate-800 dark:text-slate-200 hidden xl:inline max-w-[120px] truncate">Usuario</span>
               <span class="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
             </div>
 
@@ -224,7 +228,7 @@
     </header>
     
   <main class="w-full">
-    <aside class="fixed left-0 top-16 bottom-0 w-72 bg-surface-card z-40 flex flex-col border-r border-border-subtle shadow-[0_1px_8px_rgba(0,0,0,0.02)] dark:bg-[#0B0F19] dark:text-[#F8FAFC]"><div class="p-space-md border-b border-border-subtle"><div class="flex items-center justify-between bg-surface-container-low px-space-sm py-2 rounded border border-border-subtle dark:bg-[#0B0F19] dark:text-[#F8FAFC]"><div class="flex items-center gap-space-xs"><span class="inline-block w-2.5 h-2.5 rounded-full bg-sport-success animate-pulse"></span><span class="font-label-caps text-label-caps text-text-primary uppercase dark:text-[#F8FAFC]">COMET Enlace Activo</span></div><span class="font-mono-table text-[11px] text-sport-success font-semibold">SYNC</span></div></div><div class="flex-1 overflow-y-auto py-space-sm px-space-xs"><div class="px-space-sm py-1 font-label-caps text-label-caps text-text-secondary uppercase tracking-wider dark:text-[#CBD5E1]">Administración LigaPro</div><nav class="flex flex-col gap-0.5 mt-1" data-active-classes="bg-secondary text-on-secondary font-semibold shadow-sm"><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="tablero-general" href="javascript:void(0)" onclick="navigateView('tablero')"><span class="material-symbols-outlined text-xl">space_dashboard</span><span>Tablero General</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="competiciones-formatos" href="javascript:void(0)" onclick="mostrarModalCompeticionesFormatos()"><span class="material-symbols-outlined text-xl">emoji_events</span><span>Competiciones &amp; Formatos</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="calificacion-escenarios" href="javascript:void(0)" onclick="navigateView('estadios')"><span class="material-symbols-outlined text-xl">stadium</span><span>Escenarios &amp; VAR (Z)</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="designacion-uniformes" href="javascript:void(0)" onclick="navigateView('uniformes')"><span class="material-symbols-outlined text-xl">checkroom</span><span>Designación de Uniformes</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="consola-matchday" href="javascript:void(0)" onclick="navigateView('consola')"><span class="material-symbols-outlined text-xl">sports_soccer</span><span>Consola Comisario Matchday</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="portal-clubes" href="javascript:void(0)" onclick="navigateView('clubes')"><span class="material-symbols-outlined text-xl">shield_person</span><span>Portal Clubes &amp; Trámites</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="posiciones-fair-play" href="javascript:void(0)" onclick="navigateView('posiciones')"><span class="material-symbols-outlined text-xl">leaderboard</span><span>Posiciones &amp; Fair Play</span></a><a class="flex items-center gap-space-sm px-space-sm py-2.5 rounded text-text-secondary hover:bg-surface-container-low hover:text-text-primary transition-colors font-body-md text-body-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-path="seguridad-criptografica" href="javascript:void(0)" onclick="mostrarModalSeguridadSHA256()"><span class="material-symbols-outlined text-xl">verified_user</span><span>Seguridad SHA-256</span></a></nav></div><div class="p-space-sm border-t border-border-subtle bg-surface-container-low/50 dark:bg-[#0B0F19] dark:text-[#F8FAFC]"><div class="flex items-center justify-between text-text-secondary font-label-caps text-[10px] dark:text-[#CBD5E1]"><span>VERSION 4.2.1-SEC</span><span class="font-mono-table text-text-secondary dark:text-[#CBD5E1]">ID: LIGAPRO-EC</span></div></div></aside><div class="pl-72"><main class="relative w-full pt-20 bg-surface min-h-screen px-gutter-lg py-margin-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+    <main class="relative w-full pt-16 bg-surface min-h-screen px-gutter-lg py-margin-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" class="max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-12 w-full">
 
         <div class="mb-4 bg-white p-3 rounded-xl border border-slate-200 flex flex-wrap items-center justify-between gap-2 shadow-xs">
           <div>
