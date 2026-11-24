@@ -176,125 +176,157 @@ def clean_and_transform_screen(folder, screen_id):
         flags=re.DOTALL
     )
 
-    # --- INICIO DE SESIÓN / ROLES (AUTENTICACIÓN REAL CON TABS) ---
+    # --- INICIO DE SESIÓN / ROLES (AUTENTICACIÓN REAL CON BASE DE DATOS) ---
     if screen_id == 'auth' or 'inicio_de_sesi_n' in folder:
         auth_card = '''
         <div class="min-h-[calc(100vh-4rem)] pt-20 pb-8 flex items-center justify-center w-full px-4">
-          <div class="w-full max-w-lg bg-slate-900 text-white rounded-2xl shadow-2xl overflow-hidden border border-slate-800 p-6">
+          <div class="w-full max-w-lg bg-slate-900 text-white rounded-2xl shadow-2xl overflow-hidden border border-slate-800 p-6 sm:p-7">
             <!-- Cabecera -->
             <div class="flex flex-col items-center text-center mb-5">
               <div class="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg border border-slate-700 mb-2">
-              <span class="material-symbols-outlined text-white text-2xl">shield</span>
+                <span class="material-symbols-outlined text-white text-2xl">shield</span>
+              </div>
+              <h1 class="text-xl font-extrabold tracking-tight text-white">SIGEC-LP</h1>
+              <p class="text-xs text-amber-400 font-bold uppercase tracking-wider">Liga Profesional de Fútbol del Ecuador</p>
+              <p class="text-xs text-slate-400 mt-1">Portal Oficial de Acceso y Gestión Federativa</p>
             </div>
-            <h1 class="text-xl font-extrabold tracking-tight text-white">SIGEC-LP</h1>
-            <p class="text-xs text-amber-400 font-bold uppercase tracking-wider">Liga Profesional de Fútbol del Ecuador</p>
-            <p class="text-xs text-slate-400 mt-1">Portal Oficial de Acceso y Gestión Federativa</p>
-          </div>
 
-          <!-- Pestañas de Autenticación -->
-          <div class="flex border-b border-slate-800 mb-5">
-            <button type="button" id="tab-btn-login" onclick="toggleAuthTab('login')" class="flex-1 py-2 text-center font-bold text-xs border-b-2 border-amber-400 text-amber-400 transition-colors">
-              Iniciar Sesión
-            </button>
-            <button type="button" id="tab-btn-signup" onclick="toggleAuthTab('signup')" class="flex-1 py-2 text-center font-bold text-xs border-b-2 border-transparent text-slate-400 hover:text-white transition-colors">
-              Crear Cuenta
-            </button>
-          </div>
-
-          <!-- Sección Iniciar Sesión -->
-          <div id="auth-section-login">
-            <form id="login-form" onsubmit="loginFormSubmit(event)" class="space-y-4">
-              <div>
-                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Cédula / Correo / ID COMET</label>
-                <div class="relative flex items-center">
-                  <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">fingerprint</span>
-                  <input type="text" id="login-email" required placeholder="c.villacis@ligapro.ec" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
-                </div>
-              </div>
-
-              <div>
-                <div class="flex justify-between items-center mb-1">
-                  <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Contraseña</label>
-                  <a href="javascript:void(0)" onclick="showToast('Para restablecer credenciales COMET contacte a soporte@ligapro.ec', 'info')" class="text-[11px] text-blue-400 hover:underline">¿Olvidó contraseña?</a>
-                </div>
-                <div class="relative flex items-center">
-                  <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">lock</span>
-                  <input type="password" id="login-password" required placeholder="••••••••" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
-                </div>
-              </div>
-
-              <button type="submit" id="btn-login-submit" class="w-full h-10 mt-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md transition-all">
-                <span class="material-symbols-outlined text-sm">login</span> Iniciar Sesión en SIGEC-LP
+            <!-- Pestañas de Autenticación -->
+            <div class="flex border-b border-slate-800 mb-5">
+              <button type="button" id="tab-btn-login" onclick="toggleAuthTab('login')" class="flex-1 py-2 text-center font-bold text-xs border-b-2 border-amber-400 text-amber-400 transition-colors">
+                Iniciar Sesión
               </button>
-            </form>
-          </div>
-
-          <!-- Sección Crear Cuenta -->
-          <div id="auth-section-signup" class="hidden">
-            <form id="signup-form" onsubmit="signupFormSubmit(event)" class="space-y-3">
-              <div>
-                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Nombres y Apellidos</label>
-                <div class="relative flex items-center">
-                  <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">badge</span>
-                  <input type="text" id="signup-nombre" required placeholder="Ej: Dr. Fernando Gaibor" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
-                </div>
-              </div>
-
-              <div>
-                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Correo Electrónico Oficial</label>
-                <div class="relative flex items-center">
-                  <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">mail</span>
-                  <input type="email" id="signup-email" required placeholder="f.gaibor@ligapro.ec" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
-                </div>
-              </div>
-
-              <div>
-                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Contraseña (Mínimo 6 caracteres)</label>
-                <div class="relative flex items-center">
-                  <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">key</span>
-                  <input type="password" id="signup-password" minlength="6" required placeholder="••••••••" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
-                </div>
-              </div>
-
-              <div>
-                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Rol / Función Oficial</label>
-                <select id="signup-rol" class="w-full h-10 px-3 rounded-lg bg-slate-800 text-white text-xs border border-slate-700 focus:outline-none focus:border-blue-500">
-                  <option value="DIR_COMP">Dirección de Competiciones LigaPro</option>
-                  <option value="COMISARIO">Comisario de Partido (Matchday)</option>
-                  <option value="CLUB_ADMIN">Delegado Oficial de Club</option>
-                </select>
-              </div>
-
-              <button type="submit" id="btn-signup-submit" class="w-full h-10 mt-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md transition-all">
-                <span class="material-symbols-outlined text-sm">person_add</span> Registrar Cuenta Oficial
+              <button type="button" id="tab-btn-signup" onclick="toggleAuthTab('signup')" class="flex-1 py-2 text-center font-bold text-xs border-b-2 border-transparent text-slate-400 hover:text-white transition-colors">
+                Crear Cuenta
               </button>
-            </form>
-          </div>
-
-          <!-- Botón Discreto de Acceso Demo Rápido -->
-          <div class="mt-6 pt-4 border-t border-slate-800">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">⚡ Acceso Demo Rápido (1 Clic)</span>
-              <span class="text-[9px] font-mono text-emerald-400">SUPABASE CONNECTED</span>
             </div>
-            <div class="grid grid-cols-2 gap-1.5 text-[11px] font-semibold">
-              <button type="button" onclick="cambiarRol('DIR_COMP')" class="p-1.5 rounded bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-left flex items-center gap-1 truncate">
-                <span>🛡️</span> Dirección LigaPro
-              </button>
-              <button type="button" onclick="cambiarRol('COMISARIO')" class="p-1.5 rounded bg-slate-800 hover:bg-amber-600 text-slate-300 hover:text-white transition-all text-left flex items-center gap-1 truncate">
-                <span>📋</span> Comisario Juego
-              </button>
-              <button type="button" onclick="cambiarRol('CLUB_ADMIN')" class="p-1.5 rounded bg-slate-800 hover:bg-emerald-600 text-slate-300 hover:text-white transition-all text-left flex items-center gap-1 truncate">
-                <span>⚽</span> Delegado Club
-              </button>
-              <button type="button" onclick="cambiarRol('PUBLICO')" class="p-1.5 rounded bg-slate-800 hover:bg-purple-600 text-slate-300 hover:text-white transition-all text-left flex items-center gap-1 truncate">
-                <span>👁️</span> Acceso Público
-              </button>
+
+            <!-- Sección Iniciar Sesión -->
+            <div id="auth-section-login">
+              <form id="login-form" onsubmit="loginFormSubmit(event)" class="space-y-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Correo Electrónico Registrado</label>
+                  <div class="relative flex items-center">
+                    <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">mail</span>
+                    <input type="email" id="login-email" required placeholder="usuario@ejemplo.com o tu.correo@ligapro.ec" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between items-center mb-1">
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Contraseña</label>
+                    <a href="javascript:void(0)" onclick="showToast('Para restablecer sus credenciales contacte a soporte@ligapro.ec', 'info')" class="text-[11px] text-blue-400 hover:underline">¿Olvidó contraseña?</a>
+                  </div>
+                  <div class="relative flex items-center">
+                    <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">lock</span>
+                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
+                  </div>
+                </div>
+
+                <button type="submit" id="btn-login-submit" class="w-full h-10 mt-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md transition-all">
+                  <span class="material-symbols-outlined text-sm">login</span> Iniciar Sesión en SIGEC-LP
+                </button>
+
+                <div class="pt-2 text-center">
+                  <p class="text-[11px] text-slate-400">¿No tienes cuenta oficial? <a href="javascript:void(0)" onclick="toggleAuthTab('signup')" class="text-blue-400 hover:underline font-bold">Regístrate aquí</a></p>
+                </div>
+              </form>
+            </div>
+
+            <!-- Sección Crear Cuenta -->
+            <div id="auth-section-signup" class="hidden">
+              <form id="signup-form" onsubmit="signupFormSubmit(event)" class="space-y-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Nombres y Apellidos *</label>
+                    <div class="relative flex items-center">
+                      <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">badge</span>
+                      <input type="text" id="signup-nombre" required placeholder="Ej: Ing. Juan Pérez" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Cédula de Identidad *</label>
+                    <div class="relative flex items-center">
+                      <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">fingerprint</span>
+                      <input type="text" id="signup-cedula" required placeholder="Ej: 1712345678" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Correo Electrónico *</label>
+                  <div class="relative flex items-center">
+                    <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">mail</span>
+                    <input type="email" id="signup-email" required placeholder="tu.correo@ejemplo.com" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Contraseña (Mínimo 6 caracteres) *</label>
+                  <div class="relative flex items-center">
+                    <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">key</span>
+                    <input type="password" id="signup-password" minlength="6" required placeholder="••••••••" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Rol / Función *</label>
+                    <select id="signup-rol" class="w-full h-10 px-3 rounded-lg bg-slate-800 text-white text-xs border border-slate-700 focus:outline-none focus:border-blue-500">
+                      <option value="DIR_COMP">Dirección de Competiciones LigaPro</option>
+                      <option value="COMISARIO">Comisario de Partido (Matchday)</option>
+                      <option value="CLUB_ADMIN">Delegado Oficial de Club</option>
+                      <option value="PUBLICO">Acceso Público (Aficionado / Prensa)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Club / Organización</label>
+                    <select id="signup-club" class="w-full h-10 px-3 rounded-lg bg-slate-800 text-white text-xs border border-slate-700 focus:outline-none focus:border-blue-500">
+                      <option value="LigaPro Sede Central">LigaPro Sede Central</option>
+                      <option value="Liga Deportiva Universitaria de Quito">LDU Quito</option>
+                      <option value="Barcelona SC">Barcelona SC</option>
+                      <option value="Independiente del Valle">Independiente del Valle</option>
+                      <option value="CS Emelec">CS Emelec</option>
+                      <option value="Universidad Católica">Universidad Católica</option>
+                      <option value="SD Aucas">SD Aucas</option>
+                      <option value="Orense SC">Orense SC</option>
+                      <option value="El Nacional">El Nacional</option>
+                      <option value="Delfín SC">Delfín SC</option>
+                      <option value="Deportivo Cuenca">Deportivo Cuenca</option>
+                      <option value="Macará">Macará</option>
+                      <option value="Técnico Universitario">Técnico Universitario</option>
+                      <option value="Mushuc Runa">Mushuc Runa</option>
+                      <option value="Libertad FC">Libertad FC</option>
+                      <option value="Imbabura SC">Imbabura SC</option>
+                      <option value="Cumbayá FC">Cumbayá FC</option>
+                      <option value="Prensa / Afición General">Prensa / Afición General</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Cargo Institucional (Opcional)</label>
+                  <div class="relative flex items-center">
+                    <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">work</span>
+                    <input type="text" id="signup-cargo" placeholder="Ej: Director Técnico, Comisario Acreditado, Gerente Deportivo" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
+                  </div>
+                </div>
+
+                <button type="submit" id="btn-signup-submit" class="w-full h-10 mt-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md transition-all hover:scale-[1.01]">
+                  <span class="material-symbols-outlined text-sm">person_add</span> Registrar Usuario en Base de Datos
+                </button>
+
+                <div class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/80 text-[10px] text-slate-400 flex items-start gap-2 mt-2">
+                  <span class="material-symbols-outlined text-sm text-emerald-400 shrink-0">verified_user</span>
+                  <span>Tus datos se encriptan y guardan directamente en la base de datos de PostgreSQL (Supabase) con sesión persistente real.</span>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      </div>
-      '''
+        '''
         body_content = auth_card
 
     # 3. Reemplazar cualquier href="#" remanente por javascript:void(0)

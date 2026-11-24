@@ -30,23 +30,20 @@ window.toggleUserDropdown = function(forceClose = false) {
 };
 
 window.cambiarRol = function(nuevoRol) {
-  store.setUserRole(nuevoRol);
   window.toggleUserDropdown(true);
-  actualizarUIHeader();
-  
-  // Si estamos en la vista de login, redirigir a tablero o posiciones
-  if (store.state.activeView === 'auth') {
-    window.navigateView(nuevoRol === 'PUBLICO' ? 'posiciones' : 'tablero');
-  } else {
-    // Si la vista actual no está permitida, redirigir
-    if (!store.canAccessView(store.state.activeView)) {
-      window.navigateView('posiciones');
-    }
-  }
+  showToast('El rol asignado se gestiona desde el registro oficial en la base de datos.', 'info');
 };
 
 window.cerrarSesion = async function() {
   window.toggleUserDropdown(true);
+  const sb = getSupabase();
+  if (sb && sb.auth) {
+    try {
+      await sb.auth.signOut();
+    } catch (e) {
+      console.warn('Error signOut Supabase:', e);
+    }
+  }
   await store.logout();
   actualizarUIHeader();
   showToast('Sesión cerrada correctamente.', 'info');
@@ -441,89 +438,134 @@ window.toggleAuthTab = function(tab) {
 
 window.loginFormSubmit = async function(event) {
   if (event) event.preventDefault();
-  const idInput = document.getElementById('id-federativo') || document.getElementById('login-email');
-  const passInput = document.getElementById('credencial-clave') || document.getElementById('login-password');
-  const roleRadio = document.querySelector('input[name="portal_role"]:checked');
+  const idInput = document.getElementById('login-email') || document.getElementById('id-federativo');
+  const passInput = document.getElementById('login-password') || document.getElementById('credencial-clave');
+  const submitBtn = document.getElementById('btn-login-submit');
 
-  const rawId = idInput ? idInput.value.trim() : '';
-  if (!rawId) {
-    showToast('Por favor ingrese su usuario o correo electrónico.', 'warning');
+  const email = idInput ? idInput.value.trim() : '';
+  const password = passInput ? passInput.value : '';
+
+  if (!email) {
+    showToast('Por favor ingrese su correo electrónico registrado.', 'warning');
     return;
   }
-  const email = rawId.includes('@') ? rawId : `${rawId.replace(/[^a-zA-Z0-9._-]/g, '') || 'oficial'}@ligapro.ec`;
-  const password = passInput ? passInput.value : '';
   if (!password) {
     showToast('Por favor ingrese su contraseña.', 'warning');
     return;
   }
 
-  const roleMap = {
-    'competiciones': 'DIR_COMP',
-    'comisario': 'COMISARIO',
-    'clubes': 'CLUB_ADMIN',
-    'arbitral': 'DIR_COMP',
-    'DIR_COMP': 'DIR_COMP',
-    'COMISARIO': 'COMISARIO',
-    'CLUB_ADMIN': 'CLUB_ADMIN',
-    'PUBLICO': 'PUBLICO'
-  };
-  let role = roleRadio ? (roleMap[roleRadio.value] || 'DIR_COMP') : 'DIR_COMP';
-  let nombreUsuario = rawId.includes('@') ? rawId.split('@')[0] : rawId;
-  let userMeta = {};
-
-  // Intentar autenticación con Supabase si está disponible
-  const sb = getSupabase();
-  if (sb && sb.auth) {
-    try {
-      const { data, error } = await sb.auth.signInWithPassword({
-        email,
-        password
-      });
-      if (error) {
-        console.warn('Supabase Auth fallo:', error.message);
-        if (!email.includes('ligapro.ec') && !email.includes('ldu.com.ec')) {
-          showToast(`Error de autenticación: ${error.message}`, 'error');
-          return;
-        }
-      } else if (data && data.user) {
-        if (data.user.user_metadata) {
-          userMeta = data.user.user_metadata;
-          if (userMeta.rol || userMeta.role) role = userMeta.rol || userMeta.role;
-          if (userMeta.nombre || userMeta.full_name) nombreUsuario = userMeta.nombre || userMeta.full_name;
-        }
-      }
-    } catch (err) {
-      console.warn('Supabase Auth offline, aplicando fallback demo.');
-    }
+  const origBtnContent = submitBtn ? submitBtn.innerHTML : '';
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<span class="material-symbols-outlined text-sm animate-spin">refresh</span> Verificando en base de datos...`;
   }
 
-  // Activar sesión en store
-  store.setUserRole(role, nombreUsuario, email, {
-    cargo: userMeta.cargo,
-    club: userMeta.club,
-    cedula: userMeta.cedula,
-    avatar: userMeta.avatar_url || userMeta.avatar,
-    avatar_url: userMeta.avatar_url || userMeta.avatar
-  });
-  actualizarUIHeader();
-  showToast(`¡Bienvenido! Sesión iniciada como ${store.state.currentUser.rolNombre}`, 'success');
-  window.navigateView('tablero');
+  const sb = getSupabase();
+  if (!sb || !sb.auth) {
+    showToast('Error: Servicio de base de datos no disponible.', 'error');
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = origBtnContent;
+    }
+    return;
+  }
+
+  try {
+    const { data, error } = await sb.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      console.warn('Supabase Auth error:', error.message);
+      const msg = error.message === 'Invalid login credentials'
+        ? 'Credenciales incorrectas. Verifique su correo y contraseña.'
+        : `Error de autenticación: ${error.message}`;
+      showToast(msg, 'error');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = origBtnContent;
+      }
+      return;
+    }
+
+    const user = data?.user;
+    if (!user) {
+      showToast('No se encontró el usuario en la base de datos.', 'error');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = origBtnContent;
+      }
+      return;
+    }
+
+    const meta = user.user_metadata || {};
+    let role = meta.rol || meta.role || 'DIR_COMP';
+    let nombreUsuario = meta.nombre || meta.full_name || user.email.split('@')[0];
+
+    // Consultar rol asignado en la base de datos user_roles
+    try {
+      const { data: roleRows } = await sb.from('user_roles').select('rol, club_id').eq('user_id', user.id).limit(1);
+      if (roleRows && roleRows.length > 0 && roleRows[0].rol) {
+        role = roleRows[0].rol;
+      }
+    } catch (rErr) {
+      console.warn('Consulta user_roles:', rErr);
+    }
+
+    const initialSeed = encodeURIComponent(nombreUsuario);
+    const avatarUrl = meta.avatar_url || meta.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${initialSeed}&backgroundColor=0284c7`;
+
+    // Activar sesión en store
+    store.setUserRole(role, nombreUsuario, user.email, {
+      id: user.id,
+      cargo: meta.cargo,
+      club: meta.club,
+      cedula: meta.cedula,
+      avatar: avatarUrl,
+      avatar_url: avatarUrl
+    });
+
+    actualizarUIHeader();
+    showToast(`¡Bienvenido, ${nombreUsuario}! Sesión iniciada con éxito.`, 'success');
+    window.navigateView('tablero');
+
+  } catch (ex) {
+    console.error('Error en login:', ex);
+    showToast('Error al conectar con la base de datos.', 'error');
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = origBtnContent;
+    }
+  }
 };
 
 window.signupFormSubmit = async function(event) {
   if (event) event.preventDefault();
   const nombreInput = document.getElementById('signup-nombre');
+  const cedulaInput = document.getElementById('signup-cedula');
   const emailInput = document.getElementById('signup-email');
   const passInput = document.getElementById('signup-password');
   const roleSelect = document.getElementById('signup-rol');
+  const clubSelect = document.getElementById('signup-club');
+  const cargoInput = document.getElementById('signup-cargo');
+  const submitBtn = document.getElementById('btn-signup-submit');
 
   const nombre = nombreInput ? nombreInput.value.trim() : '';
+  const cedula = cedulaInput ? cedulaInput.value.trim() : '';
   const email = emailInput ? emailInput.value.trim() : '';
   const password = passInput ? passInput.value : '';
   const rol = roleSelect ? roleSelect.value : 'DIR_COMP';
+  const club = clubSelect ? clubSelect.value : 'LigaPro Sede Central';
+  const cargo = cargoInput ? cargoInput.value.trim() : (
+    rol === 'DIR_COMP' ? 'Dirección de Competiciones' :
+    rol === 'COMISARIO' ? 'Comisario Oficial de Partido' :
+    rol === 'CLUB_ADMIN' ? 'Delegado Oficial de Club' : 'Aficionado / Público'
+  );
 
   if (!nombre || !email || !password) {
-    showToast('Por favor complete todos los campos obligatorios.', 'warning');
+    showToast('Por favor complete los campos obligatorios (Nombre, Correo y Contraseña).', 'warning');
     return;
   }
 
@@ -532,40 +574,101 @@ window.signupFormSubmit = async function(event) {
     return;
   }
 
-  const sb = getSupabase();
-  if (sb && sb.auth) {
-    try {
-      const { data, error } = await sb.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            nombre,
-            rol
-          }
-        }
-      });
-
-      if (error) {
-        showToast(`Error al crear cuenta: ${error.message}`, 'error');
-        return;
-      }
-
-      if (data && data.user) {
-        await safeInsert('user_roles', {
-          user_id: data.user.id,
-          rol: rol === 'DIR_COMP' ? 'DIR_COMP' : rol
-        });
-      }
-    } catch (err) {
-      console.warn('Supabase signUp excepción:', err);
-    }
+  const origBtnContent = submitBtn ? submitBtn.innerHTML : '';
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<span class="material-symbols-outlined text-sm animate-spin">refresh</span> Guardando usuario en base de datos...`;
   }
 
-  store.setUserRole(rol, nombre, email);
-  actualizarUIHeader();
-  showToast(`✅ Cuenta creada exitosamente. Bienvenido a SIGEC-LP, ${nombre}.`, 'success');
-  window.navigateView('tablero');
+  const sb = getSupabase();
+  if (!sb || !sb.auth) {
+    showToast('Error: Servicio de base de datos no disponible.', 'error');
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = origBtnContent;
+    }
+    return;
+  }
+
+  try {
+    const initialSeed = encodeURIComponent(nombre);
+    const avatarUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${initialSeed}&backgroundColor=0284c7`;
+
+    // 1. Guardar usuario en Supabase Auth (auth.users con metadata en PostgreSQL)
+    const { data, error } = await sb.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          nombre,
+          full_name: nombre,
+          rol,
+          role: rol,
+          cedula,
+          club,
+          cargo,
+          avatar_url: avatarUrl,
+          avatar: avatarUrl
+        }
+      }
+    });
+
+    if (error) {
+      showToast(`Error al registrar usuario: ${error.message}`, 'error');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = origBtnContent;
+      }
+      return;
+    }
+
+    const newUser = data?.user;
+    if (!newUser) {
+      showToast('No se pudo completar el registro del usuario.', 'error');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = origBtnContent;
+      }
+      return;
+    }
+
+    // 2. Guardar registro en la tabla user_roles en la base de datos
+    if (['DIR_COMP', 'COMISARIO', 'CLUB_ADMIN'].includes(rol)) {
+      try {
+        await sb.from('user_roles').insert({
+          user_id: newUser.id,
+          rol: rol,
+          vigente_desde: new Date().toISOString().split('T')[0]
+        });
+        console.log('✅ Rol registrado en tabla user_roles de la base de datos.');
+      } catch (errRole) {
+        console.warn('Aviso user_roles insert:', errRole);
+      }
+    }
+
+    // 3. Activar sesión real en el store de la aplicación
+    store.setUserRole(rol, nombre, email, {
+      id: newUser.id,
+      cargo,
+      club,
+      cedula,
+      avatar: avatarUrl,
+      avatar_url: avatarUrl
+    });
+
+    actualizarUIHeader();
+    showToast(`✅ Cuenta creada y guardada exitosamente en la base de datos. ¡Bienvenido, ${nombre}!`, 'success');
+    window.navigateView('tablero');
+
+  } catch (ex) {
+    console.error('Excepción en registro:', ex);
+    showToast('Ocurrió un error inesperado al procesar el registro en la base de datos.', 'error');
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = origBtnContent;
+    }
+  }
 };
 
 // ==============================================================================
@@ -1920,26 +2023,48 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Sincronizar sesión activa de Supabase si existe
   const sb = getSupabase();
   if (sb && sb.auth) {
-    sb.auth.getSession().then(({ data: { session } }) => {
+    sb.auth.getSession().then(async ({ data: { session } }) => {
       if (session && session.user) {
         const u = session.user;
         const meta = u.user_metadata || {};
-        store.updateUserProfile({
-          isAuthenticated: true,
+        let userRole = meta.role || meta.rol || 'DIR_COMP';
+
+        try {
+          const { data: roleRows } = await sb.from('user_roles').select('rol, club_id').eq('user_id', u.id).limit(1);
+          if (roleRows && roleRows.length > 0 && roleRows[0].rol) {
+            userRole = roleRows[0].rol;
+          }
+        } catch (rErr) {}
+
+        const nombre = meta.full_name || meta.nombre || u.email.split('@')[0];
+        const initialSeed = encodeURIComponent(nombre);
+        const avatarUrl = meta.avatar_url || meta.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${initialSeed}&backgroundColor=0284c7`;
+
+        store.setUserRole(userRole, nombre, u.email, {
           id: u.id,
-          nombre: meta.full_name || meta.nombre || u.email.split('@')[0],
-          email: u.email,
-          rol: meta.role || meta.rol || 'DIR_COMP',
-          cargo: meta.cargo || 'Oficial LigaPro',
-          club: meta.club || (meta.rol === 'CLUB_ADMIN' ? 'Liga Deportiva Universitaria' : 'LigaPro Ecuador'),
-          cedula: meta.cedula || '1714209552',
-          avatar: meta.avatar_url || meta.avatar || null,
-          avatar_url: meta.avatar_url || meta.avatar || null
+          cargo: meta.cargo || 'Oficial',
+          club: meta.club || 'LigaPro Ecuador',
+          cedula: meta.cedula || '',
+          avatar: avatarUrl,
+          avatar_url: avatarUrl
         });
+        actualizarUIHeader();
+      } else {
+        // No hay sesión activa en Supabase
+        if (store.state.currentUser.isAuthenticated && !store.state.currentUser.email) {
+          store.setUserRole('PUBLICO', 'Invitado', '');
+        }
         actualizarUIHeader();
       }
     }).catch(err => {
       console.warn('Supabase getSession fallback:', err);
+    });
+
+    sb.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT') {
+        store.setUserRole('PUBLICO', 'Invitado', '');
+        actualizarUIHeader();
+      }
     });
   }
 

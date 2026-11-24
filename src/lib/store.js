@@ -17,15 +17,15 @@ export const INITIAL_STATE = {
   currentUser: {
     isAuthenticated: false,
     id: null,
-    nombre: 'Invitado General',
-    email: 'publico@ligapro.ec',
+    nombre: 'Invitado',
+    email: '',
     rol: 'PUBLICO',
-    rolNombre: 'Acceso Público (Aficionado)',
+    rolNombre: 'Acceso Público (Invitado)',
     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
     avatar_url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
-    cargo: 'Espectador Público',
+    cargo: 'Espectador',
     club: 'Ninguno',
-    cedula: 'Consumidor Final',
+    cedula: '',
     clubId: null,
     partidoId: null
   },
@@ -246,43 +246,30 @@ export const INITIAL_STATE = {
   ]
 };
 
-const ROLES_MAP = {
+export const ROLES_MAP = {
   'DIR_COMP': { 
     nombre: 'Dirección de Competiciones', 
-    email: 'c.villacis@ligapro.ec', 
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80', 
-    usuario: 'Lic. Carlos Villacís',
     cargo: 'Director de Competiciones LigaPro',
     club: 'Liga Profesional de Fútbol del Ecuador (LigaPro)',
-    cedula: '1708923411'
+    badgeColor: 'blue'
   },
   'COMISARIO': { 
     nombre: 'Comisario de Juego', 
-    email: 'm.valencia@ligapro.ec', 
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80', 
-    usuario: 'Ing. Marcelo Valencia',
-    cargo: 'Comisario Nacional Acreditado (COMET-883)',
+    cargo: 'Comisario Oficial de Partido',
     club: 'Comisión de Seguridad y Escenarios LigaPro',
-    cedula: '1714209552'
+    badgeColor: 'amber'
   },
   'CLUB_ADMIN': { 
-    nombre: 'Delegado de Club (LDU Quito)', 
-    email: 'delegado@ldu.com.ec', 
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80', 
-    usuario: 'Dr. Diego Castro',
-    cargo: 'Gerente Deportivo / Delegado Oficial',
-    club: 'Liga Deportiva Universitaria de Quito',
-    cedula: '1705648190'
+    nombre: 'Delegado Oficial de Club', 
+    cargo: 'Delegado Oficial de Club',
+    club: 'Club Afiliado LigaPro',
+    badgeColor: 'emerald'
   },
   'PUBLICO': { 
-    nombre: 'Aficionado / Acceso Público', 
-    email: 'publico@ligapro.ec', 
-    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
-    avatar_url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80', 
-    usuario: 'Invitado General',
-    cargo: 'Espectador Público',
+    nombre: 'Acceso Público / Aficionado', 
+    cargo: 'Espectador',
     club: 'Ninguno',
-    cedula: 'Consumidor Final'
+    badgeColor: 'purple'
   }
 };
 
@@ -339,10 +326,15 @@ class Store {
         const saved = localStorage.getItem('sigec_lp_state');
         if (saved) {
           const parsed = JSON.parse(saved);
+          let loadedUser = parsed.currentUser || {};
+          // Limpiar datos demo persistidos previamente
+          if (!loadedUser.email || loadedUser.email === 'publico@ligapro.ec' || loadedUser.email.includes('c.villacis')) {
+            loadedUser = { ...INITIAL_STATE.currentUser };
+          }
           this.state = {
             ...this.state,
             ...parsed,
-            currentUser: { ...this.state.currentUser, ...(parsed.currentUser || {}) },
+            currentUser: { ...INITIAL_STATE.currentUser, ...loadedUser },
             partidoActivo: { ...this.state.partidoActivo, ...(parsed.partidoActivo || {}) }
           };
         }
@@ -399,28 +391,29 @@ class Store {
   setUserRole(rolCode, nombreUsuario = null, emailUsuario = null, extraData = {}) {
     const roleConfig = ROLES_MAP[rolCode] || {
       nombre: rolCode,
-      email: `${rolCode.toLowerCase()}@ligapro.ec`,
-      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
-    avatar_url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
-      usuario: nombreUsuario || 'Oficial LigaPro',
       cargo: 'Oficial de Partido',
-      club: 'LigaPro Ecuador',
-      cedula: '1700000000'
+      club: 'LigaPro Ecuador'
     };
 
-    const finalAvatar = extraData.avatar_url || extraData.avatar || roleConfig.avatar;
+    const initialSeed = encodeURIComponent(nombreUsuario || emailUsuario || 'LigaPro');
+    const defaultAvatar = `https://api.dicebear.com/7.x/initials/svg?seed=${initialSeed}&backgroundColor=0284c7`;
+    const finalAvatar = extraData.avatar_url || extraData.avatar || defaultAvatar;
+
+    const isAuth = rolCode !== 'PUBLICO' && Boolean(emailUsuario);
+
     this.state.currentUser = {
       ...this.state.currentUser,
-      isAuthenticated: rolCode !== 'PUBLICO',
+      isAuthenticated: isAuth,
+      id: extraData.id || this.state.currentUser.id || null,
       rol: rolCode,
       rolNombre: roleConfig.nombre,
-      nombre: nombreUsuario || roleConfig.usuario,
-      email: emailUsuario || roleConfig.email,
+      nombre: nombreUsuario || (isAuth ? 'Usuario Oficial' : 'Invitado'),
+      email: emailUsuario || '',
       avatar: finalAvatar,
       avatar_url: finalAvatar,
-      cargo: extraData.cargo || roleConfig.cargo || 'Oficial de Partido',
+      cargo: extraData.cargo || roleConfig.cargo || 'Oficial',
       club: extraData.club || roleConfig.club || 'LigaPro Ecuador',
-      cedula: extraData.cedula || roleConfig.cedula || '1700000000'
+      cedula: extraData.cedula || ''
     };
 
     // Si cambió a público y estaba en vista restringida, redirigir a posiciones
