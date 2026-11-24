@@ -97,15 +97,15 @@ def generate_header(active_id):
     # Minimalist horizontal navigation items covering all main sections
     nav_links = [
         {'id': 'tablero', 'label': 'Partidos', 'icon': 'sports_soccer'},
-        {'id': 'posiciones', 'label': 'Posiciones & Fixture', 'icon': 'leaderboard'},
-        {'id': 'clubes', 'label': 'Clubes & Trámites', 'icon': 'shield'},
-        {'id': 'uniformes', 'label': 'Uniformes 48h', 'icon': 'checkroom'},
-        {'id': 'estadios', 'label': 'Escenarios & VAR', 'icon': 'stadium'},
-        {'id': 'consola', 'label': 'Consola de Partido', 'icon': 'terminal'},
+        {'id': 'posiciones', 'label': 'Posiciones', 'icon': 'leaderboard'},
+        {'id': 'clubes', 'label': 'Clubes', 'icon': 'shield'},
+        {'id': 'uniformes', 'label': 'Uniformes', 'icon': 'checkroom'},
+        {'id': 'estadios', 'label': 'Escenarios', 'icon': 'stadium'},
+        {'id': 'consola', 'label': 'Consola', 'icon': 'terminal'},
     ]
 
     nav_links_html = "".join([
-        f'''<a href="javascript:void(0)" onclick="navigateView('{item['id']}')" data-nav-id="{item['id']}" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap {'bg-indigo-600 text-white shadow-xs' if item['id'] == active_id else 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'}">
+        f'''<a href="javascript:void(0)" onclick="navigateView('{item['id']}')" data-nav-id="{item['id']}" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap {'bg-indigo-600 text-white shadow-xs' if item['id'] == active_id else 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'}">
           <span class="material-symbols-outlined text-base">{item['icon']}</span>
           <span>{item['label']}</span>
         </a>'''
@@ -124,15 +124,15 @@ def generate_header(active_id):
           </div>
         </div>
 
-        <!-- Navegación HORIZONTAL limpia y completa -->
-        <nav id="header-nav" class="flex items-center gap-1 overflow-x-auto no-scrollbar py-1">
+        <!-- Navegación HORIZONTAL limpia, centrada y sin desbordamiento -->
+        <nav id="header-nav" class="flex-1 min-w-0 flex items-center justify-center gap-1 overflow-x-auto no-scrollbar py-1 px-1">
           {nav_links_html}
         </nav>
 
         <!-- Derecha: Marcador En Vivo + Tema + Usuario -->
         <div class="flex items-center gap-2 shrink-0">
           <!-- Marcador En Vivo sutil y elegante -->
-          <div onclick="navigateView('consola')" class="cursor-pointer hidden lg:flex items-center gap-2 bg-slate-100 dark:bg-slate-900/80 hover:bg-slate-200/80 dark:hover:bg-slate-800/80 px-2.5 py-1 rounded-full text-xs transition-colors border border-slate-200 dark:border-slate-800 select-none" title="Ver Consola de Partido">
+          <div onclick="navigateView('consola')" class="cursor-pointer hidden lg:flex items-center gap-2 bg-slate-100 dark:bg-slate-900/80 hover:bg-slate-200/80 dark:hover:bg-slate-800/80 px-2.5 py-1 rounded-full text-xs transition-colors border border-slate-200 dark:border-slate-800 select-none shrink-0" title="Ver Consola de Partido">
             <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
             <span class="font-semibold text-slate-600 dark:text-slate-300">En Vivo</span>
             <span class="font-bold text-slate-900 dark:text-white font-mono px-0.5" id="header-score">1 - 1</span>
