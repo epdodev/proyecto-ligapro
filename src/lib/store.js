@@ -740,12 +740,25 @@ class Store {
   saveToLocalStorage() {
     if (typeof localStorage !== 'undefined') {
       try {
+        const u = this.state.currentUser || {};
         localStorage.setItem('sigec_lp_state', JSON.stringify({
           activeView: this.state.activeView,
           highContrast: this.state.highContrast,
           fontScale: this.state.fontScale,
           audioAlerts: this.state.audioAlerts,
-          currentUser: this.state.currentUser,
+          currentUser: {
+            isAuthenticated: Boolean(u.isAuthenticated),
+            id: u.id || null,
+            rol: u.rol || 'PUBLICO',
+            rolNombre: u.rolNombre || 'Acceso Público (Invitado)',
+            nombre: u.nombre || 'Invitado',
+            email: u.email || '',
+            avatar: u.avatar || '',
+            avatar_url: u.avatar_url || '',
+            cargo: u.cargo || '',
+            club: u.club || '',
+            cedula: u.cedula || ''
+          },
           partidoActivo: this.state.partidoActivo,
           partidos: this.state.partidos,
           tramites: this.state.tramites,

@@ -103,18 +103,29 @@ window.procesarFotoPerfil = function(event) {
   reader.readAsDataURL(file);
 };
 
+// Helper de sanitización contra inyecciones XSS en atributos y plantillas HTML
+export function escapeAttr(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 window.abrirModalPerfil = function() {
   window.toggleUserDropdown(true);
   pendingAvatarDataUrl = null;
 
   const u = store.state.currentUser || {};
-  const nombre = u.nombre || '';
-  const email = u.email || 'usuario@ligapro.ec';
-  const cargo = u.cargo || 'Oficial de Partido';
-  const club = u.club || 'LigaPro Ecuador';
-  const rol = u.rol || 'DIR_COMP';
-  const cedula = u.cedula || '1714209552';
-  const avatar = u.avatar_url || u.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80';
+  const nombre = escapeAttr(u.nombre || '');
+  const email = escapeAttr(u.email || '');
+  const cargo = escapeAttr(u.cargo || 'Oficial de Partido');
+  const club = escapeAttr(u.club || 'LigaPro Ecuador');
+  const rol = escapeAttr(u.rol || 'DIR_COMP');
+  const cedula = escapeAttr(u.cedula || '');
+  const avatar = escapeAttr(u.avatar_url || u.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80');
 
   const modalHtml = `
   <div id="modal-perfil-backdrop" class="fixed inset-0 bg-black/75 backdrop-blur-xs z-50 flex items-start justify-center p-4 pt-20 overflow-y-auto">
@@ -180,7 +191,7 @@ window.abrirModalPerfil = function() {
               <span class="material-symbols-outlined text-sm text-emerald-500">pin</span>
               Número de Cédula
             </label>
-            <input id="perfil-cedula" type="text" value="${cedula}" placeholder="Ej: 1714209552" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-mono font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all" />
+            <input id="perfil-cedula" type="text" value="${cedula}" placeholder="10 dígitos de cédula" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-mono font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all" />
           </div>
         </div>
 
@@ -260,6 +271,10 @@ window.guardarCambiosPerfil = async function(event) {
   const cedula = cedulaInput ? cedulaInput.value.trim() : '';
   const nuevaPwd = nuevaPwdInput ? nuevaPwdInput.value : '';
   const confirmPwd = confirmPwdInput ? confirmPwdInput.value : '';
+
+  // Limpiar campos de contraseña del DOM inmediatamente por seguridad
+  if (nuevaPwdInput) nuevaPwdInput.value = '';
+  if (confirmPwdInput) confirmPwdInput.value = '';
 
   // Conservar rol por defecto interno para permisos del sistema sin exigir campos de rol/club/cargo al usuario
   const rol = store.state.currentUser.rol || 'DIR_COMP';
@@ -406,6 +421,9 @@ window.loginFormSubmit = async function(event) {
   const email = idInput ? idInput.value.trim() : '';
   const password = passInput ? passInput.value : '';
 
+  // Limpiar campo de contraseña del DOM inmediatamente por seguridad
+  if (passInput) passInput.value = '';
+
   if (!email) {
     showToast('Por favor ingrese su correo electrónico registrado.', 'warning');
     return;
@@ -492,7 +510,6 @@ window.loginFormSubmit = async function(event) {
     window.navigateView('tablero');
 
   } catch (ex) {
-    console.error('Error en login:', ex);
     showToast('Error al conectar con la base de datos.', 'error');
   } finally {
     if (submitBtn) {
@@ -514,6 +531,9 @@ window.signupFormSubmit = async function(event) {
   const cedula = cedulaInput ? cedulaInput.value.trim() : '';
   const email = emailInput ? emailInput.value.trim() : '';
   const password = passInput ? passInput.value : '';
+
+  // Limpiar campo de contraseña del DOM inmediatamente por seguridad
+  if (passInput) passInput.value = '';
   
   // Asignar rol por defecto para acceso total al sistema sin pedir cargo/rol/club al usuario
   const rol = 'DIR_COMP';
@@ -617,7 +637,6 @@ window.signupFormSubmit = async function(event) {
     window.navigateView('tablero');
 
   } catch (ex) {
-    console.error('Excepción en registro:', ex);
     showToast('Ocurrió un error inesperado al procesar el registro en la base de datos.', 'error');
   } finally {
     if (submitBtn) {
@@ -2579,22 +2598,18 @@ function inicializarPartidosEnTiempoReal() {
         .on(
           'postgres_changes',
           { event: '*', schema: 'public', table: 'partidos' },
-          (payload) => {
-            console.log('⚡ Evento en tiempo real recibido de partidos:', payload);
+          () => {
             sincronizarPartidosDesdeSupabase();
           }
         )
         .on(
           'postgres_changes',
           { event: 'INSERT', schema: 'public', table: 'eventos_partido' },
-          (payload) => {
-            console.log('⚡ Nuevo evento de partido registrado en tiempo real:', payload);
+          () => {
             sincronizarPartidosDesdeSupabase();
           }
         )
-        .subscribe((status) => {
-          console.log('📡 Estado de canal en tiempo real:', status);
-        });
+        .subscribe(() => {});
     } catch (e) {
       console.warn('Realtime channel subscription error:', e);
     }

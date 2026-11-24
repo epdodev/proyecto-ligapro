@@ -39,10 +39,8 @@ export function getSupabase() {
         }
       });
       isConnected = true;
-      console.log('✅ Supabase conectado a:', SUPABASE_URL);
     }
   } catch (err) {
-    console.warn('⚠️ Supabase no pudo inicializarse, usando fallback seguro:', err);
     isConnected = false;
   }
 
@@ -68,7 +66,6 @@ export async function safeQuery(tableName, fallbackData = [], select = '*') {
   try {
     const { data, error } = await client.from(tableName).select(select);
     if (error) {
-      console.warn(`[Supabase Fallback en "${tableName}"]:`, error.message);
       return { data: fallbackData, source: 'fallback', error };
     }
 
@@ -78,7 +75,6 @@ export async function safeQuery(tableName, fallbackData = [], select = '*') {
 
     return { data, source: 'supabase', error: null };
   } catch (ex) {
-    console.warn(`[Supabase Excepción en "${tableName}"]:`, ex);
     return { data: fallbackData, source: 'fallback', error: ex };
   }
 }
@@ -93,12 +89,10 @@ export async function safeInsert(tableName, record) {
   try {
     const { data, error } = await client.from(tableName).insert(record).select();
     if (error) {
-      console.warn(`[Supabase Error al insertar en "${tableName}"]:`, error.message);
       return { success: false, error };
     }
     return { success: true, data };
   } catch (ex) {
-    console.warn(`[Supabase Excepción al insertar en "${tableName}"]:`, ex);
     return { success: false, error: ex };
   }
 }
