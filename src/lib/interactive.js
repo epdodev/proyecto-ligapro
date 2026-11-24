@@ -51,27 +51,6 @@ window.cerrarSesion = async function() {
 };
 
 // ==============================================================================
-// GESTIÓN DE MENÚ LATERAL OCULTABLE (DRAWER ADMINISTRACIÓN LIGAPRO)
-// ==============================================================================
-
-window.toggleAdminDrawer = function(force) {
-  const backdrop = document.getElementById('admin-drawer-backdrop');
-  const drawer = document.getElementById('admin-drawer');
-  if (!drawer) return;
-  const isClosed = drawer.classList.contains('-translate-x-full');
-  const shouldOpen = force !== undefined ? force : isClosed;
-  if (shouldOpen) {
-    drawer.classList.remove('-translate-x-full');
-    backdrop?.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-  } else {
-    drawer.classList.add('-translate-x-full');
-    backdrop?.classList.add('hidden');
-    document.body.style.overflow = '';
-  }
-};
-
-// ==============================================================================
 // GESTIÓN DE PERFIL DE USUARIO Y PERSISTENCIA SUPABASE
 // ==============================================================================
 
@@ -230,21 +209,15 @@ window.abrirModalPerfil = function() {
           </div>
         </div>
 
-        <!-- Estado de Sincronización y Botones -->
-        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div class="flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400">
-            <span class="material-symbols-outlined text-sm text-emerald-500">cloud_done</span>
-            <span>Sincronización en tiempo real con Supabase</span>
-          </div>
-          <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
-            <button type="button" onclick="cerrarModalPerfil()" class="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold transition-colors">
-              Cancelar
-            </button>
-            <button id="btn-guardar-perfil" type="submit" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold flex items-center justify-center gap-1.5 shadow-sm transition-colors">
-              <span class="material-symbols-outlined text-base">save</span>
-              <span>Guardar Cambios</span>
-            </button>
-          </div>
+        <!-- Botones de Acción -->
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end gap-2">
+          <button type="button" onclick="cerrarModalPerfil()" class="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold transition-colors">
+            Cancelar
+          </button>
+          <button id="btn-guardar-perfil" type="submit" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold flex items-center justify-center gap-1.5 shadow-sm transition-colors">
+            <span class="material-symbols-outlined text-base">save</span>
+            <span>Guardar Cambios</span>
+          </button>
         </div>
       </form>
     </div>
