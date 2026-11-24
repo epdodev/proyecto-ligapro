@@ -195,7 +195,7 @@ window.abrirModalPerfil = function() {
           </button>
 
           <div id="perfil-password-section" class="hidden mt-2 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-3">
-            <p class="text-[11px] text-slate-500 dark:text-slate-400">Si deseas cambiar tu contraseña en Supabase Auth, ingresa la nueva clave a continuación (mínimo 6 caracteres). Si no deseas cambiarla, deja estos campos en blanco.</p>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400">Si deseas cambiar tu contraseña, ingresa la nueva clave a continuación (mínimo 6 caracteres). Si no deseas cambiarla, deja estos campos en blanco.</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Nueva Contraseña</label>
@@ -1494,7 +1494,7 @@ Sello Criptográfico: ${hash}
   a.href = URL.createObjectURL(blob);
   a.download = `Acta_Oficial_Uniformes_LigaPro_${Date.now()}.txt`;
   a.click();
-  showToast('📄 Acta Oficial de Uniformes descargada y registrada en Supabase.', 'success');
+  showToast('📄 Acta Oficial de Uniformes descargada y registrada en el sistema.', 'success');
 };
 
 window.forzarSincroComet = async function() {
