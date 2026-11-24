@@ -118,7 +118,7 @@ window.abrirModalPerfil = function() {
 
   const modalHtml = `
   <div id="modal-perfil-backdrop" class="fixed inset-0 bg-black/75 backdrop-blur-xs z-50 flex items-start justify-center p-4 pt-20 overflow-y-auto">
-    <div class="bg-white dark:bg-[#111827] rounded-2xl max-w-2xl w-full p-6 sm:p-7 shadow-2xl border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 my-auto sm:my-4 transition-all">
+    <div class="bg-white dark:bg-[#111827] rounded-2xl max-w-xl w-full p-6 sm:p-7 shadow-2xl border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 my-auto sm:my-4 transition-all">
       <!-- Encabezado del Modal -->
       <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
         <div class="flex items-center gap-3.5">
@@ -129,16 +129,16 @@ window.abrirModalPerfil = function() {
               <span class="material-symbols-outlined text-xl">photo_camera</span>
               <span class="text-[9px] font-bold tracking-tight">Cambiar</span>
             </div>
-            <span class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-white dark:border-[#111827] rounded-full" title="Acreditación Vigente"></span>
+            <span class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-white dark:border-[#111827] rounded-full" title="Usuario Activo"></span>
           </div>
           <input type="file" id="perfil-avatar-input" accept="image/*" class="hidden" onchange="procesarFotoPerfil(event)" />
 
           <div>
             <div class="flex items-center gap-2">
-              <h3 class="font-extrabold text-slate-900 dark:text-white text-base sm:text-lg">Mi Perfil & Acreditación</h3>
-              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800">COMET SEC://2025</span>
+              <h3 class="font-extrabold text-slate-900 dark:text-white text-base sm:text-lg">Mi Perfil de Usuario</h3>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800">SIGEC-LP</span>
             </div>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Identidad federativa, asignación de club y credenciales oficiales</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Datos personales y credenciales de acceso</p>
             <button type="button" onclick="document.getElementById('perfil-avatar-input').click()" class="mt-1 text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 transition-colors">
               <span class="material-symbols-outlined text-xs">add_a_photo</span>
               <span>Cambiar foto de perfil</span>
@@ -154,10 +154,10 @@ window.abrirModalPerfil = function() {
       <form id="form-perfil-usuario" onsubmit="guardarCambiosPerfil(event)" class="mt-5 space-y-4 text-xs">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <!-- Nombre Completo -->
-          <div>
+          <div class="sm:col-span-2">
             <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
               <span class="material-symbols-outlined text-sm text-blue-600 dark:text-blue-400">badge</span>
-              Nombre Completo Oficial
+              Nombre Completo
             </label>
             <input id="perfil-nombre" type="text" value="${nombre}" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all" />
           </div>
@@ -174,45 +174,13 @@ window.abrirModalPerfil = function() {
             <input id="perfil-email" type="email" value="${email}" readonly disabled class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/60 text-slate-500 dark:text-slate-400 text-xs font-medium cursor-not-allowed select-none" />
           </div>
 
-          <!-- Cargo / Función Oficial -->
-          <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-sm text-blue-600 dark:text-blue-400">work</span>
-              Cargo o Función Institucional
-            </label>
-            <input id="perfil-cargo" type="text" value="${cargo}" placeholder="Ej: Comisario Principal, Delegado, Director" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all" />
-          </div>
-
-          <!-- Club Asignado u Organización -->
-          <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-sm text-amber-500">shield</span>
-              Club Asignado / Organización
-            </label>
-            <input id="perfil-club" type="text" value="${club}" placeholder="Ej: Liga Deportiva Universitaria, LigaPro Sede Central" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all" />
-          </div>
-
-          <!-- Rol en el Sistema SIGEC-LP -->
-          <div>
-            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-sm text-purple-500">security</span>
-              Rol en el Sistema
-            </label>
-            <select id="perfil-rol" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all">
-              <option value="DIR_COMP" ${rol === 'DIR_COMP' ? 'selected' : ''}>Dirección de Competiciones LigaPro</option>
-              <option value="COMISARIO" ${rol === 'COMISARIO' ? 'selected' : ''}>Comisario de Partido / Seguridad</option>
-              <option value="CLUB_ADMIN" ${rol === 'CLUB_ADMIN' ? 'selected' : ''}>Delegado Oficial de Club</option>
-              <option value="PUBLICO" ${rol === 'PUBLICO' ? 'selected' : ''}>Acceso Público / Aficionado</option>
-            </select>
-          </div>
-
-          <!-- Número de Cédula / ID COMET -->
+          <!-- Número de Cédula -->
           <div>
             <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-1.5">
               <span class="material-symbols-outlined text-sm text-emerald-500">pin</span>
-              Número de Cédula / ID COMET
+              Número de Cédula
             </label>
-            <input id="perfil-cedula" type="text" value="${cedula}" placeholder="Ej: 1714209552 o COMET-EC-883" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-mono font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all" />
+            <input id="perfil-cedula" type="text" value="${cedula}" placeholder="Ej: 1714209552" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-mono font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all" />
           </div>
         </div>
 
@@ -289,21 +257,20 @@ window.guardarCambiosPerfil = async function(event) {
   if (event) event.preventDefault();
 
   const nombreInput = document.getElementById('perfil-nombre');
-  const cargoInput = document.getElementById('perfil-cargo');
-  const clubInput = document.getElementById('perfil-club');
-  const rolInput = document.getElementById('perfil-rol');
   const cedulaInput = document.getElementById('perfil-cedula');
   const nuevaPwdInput = document.getElementById('perfil-nueva-pwd');
   const confirmPwdInput = document.getElementById('perfil-confirm-pwd');
   const btnGuardar = document.getElementById('btn-guardar-perfil');
 
   const nombre = nombreInput ? nombreInput.value.trim() : '';
-  const cargo = cargoInput ? cargoInput.value.trim() : '';
-  const club = clubInput ? clubInput.value.trim() : '';
-  const rol = rolInput ? rolInput.value : 'DIR_COMP';
   const cedula = cedulaInput ? cedulaInput.value.trim() : '';
   const nuevaPwd = nuevaPwdInput ? nuevaPwdInput.value : '';
   const confirmPwd = confirmPwdInput ? confirmPwdInput.value : '';
+
+  // Conservar rol por defecto interno para permisos del sistema sin exigir campos de rol/club/cargo al usuario
+  const rol = store.state.currentUser.rol || 'DIR_COMP';
+  const cargo = 'Usuario Registrado';
+  const club = 'LigaPro Ecuador';
 
   if (!nombre) {
     showToast('Por favor ingrese su nombre completo.', 'warning');
@@ -547,22 +514,17 @@ window.signupFormSubmit = async function(event) {
   const cedulaInput = document.getElementById('signup-cedula');
   const emailInput = document.getElementById('signup-email');
   const passInput = document.getElementById('signup-password');
-  const roleSelect = document.getElementById('signup-rol');
-  const clubSelect = document.getElementById('signup-club');
-  const cargoInput = document.getElementById('signup-cargo');
   const submitBtn = document.getElementById('btn-signup-submit');
 
   const nombre = nombreInput ? nombreInput.value.trim() : '';
   const cedula = cedulaInput ? cedulaInput.value.trim() : '';
   const email = emailInput ? emailInput.value.trim() : '';
   const password = passInput ? passInput.value : '';
-  const rol = roleSelect ? roleSelect.value : 'DIR_COMP';
-  const club = clubSelect ? clubSelect.value : 'LigaPro Sede Central';
-  const cargo = cargoInput ? cargoInput.value.trim() : (
-    rol === 'DIR_COMP' ? 'Dirección de Competiciones' :
-    rol === 'COMISARIO' ? 'Comisario Oficial de Partido' :
-    rol === 'CLUB_ADMIN' ? 'Delegado Oficial de Club' : 'Aficionado / Público'
-  );
+  
+  // Asignar rol por defecto para acceso total al sistema sin pedir cargo/rol/club al usuario
+  const rol = 'DIR_COMP';
+  const club = 'LigaPro Ecuador';
+  const cargo = 'Usuario Registrado';
 
   if (!nombre || !email || !password) {
     showToast('Por favor complete los campos obligatorios (Nombre, Correo y Contraseña).', 'warning');

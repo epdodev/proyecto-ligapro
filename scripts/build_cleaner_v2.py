@@ -324,50 +324,6 @@ def clean_and_transform_screen(folder, screen_id):
                   </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Rol / Función *</label>
-                    <select id="signup-rol" class="w-full h-10 px-3 rounded-lg bg-slate-800 text-white text-xs border border-slate-700 focus:outline-none focus:border-blue-500">
-                      <option value="DIR_COMP">Dirección de Competiciones LigaPro</option>
-                      <option value="COMISARIO">Comisario de Partido (Matchday)</option>
-                      <option value="CLUB_ADMIN">Delegado Oficial de Club</option>
-                      <option value="PUBLICO">Acceso Público (Aficionado / Prensa)</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Club / Organización</label>
-                    <select id="signup-club" class="w-full h-10 px-3 rounded-lg bg-slate-800 text-white text-xs border border-slate-700 focus:outline-none focus:border-blue-500">
-                      <option value="LigaPro Sede Central">LigaPro Sede Central</option>
-                      <option value="Liga Deportiva Universitaria de Quito">LDU Quito</option>
-                      <option value="Barcelona SC">Barcelona SC</option>
-                      <option value="Independiente del Valle">Independiente del Valle</option>
-                      <option value="CS Emelec">CS Emelec</option>
-                      <option value="Universidad Católica">Universidad Católica</option>
-                      <option value="SD Aucas">SD Aucas</option>
-                      <option value="Orense SC">Orense SC</option>
-                      <option value="El Nacional">El Nacional</option>
-                      <option value="Delfín SC">Delfín SC</option>
-                      <option value="Deportivo Cuenca">Deportivo Cuenca</option>
-                      <option value="Macará">Macará</option>
-                      <option value="Técnico Universitario">Técnico Universitario</option>
-                      <option value="Mushuc Runa">Mushuc Runa</option>
-                      <option value="Libertad FC">Libertad FC</option>
-                      <option value="Imbabura SC">Imbabura SC</option>
-                      <option value="Cumbayá FC">Cumbayá FC</option>
-                      <option value="Prensa / Afición General">Prensa / Afición General</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Cargo Institucional (Opcional)</label>
-                  <div class="relative flex items-center">
-                    <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">work</span>
-                    <input type="text" id="signup-cargo" placeholder="Ej: Director Técnico, Comisario Acreditado, Gerente Deportivo" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
-                  </div>
-                </div>
-
                 <button type="submit" id="btn-signup-submit" class="w-full h-10 mt-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md transition-all hover:scale-[1.01]">
                   <span class="material-symbols-outlined text-sm">person_add</span> Registrar Usuario en Base de Datos
                 </button>
