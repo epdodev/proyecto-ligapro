@@ -140,7 +140,7 @@
     }
   </style>
 </head>
-<body class="bg-surface font-body-md text-on-surface antialiased min-h-screen">
+<body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col">
   
     
     <!-- Backdrop y Ventana Lateral Colapsable / Ocultable: Administración LigaPro -->
@@ -292,7 +292,7 @@
       </div>
     </header>
     
-  <main class="w-full">
+  <main class="w-full flex-1">
     <div class="w-full" style="padding-left: 300px; background-color: #000000;"><main class="relative w-full pt-16 bg-surface min-h-screen px-gutter-lg py-margin-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" style="background-color: #000000; min-height: 100vh; padding-top: 84px; color: #FFFFFF;">
 
         <!-- WCAG AAA Action Bar -->
@@ -652,6 +652,18 @@
   }
 </script></main></div>
   </main>
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] text-slate-500 dark:text-slate-400 py-4 px-6 text-xs transition-colors">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-slate-800 dark:text-slate-200">LigaPro Ecuabet</span>
+        <span>•</span>
+        <span>© 2025 Liga Profesional de Fútbol del Ecuador</span>
+      </div>
+      <div class="flex items-center gap-2 text-slate-400 text-[11px]">
+        <span>Sistema Oficial de Competiciones</span>
+      </div>
+    </div>
+  </footer>
   <script type="module" src="src/lib/interactive.js"></script>
 </body>
 </html>

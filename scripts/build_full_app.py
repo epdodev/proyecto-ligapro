@@ -399,11 +399,23 @@ def build():
     }}
   </style>
 </head>
-<body class="bg-surface font-body-md text-on-surface antialiased min-h-screen">
+<body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col">
   {header}
-  <main class="w-full">
+  <main class="w-full flex-1">
     {enriched_content}
   </main>
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] text-slate-500 dark:text-slate-400 py-4 px-6 text-xs transition-colors">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-slate-800 dark:text-slate-200">LigaPro Ecuabet</span>
+        <span>•</span>
+        <span>© 2025 Liga Profesional de Fútbol del Ecuador</span>
+      </div>
+      <div class="flex items-center gap-2 text-slate-400 text-[11px]">
+        <span>Sistema Oficial de Competiciones</span>
+      </div>
+    </div>
+  </footer>
   <script type="module" src="src/lib/interactive.js"></script>
 </body>
 </html>'''
@@ -575,21 +587,15 @@ def build():
     {''.join(views_containers)}
   </main>
   
-  <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 py-4 px-6 text-xs text-center">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] text-slate-500 dark:text-slate-400 py-4 px-6 text-xs transition-colors">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
       <div class="flex items-center gap-2">
-        <span class="font-extrabold text-white">SIGEC-LP</span>
+        <span class="font-bold text-slate-800 dark:text-slate-200">LigaPro Ecuabet</span>
         <span>•</span>
-        <span>Liga Profesional de Fútbol del Ecuador</span>
-        <span>•</span>
-        <span class="text-amber-400">Reglamento Oficial 2023</span>
+        <span>© 2025 Liga Profesional de Fútbol del Ecuador</span>
       </div>
-      <div class="flex items-center gap-3">
-        <a href="docs/SRS.md" class="hover:text-amber-400 transition-colors">Especificación SRS</a>
-        <span>•</span>
-        <span class="font-mono text-emerald-400">Supabase: udykrprupwifmffhpvuz</span>
-        <span>•</span>
-        <span>WCAG 2.1 AAA Compliant</span>
+      <div class="flex items-center gap-2 text-slate-400 text-[11px]">
+        <span>Sistema Oficial de Competiciones</span>
       </div>
     </div>
   </footer>
