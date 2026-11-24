@@ -815,8 +815,11 @@ window.marcarNotificacionesLeidas = function() {
 // ==============================================================================
 
 window.registrarGolEnVivo = async function(club) {
-  const jugador = club === 'local' ? 'Alex Arce (19)' : 'Octavio Rivero (29)';
   const p = store.state.partidoActivo;
+  const nombreClub = club === 'local' ? (p.local?.nombre || 'Local') : (p.visitante?.nombre || 'Visitante');
+  const jugador = club === 'local' 
+    ? (p.local?.nombre_corto === 'LDU' ? 'Alex Arce (19)' : 'Delantero Local (9)') 
+    : (p.visitante?.nombre_corto === 'BSC' ? 'Octavio Rivero (29)' : 'Delantero Visitante (11)');
   
   const evento = {
     tipo: 'gol',
@@ -828,7 +831,10 @@ window.registrarGolEnVivo = async function(club) {
   store.registrarEventoPartido(evento);
   reproducirTonoAccesible(587.33, 0.3); // Tono agudo de gol
   
-  // Persistir en Supabase de forma segura
+  // Persistir en Supabase de forma segura tanto el evento como el marcador actualizado en partidos
+  const nuevoGolesLocal = p.marcador.local;
+  const nuevoGolesVisitante = p.marcador.visitante;
+
   await safeInsert('eventos_partido', {
     partido_id: p.id,
     tipo: 'gol',
@@ -837,8 +843,22 @@ window.registrarGolEnVivo = async function(club) {
     detalle: evento
   });
 
-  showToast(`⚽ ¡GOL de ${club === 'local' ? 'LDU Quito' : 'Barcelona SC'}! Registrado en Minuto ${p.minuto}'`, 'success');
+  const sb = getSupabase();
+  if (sb) {
+    try {
+      await sb.from('partidos').update({
+        goles_local: nuevoGolesLocal,
+        goles_visitante: nuevoGolesVisitante,
+        estado: 'en_juego'
+      }).eq('id', p.id);
+    } catch (e) {
+      console.warn('Error actualizando marcador en Supabase:', e);
+    }
+  }
+
+  showToast(`⚽ ¡GOL de ${nombreClub}! Registrado en Minuto ${p.minuto}'`, 'success');
   actualizarUIHeader();
+  renderizarPartidosTablero();
 };
 
 window.registrarTarjetaEnVivo = async function(tipo, club = 'visitante') {
@@ -1407,6 +1427,9 @@ function updateActiveViewInDOM(viewId) {
   });
 
   actualizarUIHeader();
+  if (viewId === 'tablero') {
+    renderizarPartidosTablero();
+  }
 }
 
 function actualizarUIHeader() {
@@ -2003,6 +2026,341 @@ function showToast(message, type = 'info') {
   }, 4000);
 }
 
+// ==============================================================================
+// 7. PARTIDOS EN TIEMPO REAL (LIGAPRO 2025 OFICIAL & SUPABASE REALTIME)
+// ==============================================================================
+
+let filtroPartidosActual = 'todos';
+let suscripcionRealtime = null;
+
+window.filtrarPartidosTablero = function(filtro) {
+  filtroPartidosActual = filtro;
+  const botones = ['todos', 'en_juego', 'finalizado', 'programado'];
+  botones.forEach((btnId) => {
+    const el = document.getElementById(`btn-filtro-${btnId}`);
+    if (el) {
+      if (btnId === filtro) {
+        el.className = 'px-3 py-1 rounded bg-secondary text-on-secondary shadow-xs transition-all font-bold';
+      } else {
+        el.className = 'px-3 py-1 rounded text-text-secondary hover:text-text-primary transition-all font-normal';
+      }
+    }
+  });
+  renderizarPartidosTablero();
+};
+
+window.seleccionarPartidoEnVivo = function(partidoId, irAConsola = false) {
+  store.seleccionarPartido(partidoId);
+  actualizarUIHeader();
+  renderizarPartidosTablero();
+  showToast(`Partido seleccionado: ${store.state.partidoActivo?.local?.nombre} vs ${store.state.partidoActivo?.visitante?.nombre}`, 'info');
+  if (irAConsola) {
+    window.navigateView('consola');
+  }
+};
+
+window.renderizarPartidosTablero = function() {
+  const container = document.getElementById('contenedor-partidos-realtime');
+  if (!container) return;
+
+  const partidos = store.state.partidos || [];
+  if (partidos.length === 0) {
+    container.innerHTML = `
+      <div class="p-8 text-center bg-surface-card rounded-xl border border-border-subtle text-text-secondary">
+        <span class="material-symbols-outlined text-3xl mb-2 text-secondary">sports_soccer</span>
+        <p class="font-bold">No hay partidos registrados en la jornada oficial.</p>
+      </div>`;
+    return;
+  }
+
+  // Filtrado
+  const filtrados = partidos.filter((p) => {
+    if (filtroPartidosActual === 'todos') return true;
+    if (filtroPartidosActual === 'en_juego') return p.estado === 'en_juego';
+    if (filtroPartidosActual === 'finalizado') return p.estado === 'finalizado' || p.estado === 'oficializado';
+    if (filtroPartidosActual === 'programado') return p.estado === 'programado';
+    return true;
+  });
+
+  // Actualizar conteos en el toolbar si existen
+  const totalCount = partidos.length;
+  const enVivoCount = partidos.filter(p => p.estado === 'en_juego').length;
+  const btnTodos = document.getElementById('btn-filtro-todos');
+  const btnVivo = document.getElementById('btn-filtro-en_juego');
+  if (btnTodos) btnTodos.textContent = `Todos (${totalCount})`;
+  if (btnVivo) btnVivo.textContent = `🔴 En Vivo (${enVivoCount})`;
+
+  if (filtrados.length === 0) {
+    container.innerHTML = `
+      <div class="p-8 text-center bg-surface-card rounded-xl border border-border-subtle text-text-secondary">
+        <span class="material-symbols-outlined text-3xl mb-2 text-secondary">filter_alt_off</span>
+        <p class="font-bold">No hay partidos en esta categoría (${filtroPartidosActual}).</p>
+        <button class="mt-3 px-3 py-1.5 rounded bg-secondary text-on-secondary text-xs font-bold" onclick="filtrarPartidosTablero('todos')">Ver todos los partidos</button>
+      </div>`;
+    return;
+  }
+
+  const activoId = store.state.partidoActivo?.id;
+
+  const htmlCards = filtrados.map((p) => {
+    const esActivo = p.id === activoId;
+    const esEnVivo = p.estado === 'en_juego';
+    const esFinalizado = p.estado === 'finalizado' || p.estado === 'oficializado';
+    
+    // Insignia de estado
+    let badgeEstado = '';
+    if (esEnVivo) {
+      badgeEstado = `
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-label-caps text-xs font-bold uppercase animate-pulse">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span> EN VIVO: ${p.minuto || 45}' ${p.periodo || '1T'}
+        </span>`;
+    } else if (esFinalizado) {
+      badgeEstado = `
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-500/15 text-slate-600 dark:text-slate-400 font-label-caps text-xs font-bold uppercase">
+          <span class="material-symbols-outlined text-xs">check_circle</span> FINALIZADO
+        </span>`;
+    } else {
+      badgeEstado = `
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/15 text-blue-600 dark:text-blue-400 font-label-caps text-xs font-bold uppercase">
+          <span class="material-symbols-outlined text-xs">schedule</span> HOY ${p.horario || '18:00'}
+        </span>`;
+    }
+
+    // Datos de equipos
+    const local = p.local || { nombre: 'Local', nombre_corto: 'LOC', escudo: '' };
+    const visitante = p.visitante || { nombre: 'Visitante', nombre_corto: 'VIS', escudo: '' };
+    const estadioNombre = p.estadio?.nombre || 'Estadio Oficial LigaPro';
+    const estadioCiudad = p.estadio?.ciudad ? ` (${p.estadio.ciudad})` : '';
+
+    const gl = p.goles_local !== null && p.goles_local !== undefined ? p.goles_local : (p.marcador?.local ?? '-');
+    const gv = p.goles_visitante !== null && p.goles_visitante !== undefined ? p.goles_visitante : (p.marcador?.visitante ?? '-');
+
+    return `
+    <div class="bg-surface-card rounded-xl p-space-md lg:p-space-lg shadow-sm hover:shadow-md transition-all relative overflow-hidden border ${esActivo ? 'border-secondary ring-2 ring-secondary/30' : 'border-border-subtle'}">
+      <!-- Barra lateral de estado -->
+      <div class="absolute top-0 left-0 w-1.5 h-full ${esEnVivo ? 'bg-emerald-500' : esActivo ? 'bg-secondary' : 'bg-slate-400'}"></div>
+      
+      <!-- Encabezado del partido -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-space-sm border-b border-border-subtle">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="px-2 py-0.5 rounded ${esEnVivo ? 'bg-emerald-600 text-white' : 'bg-surface-container text-text-primary'} font-label-caps text-[10px] font-bold uppercase tracking-wider">
+            ${p.categoria || 'SERIE A 2025'}
+          </span>
+          <span class="flex items-center gap-1 font-body-sm text-xs text-text-secondary">
+            <span class="material-symbols-outlined text-xs">stadium</span>
+            ${estadioNombre}${estadioCiudad}
+          </span>
+          <span class="font-mono-table text-xs text-text-secondary">| Césped: ${p.cesped || '22mm OK'}</span>
+        </div>
+        <div>
+          ${badgeEstado}
+        </div>
+      </div>
+
+      <!-- Marcador y Equipos -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-space-md my-space-md items-center">
+        <!-- Equipo Local -->
+        <div class="md:col-span-5 flex items-center justify-end gap-space-md text-right">
+          <div class="flex flex-col">
+            <span class="font-headline-md text-base sm:text-lg lg:text-xl text-text-primary font-black tracking-tight leading-tight">${local.nombre}</span>
+            <span class="font-label-caps text-xs text-text-secondary">${p.uniforme_local_desc || 'Titular Oficial'}</span>
+          </div>
+          <img class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-xs shrink-0" src="${local.escudo || ''}" alt="Escudo ${local.nombre}" onerror="this.src='https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=100'"/>
+        </div>
+
+        <!-- Marcador Central / VS -->
+        <div class="md:col-span-2 flex flex-col items-center justify-center text-center py-1">
+          <span class="font-mono-table text-[11px] text-text-secondary uppercase tracking-widest font-bold">FECHA 18</span>
+          <div class="px-4 py-1.5 rounded-xl bg-surface-container-low border border-border-subtle flex items-center gap-3 my-1 shadow-inner">
+            <span class="font-mono-metric text-xl sm:text-2xl font-black ${esEnVivo ? 'text-emerald-600 dark:text-emerald-400' : 'text-text-primary'}">${gl}</span>
+            <span class="text-text-secondary font-bold text-sm">:</span>
+            <span class="font-mono-metric text-xl sm:text-2xl font-black ${esEnVivo ? 'text-emerald-600 dark:text-emerald-400' : 'text-text-primary'}">${gv}</span>
+          </div>
+          <span class="px-2 py-0.5 rounded bg-surface-container-low text-text-secondary font-label-caps text-[10px]">${p.tv || 'TV CH-1 GOLTV / ZAPPING'}</span>
+        </div>
+
+        <!-- Equipo Visitante -->
+        <div class="md:col-span-5 flex items-center justify-start gap-space-md text-left">
+          <img class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-xs shrink-0" src="${visitante.escudo || ''}" alt="Escudo ${visitante.nombre}" onerror="this.src='https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=100'"/>
+          <div class="flex flex-col">
+            <span class="font-headline-md text-base sm:text-lg lg:text-xl text-text-primary font-black tracking-tight leading-tight">${visitante.nombre}</span>
+            <span class="font-label-caps text-xs text-text-secondary">${p.uniforme_visitante_desc || 'Alterna Oficial'}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pie de tarjeta con oficiales y acciones -->
+      <div class="bg-surface-container-low/70 rounded-lg p-space-sm flex flex-col md:flex-row items-center justify-between gap-space-sm text-text-secondary font-body-sm text-xs border border-border-subtle/50">
+        <div class="flex items-center gap-space-md flex-wrap">
+          <div class="flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-secondary text-sm">badge</span>
+            <span><strong>Comisario:</strong> ${p.comisario || 'Oficial LigaPro'}</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-amber-500 text-sm">sports</span>
+            <span><strong>Árbitro:</strong> ${p.arbitro || 'Designación Oficial CNA'}</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-secondary text-sm">support_agent</span>
+            <span><strong>VAR:</strong> ${p.var || 'Cabina VOR'}</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          ${esActivo ? `
+            <span class="px-2 py-1 rounded bg-secondary/10 text-secondary font-bold text-[11px] flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">check</span> Partido Activo en Consola
+            </span>
+          ` : `
+            <button type="button" onclick="seleccionarPartidoEnVivo('${p.id}', false)" class="px-3 py-1 rounded bg-surface-container hover:bg-surface-container-high text-text-primary font-bold text-xs transition-colors flex items-center gap-1">
+              <span class="material-symbols-outlined text-xs">radio_button_checked</span> Seleccionar
+            </button>
+          `}
+          <button type="button" onclick="seleccionarPartidoEnVivo('${p.id}', true)" class="px-3 py-1 rounded bg-secondary text-on-secondary hover:bg-secondary/90 font-bold text-xs shadow-xs transition-colors flex items-center gap-1">
+            <span class="material-symbols-outlined text-xs">terminal</span> Abrir Consola
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  container.innerHTML = htmlCards;
+};
+
+// Carga inicial y sincronización continua desde Supabase
+async function sincronizarPartidosDesdeSupabase() {
+  const sb = getSupabase();
+  if (!sb) return;
+
+  try {
+    const { data, error } = await sb
+      .from('partidos')
+      .select(`
+        id,
+        estado,
+        goles_local,
+        goles_visitante,
+        inicio_programado,
+        local:local_id (id, nombre, nombre_corto),
+        visitante:visitante_id (id, nombre, nombre_corto),
+        estadio:estadio_id (nombre, ciudad)
+      `)
+      .order('inicio_programado', { ascending: true });
+
+    if (error) {
+      console.warn('No se pudieron obtener partidos de Supabase:', error.message);
+      return;
+    }
+
+    if (data && data.length > 0) {
+      // Cruzar con los metadatos visuales del INITIAL_STATE para mantener escudos y detalles oficiales
+      const partidosMapeados = data.map((remoto) => {
+        const localSeed = INITIAL_STATE.partidos?.find(p => p.id === remoto.id);
+        const clubLocal = store.state.clubes?.find(c => c.id === remoto.local?.id) || localSeed?.local;
+        const clubVisitante = store.state.clubes?.find(c => c.id === remoto.visitante?.id) || localSeed?.visitante;
+
+        const dateObj = new Date(remoto.inicio_programado);
+        const horarioStr = !isNaN(dateObj.getTime())
+          ? dateObj.toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' })
+          : (localSeed?.horario || '18:00');
+
+        return {
+          id: remoto.id,
+          estado: remoto.estado || 'programado',
+          minuto: localSeed?.minuto || 45,
+          periodo: localSeed?.periodo || 1,
+          horario: horarioStr,
+          marcador: {
+            local: remoto.goles_local ?? 0,
+            visitante: remoto.goles_visitante ?? 0
+          },
+          goles_local: remoto.goles_local ?? 0,
+          goles_visitante: remoto.goles_visitante ?? 0,
+          local: {
+            id: remoto.local?.id || clubLocal?.id || 'LDU',
+            nombre: remoto.local?.nombre || clubLocal?.nombre || 'LDU Quito',
+            nombre_corto: remoto.local?.nombre_corto || clubLocal?.nombre_corto || 'LDU',
+            escudo: clubLocal?.escudo || localSeed?.local?.escudo || ''
+          },
+          visitante: {
+            id: remoto.visitante?.id || clubVisitante?.id || 'BSC',
+            nombre: remoto.visitante?.nombre || clubVisitante?.nombre || 'Barcelona SC',
+            nombre_corto: remoto.visitante?.nombre_corto || clubVisitante?.nombre_corto || 'BSC',
+            escudo: clubVisitante?.escudo || localSeed?.visitante?.escudo || ''
+          },
+          estadio: {
+            nombre: remoto.estadio?.nombre || localSeed?.estadio?.nombre || 'Estadio Rodrigo Paz Delgado',
+            ciudad: remoto.estadio?.ciudad || localSeed?.estadio?.ciudad || 'Quito'
+          },
+          categoria: localSeed?.categoria || 'SERIE A 2025',
+          tv: localSeed?.tv || 'GOLTV / STAR+',
+          arbitro: localSeed?.arbitro || 'Árbitro CNA Oficial',
+          comisario: localSeed?.comisario || 'Comisario LigaPro',
+          var: localSeed?.var || 'Cabina VAR LigaPro',
+          uniforme_local_desc: localSeed?.uniforme_local_desc || 'Titular Oficial',
+          uniforme_visitante_desc: localSeed?.uniforme_visitante_desc || 'Alterna Oficial'
+        };
+      });
+
+      store.setPartidos(partidosMapeados);
+      renderizarPartidosTablero();
+      actualizarUIHeader();
+    }
+  } catch (err) {
+    console.warn('Excepción sincronizando partidos:', err);
+  }
+}
+
+function inicializarPartidosEnTiempoReal() {
+  // 1. Carga inmediata inicial
+  renderizarPartidosTablero();
+  sincronizarPartidosDesdeSupabase();
+
+  // 2. Suscripción a canal Supabase Realtime para cambios instantáneos
+  const sb = getSupabase();
+  if (sb && sb.channel && !suscripcionRealtime) {
+    try {
+      suscripcionRealtime = sb
+        .channel('realtime_partidos_ligapro')
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'partidos' },
+          (payload) => {
+            console.log('⚡ Evento en tiempo real recibido de partidos:', payload);
+            sincronizarPartidosDesdeSupabase();
+          }
+        )
+        .on(
+          'postgres_changes',
+          { event: 'INSERT', schema: 'public', table: 'eventos_partido' },
+          (payload) => {
+            console.log('⚡ Nuevo evento de partido registrado en tiempo real:', payload);
+            sincronizarPartidosDesdeSupabase();
+          }
+        )
+        .subscribe((status) => {
+          console.log('📡 Estado de canal en tiempo real:', status);
+        });
+    } catch (e) {
+      console.warn('Realtime channel subscription error:', e);
+    }
+  }
+
+  // 3. Intervalo de refresco periódico cada 10 segundos
+  setInterval(() => {
+    sincronizarPartidosDesdeSupabase();
+  }, 10000);
+
+  // 4. Avance de minuto para el partido en vivo (reloj de fútbol en vivo)
+  setInterval(() => {
+    const p = store.state.partidoActivo;
+    if (p && p.estado === 'en_juego' && p.minuto < 95) {
+      p.minuto += 1;
+      const minEl = document.getElementById('header-match-min');
+      if (minEl) minEl.textContent = `${p.minuto}' ${p.periodo}T`;
+    }
+  }, 30000);
+}
+
 // Reloj continuo y sincronización al cargar
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Sincronizar tema y accesibilidad desde localStorage / store
@@ -2082,6 +2440,9 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(() => {
     actualizarUIHeader();
   }, 1000);
+
+  // Inicializar carga de partidos en tiempo real y suscripción
+  inicializarPartidosEnTiempoReal();
 
   // Cerrar dropdown si se hace clic fuera
   document.addEventListener('click', (e) => {

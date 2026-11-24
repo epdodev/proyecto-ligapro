@@ -68,6 +68,337 @@ export const INITIAL_STATE = {
       leida: true
     }
   ],
+  partidos: [
+    {
+      id: '88888888-8888-8888-8888-888888888888',
+      jornada: 18,
+      fase: 'Fase Uno',
+      categoria: 'PARTIDO CLASE A - ALTO RIESGO',
+      tv: 'ZAPPING SPORTS / TELEAMAZONAS',
+      horaProgramada: 'HOY 18:00',
+      estado: 'en_juego',
+      marcador: { local: 1, visitante: 1 },
+      minuto: 68,
+      periodo: 2,
+      estadio: 'Estadio Rodrigo Paz Delgado',
+      ciudad: 'Quito',
+      altitud: '2,850m',
+      cesped: '22.5 mm',
+      local: {
+        id: '66666666-6666-6666-6666-666666666601',
+        nombre: 'Liga Deportiva Universitaria',
+        nombreCorto: 'LDU Quito',
+        escudo: '⚪',
+        color: '#FFFFFF',
+        camisetaColor: '#FFFFFF',
+        pantalonetaColor: '#FFFFFF',
+        polainasColor: '#FFFFFF',
+        wcag: 'WCAG 12.8:1'
+      },
+      visitante: {
+        id: '66666666-6666-6666-6666-666666666602',
+        nombre: 'Barcelona Sporting Club',
+        nombreCorto: 'Barcelona SC',
+        escudo: '🟡',
+        color: '#FFE600',
+        camisetaColor: '#FF7900',
+        pantalonetaColor: '#1A1A1A',
+        polainasColor: '#FF7900',
+        wcag: 'WCAG 8.4:1'
+      },
+      comisario: 'Ing. Marcelo Valencia (Acreditado COMET-883)',
+      arbitroCentral: 'Augusto Aragón (FIFA)',
+      varOficial: 'Bryan Loayza (FIFA)',
+      medicoCampo: 'Dra. Elena Santillán'
+    },
+    {
+      id: '88888888-8888-8888-8888-888888888802',
+      jornada: 18,
+      fase: 'Fase Uno',
+      categoria: 'PARTIDO CLASE A',
+      tv: 'ZAPPING SPORTS / STAR+',
+      horaProgramada: 'HOY 15:30',
+      estado: 'finalizado',
+      marcador: { local: 2, visitante: 1 },
+      minuto: 90,
+      periodo: 2,
+      estadio: 'Estadio Banco Guayaquil',
+      ciudad: 'Sangolquí',
+      altitud: '2,500m',
+      cesped: '21.0 mm',
+      local: {
+        id: '66666666-6666-6666-6666-666666666603',
+        nombre: 'Independiente del Valle',
+        nombreCorto: 'IDV',
+        escudo: '⚫',
+        color: '#000000',
+        camisetaColor: '#000000',
+        pantalonetaColor: '#000000',
+        polainasColor: '#000000',
+        wcag: 'WCAG 14.2:1'
+      },
+      visitante: {
+        id: '66666666-6666-6666-6666-666666666604',
+        nombre: 'Club Sport Emelec',
+        nombreCorto: 'CS Emelec',
+        escudo: '🔵',
+        color: '#003399',
+        camisetaColor: '#003399',
+        pantalonetaColor: '#999999',
+        polainasColor: '#003399',
+        wcag: 'WCAG 9.1:1'
+      },
+      comisario: 'Lcdo. Ramiro Salazar',
+      arbitroCentral: 'Guillermo Guerrero (FIFA)',
+      varOficial: 'Carlos Orbe (FIFA)'
+    },
+    {
+      id: '88888888-8888-8888-8888-888888888803',
+      jornada: 18,
+      fase: 'Fase Uno',
+      categoria: 'SUPERCLÁSICO QUITEÑO',
+      tv: 'TELEAMAZONAS / ZAPPING',
+      horaProgramada: 'HOY 13:00',
+      estado: 'finalizado',
+      marcador: { local: 3, visitante: 2 },
+      minuto: 90,
+      periodo: 2,
+      estadio: 'Estadio Gonzalo Pozo Ripalda',
+      ciudad: 'Quito',
+      altitud: '2,880m',
+      cesped: '23.0 mm',
+      local: {
+        id: '66666666-6666-6666-6666-666666666606',
+        nombre: 'Sociedad Deportiva Aucas',
+        nombreCorto: 'SD Aucas',
+        escudo: '🟡',
+        color: '#FFCC00',
+        camisetaColor: '#FFCC00',
+        pantalonetaColor: '#CC0000',
+        polainasColor: '#FFCC00',
+        wcag: 'WCAG 10.5:1'
+      },
+      visitante: {
+        id: '66666666-6666-6666-6666-666666666609',
+        nombre: 'Club Deportivo El Nacional',
+        nombreCorto: 'CD El Nacional',
+        escudo: '🔴',
+        color: '#CC0000',
+        camisetaColor: '#8B0000',
+        pantalonetaColor: '#8B0000',
+        polainasColor: '#001F3F',
+        wcag: 'WCAG 7.1:1'
+      },
+      comisario: 'Lcdo. Patricio Sánchez',
+      arbitroCentral: 'Franklin Congo',
+      varOficial: 'Gabriel González'
+    },
+    {
+      id: '88888888-8888-8888-8888-888888888804',
+      jornada: 18,
+      fase: 'Fase Uno',
+      categoria: 'PARTIDO CLASE B',
+      tv: 'ZAPPING SPORTS',
+      horaProgramada: 'AYER 19:00',
+      estado: 'finalizado',
+      marcador: { local: 2, visitante: 0 },
+      minuto: 90,
+      periodo: 2,
+      estadio: 'Estadio Olímpico Atahualpa',
+      ciudad: 'Quito',
+      altitud: '2,780m',
+      cesped: '22.0 mm',
+      local: {
+        id: '66666666-6666-6666-6666-666666666605',
+        nombre: 'Universidad Católica',
+        nombreCorto: 'U. Católica',
+        escudo: '🔵',
+        color: '#0080FF',
+        camisetaColor: '#0080FF',
+        pantalonetaColor: '#FFFFFF',
+        polainasColor: '#0080FF',
+        wcag: 'WCAG 11.2:1'
+      },
+      visitante: {
+        id: '66666666-6666-6666-6666-666666666607',
+        nombre: 'Orense Sporting Club',
+        nombreCorto: 'Orense SC',
+        escudo: '🟢',
+        color: '#009933',
+        camisetaColor: '#009933',
+        pantalonetaColor: '#009933',
+        polainasColor: '#FFFFFF',
+        wcag: 'WCAG 8.9:1'
+      },
+      comisario: 'Ing. Carlos Echeverría',
+      arbitroCentral: 'Roberto Sánchez',
+      varOficial: 'Jaime Sánchez'
+    },
+    {
+      id: '88888888-8888-8888-8888-888888888805',
+      jornada: 18,
+      fase: 'Fase Uno',
+      categoria: 'PARTIDO CLASE B',
+      tv: 'ZAPPING SPORTS',
+      horaProgramada: 'AYER 16:30',
+      estado: 'finalizado',
+      marcador: { local: 1, visitante: 1 },
+      minuto: 90,
+      periodo: 2,
+      estadio: 'Estadio Alejandro Serrano Aguilar',
+      ciudad: 'Cuenca',
+      altitud: '2,550m',
+      cesped: '23.5 mm',
+      local: {
+        id: '66666666-6666-6666-6666-666666666610',
+        nombre: 'Club Deportivo Cuenca',
+        nombreCorto: 'Dep. Cuenca',
+        escudo: '🔴',
+        color: '#CC0000',
+        camisetaColor: '#CC0000',
+        pantalonetaColor: '#000000',
+        polainasColor: '#CC0000',
+        wcag: 'WCAG 9.4:1'
+      },
+      visitante: {
+        id: '66666666-6666-6666-6666-666666666612',
+        nombre: 'Club Deportivo Macará',
+        nombreCorto: 'Macará',
+        escudo: '🔵',
+        color: '#00BFFF',
+        camisetaColor: '#00BFFF',
+        pantalonetaColor: '#00BFFF',
+        polainasColor: '#00BFFF',
+        wcag: 'WCAG 8.2:1'
+      },
+      comisario: 'Ab. Mario Romero',
+      arbitroCentral: 'Anthony Díaz',
+      varOficial: 'Luis Quiroz'
+    },
+    {
+      id: '88888888-8888-8888-8888-888888888806',
+      jornada: 18,
+      fase: 'Fase Uno',
+      categoria: 'CLÁSICO AMBATEÑO',
+      tv: 'ZAPPING SPORTS',
+      horaProgramada: 'HOY 20:30',
+      estado: 'programado',
+      marcador: { local: 0, visitante: 0 },
+      minuto: 0,
+      periodo: 1,
+      estadio: 'Estadio Bellavista',
+      ciudad: 'Ambato',
+      altitud: '2,570m',
+      cesped: '22.0 mm',
+      local: {
+        id: '66666666-6666-6666-6666-666666666611',
+        nombre: 'Técnico Universitario',
+        nombreCorto: 'Técnico Univ.',
+        escudo: '🔴',
+        color: '#FF0000',
+        camisetaColor: '#FF0000',
+        pantalonetaColor: '#FFFFFF',
+        polainasColor: '#FF0000',
+        wcag: 'WCAG 10.1:1'
+      },
+      visitante: {
+        id: '66666666-6666-6666-6666-666666666613',
+        nombre: 'Mushuc Runa Sporting Club',
+        nombreCorto: 'Mushuc Runa',
+        escudo: '🟢',
+        color: '#009900',
+        camisetaColor: '#009900',
+        pantalonetaColor: '#FFFFFF',
+        polainasColor: '#009900',
+        wcag: 'WCAG 9.0:1'
+      },
+      comisario: 'Ing. Washington Alarcón',
+      arbitroCentral: 'Oswaldo Contreras',
+      varOficial: 'Marlon Vera'
+    },
+    {
+      id: '88888888-8888-8888-8888-888888888807',
+      jornada: 18,
+      fase: 'Fase Uno',
+      categoria: 'PARTIDO CLASE C',
+      tv: 'ZAPPING SPORTS',
+      horaProgramada: 'MAÑANA 16:30',
+      estado: 'programado',
+      marcador: { local: 0, visitante: 0 },
+      minuto: 0,
+      periodo: 1,
+      estadio: 'Estadio Jocay',
+      ciudad: 'Manta',
+      altitud: '6m',
+      cesped: '22.0 mm',
+      local: {
+        id: '66666666-6666-6666-6666-666666666608',
+        nombre: 'Delfín Sporting Club',
+        nombreCorto: 'Delfín SC',
+        escudo: '🟡',
+        color: '#FFD700',
+        camisetaColor: '#FFD700',
+        pantalonetaColor: '#000080',
+        polainasColor: '#FFD700',
+        wcag: 'WCAG 11.5:1'
+      },
+      visitante: {
+        id: '66666666-6666-6666-6666-666666666614',
+        nombre: 'Libertad Fútbol Club',
+        nombreCorto: 'Libertad FC',
+        escudo: '🟠',
+        color: '#FF6600',
+        camisetaColor: '#FF6600',
+        pantalonetaColor: '#FFFFFF',
+        polainasColor: '#FF6600',
+        wcag: 'WCAG 8.6:1'
+      },
+      comisario: 'Lcdo. Jorge Bravo',
+      arbitroCentral: 'Gorky Araujo',
+      varOficial: 'Jefferson Macías'
+    },
+    {
+      id: '88888888-8888-8888-8888-888888888808',
+      jornada: 18,
+      fase: 'Fase Uno',
+      categoria: 'DUELO DIRECTO PERMANENCIA',
+      tv: 'ZAPPING SPORTS',
+      horaProgramada: 'MAÑANA 19:00',
+      estado: 'programado',
+      marcador: { local: 0, visitante: 0 },
+      minuto: 0,
+      periodo: 1,
+      estadio: 'Estadio Olímpico de Ibarra',
+      ciudad: 'Ibarra',
+      altitud: '2,225m',
+      cesped: '23.0 mm',
+      local: {
+        id: '66666666-6666-6666-6666-666666666616',
+        nombre: 'Imbabura Sporting Club',
+        nombreCorto: 'Imbabura SC',
+        escudo: '🔵',
+        color: '#0033CC',
+        camisetaColor: '#0033CC',
+        pantalonetaColor: '#0033CC',
+        polainasColor: '#0033CC',
+        wcag: 'WCAG 12.0:1'
+      },
+      visitante: {
+        id: '66666666-6666-6666-6666-666666666615',
+        nombre: 'Cumbayá Fútbol Club',
+        nombreCorto: 'Cumbayá FC',
+        escudo: '⚪',
+        color: '#0099FF',
+        camisetaColor: '#0099FF',
+        pantalonetaColor: '#FFFFFF',
+        polainasColor: '#0099FF',
+        wcag: 'WCAG 9.8:1'
+      },
+      comisario: 'Ing. Byron Moreno',
+      arbitroCentral: 'Álex Cajas',
+      varOficial: 'Christian Lescano'
+    }
+  ],
   partidoActivo: {
     id: '88888888-8888-8888-8888-888888888888',
     jornada: 18,
@@ -310,6 +641,7 @@ class Store {
           audioAlerts: this.state.audioAlerts,
           currentUser: this.state.currentUser,
           partidoActivo: this.state.partidoActivo,
+          partidos: this.state.partidos,
           tramites: this.state.tramites,
           clubes: this.state.clubes,
           notificaciones: this.state.notificaciones
@@ -335,7 +667,8 @@ class Store {
             ...this.state,
             ...parsed,
             currentUser: { ...INITIAL_STATE.currentUser, ...loadedUser },
-            partidoActivo: { ...this.state.partidoActivo, ...(parsed.partidoActivo || {}) }
+            partidoActivo: { ...this.state.partidoActivo, ...(parsed.partidoActivo || {}) },
+            partidos: parsed.partidos && parsed.partidos.length > 0 ? parsed.partidos : INITIAL_STATE.partidos
           };
         }
       } catch (e) {
@@ -527,6 +860,51 @@ class Store {
 
     const mapOrden = new Map(resultado.orden.map((item, idx) => [item.clubId, idx]));
     this.state.clubes.sort((a, b) => (mapOrden.get(a.id) ?? 99) - (mapOrden.get(b.id) ?? 99));
+  }
+
+  setPartidos(partidosList) {
+    if (!Array.isArray(partidosList) || partidosList.length === 0) return;
+    this.state.partidos = partidosList;
+    // Si el partido activo está en la lista actualizada, actualizarlo
+    const matchActivo = partidosList.find(p => p.id === this.state.partidoActivo?.id);
+    if (matchActivo) {
+      this.state.partidoActivo = {
+        ...this.state.partidoActivo,
+        ...matchActivo
+      };
+      this.recalcularPuntosPartidoEnVivo();
+    }
+    this.notify();
+  }
+
+  seleccionarPartido(partidoId) {
+    const encontrado = this.state.partidos?.find(p => p.id === partidoId);
+    if (encontrado) {
+      this.state.partidoActivo = {
+        ...this.state.partidoActivo,
+        ...encontrado
+      };
+      this.recalcularPuntosPartidoEnVivo();
+      this.notify();
+    }
+  }
+
+  actualizarMarcadorPartido(partidoId, gl, gv, estado = null) {
+    if (this.state.partidos) {
+      const idx = this.state.partidos.findIndex(p => p.id === partidoId);
+      if (idx !== -1) {
+        this.state.partidos[idx].goles_local = gl;
+        this.state.partidos[idx].goles_visitante = gv;
+        if (estado) this.state.partidos[idx].estado = estado;
+      }
+    }
+    if (this.state.partidoActivo?.id === partidoId) {
+      this.state.partidoActivo.goles_local = gl;
+      this.state.partidoActivo.goles_visitante = gv;
+      if (estado) this.state.partidoActivo.estado = estado;
+      this.recalcularPuntosPartidoEnVivo();
+    }
+    this.notify();
   }
 
   crearTramite(tramite) {

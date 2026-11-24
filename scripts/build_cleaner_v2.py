@@ -151,6 +151,60 @@ def clean_and_transform_screen(folder, screen_id):
     body_content = add_onclick_to_btn(body_content, r'Ver\s*Registro\s*Fotográfico', "navigateView('estadios')")
     body_content = add_onclick_to_btn(body_content, r'Revisar\s*Acta', "navigateView('uniformes')")
 
+    # Reemplazo de los Match Cards estáticos por el contenedor reactivo en tiempo real con filtro
+    partidos_realtime_html = '''<!-- Contenedor Reactivo de Partidos Oficiales LigaPro 2025 en Tiempo Real -->
+<div class="flex items-center justify-between bg-surface-card p-space-md rounded-xl shadow-sm border border-border-subtle">
+  <div class="flex items-center gap-space-sm">
+    <span class="p-2 bg-secondary/10 text-secondary rounded-lg">
+      <span class="material-symbols-outlined text-xl">sports_soccer</span>
+    </span>
+    <div>
+      <div class="flex items-center gap-2">
+        <h3 class="font-headline-sm text-headline-sm text-text-primary font-bold">
+          Programación de Partidos Oficiales
+        </h3>
+        <span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-label-caps text-[10px] font-bold tracking-wider">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> CONEXIÓN EN VIVO
+        </span>
+      </div>
+      <span class="font-body-sm text-body-sm text-text-secondary">
+        Jornada 18 — LigaPro Ecuabet Serie A 2025 • Sincronización oficial Supabase & COMET
+      </span>
+    </div>
+  </div>
+  <div class="flex items-center gap-2 flex-wrap">
+    <!-- Filtros de Estado de Partidos -->
+    <div class="inline-flex rounded-lg bg-surface-container-low p-1 border border-border-subtle text-xs font-bold" id="toolbar-filtro-partidos">
+      <button type="button" onclick="filtrarPartidosTablero('todos')" id="btn-filtro-todos" class="px-3 py-1 rounded bg-secondary text-on-secondary shadow-xs transition-all">Todos (8)</button>
+      <button type="button" onclick="filtrarPartidosTablero('en_juego')" id="btn-filtro-en_juego" class="px-3 py-1 rounded text-text-secondary hover:text-text-primary transition-all">🔴 En Vivo</button>
+      <button type="button" onclick="filtrarPartidosTablero('finalizado')" id="btn-filtro-finalizado" class="px-3 py-1 rounded text-text-secondary hover:text-text-primary transition-all">Finalizados</button>
+      <button type="button" onclick="filtrarPartidosTablero('programado')" id="btn-filtro-programado" class="px-3 py-1 rounded text-text-secondary hover:text-text-primary transition-all">Próximos</button>
+    </div>
+    <button class="px-3 py-1.5 rounded bg-surface-container-low text-text-secondary hover:text-text-primary font-label-caps text-label-caps uppercase transition-colors" type="button" onclick="navigateView('estadios')">
+      Estadios
+    </button>
+    <button class="px-3 py-1.5 rounded bg-secondary text-on-secondary font-label-caps text-label-caps uppercase font-bold flex items-center gap-1 shadow-sm" type="button" onclick="descargarPlanillaMatchday()">
+      <span class="material-symbols-outlined text-xs">download</span> Planilla
+    </button>
+  </div>
+</div>
+
+<!-- Contenedor dinámico de partidos inyectado por interactive.js -->
+<div id="contenedor-partidos-realtime" class="flex flex-col gap-space-md min-h-[300px]">
+  <div class="flex items-center justify-center p-12 bg-surface-card rounded-xl text-text-secondary gap-3 border border-border-subtle">
+    <span class="material-symbols-outlined animate-spin text-2xl text-secondary">sync</span>
+    <span class="font-body-md">Sincronizando partidos oficiales de LigaPro 2025 en tiempo real...</span>
+  </div>
+</div>'''
+
+    # Sustituir la sección de programación estática y los match cards 1, 2 y 3
+    body_content = re.sub(
+        r'<div class="flex items-center justify-between bg-surface-card p-space-md rounded-xl shadow-sm">.*?<!-- Match Card 3: Aucas vs El Nacional -->.*?</div>\s*</div>\s*</div>\s*(?=<!-- Right Column)',
+        partidos_realtime_html + '\n</div>\n',
+        body_content,
+        flags=re.DOTALL
+    )
+
     body_content = re.sub(
         r'<a([^>]*href=["\']#["\'][^>]*)>(.*?Calificación Escenarios.*?</a>)',
         r'<a\1 href="javascript:void(0)" onclick="navigateView(\'estadios\')">\2',

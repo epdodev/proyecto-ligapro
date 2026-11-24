@@ -480,272 +480,49 @@
 <div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg mb-space-xl">
 <!-- Left Column (8 Cols): Matchday Broadcast Command Console -->
 <div class="xl:col-span-8 flex flex-col gap-space-md">
-<div class="flex items-center justify-between bg-surface-card p-space-md rounded-xl shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex items-center gap-space-sm">
-<span class="p-2 bg-secondary/10 text-secondary rounded-lg">
-<span class="material-symbols-outlined text-xl">sports_soccer</span>
-</span>
-<div>
-<h3 class="font-headline-sm text-headline-sm text-text-primary font-bold dark:text-white">
-              Programación de Partidos Oficiales
-            </h3>
-<span class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">
-              Auditoría previa a 3 horas de pitazo inicial. Protocolo COMET-LigaPro.
-            </span>
+<!-- Contenedor Reactivo de Partidos Oficiales LigaPro 2025 en Tiempo Real -->
+<div class="flex items-center justify-between bg-surface-card p-space-md rounded-xl shadow-sm border border-border-subtle dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+  <div class="flex items-center gap-space-sm">
+    <span class="p-2 bg-secondary/10 text-secondary rounded-lg">
+      <span class="material-symbols-outlined text-xl">sports_soccer</span>
+    </span>
+    <div>
+      <div class="flex items-center gap-2">
+        <h3 class="font-headline-sm text-headline-sm text-text-primary font-bold dark:text-white">
+          Programación de Partidos Oficiales
+        </h3>
+        <span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-label-caps text-[10px] font-bold tracking-wider">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> CONEXIÓN EN VIVO
+        </span>
+      </div>
+      <span class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">
+        Jornada 18 — LigaPro Ecuabet Serie A 2025 • Sincronización oficial Supabase & COMET
+      </span>
+    </div>
+  </div>
+  <div class="flex items-center gap-2 flex-wrap">
+    <!-- Filtros de Estado de Partidos -->
+    <div class="inline-flex rounded-lg bg-surface-container-low p-1 border border-border-subtle text-xs font-bold dark:bg-[#0B0F19] dark:text-[#F8FAFC]" id="toolbar-filtro-partidos">
+      <button type="button" onclick="filtrarPartidosTablero('todos')" id="btn-filtro-todos" class="px-3 py-1 rounded bg-secondary text-on-secondary shadow-xs transition-all">Todos (8)</button>
+      <button type="button" onclick="filtrarPartidosTablero('en_juego')" id="btn-filtro-en_juego" class="px-3 py-1 rounded text-text-secondary hover:text-text-primary transition-all dark:text-[#F8FAFC]">🔴 En Vivo</button>
+      <button type="button" onclick="filtrarPartidosTablero('finalizado')" id="btn-filtro-finalizado" class="px-3 py-1 rounded text-text-secondary hover:text-text-primary transition-all dark:text-[#F8FAFC]">Finalizados</button>
+      <button type="button" onclick="filtrarPartidosTablero('programado')" id="btn-filtro-programado" class="px-3 py-1 rounded text-text-secondary hover:text-text-primary transition-all dark:text-[#F8FAFC]">Próximos</button>
+    </div>
+    <button class="px-3 py-1.5 rounded bg-surface-container-low text-text-secondary hover:text-text-primary font-label-caps text-label-caps uppercase transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="button" onclick="navigateView('estadios')">
+      Estadios
+    </button>
+    <button class="px-3 py-1.5 rounded bg-secondary text-on-secondary font-label-caps text-label-caps uppercase font-bold flex items-center gap-1 shadow-sm" type="button" onclick="descargarPlanillaMatchday()">
+      <span class="material-symbols-outlined text-xs">download</span> Planilla
+    </button>
+  </div>
 </div>
-</div>
-<div class="flex items-center gap-2">
-<button class="px-3 py-1.5 rounded bg-surface-container-low text-text-secondary hover:text-text-primary font-label-caps text-label-caps uppercase transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="button" onclick="navigateView('estadios')">
-            Filtrar por Estadio
-          </button>
-<button class="px-3 py-1.5 rounded bg-secondary text-on-secondary font-label-caps text-label-caps uppercase font-bold flex items-center gap-1 shadow-sm" type="button" onclick="descargarPlanillaMatchday()">
-<span class="material-symbols-outlined text-xs">download</span> Descargar Planilla Matchday
-          </button>
-</div>
-</div>
-<!-- Match Card 1: LDU Quito vs Barcelona SC (Clásico Nacional) -->
-<div class="bg-surface-card rounded-xl p-space-md lg:p-space-lg shadow-sm hover:shadow-md transition-shadow relative overflow-hidden dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="absolute top-0 left-0 w-1.5 h-full bg-secondary"></div>
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pb-space-md border-b border-border-subtle">
-<!-- Game Category & Venue -->
-<div class="flex items-center gap-2 flex-wrap">
-<span class="px-2 py-0.5 rounded bg-secondary text-on-secondary font-label-caps text-[10px] font-bold uppercase tracking-wider">
-              PARTIDO CLASE A - ALTO RIESGO
-            </span>
-<span class="flex items-center gap-1 font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">
-<span class="material-symbols-outlined text-sm">stadium</span>
-              Estadio Rodrigo Paz Delgado (Quito, 2,850m)
-            </span>
-<span class="font-mono-table text-body-sm text-text-secondary dark:text-[#CBD5E1]">| Césped: 21mm (OK)</span>
-</div>
-<!-- Timing & Status -->
-<div class="flex items-center gap-space-sm">
-<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-sport-success/10 text-sport-success font-label-caps text-label-caps uppercase font-bold">
-<span class="w-2 h-2 rounded-full bg-sport-success"></span> COMET OK: EN REVISIÓN 60 MIN
-            </span>
-<span class="font-mono-metric text-headline-sm text-secondary font-black dark:text-white">HOY 18:00</span>
-</div>
-</div>
-<!-- Teams Scoreboard and Details -->
-<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md my-space-md items-center">
-<!-- Home Team: LDU Quito -->
-<div class="md:col-span-5 flex items-center justify-end gap-space-md text-right">
-<div class="flex flex-col">
-<span class="font-headline-md text-headline-md text-text-primary font-black tracking-tight leading-tight dark:text-[#F8FAFC]">LDU Quito</span>
-<span class="font-label-caps text-label-caps text-text-secondary dark:text-[#CBD5E1]">Local (Blanco Tradicional)</span>
-<div class="flex items-center justify-end gap-1 mt-1">
-<span class="inline-block w-4 h-4 rounded-full bg-[#FFFFFF] border border-border-strong" title="Camiseta Blanca"></span>
-<span class="inline-block w-4 h-4 rounded-full bg-[#FFFFFF] border border-border-strong" title="Pantaloneta Blanca"></span>
-<span class="inline-block w-4 h-4 rounded-full bg-[#FFFFFF] border border-border-strong" title="Polainas Blancas"></span>
-<span class="font-label-caps text-[10px] text-sport-success ml-1 font-bold">WCAG 12.8:1</span>
-</div>
-</div>
-<img class="w-14 h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-sm shrink-0 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-alt="Official soccer crest shield of Liga Deportiva Universitaria LDU Quito with red university U letter on sharp white background and four championship stars, vector football emblem style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAanpgjHnIwtRRzoXtxHB7AlXF98yl6VKDwnK-y91gSYCB4f0PBBW9VJLQ6HHeH1x59w7DdLD7PVnMJ0GvqSBOs3Uq1Kz8sdeEcv3fArOJKx6TR1FB_7sGVLvlitfCdrmNMvfeefkP7Y9O-E4lk24zG5ejS2nWH3VWx19-HrDSjfcw3M5ZL3nGYe0re6fnQpUP062TYDHFb7ObGdjTi5n0UFtxYmTXiXGphUeOiUdbG"/>
-</div>
-<!-- VS Badge / Broadcast Window -->
-<div class="md:col-span-2 flex flex-col items-center justify-center text-center py-2">
-<span class="font-mono-table text-xs text-text-secondary uppercase tracking-widest font-bold dark:text-[#CBD5E1]">FECHA 14</span>
-<div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-body-md text-text-primary font-extrabold my-1 shadow-inner dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-              VS
-            </div>
-<span class="px-2 py-0.5 rounded bg-surface-container-low text-text-secondary font-label-caps text-[10px] dark:bg-[#0B0F19] dark:text-[#F8FAFC]">TV CH-1 GOLTV</span>
-</div>
-<!-- Away Team: Barcelona SC -->
-<div class="md:col-span-5 flex items-center justify-start gap-space-md text-left">
-<img class="w-14 h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-sm shrink-0 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-alt="Official soccer club crest shield of Barcelona Sporting Club Guayaquil with vertical yellow and red stripes and black accents, modern professional sports emblem vector style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQm5q3g_LQy_pAgqBzeIZrPmAoI0QMAt__1U-5DN2lix5AmwzLt4DeC6nqcpgh3K_ixEeYrxbd7IBrpNzeBBKYfCaWMhl7nzViIu4Ec7jSEJ8OguQiq8FnEXLaX8S4vJne7_HxU92qnaGEa0bx5opARAytdA-DC08vTTKKef-_G8Is4MmDnddHfc_hoyw8lC2BGEAhEpk6ZSShPKfWciIdjNvntEXVFjXMMvzR2QJN"/>
-<div class="flex flex-col">
-<span class="font-headline-md text-headline-md text-text-primary font-black tracking-tight leading-tight dark:text-[#F8FAFC]">Barcelona SC</span>
-<span class="font-label-caps text-label-caps text-text-secondary dark:text-[#CBD5E1]">Visitante (Alterna Naranja/Gris)</span>
-<div class="flex items-center justify-start gap-1 mt-1">
-<span class="inline-block w-4 h-4 rounded-full bg-[#FF7900]" title="Camiseta Naranja Especial"></span>
-<span class="inline-block w-4 h-4 rounded-full bg-[#1A1A1A]" title="Pantaloneta Negra"></span>
-<span class="inline-block w-4 h-4 rounded-full bg-[#FF7900]" title="Polainas Naranjas"></span>
-<span class="font-label-caps text-[10px] text-sport-success ml-1 font-bold">WCAG 8.4:1</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Official Match Crew Accordion / Metadata -->
-<div class="bg-surface-container-low/70 rounded-lg p-space-sm flex flex-col md:flex-row items-center justify-between gap-space-sm text-text-secondary font-body-sm text-body-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex items-center gap-space-md flex-wrap">
-<div class="flex items-center gap-1.5">
-<span class="material-symbols-outlined text-secondary text-base">badge</span>
-<span><strong>Comisario LigaPro:</strong> Ab. Carlos Morales V.</span>
-</div>
-<div class="flex items-center gap-1.5">
-<span class="material-symbols-outlined text-sport-warning text-base">sports</span>
-<span><strong>Árbitro Central:</strong> Augusto Aragón (FIFA)</span>
-</div>
-<div class="flex items-center gap-1.5">
-<span class="material-symbols-outlined text-secondary text-base">support_agent</span>
-<span><strong>VAR:</strong> Bryan Loayza</span>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<span class="font-label-caps text-[10px] text-sport-success font-bold uppercase tracking-wider bg-sport-success/15 px-2 py-0.5 rounded">
-              Pasabolas: 12 acreditados
-            </span>
-<button class="text-secondary hover:text-secondary-container font-label-caps text-label-caps uppercase font-bold flex items-center" type="button" onclick="navigateView('uniformes')">
-              Revisar Acta <span class="material-symbols-outlined text-sm">arrow_forward</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Match Card 2: Independiente del Valle vs Emelec -->
-<div class="bg-surface-card rounded-xl p-space-md lg:p-space-lg shadow-sm hover:shadow-md transition-shadow relative overflow-hidden dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="absolute top-0 left-0 w-1.5 h-full bg-secondary"></div>
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pb-space-md border-b border-border-subtle">
-<div class="flex items-center gap-2 flex-wrap">
-<span class="px-2 py-0.5 rounded bg-surface-container text-text-primary font-label-caps text-[10px] font-bold uppercase tracking-wider dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-              PARTIDO CLASE B
-            </span>
-<span class="flex items-center gap-1 font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">
-<span class="material-symbols-outlined text-sm">stadium</span>
-              Estadio Banco Guayaquil (Sangolquí)
-            </span>
-<span class="font-mono-table text-body-sm text-text-secondary dark:text-[#CBD5E1]">| Césped: 22mm</span>
-</div>
-<div class="flex items-center gap-space-sm">
-<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-sport-warning/20 text-on-surface font-label-caps text-label-caps uppercase font-bold">
-<span class="w-2 h-2 rounded bg-sport-warning"></span> UNIFORME ÁRBITRO EN VALIDACIÓN
-            </span>
-<span class="font-mono-metric text-headline-sm text-secondary font-black dark:text-white">HOY 20:30</span>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md my-space-md items-center">
-<!-- Home Team: IDV -->
-<div class="md:col-span-5 flex items-center justify-end gap-space-md text-right">
-<div class="flex flex-col">
-<span class="font-headline-md text-headline-md text-text-primary font-black tracking-tight leading-tight dark:text-[#F8FAFC]">Ind. del Valle</span>
-<span class="font-label-caps text-label-caps text-text-secondary dark:text-[#CBD5E1]">Local (Negro y Rosa Fucsia)</span>
-<div class="flex items-center justify-end gap-1 mt-1">
-<span class="inline-block w-4 h-4 rounded-full bg-[#000000]" title="Camiseta Negra con Fucsia"></span>
-<span class="inline-block w-4 h-4 rounded-full bg-[#000000]" title="Pantaloneta Negra"></span>
-<span class="inline-block w-4 h-4 rounded-full bg-[#FF007F]" title="Polainas Rosa"></span>
-<span class="font-label-caps text-[10px] text-sport-success ml-1 font-bold">WCAG 10.1:1</span>
-</div>
-</div>
-<img class="w-14 h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-sm shrink-0 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-alt="Official soccer crest shield of Independiente del Valle club with classic black and bright magenta shield stripes and bold IDV lettering, modern vector sports crest." src="https://lh3.googleusercontent.com/aida-public/AB6AXuARukmE4j4H_Yp5zt-T4AsyD3dGSa7UkE8XlKfIcZ7GAWSHyxy0qlUFO1ttrkuZ_GAvz-QoeaKA3wllcdhcqttaOLsEjASCVkY9T8EclU78FqaWRL32D0Iwqzcry5ukWVt2q6viZAM3cvVhrBEZc_A0ZKXjGz9eVaSKITjbJKgq5nGDbzgylLJIHKC2jsxUb_3K7mGSauwDB33j4SvBQ-d8vF5P2F7zusv9Zj8PuMJx"/>
-</div>
-<div class="md:col-span-2 flex flex-col items-center justify-center text-center py-2">
-<span class="font-mono-table text-xs text-text-secondary uppercase tracking-widest font-bold dark:text-[#CBD5E1]">FECHA 14</span>
-<div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-body-md text-text-primary font-extrabold my-1 shadow-inner dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-              VS
-            </div>
-<span class="px-2 py-0.5 rounded bg-surface-container-low text-text-secondary font-label-caps text-[10px] dark:bg-[#0B0F19] dark:text-[#F8FAFC]">TV CH-2 STAR+</span>
-</div>
-<!-- Away Team: CS Emelec -->
-<div class="md:col-span-5 flex items-center justify-start gap-space-md text-left">
-<img class="w-14 h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-sm shrink-0 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-alt="Official soccer crest of Club Sport Emelec featuring deep blue shield with diagonal silver sash and bright stars, authentic Ecuadorian football badge design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqc9z1vS4k5o9CDE9WCdMbsB7-Ibrdi4zlzKuz9R8VITUiiuEsTo5uW0H_pearm9q03wshHSGBlAHK5sNOBpJGszH1JPCfNkJ9DXF2ruerGVHsggpsjRORxobhCDA4vQdCzrF5v5O3cntZfKXb_EYbZlawHveekMTTBc0q20xn_tG9A3kOjO-4wOVCHv32_dZg462UsHJchgOWlZIFkK_XHWqzn8O0wpQhugL8319g"/>
-<div class="flex flex-col">
-<span class="font-headline-md text-headline-md text-text-primary font-black tracking-tight leading-tight dark:text-[#F8FAFC]">CS Emelec</span>
-<span class="font-label-caps text-label-caps text-text-secondary dark:text-[#CBD5E1]">Visitante (Celeste / Blanco)</span>
-<div class="flex items-center justify-start gap-1 mt-1">
-<span class="inline-block w-4 h-4 rounded-full bg-[#75AADB]" title="Camiseta Celeste Claro"></span>
-<span class="inline-block w-4 h-4 rounded-full bg-[#FFFFFF] border border-border-subtle" title="Pantaloneta Blanca"></span>
-<span class="inline-block w-4 h-4 rounded-full bg-[#75AADB]" title="Polainas Celestes"></span>
-<span class="font-label-caps text-[10px] text-sport-warning ml-1 font-bold">WCAG 5.2:1</span>
-</div>
-</div>
-</div>
-</div>
-<div class="bg-surface-container-low/70 rounded-lg p-space-sm flex flex-col md:flex-row items-center justify-between gap-space-sm text-text-secondary font-body-sm text-body-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex items-center gap-space-md flex-wrap">
-<div class="flex items-center gap-1.5">
-<span class="material-symbols-outlined text-secondary text-base">badge</span>
-<span><strong>Comisario LigaPro:</strong> Ing. Mayra Cajas</span>
-</div>
-<div class="flex items-center gap-1.5">
-<span class="material-symbols-outlined text-sport-warning text-base">sports</span>
-<span><strong>Árbitro Central:</strong> Guillermo Guerrero</span>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<span class="font-label-caps text-[10px] text-sport-success font-bold uppercase tracking-wider bg-sport-success/15 px-2 py-0.5 rounded">
-              Pasabolas: 8 acreditados
-            </span>
-<button class="text-secondary hover:text-secondary-container font-label-caps text-label-caps uppercase font-bold flex items-center" type="button" onclick="sellarActaUniformes()">
-              Aprobar Uniforme Árbitro <span class="material-symbols-outlined text-sm">done_all</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Match Card 3: Aucas vs El Nacional -->
-<div class="bg-surface-card rounded-xl p-space-md lg:p-space-lg shadow-sm hover:shadow-md transition-shadow relative overflow-hidden dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="absolute top-0 left-0 w-1.5 h-full bg-text-secondary"></div>
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pb-space-md border-b border-border-subtle">
-<div class="flex items-center gap-2 flex-wrap">
-<span class="px-2 py-0.5 rounded bg-surface-container text-text-primary font-label-caps text-[10px] font-bold uppercase tracking-wider dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-              CLÁSICO DE QUITO SUR
-            </span>
-<span class="flex items-center gap-1 font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">
-<span class="material-symbols-outlined text-sm">stadium</span>
-              Estadio Gonzalo Pozo Ripalda (Chillogallo)
-            </span>
-<span class="font-mono-table text-body-sm text-sport-warning font-semibold">| Advertencia Césped: 24.9mm</span>
-</div>
-<div class="flex items-center gap-space-sm">
-<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-sport-success/10 text-sport-success font-label-caps text-label-caps uppercase font-bold">
-<span class="w-2 h-2 rounded-full bg-sport-success"></span> AUDITORÍA COMPLETA
-            </span>
-<span class="font-mono-metric text-headline-sm text-text-primary font-black dark:text-white">DOM 13:00</span>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md my-space-md items-center">
-<div class="md:col-span-5 flex items-center justify-end gap-space-md text-right">
-<div class="flex flex-col">
-<span class="font-headline-md text-headline-md text-text-primary font-black tracking-tight leading-tight dark:text-[#F8FAFC]">SD Aucas</span>
-<span class="font-label-caps text-label-caps text-text-secondary dark:text-[#CBD5E1]">Local (Amarillo Oro / Rojo)</span>
-<div class="flex items-center justify-end gap-1 mt-1">
-<span class="inline-block w-4 h-4 rounded-full bg-[#FFD100]" title="Camiseta Amarilla"></span>
-<span class="inline-block w-4 h-4 rounded-full bg-[#D92D20]" title="Pantaloneta Roja"></span>
-<span class="inline-block w-4 h-4 rounded-full bg-[#FFD100]" title="Polainas Amarillas"></span>
-<span class="font-label-caps text-[10px] text-sport-success ml-1 font-bold">WCAG 9.2:1</span>
-</div>
-</div>
-<img class="w-14 h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-sm shrink-0 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-alt="Official soccer crest shield of Sociedad Deportiva Aucas with yellow and red native warrior face profile mascot, Ecuadorian historical football emblem vector." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF2haVEBhO5ujy-DgHHevPGi67bHLWL5WlNLwUbjhc_ye9Pg-2-kb1DQyskzbxHjlzujpgvZ2vqGQEM0BOrfYHrAwhNlknmBuZ9nLqEMKa1mlHYQPvh8G09Qe3sC40FGtwJFpppjLxr5ae5i32smVshNeMFWHVk-WJzkK1hEkdJi3vX7Hn-FXPtENg1lUWzsLIcwNnFysr5pakPENKO7mtGa6sHaj9huxG6zNkDkkO"/>
-</div>
-<div class="md:col-span-2 flex flex-col items-center justify-center text-center py-2">
-<span class="font-mono-table text-xs text-text-secondary uppercase tracking-widest font-bold dark:text-[#CBD5E1]">FECHA 14</span>
-<div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-body-md text-text-primary font-extrabold my-1 shadow-inner dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-              VS
-            </div>
-<span class="px-2 py-0.5 rounded bg-surface-container-low text-text-secondary font-label-caps text-[10px] dark:bg-[#0B0F19] dark:text-[#F8FAFC]">TV ABIERTA TELEAMAZONAS</span>
-</div>
-<div class="md:col-span-5 flex items-center justify-start gap-space-md text-left">
-<img class="w-14 h-14 rounded-full object-contain p-1 bg-surface-container-low shadow-sm shrink-0 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-alt="Official soccer crest shield of Club Deportivo El Nacional with military tri-color red skyblue and darkblue sash, Ecuador armed forces team emblem vector design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADXvXQePSLnd36UQOXETOsY-nwiVrfPPCK5Bo5ostN2tbz0uQGjmXx-Fb05o8EzlxxZU16s7-TLKwp49zTGhyMbCBnBQpM3RTUBkgrUBl-wivs_gaV5ySxYl7NnBRdObb2SfuZHbr3HRv5eFGK_780GN9iSxCm5wP3A600RNlKtsHqqF7Vi7xIqDvz_-7Y6o--ymYxeb8K-8hr3WY4jG_qdoN4jdi_994ZM6wKgZTr"/>
-<div class="flex flex-col">
-<span class="font-headline-md text-headline-md text-text-primary font-black tracking-tight leading-tight dark:text-[#F8FAFC]">CD El Nacional</span>
-<span class="font-label-caps text-label-caps text-text-secondary dark:text-[#CBD5E1]">Visitante (Rojo Carmesí)</span>
-<div class="flex items-center justify-start gap-1 mt-1">
-<span class="inline-block w-4 h-4 rounded-full bg-[#8B0000]" title="Camiseta Carmesí"></span>
-<span class="inline-block w-4 h-4 rounded-full bg-[#8B0000]" title="Pantaloneta Carmesí"></span>
-<span class="inline-block w-4 h-4 rounded-full bg-[#001F3F]" title="Polainas Azul Marino"></span>
-<span class="font-label-caps text-[10px] text-sport-success ml-1 font-bold">WCAG 7.1:1</span>
-</div>
-</div>
-</div>
-</div>
-<div class="bg-surface-container-low/70 rounded-lg p-space-sm flex flex-col md:flex-row items-center justify-between gap-space-sm text-text-secondary font-body-sm text-body-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex items-center gap-space-md flex-wrap">
-<div class="flex items-center gap-1.5">
-<span class="material-symbols-outlined text-secondary text-base">badge</span>
-<span><strong>Comisario LigaPro:</strong> Lcdo. Patricio Sánchez</span>
-</div>
-<div class="flex items-center gap-1.5">
-<span class="material-symbols-outlined text-sport-warning text-base">sports</span>
-<span><strong>Árbitro Central:</strong> Franklin Congo</span>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<span class="font-label-caps text-[10px] text-sport-success font-bold uppercase tracking-wider bg-sport-success/15 px-2 py-0.5 rounded">
-              Pasabolas: 12 autorizados
-            </span>
-<button class="text-secondary hover:text-secondary-container font-label-caps text-label-caps uppercase font-bold flex items-center" type="button" onclick="navigateView('uniformes')">
-              Revisar Acta <span class="material-symbols-outlined text-sm">arrow_forward</span>
-</button>
-</div>
-</div>
+
+<!-- Contenedor dinámico de partidos inyectado por interactive.js -->
+<div id="contenedor-partidos-realtime" class="flex flex-col gap-space-md min-h-[300px]">
+  <div class="flex items-center justify-center p-12 bg-surface-card rounded-xl text-text-secondary gap-3 border border-border-subtle dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
+    <span class="material-symbols-outlined animate-spin text-2xl text-secondary">sync</span>
+    <span class="font-body-md">Sincronizando partidos oficiales de LigaPro 2025 en tiempo real...</span>
+  </div>
 </div>
 </div>
 <!-- Right Column (4 Cols): Regulatory Tools & Inspection Monitors -->
