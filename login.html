@@ -154,32 +154,32 @@
         </div>
 
         <!-- Navegación HORIZONTAL limpia, centrada y sin desbordamiento -->
-        <nav id="header-nav" class="flex-1 min-w-0 flex items-center justify-center gap-1 overflow-x-auto no-scrollbar py-1 px-1">
-          <a href="javascript:void(0)" onclick="navigateView('tablero')" data-nav-id="tablero" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+        <nav id="header-nav" class="flex-1 min-w-0 flex items-center justify-start lg:justify-center gap-0.5 lg:gap-1 overflow-x-auto no-scrollbar py-1 px-1">
+          <a href="javascript:void(0)" onclick="navigateView('tablero')" data-nav-id="tablero" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">sports_soccer</span>
-          <span>Partidos</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('posiciones')" data-nav-id="posiciones" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span class="sr-only lg:not-sr-only">Partidos</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('posiciones')" data-nav-id="posiciones" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">leaderboard</span>
-          <span>Posiciones</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('clubes')" data-nav-id="clubes" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span class="sr-only lg:not-sr-only">Posiciones</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('clubes')" data-nav-id="clubes" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">shield</span>
-          <span>Clubes</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('uniformes')" data-nav-id="uniformes" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span class="sr-only lg:not-sr-only">Clubes</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('uniformes')" data-nav-id="uniformes" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">checkroom</span>
-          <span>Uniformes</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('estadios')" data-nav-id="estadios" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span class="sr-only lg:not-sr-only">Uniformes</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('estadios')" data-nav-id="estadios" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">stadium</span>
-          <span>Escenarios</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('consola')" data-nav-id="consola" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span class="sr-only lg:not-sr-only">Escenarios</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('consola')" data-nav-id="consola" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">terminal</span>
-          <span>Consola</span>
+          <span class="sr-only lg:not-sr-only">Consola</span>
         </a>
         </nav>
 
         <!-- Derecha: Marcador En Vivo + Tema + Usuario -->
         <div class="flex items-center gap-2 shrink-0">
           <!-- Marcador En Vivo sutil y elegante -->
-          <div onclick="navigateView('consola')" class="cursor-pointer hidden lg:flex items-center gap-2 bg-slate-100 dark:bg-slate-900/80 hover:bg-slate-200/80 dark:hover:bg-slate-800/80 px-2.5 py-1 rounded-full text-xs transition-colors border border-slate-200 dark:border-slate-800 select-none shrink-0" title="Ver Consola de Partido">
+          <div onclick="navigateView('consola')" class="cursor-pointer hidden xl:flex items-center gap-2 bg-slate-100 dark:bg-slate-900/80 hover:bg-slate-200/80 dark:hover:bg-slate-800/80 px-2.5 py-1 rounded-full text-xs transition-colors border border-slate-200 dark:border-slate-800 select-none shrink-0" title="Ver Consola de Partido">
             <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
             <span class="font-semibold text-slate-600 dark:text-slate-300">En Vivo</span>
             <span class="font-bold text-slate-900 dark:text-white font-mono px-0.5" id="header-score">1 - 1</span>
@@ -204,7 +204,7 @@
             <div onclick="toggleUserDropdown()" class="cursor-pointer flex items-center gap-2 py-1 px-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               <img id="header-user-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" alt="Avatar Usuario" class="w-7 h-7 rounded-full object-cover border border-slate-300 dark:border-slate-700"/>
               <span id="header-user-name" class="font-semibold text-xs text-slate-800 dark:text-slate-200 hidden xl:inline max-w-[120px] truncate">Usuario</span>
-              <span class="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
+              <span class="material-symbols-outlined text-slate-400 text-sm hidden sm:inline">expand_more</span>
             </div>
 
             <!-- Menú Desplegable Minimalista -->
@@ -228,109 +228,68 @@
     </header>
     
   <main class="w-full flex-1">
-    
-        <div class="min-h-[calc(100vh-4rem)] pt-20 pb-8 flex items-center justify-center w-full px-4">
-          <div class="w-full max-w-lg bg-slate-900 text-white rounded-2xl shadow-2xl overflow-hidden border border-slate-800 p-6 sm:p-7">
-            <!-- Cabecera -->
-            <div class="flex flex-col items-center text-center mb-5">
-              <img src="assets/ligapro-logo.svg" alt="LigaPro" class="h-16 w-auto object-contain drop-shadow-md mb-2" />
-              <h1 class="text-xl font-extrabold tracking-tight text-white dark:text-white">SIGEC-LP</h1>
-              <p class="text-xs text-amber-400 font-bold uppercase tracking-wider">Liga Profesional de Fútbol del Ecuador</p>
-              <p class="text-xs text-slate-400 mt-1">Portal Oficial de Acceso y Gestión Federativa</p>
-            </div>
+    <section class="min-h-screen flex items-center justify-center px-4 pt-20 pb-12">
+      <div class="w-full max-w-sm">
+        <div class="text-center mb-6">
+          <img src="assets/ligapro-mini.svg" alt="LigaPro" class="h-14 w-auto mx-auto mb-3" />
+          <h1 class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">Bienvenido a LigaPro</h1>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Gestión de competiciones</p>
+        </div>
 
-            <!-- Pestañas de Autenticación -->
-            <div class="flex border-b border-slate-800 mb-5">
-              <button type="button" id="tab-btn-login" onclick="toggleAuthTab('login')" class="flex-1 py-2 text-center font-bold text-xs border-b-2 border-slate-200 dark:border-slate-800 text-amber-400 transition-colors">
-                Iniciar Sesión
+        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-sm">
+          <div class="grid grid-cols-2 p-1 mb-5 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-sm font-semibold" role="tablist">
+            <button type="button" id="tab-btn-login" onclick="toggleAuthTab('login')" class="auth-tab py-1.5 rounded-md">Iniciar sesión</button>
+            <button type="button" id="tab-btn-signup" onclick="toggleAuthTab('signup')" class="auth-tab py-1.5 rounded-md">Crear cuenta</button>
+          </div>
+
+          <!-- Iniciar sesión -->
+          <div id="auth-section-login">
+            <form id="login-form" onsubmit="loginFormSubmit(event)" class="space-y-4">
+              <label class="block">
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-200">Correo electrónico</span>
+                <input type="email" id="login-email" required autocomplete="email" placeholder="tu.correo@ejemplo.com" class="mt-1 w-full h-10 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/30 focus:border-indigo-600" />
+              </label>
+              <label class="block">
+                <span class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-slate-700 dark:text-slate-200">Contraseña</span>
+                  <a href="javascript:void(0)" onclick="abrirRecuperarPassword()" class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">¿Olvidó contraseña?</a>
+                </span>
+                <input type="password" id="login-password" required autocomplete="current-password" placeholder="••••••••" class="mt-1 w-full h-10 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/30 focus:border-indigo-600" />
+              </label>
+              <button type="submit" id="btn-login-submit" class="w-full h-10 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold flex items-center justify-center gap-1.5 transition-colors">
+                Iniciar sesión
               </button>
-              <button type="button" id="tab-btn-signup" onclick="toggleAuthTab('signup')" class="flex-1 py-2 text-center font-bold text-xs border-b-2 border-transparent text-slate-400 hover:text-white transition-colors">
-                Crear Cuenta
+            </form>
+          </div>
+
+          <!-- Crear cuenta -->
+          <div id="auth-section-signup" class="hidden">
+            <form id="signup-form" onsubmit="signupFormSubmit(event)" class="space-y-4">
+              <label class="block">
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-200">Nombre completo</span>
+                <input type="text" id="signup-nombre" required autocomplete="name" placeholder="Juan Pérez" class="mt-1 w-full h-10 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/30 focus:border-indigo-600" />
+              </label>
+              <label class="block">
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-200">Cédula</span>
+                <input type="text" id="signup-cedula" required inputmode="numeric" placeholder="1712345678" class="mt-1 w-full h-10 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/30 focus:border-indigo-600" />
+              </label>
+              <label class="block">
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-200">Correo electrónico</span>
+                <input type="email" id="signup-email" required autocomplete="email" placeholder="tu.correo@ejemplo.com" class="mt-1 w-full h-10 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/30 focus:border-indigo-600" />
+              </label>
+              <label class="block">
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-200">Contraseña</span>
+                <input type="password" id="signup-password" minlength="6" required autocomplete="new-password" placeholder="Mínimo 6 caracteres" class="mt-1 w-full h-10 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/30 focus:border-indigo-600" />
+              </label>
+              <button type="submit" id="btn-signup-submit" class="w-full h-10 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold flex items-center justify-center gap-1.5 transition-colors">
+                Crear cuenta
               </button>
-            </div>
-
-            <!-- Sección Iniciar Sesión -->
-            <div id="auth-section-login">
-              <form id="login-form" onsubmit="loginFormSubmit(event)" class="space-y-4">
-                <div>
-                  <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Correo Electrónico Registrado</label>
-                  <div class="relative flex items-center">
-                    <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">mail</span>
-                    <input type="email" id="login-email" required placeholder="usuario@ejemplo.com o tu.correo@ligapro.ec" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
-                  </div>
-                </div>
-
-                <div>
-                  <div class="flex justify-between items-center mb-1">
-                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Contraseña</label>
-                    <a href="javascript:void(0)" onclick="abrirRecuperarPassword()" class="text-[11px] text-blue-400 hover:underline">¿Olvidó contraseña?</a>
-                  </div>
-                  <div class="relative flex items-center">
-                    <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">lock</span>
-                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
-                  </div>
-                </div>
-
-                <button type="submit" id="btn-login-submit" class="w-full h-10 mt-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md transition-all">
-                  <span class="material-symbols-outlined text-sm">login</span> Iniciar Sesión
-                </button>
-
-                <div class="pt-2 text-center">
-                  <p class="text-[11px] text-slate-400">¿No tienes cuenta oficial? <a href="javascript:void(0)" onclick="toggleAuthTab('signup')" class="text-blue-400 hover:underline font-bold">Regístrate aquí</a></p>
-                </div>
-              </form>
-            </div>
-
-            <!-- Sección Crear Cuenta -->
-            <div id="auth-section-signup" class="hidden">
-              <form id="signup-form" onsubmit="signupFormSubmit(event)" class="space-y-3">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Nombres y Apellidos *</label>
-                    <div class="relative flex items-center">
-                      <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">badge</span>
-                      <input type="text" id="signup-nombre" required placeholder="Ej: Ing. Juan Pérez" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Cédula de Identidad *</label>
-                    <div class="relative flex items-center">
-                      <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">fingerprint</span>
-                      <input type="text" id="signup-cedula" required placeholder="Ej: 1712345678" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Correo Electrónico *</label>
-                  <div class="relative flex items-center">
-                    <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">mail</span>
-                    <input type="email" id="signup-email" required placeholder="tu.correo@ejemplo.com" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
-                  </div>
-                </div>
-
-                <div>
-                  <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Contraseña (Mínimo 6 caracteres) *</label>
-                  <div class="relative flex items-center">
-                    <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">key</span>
-                    <input type="password" id="signup-password" minlength="6" required placeholder="••••••••" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500 transition"/>
-                  </div>
-                </div>
-
-                <button type="submit" id="btn-signup-submit" class="w-full h-10 mt-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md transition-all hover:scale-[1.01]">
-                  <span class="material-symbols-outlined text-sm">person_add</span> Crear Cuenta
-                </button>
-
-                <div class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/80 text-[10px] text-slate-400 flex items-start gap-2 mt-2">
-                  <span class="material-symbols-outlined text-sm text-emerald-400 shrink-0">verified_user</span>
-                  <span>Tus credenciales se procesan de forma segura con cifrado oficial.</span>
-                </div>
-              </form>
-            </div>
+            </form>
           </div>
         </div>
-        
+      </div>
+    </section>
+
   </main>
   <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] text-slate-500 dark:text-slate-400 py-4 px-6 text-xs transition-colors">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">

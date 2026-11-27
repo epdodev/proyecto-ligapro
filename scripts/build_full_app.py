@@ -609,4 +609,11 @@ def build():
     print("Generated master application: index.html")
 
 if __name__ == '__main__':
+    import sys
+    if '--force' not in sys.argv:
+        sys.exit(
+            'build_full_app.py es LEGADO: regenera el diseño antiguo y sobrescribe index.html y las páginas sueltas.\n'
+            'Para actualizar las pantallas edita src/views/*.html y ejecuta: python scripts/sync_views.py\n'
+            'Si de verdad quieres el diseño antiguo, ejecuta con --force.'
+        )
     build()

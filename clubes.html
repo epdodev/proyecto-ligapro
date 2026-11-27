@@ -154,32 +154,32 @@
         </div>
 
         <!-- Navegación HORIZONTAL limpia, centrada y sin desbordamiento -->
-        <nav id="header-nav" class="flex-1 min-w-0 flex items-center justify-center gap-1 overflow-x-auto no-scrollbar py-1 px-1">
-          <a href="javascript:void(0)" onclick="navigateView('tablero')" data-nav-id="tablero" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+        <nav id="header-nav" class="flex-1 min-w-0 flex items-center justify-start lg:justify-center gap-0.5 lg:gap-1 overflow-x-auto no-scrollbar py-1 px-1">
+          <a href="javascript:void(0)" onclick="navigateView('tablero')" data-nav-id="tablero" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">sports_soccer</span>
-          <span>Partidos</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('posiciones')" data-nav-id="posiciones" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span class="sr-only lg:not-sr-only">Partidos</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('posiciones')" data-nav-id="posiciones" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">leaderboard</span>
-          <span>Posiciones</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('clubes')" data-nav-id="clubes" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow-xs">
+          <span class="sr-only lg:not-sr-only">Posiciones</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('clubes')" data-nav-id="clubes" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow-xs">
           <span class="material-symbols-outlined text-base">shield</span>
-          <span>Clubes</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('uniformes')" data-nav-id="uniformes" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span class="sr-only lg:not-sr-only">Clubes</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('uniformes')" data-nav-id="uniformes" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">checkroom</span>
-          <span>Uniformes</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('estadios')" data-nav-id="estadios" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span class="sr-only lg:not-sr-only">Uniformes</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('estadios')" data-nav-id="estadios" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">stadium</span>
-          <span>Escenarios</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('consola')" data-nav-id="consola" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span class="sr-only lg:not-sr-only">Escenarios</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('consola')" data-nav-id="consola" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">terminal</span>
-          <span>Consola</span>
+          <span class="sr-only lg:not-sr-only">Consola</span>
         </a>
         </nav>
 
         <!-- Derecha: Marcador En Vivo + Tema + Usuario -->
         <div class="flex items-center gap-2 shrink-0">
           <!-- Marcador En Vivo sutil y elegante -->
-          <div onclick="navigateView('consola')" class="cursor-pointer hidden lg:flex items-center gap-2 bg-slate-100 dark:bg-slate-900/80 hover:bg-slate-200/80 dark:hover:bg-slate-800/80 px-2.5 py-1 rounded-full text-xs transition-colors border border-slate-200 dark:border-slate-800 select-none shrink-0" title="Ver Consola de Partido">
+          <div onclick="navigateView('consola')" class="cursor-pointer hidden xl:flex items-center gap-2 bg-slate-100 dark:bg-slate-900/80 hover:bg-slate-200/80 dark:hover:bg-slate-800/80 px-2.5 py-1 rounded-full text-xs transition-colors border border-slate-200 dark:border-slate-800 select-none shrink-0" title="Ver Consola de Partido">
             <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
             <span class="font-semibold text-slate-600 dark:text-slate-300">En Vivo</span>
             <span class="font-bold text-slate-900 dark:text-white font-mono px-0.5" id="header-score">1 - 1</span>
@@ -204,7 +204,7 @@
             <div onclick="toggleUserDropdown()" class="cursor-pointer flex items-center gap-2 py-1 px-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               <img id="header-user-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" alt="Avatar Usuario" class="w-7 h-7 rounded-full object-cover border border-slate-300 dark:border-slate-700"/>
               <span id="header-user-name" class="font-semibold text-xs text-slate-800 dark:text-slate-200 hidden xl:inline max-w-[120px] truncate">Usuario</span>
-              <span class="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
+              <span class="material-symbols-outlined text-slate-400 text-sm hidden sm:inline">expand_more</span>
             </div>
 
             <!-- Menú Desplegable Minimalista -->
@@ -228,747 +228,122 @@
     </header>
     
   <main class="w-full flex-1">
-    <main class="relative w-full pt-16 bg-surface min-h-screen px-gutter-lg py-margin-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" class="max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-12 w-full">
-
-        <div class="mb-4 bg-white p-3 rounded-xl border border-slate-200 flex items-center justify-between gap-2 shadow-xs">
-          <div>
-            <h3 class="font-bold text-slate-900 text-xs">Ventanilla Única Digital de Clubes (Art. 6, 28, 29, 35, 50)</h3>
-            <p class="text-[11px] text-slate-500">Radicación de trámites oficiales y monitoreo automático de plazos de caducidad</p>
-          </div>
-          <button onclick="mostrarModalNuevoTramite()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold flex items-center gap-1 shadow-sm">
-            <span class="material-symbols-outlined text-sm">add_circle</span>
-            Nueva Solicitud Reglamentaria
-          </button>
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-16">
+      <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+        <div>
+          <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">Clubes</h1>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Solicitudes y sanciones de tu club</p>
         </div>
-        <div class="flex flex-col w-full gap-space-lg">
-<!-- ACTIVATION SCRIPT FOR SIDEBAR & TABS -->
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Sincronizar enlace activo en el Aside del Shell
-      const navLinks = document.querySelectorAll('aside nav a');
-      navLinks.forEach(link => {
-        if (link.getAttribute('data-path') === 'portal-clubes') {
-          link.className = "flex items-center gap-space-sm px-space-sm py-2.5 rounded font-body-md text-body-md bg-secondary text-on-secondary font-semibold shadow-sm";
-        }
-      });
-    });
+        <button type="button" onclick="mostrarModalNuevoTramite()" class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition-colors">
+          <span class="material-symbols-outlined text-base">add</span> Nueva solicitud
+        </button>
+      </div>
 
-    function switchTab(tabKey) {
-      const cards = document.querySelectorAll('.tramite-card');
-      const tabs = document.querySelectorAll('.tab-btn');
-      
-      tabs.forEach(t => {
-        t.classList.remove('bg-secondary', 'text-on-secondary', 'font-semibold');
-        t.classList.add('bg-surface-container-low', 'text-text-secondary');
-      });
-
-      const activeBtn = document.getElementById('tab-' + tabKey);
-      if (activeBtn) {
-        activeBtn.classList.add('bg-secondary', 'text-on-secondary', 'font-semibold');
-        activeBtn.classList.remove('bg-surface-container-low', 'text-text-secondary');
-      }
-
-      cards.forEach(card => {
-        if (tabKey === 'all') {
-          card.classList.remove('hidden');
-        } else {
-          const status = card.getAttribute('data-status');
-          if (status === tabKey) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
-        }
-      });
-    }
-
-    function toggleModal(open) {
-      const modal = document.getElementById('modal-tramite');
-      if (open) {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-      } else {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-      }
-    }
-
-    function updateReglamentoAlert(categoria) {
-      const alertBox = document.getElementById('alerta-reglamento-texto');
-      const artSpan = document.getElementById('alerta-art-badge');
-      if (categoria === 'estadio') {
-        artSpan.textContent = 'Art. 35 - REGLAMENTO GENERAL';
-        alertBox.textContent = 'Las solicitudes de cambio de estadio o escenario de localía deben ingresarse con al menos 30 días calendario de anticipación e incluir contrato de cesión y certificado de iluminación broadcast.';
-      } else if (categoria === 'conmebol') {
-        artSpan.textContent = 'Art. 48 - CONCURRENCIA INTERNACIONAL';
-        alertBox.textContent = 'La solicitud de postergación por participación en torneos CONMEBOL debe remitirse en un plazo no menor a 48 horas tras la confirmación de fixture continental.';
-      } else if (categoria === 'protocolo') {
-        artSpan.textContent = 'Art. 62 - ACTOS PROTOCOLARES';
-        alertBox.textContent = 'Todo homenaje, minuto de silencio o ingreso de comitivas infantiles debe autorizarse 72 horas antes y ejecutarse estrictamente antes del T-minus 10:00.';
-      } else if (categoria === 'indumentaria') {
-        artSpan.textContent = 'Art. 55.8 - HOMOLOGACIÓN INDUMENTARIA';
-        alertBox.textContent = 'La inclusión de seudónimos, parches o homenajes textiles requiere ratificación de partida de registro y aprobación de la Comisión Técnica 5 días hábiles antes del encuentro.';
-      } else {
-        artSpan.textContent = 'Art. 120 - TRIBUNAL DE APELACIONES';
-        alertBox.textContent = 'Los recursos de reposición disciplinaria deben consignar el comprobante de arancel federativo y exponerse dentro de las 72 horas de notificada el acta de sanciones.';
-      }
-    }
-  </script>
-<!-- 1. ENCABEZADO Y ESTADO DE HABILITACIÓN FEDERATIVA (CARD SUPERIOR) -->
-<section class="bg-surface-card rounded-xl p-space-lg shadow-sm flex flex-col gap-space-lg dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
-<!-- Identidad Institucional -->
-<div class="flex items-center gap-space-md">
-<div class="relative w-20 h-20 bg-surface-container-low rounded-xl flex items-center justify-center p-2 shadow-sm shrink-0 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<img class="w-full h-full object-contain drop-shadow-sm" src="assets/clubs/ldu-quito.png"/>
-<span class="absolute -bottom-1 -right-1 bg-secondary text-on-secondary font-label-caps text-[9px] px-1.5 py-0.5 rounded shadow">SERIE A</span>
-</div>
-<div class="flex flex-col">
-<div class="flex flex-wrap items-center gap-space-xs">
-<span class="font-headline-md text-headline-md text-text-primary tracking-tight dark:text-[#F8FAFC]">Liga Deportiva Universitaria de Quito</span>
-<span class="font-mono-table text-body-sm bg-surface-container text-secondary font-bold px-2 py-0.5 rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">ID: #LP-004</span>
-</div>
-<div class="flex flex-wrap items-center gap-x-space-md gap-y-1 mt-1 text-text-secondary font-body-sm text-body-sm dark:text-[#CBD5E1]">
-<span class="flex items-center gap-1">
-<span class="material-symbols-outlined text-sm text-text-secondary dark:text-[#CBD5E1]">badge</span>
-<span>RUC: <strong class="text-text-primary font-mono-table dark:text-[#F8FAFC]">1790123456001</strong></span>
-</span>
-<span class="hidden sm:inline text-surface-container-highest">•</span>
-<span class="flex items-center gap-1">
-<span class="material-symbols-outlined text-sm text-text-secondary dark:text-[#CBD5E1]">gavel</span>
-<span>Rep. Legal: <strong class="text-text-primary dark:text-[#F8FAFC]">Dr. Isaac Álvarez</strong></span>
-</span>
-<span class="hidden sm:inline text-surface-container-highest">•</span>
-<span class="flex items-center gap-1">
-<span class="material-symbols-outlined text-sm text-text-secondary dark:text-[#CBD5E1]">contact_mail</span>
-<span>Oficial Enlace: <strong class="text-text-primary dark:text-[#F8FAFC]">Ing. Santiago Jácome</strong></span>
-</span>
-</div>
-<!-- Triple Indicator Badge -->
-<div class="flex items-center gap-space-xs mt-2">
-<div class="inline-flex items-center gap-1.5 bg-sport-success/10 text-sport-success px-space-sm py-1 rounded font-label-caps text-label-caps">
-<span class="material-symbols-outlined text-base">verified</span>
-<span>CLUB HABILITADO - FASE REGULAR 2025</span>
-</div>
-<span class="font-label-caps text-[10px] text-text-secondary bg-surface-container px-2 py-1 rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">COMET SYNC OK</span>
-</div>
-</div>
-</div>
-<!-- Botones de Acción Primaria -->
-<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-sm shrink-0">
-<button class="flex items-center justify-center gap-space-xs bg-secondary-container hover:bg-secondary text-on-secondary px-space-md py-2.5 rounded font-title-md text-body-md shadow transition-colors cursor-pointer" onclick="mostrarModalNuevoTramite()" type="button">
-<span class="material-symbols-outlined text-lg">add_circle</span>
-<span>+ Iniciar Solicitud Reglamentaria</span>
-</button>
-<button class="flex items-center justify-center gap-space-xs bg-surface-container-low hover:bg-surface-container text-text-primary px-space-md py-2.5 rounded font-body-md text-body-md shadow-sm transition-colors cursor-pointer dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="button" onclick="generarCertificadoFederativo()">
-<span class="material-symbols-outlined text-lg text-secondary">file_download</span>
-<span>Certificado Federativo (SHA-256)</span>
-</button>
-</div>
-</div>
-<!-- Métricas Rápidas / Cuadrícula de Cumplimiento -->
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-md pt-space-xs">
-<!-- Métrica 1 -->
-<div class="bg-surface-base rounded-lg p-space-md flex flex-col justify-between shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Control DNCF Económico</span>
-<span class="inline-flex items-center gap-1 text-sport-success font-label-caps text-[10px] bg-sport-success/15 px-2 py-0.5 rounded">
-<span class="material-symbols-outlined text-xs">check_circle</span>
-            100% CUMPLIDO
-          </span>
-</div>
-<div class="my-2">
-<span class="font-mono-metric text-mono-metric text-text-primary dark:text-white">0%</span>
-<span class="font-body-sm text-body-sm text-text-secondary ml-1 dark:text-[#CBD5E1]">Retención TV</span>
-</div>
-<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="bg-sport-success h-full rounded-full" style="width: 100%;"></div>
-</div>
-<span class="font-body-sm text-[11px] text-text-secondary mt-2 flex items-center gap-1 dark:text-[#CBD5E1]">
-<span class="material-symbols-outlined text-xs text-sport-success">lock</span> Auditoría cuatrimestral homologada
-        </span>
-</div>
-<!-- Métrica 2 -->
-<div class="bg-surface-base rounded-lg p-space-md flex flex-col justify-between shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Minutos Juveniles Sub-25</span>
-<span class="inline-flex items-center gap-1 text-secondary font-label-caps text-[10px] bg-secondary-fixed px-2 py-0.5 rounded">
-<span class="material-symbols-outlined text-xs">timer</span>
-            94.6% REQUERIDO
-          </span>
-</div>
-<div class="my-2">
-<span class="font-mono-metric text-mono-metric text-text-primary dark:text-white">1,420</span>
-<span class="font-body-sm text-body-sm text-text-secondary ml-1 dark:text-[#CBD5E1]">/ 1,500 min</span>
-</div>
-<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="bg-secondary h-full rounded-full" style="width: 94.6%;"></div>
-</div>
-<span class="font-body-sm text-[11px] text-text-secondary mt-2 flex items-center gap-1 dark:text-[#CBD5E1]">
-<span class="material-symbols-outlined text-xs text-secondary">trending_up</span> Restan 80 min en 18 fechas
-        </span>
-</div>
-<!-- Métrica 3 -->
-<div class="bg-surface-base rounded-lg p-space-md flex flex-col justify-between shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Inscripción COMET</span>
-<span class="inline-flex items-center gap-1 text-text-primary font-label-caps text-[10px] bg-surface-container px-2 py-0.5 rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<span class="material-symbols-outlined text-xs">group</span>
-            31 HABILITADOS
-          </span>
-</div>
-<div class="my-2 flex items-baseline gap-2">
-<span class="font-mono-metric text-mono-metric text-text-primary dark:text-white">26</span>
-<span class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">Nacionales</span>
-<span class="font-mono-matchday text-mono-matchday text-secondary ml-auto">5</span>
-<span class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">Extr.</span>
-</div>
-<div class="w-full bg-surface-container rounded-full h-1.5 flex overflow-hidden dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="bg-text-primary h-full" style="width: 83.8%;"></div>
-<div class="bg-secondary-container h-full" style="width: 16.2%;"></div>
-</div>
-<span class="font-body-sm text-[11px] text-text-secondary mt-2 flex items-center gap-1 dark:text-[#CBD5E1]">
-<span class="material-symbols-outlined text-xs text-sport-success">check</span> Cupo foráneo reglamentario cubierto
-        </span>
-</div>
-<!-- Métrica 4 -->
-<div class="bg-surface-base rounded-lg p-space-md flex flex-col justify-between shadow-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Trámites Federativos</span>
-<span class="inline-flex items-center gap-1 text-sport-warning font-label-caps text-[10px] bg-primary-container px-2 py-0.5 rounded text-sport-warning">
-<span class="material-symbols-outlined text-xs">pending_actions</span>
-            1 SUBSANACIÓN
-          </span>
-</div>
-<div class="my-2 flex items-baseline gap-2">
-<span class="font-mono-metric text-mono-metric text-text-primary dark:text-white">2</span>
-<span class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">En Revisión</span>
-<span class="font-mono-matchday text-mono-matchday text-sport-danger ml-auto">1</span>
-<span class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">Pendiente</span>
-</div>
-<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="bg-sport-warning h-full rounded-full" style="width: 66%;"></div>
-</div>
-<span class="font-body-sm text-[11px] text-text-secondary mt-2 flex items-center gap-1 dark:text-[#CBD5E1]">
-<span class="material-symbols-outlined text-xs text-sport-warning">notification_important</span> Plazo Art. 55.8 vence hoy 18:00
-        </span>
-</div>
-</div>
-</section>
-<!-- SECCIÓN CENTRAL: SOLICITUDES REGLAMENTARIAS Y ASISTENTE DERECHO -->
-<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
-<!-- COLUMNA IZQUIERDA: GESTIÓN DE SOLICITUDES EN CURSO (8 Cols) -->
-<div class="xl:col-span-8 flex flex-col gap-space-md">
-<!-- Header de Solicitudes y Pestañas -->
-<div class="bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div>
-<h2 class="font-headline-sm text-headline-sm text-text-primary tracking-tight dark:text-white">Expedientes y Solicitudes Reglamentarias</h2>
-<p class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">Monitoreo de plazos perentorios y resoluciones de Dirección de Competiciones LigaPro</p>
-</div>
-<!-- Filtros Tabulares -->
-<div class="flex flex-wrap items-center bg-surface-container-low p-1 rounded gap-1 w-full sm:w-auto dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<button class="tab-btn px-2.5 py-1 rounded font-label-caps text-label-caps bg-secondary text-on-secondary font-semibold transition-all" id="tab-all" onclick="switchTab('all')" type="button">
-            TODAS (4)
-          </button>
-<button class="tab-btn px-2.5 py-1 rounded font-label-caps text-label-caps bg-surface-container-low text-text-secondary hover:text-text-primary transition-all dark:bg-[#0B0F19] dark:text-[#F8FAFC]" id="tab-revision" onclick="switchTab('revision')" type="button">
-            EN REVISIÓN (2)
-          </button>
-<button class="tab-btn px-2.5 py-1 rounded font-label-caps text-label-caps bg-surface-container-low text-text-secondary hover:text-text-primary transition-all dark:bg-[#0B0F19] dark:text-[#F8FAFC]" id="tab-aprobada" onclick="switchTab('aprobada')" type="button">
-            APROBADAS (1)
-          </button>
-<button class="tab-btn px-2.5 py-1 rounded font-label-caps text-label-caps bg-surface-container-low text-text-secondary hover:text-text-primary transition-all dark:bg-[#0B0F19] dark:text-[#F8FAFC]" id="tab-observada" onclick="switchTab('observada')" type="button">
-            OBSERVADAS (1)
-          </button>
-</div>
-</div>
-<!-- LISTA DE TRÁMITES -->
-<div class="flex flex-col gap-space-md">
-<!-- TRÁMITE 1: CAMBIO DE ESTADIO -->
-<div class="tramite-card bg-surface-card rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-status="revision">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
-<div class="flex items-center gap-space-sm">
-<span class="w-10 h-10 rounded-lg bg-surface-container-high text-secondary flex items-center justify-center shrink-0 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<span class="material-symbols-outlined text-xl">stadium</span>
-</span>
-<div>
-<div class="flex items-center gap-2">
-<span class="font-label-caps text-label-caps text-secondary uppercase bg-secondary-fixed px-2 py-0.5 rounded">Art. 35 - 30 Días Anticipación</span>
-<span class="font-mono-table text-[11px] text-text-secondary dark:text-[#CBD5E1]">EXP: #LP-TR-2025-0419</span>
-</div>
-<h3 class="font-title-md text-title-md text-text-primary mt-0.5 dark:text-white">Solicitud de Cambio de Estadio y Horario Oficial</h3>
-</div>
-</div>
-<!-- Badge Triple Indicador -->
-<div class="inline-flex items-center gap-1.5 bg-secondary/10 text-secondary px-3 py-1 rounded font-label-caps text-label-caps self-start sm:self-center">
-<span class="material-symbols-outlined text-sm">hourglass_top</span>
-<span>EN REVISIÓN TÉCNICA</span>
-</div>
-</div>
-<!-- Detalles del Encuentro y Traslado -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md bg-surface-base p-space-md rounded-lg dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div>
-<span class="font-label-caps text-[10px] text-text-secondary uppercase dark:text-[#CBD5E1]">Partido Afectado</span>
-<div class="font-title-md text-body-md text-text-primary mt-1 font-semibold dark:text-[#F8FAFC]">LDU Quito vs CS Emelec</div>
-<div class="font-body-sm text-body-sm text-text-secondary mt-0.5 dark:text-[#CBD5E1]">Fecha 18 - LigaPro Ecuabet Serie A</div>
-</div>
-<div>
-<span class="font-label-caps text-[10px] text-text-secondary uppercase dark:text-[#CBD5E1]">Modificación de Escenario</span>
-<div class="font-body-md text-body-md text-text-primary mt-1 flex items-center gap-1.5 dark:text-[#F8FAFC]">
-<span class="text-text-secondary line-through dark:text-[#CBD5E1]">Estadio Rodrigo Paz Delgado</span>
-<span class="material-symbols-outlined text-sm text-secondary">arrow_forward</span>
-<strong class="text-secondary">Estadio Olímpico Atahualpa</strong>
-</div>
-<div class="font-body-sm text-[12px] text-text-secondary dark:text-[#CBD5E1]">Motivo: Mantenimiento anual y nivelación de césped híbrido</div>
-</div>
-</div>
-<!-- Timeline Visual de 3 Pasos -->
-<div>
-<div class="flex items-center justify-between text-text-secondary font-label-caps text-[11px] mb-2 dark:text-[#CBD5E1]">
-<span class="text-sport-success flex items-center gap-1 font-bold">
-<span class="material-symbols-outlined text-xs">check_circle</span> 1. Ingreso Formal (Completado)
+      <!-- Resumen del club -->
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-5 mb-4 flex flex-col md:flex-row md:items-center gap-5">
+        <div class="flex items-center gap-4 flex-1 min-w-0">
+          <img src="assets/clubs/ldu-quito.png" alt="LDU Quito" class="w-14 h-14 object-contain shrink-0" />
+          <div class="min-w-0">
+            <h2 class="text-lg font-bold text-slate-900 dark:text-white truncate">Liga Deportiva Universitaria de Quito</h2>
+            <div class="flex items-center gap-2 mt-1 text-sm text-slate-500 dark:text-slate-400">
+              <span>Serie A</span>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Habilitado
               </span>
-<span class="text-secondary flex items-center gap-1 font-bold">
-<span class="material-symbols-outlined text-xs animate-spin">refresh</span> 2. Inspección de Escenario &amp; VAR (Z)
-              </span>
-<span class="text-text-secondary flex items-center gap-1 dark:text-[#CBD5E1]">
-<span class="material-symbols-outlined text-xs">radio_button_unchecked</span> 3. Dictamen Consejo Director
-              </span>
-</div>
-<div class="w-full bg-surface-container rounded-full h-2 flex overflow-hidden dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="bg-sport-success h-full" style="width: 33.3%;"></div>
-<div class="bg-secondary h-full" style="width: 33.3%;"></div>
-<div class="bg-surface-container-highest h-full dark:bg-[#0B0F19] dark:text-[#F8FAFC]" style="width: 33.4%;"></div>
-</div>
-</div>
-<!-- Documentación y Plazo -->
-<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm pt-space-xs text-body-sm text-body-sm">
-<div class="flex flex-wrap items-center gap-2">
-<span class="bg-surface-container-high text-text-primary px-2 py-0.5 rounded text-[11px] flex items-center gap-1 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<span class="material-symbols-outlined text-xs text-sport-success">task_alt</span> Contrato Arrendamiento CDP
-              </span>
-<span class="bg-surface-container-high text-text-primary px-2 py-0.5 rounded text-[11px] flex items-center gap-1 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<span class="material-symbols-outlined text-xs text-sport-success">task_alt</span> Certificado LED 1,350 Lux
-              </span>
-<span class="bg-surface-container-high text-text-primary px-2 py-0.5 rounded text-[11px] flex items-center gap-1 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<span class="material-symbols-outlined text-xs text-sport-success">task_alt</span> Plan Seguridad Policía Nacional
-              </span>
-</div>
-<div class="flex items-center gap-1.5 text-text-secondary shrink-0 dark:text-[#CBD5E1]">
-<span class="material-symbols-outlined text-sm text-secondary">schedule</span>
-<span>Resolución restante: <strong class="text-text-primary font-mono-table dark:text-[#F8FAFC]">48h 12m</strong></span>
-</div>
-</div>
-</div>
-<!-- TRÁMITE 2: ACTO PROTOCOLAR PRE-PARTIDO -->
-<div class="tramite-card bg-surface-card rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-status="aprobada">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
-<div class="flex items-center gap-space-sm">
-<span class="w-10 h-10 rounded-lg bg-sport-success/15 text-sport-success flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-xl">military_tech</span>
-</span>
-<div>
-<div class="flex items-center gap-2">
-<span class="font-label-caps text-label-caps text-sport-success uppercase bg-sport-success/10 px-2 py-0.5 rounded">Art. 62 - 72h Anticipación</span>
-<span class="font-mono-table text-[11px] text-text-secondary dark:text-[#CBD5E1]">EXP: #LP-PR-2025-0104</span>
-</div>
-<h3 class="font-title-md text-title-md text-text-primary mt-0.5 dark:text-white">Autorización de Acto Protocolar Institucional Pre-Partido</h3>
-</div>
-</div>
-<!-- Badge Triple Indicador -->
-<div class="inline-flex items-center gap-1.5 bg-sport-success/10 text-sport-success px-3 py-1 rounded font-label-caps text-label-caps self-start sm:self-center">
-<span class="material-symbols-outlined text-sm">task_alt</span>
-<span>APROBADO CON CONDICIONAMIENTO</span>
-</div>
-</div>
-<p class="font-body-md text-body-md text-text-secondary dark:text-[#CBD5E1]">
-            Homenaje a Glorias del Club (Plantel Campeón Libertadores 2008) e ingreso de 25 niños socios al terreno de juego previo al arranque de Fecha 14 (vs Barcelona SC).
-          </p>
-<div class="bg-surface-base p-space-md rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex items-center gap-space-md">
-<div class="flex flex-col">
-<span class="font-label-caps text-[10px] text-text-secondary uppercase dark:text-[#CBD5E1]">Ventana Horaria Aprobada</span>
-<span class="font-mono-matchday text-title-md text-text-primary font-bold dark:text-[#F8FAFC]">17:42:00 — 17:50:00</span>
-</div>
-<div class="h-8 w-px bg-border-subtle hidden sm:block"></div>
-<div class="flex flex-col">
-<span class="font-label-caps text-[10px] text-text-secondary uppercase dark:text-[#CBD5E1]">Despeje de Cancha</span>
-<span class="font-mono-table text-body-md text-sport-success font-semibold">T - 10:00 (17:50:00 ESTRICTO)</span>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-sport-success text-base">verified</span>
-<span class="font-label-caps text-[11px] text-text-secondary uppercase dark:text-[#CBD5E1]">COMET Seal ID: #CMT-LDU-901</span>
-</div>
-</div>
-</div>
-<!-- TRÁMITE 3: APODO EN CAMISETA (OBSERVADO) -->
-<div class="tramite-card bg-surface-card rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-status="observada">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
-<div class="flex items-center gap-space-sm">
-<span class="w-10 h-10 rounded-lg bg-sport-warning/20 text-text-primary flex items-center justify-center shrink-0 dark:text-[#F8FAFC]">
-<span class="material-symbols-outlined text-xl">checkroom</span>
-</span>
-<div>
-<div class="flex items-center gap-2">
-<span class="font-label-caps text-label-caps text-text-primary uppercase bg-sport-warning px-2 py-0.5 rounded font-bold dark:text-[#F8FAFC]">Art. 55.8 - Modificación Textil</span>
-<span class="font-mono-table text-[11px] text-text-secondary dark:text-[#CBD5E1]">EXP: #LP-ID-2025-0211</span>
-</div>
-<h3 class="font-title-md text-title-md text-text-primary mt-0.5 dark:text-white">Habilitación Excepcional de Apodo en Camiseta Oficial</h3>
-</div>
-</div>
-<!-- Badge Triple Indicador -->
-<div class="inline-flex items-center gap-1.5 bg-sport-danger/10 text-sport-danger px-3 py-1 rounded font-label-caps text-label-caps self-start sm:self-center font-bold">
-<span class="material-symbols-outlined text-sm">warning</span>
-<span>OBSERVADO - REQUIERE SUBSANACIÓN</span>
-</div>
-</div>
-<!-- Detalle de la observación -->
-<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-space-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div>
-<div class="font-body-md text-body-md text-text-primary font-semibold dark:text-[#F8FAFC]">Jugadores: Dorsal #10 "Kitu" &amp; Dorsal #22 "Dida"</div>
-<p class="font-body-sm text-body-sm text-sport-danger mt-1 flex items-center gap-1">
-<span class="material-symbols-outlined text-sm">error</span>
-                Dictamen Mesa de Partes: Falta declaración juramentada notariada del uso de seudónimo federativo.
-              </p>
-</div>
-<button class="shrink-0 bg-secondary text-on-secondary px-space-md py-2 rounded font-label-caps text-label-caps uppercase hover:bg-secondary-container transition-colors shadow-sm cursor-pointer flex items-center justify-center gap-1" onclick="mostrarModalNuevoTramite()" type="button">
-<span class="material-symbols-outlined text-sm">upload_file</span>
-<span>Subsanar Requisito Ahora</span>
-</button>
-</div>
-</div>
-<!-- TRÁMITE 4: POSTERGACIÓN CONMEBOL (HISTÓRICO / CERRADO) -->
-<div class="tramite-card bg-surface-card rounded-xl p-space-lg shadow-sm flex flex-col gap-space-sm opacity-90 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-status="aprobada">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
-<div class="flex items-center gap-space-sm">
-<span class="w-10 h-10 rounded-lg bg-surface-container text-text-secondary flex items-center justify-center shrink-0 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<span class="material-symbols-outlined text-xl">event_repeat</span>
-</span>
-<div>
-<div class="flex items-center gap-2">
-<span class="font-label-caps text-label-caps text-text-secondary uppercase bg-surface-container px-2 py-0.5 rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">Art. 48 - Postergación CONMEBOL</span>
-<span class="font-mono-table text-[11px] text-text-secondary dark:text-[#CBD5E1]">EXP: #LP-CON-2025-0012</span>
-</div>
-<h3 class="font-title-md text-title-md text-text-primary mt-0.5 dark:text-white">Reprogramación Fecha 9 vs CD Cuenca (Copa Sudamericana)</h3>
-</div>
-</div>
-<div class="inline-flex items-center gap-1 bg-surface-container text-text-secondary px-3 py-1 rounded font-label-caps text-label-caps self-start sm:self-center dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<span class="material-symbols-outlined text-sm">lock</span>
-<span>CERRADO Y HOMOLOGADO</span>
-</div>
-</div>
-<p class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">
-            Resolución final emitida bajo oficio <strong class="text-text-primary font-mono-table dark:text-[#F8FAFC]">#LP-DNC-2025-089</strong>. El partido se disputó el miércoles 14 de mayo a las 19:00 en el Rodrigo Paz.
-          </p>
-</div>
-</div>
-</div>
-<!-- COLUMNA DERECHA: ASISTENTE GUIADO & BUZÓN PKI (4 Cols) -->
-<div class="xl:col-span-4 flex flex-col gap-space-md">
-<!-- Card Asistente de Trámites Rápidos -->
-<div class="bg-surface-card rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex items-center gap-space-xs text-secondary font-label-caps text-label-caps">
-<span class="material-symbols-outlined text-lg">auto_awesome</span>
-<span>ASISTENTE REGLAMENTARIO VIRTUAL</span>
-</div>
-<div>
-<h3 class="font-headline-sm text-headline-sm text-text-primary dark:text-white">Iniciar Gestión Express</h3>
-<p class="font-body-sm text-body-sm text-text-secondary mt-1 dark:text-[#CBD5E1]">Cálculo dinámico de viabilidad legal según los Códigos de LigaPro 2025.</p>
-</div>
-<form class="flex flex-col gap-space-md" onsubmit="event.preventDefault(); alert('Trámite pre-validado y enviado a la Mesa de Control LigaPro.');">
-<div class="flex flex-col gap-1">
-<label class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Tipo de Trámite Federativo</label>
-<select class="bg-surface-base text-text-primary font-body-md text-body-md rounded px-space-sm py-2 shadow-sm focus:outline-none dark:bg-[#0B0F19] dark:text-[#F8FAFC]" onchange="updateReglamentoAlert(this.value)">
-<option value="estadio">Cambio de Estadio / Localía (Art. 35 - 30d)</option>
-<option value="conmebol">Postergación CONMEBOL (Art. 48 - 48h)</option>
-<option value="protocolo">Acto Protocolar / Homenaje (Art. 62 - 72h)</option>
-<option value="indumentaria">Modificación Dorsal o Apodo (Art. 55.8 - 5d)</option>
-<option value="disciplinaria">Recurso de Apelación Sanción (Art. 120 - 72h)</option>
-</select>
-</div>
-<!-- Alerta Dinámica de Plazos -->
-<div class="bg-surface-container-low p-space-sm rounded flex flex-col gap-1 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex items-center gap-1 text-secondary font-label-caps text-[10px]">
-<span class="material-symbols-outlined text-xs">info</span>
-<span id="alerta-art-badge">Art. 35 - REGLAMENTO GENERAL</span>
-</div>
-<p class="font-body-sm text-[12px] text-text-primary leading-snug dark:text-[#F8FAFC]" id="alerta-reglamento-texto">
-              Las solicitudes de cambio de estadio o escenario de localía deben ingresarse con al menos 30 días calendario de anticipación e incluir contrato de cesión y certificado de iluminación broadcast.
-            </p>
-</div>
-<div class="flex flex-col gap-1">
-<label class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Fecha Estimada del Encuentro</label>
-<input class="bg-surface-base text-text-primary font-body-md text-body-md rounded px-space-sm py-2 shadow-sm focus:outline-none font-mono-table dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="date" value="2025-06-22"/>
-</div>
-<div class="flex flex-col gap-1">
-<label class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Expediente Digital (PDF Firmado PKI)</label>
-<div class="bg-surface-base rounded p-space-md text-center flex flex-col items-center justify-center cursor-pointer hover:bg-surface-container-low transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<span class="material-symbols-outlined text-2xl text-secondary mb-1">cloud_upload</span>
-<span class="font-body-sm text-body-sm text-text-primary font-semibold dark:text-[#F8FAFC]">Arrastre aquí los anexos reglamentarios</span>
-<span class="font-body-sm text-[11px] text-text-secondary dark:text-[#CBD5E1]">Máximo 25MB • Formato PDF con firma electrónica válida</span>
-</div>
-</div>
-<button class="w-full bg-secondary text-on-secondary py-2.5 rounded font-title-md text-body-md shadow hover:bg-secondary-container transition-colors cursor-pointer flex items-center justify-center gap-space-xs" type="submit" onclick="mostrarModalNuevoTramite()">
-<span class="material-symbols-outlined text-lg">send</span>
-<span>Radicar a Mesa de Partes Virtual</span>
-</button>
-</form>
-</div>
-<!-- Card Sello PKI & Buzón Electrónico Oficial -->
-<div class="bg-surface-card rounded-xl p-space-lg shadow-sm flex flex-col gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-1.5 text-text-primary font-title-md text-body-md font-bold dark:text-[#F8FAFC]">
-<span class="material-symbols-outlined text-sport-success text-lg">verified_user</span>
-<span>Buzón Oficial Certificado</span>
-</div>
-<span class="font-label-caps text-[9px] bg-sport-success/15 text-sport-success px-2 py-0.5 rounded font-bold">TOKEN ACTIVO</span>
-</div>
-<p class="font-body-sm text-[12px] text-text-secondary dark:text-[#CBD5E1]">
-          Todas las solicitudes cursadas desde este portal adquieren validez jurídica plena de acuerdo con la Ley de Comercio Electrónico y Firmas Digitales del Ecuador.
-        </p>
-<div class="bg-surface-container-low p-space-sm rounded font-mono-table text-[11px] text-text-secondary flex flex-col gap-1 dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex justify-between items-center">
-<span>Certificado SHA-256:</span>
-<span class="text-secondary font-bold">SHA-256 RSA 4096</span>
-</div>
-<div class="truncate text-[10px] text-text-primary font-bold dark:text-[#F8FAFC]">
-            e8f49a12c8b741029cfa87110023a105f98b671a...3b99a
+            </div>
           </div>
-<div class="flex justify-between items-center text-[10px] pt-1">
-<span>Emisor: ANFAC Autoridad Certificadora</span>
-<span class="text-sport-success">Vigente hasta Dic 2025</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- 4. CUENTA CORRIENTE DISCIPLINARIA Y GESTIÓN DE MULTAS (MÓDULO FINANCIERO) -->
-<section class="bg-surface-card rounded-xl p-space-lg shadow-sm flex flex-col gap-space-lg dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<!-- Header Financiero -->
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
-<div>
-<div class="flex items-center gap-2">
-<span class="font-label-caps text-label-caps text-sport-danger uppercase bg-sport-danger/10 px-2 py-0.5 rounded font-bold">Dirección Financiera LigaPro</span>
-<span class="font-mono-table text-[11px] text-text-secondary dark:text-[#CBD5E1]">PERÍODO: MAYO 2025</span>
-</div>
-<h2 class="font-headline-sm text-headline-sm text-text-primary mt-1 dark:text-white">Cuenta Corriente Disciplinaria y Retenciones</h2>
-<p class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">Registro oficial de liquidación de actas de sanción conforme al Código Disciplinario vigente.</p>
-</div>
-<!-- Resumen de Saldo y Estado -->
-<div class="flex flex-wrap items-center gap-space-md bg-surface-base p-space-md rounded-xl dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex flex-col">
-<span class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Saldo Deudor Acumulado</span>
-<span class="font-mono-metric text-mono-metric text-text-primary dark:text-white">$ 14,250.00 <span class="text-body-sm text-text-secondary font-normal font-label-caps dark:text-[#CBD5E1]">USD</span></span>
-</div>
-<div class="h-10 w-px bg-border-subtle hidden sm:block"></div>
-<div class="flex flex-col">
-<span class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Estado de Pago</span>
-<div class="inline-flex items-center gap-1.5 text-sport-success font-label-caps text-label-caps font-bold">
-<span class="material-symbols-outlined text-base">check_circle</span>
-<span>AL DÍA — PRÓXIMO CORTE: 31 MAYO</span>
-</div>
-<span class="font-body-sm text-[11px] text-text-secondary dark:text-[#CBD5E1]">Débito automático sobre recaudación TV</span>
-</div>
-<div class="flex flex-col sm:flex-row gap-2 w-full lg:w-auto mt-2 lg:mt-0">
-<button class="bg-sport-success hover:bg-sport-success/90 text-on-secondary px-space-md py-2 rounded font-body-md text-body-md font-semibold shadow-sm transition-colors cursor-pointer flex items-center justify-center gap-1" type="button" onclick="showToast('Pago procesado vía débito automático conforme a Disposición 10ª.', 'success')">
-<span class="material-symbols-outlined text-lg">payment</span>
-<span>Pagar vía ACH / Banco</span>
-</button>
-<button class="bg-surface-container-low hover:bg-surface-container text-text-primary px-space-md py-2 rounded font-body-md text-body-md shadow-sm transition-colors cursor-pointer flex items-center justify-center gap-1 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="button" onclick="descargarDetalleTramitePDF()">
-<span class="material-symbols-outlined text-lg text-secondary">download</span>
-<span>Descargar Detalle (PDF)</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Tabla de Desglose de Multas Liquidadas -->
-<div class="overflow-x-auto">
-<table class="w-full text-left">
-<thead>
-<tr class="bg-surface-container-low text-text-secondary font-label-caps text-label-caps uppercase dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<th class="py-3 px-space-md rounded-l">Fecha / Partido</th>
-<th class="py-3 px-space-md">Artículo / Infracción</th>
-<th class="py-3 px-space-md">Descripción Reglamentaria Oficial</th>
-<th class="py-3 px-space-md">Estado Recurso</th>
-<th class="py-3 px-space-md text-right rounded-r">Monto Sanción</th>
-</tr>
-</thead>
-<tbody class="divide-y-0 text-body-md text-body-md text-text-primary font-body-md dark:text-[#F8FAFC]">
-<!-- Fila 1 -->
-<tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<td class="py-3.5 px-space-md font-mono-table text-body-sm font-semibold">
-              Fecha 12
-              <span class="block text-text-secondary text-[11px] font-normal dark:text-[#CBD5E1]">vs Independiente del Valle</span>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="font-mono-table text-body-sm bg-surface-container-high px-2 py-0.5 rounded font-bold dark:bg-[#0B0F19] dark:text-[#F8FAFC]">Art. 82</span>
-<span class="text-text-secondary text-body-sm block mt-0.5 dark:text-[#CBD5E1]">Demora de reanudación</span>
-</td>
-<td class="py-3.5 px-space-md text-text-secondary text-body-sm dark:text-[#CBD5E1]">
-              Retraso injustificado en salida al terreno de juego (2do tiempo, 2 minutos de tardanza reportado por Comisario).
-            </td>
-<td class="py-3.5 px-space-md">
-<span class="inline-flex items-center gap-1 text-text-secondary bg-surface-container px-2 py-0.5 rounded font-label-caps text-[10px] dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<span class="material-symbols-outlined text-xs">gavel</span> EN FIRME
-              </span>
-</td>
-<td class="py-3.5 px-space-md text-right font-mono-table text-body-md font-bold text-text-primary dark:text-[#F8FAFC]">
-              $ 1,000.00
-            </td>
-</tr>
-<!-- Fila 2 -->
-<tr class="bg-surface-base/50 hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<td class="py-3.5 px-space-md font-mono-table text-body-sm font-semibold">
-              Fecha 12
-              <span class="block text-text-secondary text-[11px] font-normal dark:text-[#CBD5E1]">vs Independiente del Valle</span>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="font-mono-table text-body-sm bg-surface-container-high px-2 py-0.5 rounded font-bold dark:bg-[#0B0F19] dark:text-[#F8FAFC]">Art. 54</span>
-<span class="text-text-secondary text-body-sm block mt-0.5 dark:text-[#CBD5E1]">Amonestaciones COMET</span>
-</td>
-<td class="py-3.5 px-space-md text-text-secondary text-body-sm dark:text-[#CBD5E1]">
-              Tarjetas amarillas acumuladas en el encuentro (4 TA reglamentarias a $100.00 USD cada una).
-            </td>
-<td class="py-3.5 px-space-md">
-<span class="inline-flex items-center gap-1 text-text-secondary bg-surface-container px-2 py-0.5 rounded font-label-caps text-[10px] dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<span class="material-symbols-outlined text-xs">check</span> LIQUIDADO
-              </span>
-</td>
-<td class="py-3.5 px-space-md text-right font-mono-table text-body-md font-bold text-text-primary dark:text-[#F8FAFC]">
-              $ 400.00
-            </td>
-</tr>
-<!-- Fila 3 -->
-<tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<td class="py-3.5 px-space-md font-mono-table text-body-sm font-semibold">
-              Fecha 10
-              <span class="block text-text-secondary text-[11px] font-normal dark:text-[#CBD5E1]">vs Universidad Católica</span>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="font-mono-table text-body-sm bg-surface-container-high px-2 py-0.5 rounded font-bold dark:bg-[#0B0F19] dark:text-[#F8FAFC]">Art. 93</span>
-<span class="text-text-secondary text-body-sm block mt-0.5 dark:text-[#CBD5E1]">Seguridad y Pirotecnia</span>
-</td>
-<td class="py-3.5 px-space-md text-text-secondary text-body-sm dark:text-[#CBD5E1]">
-              Encendido de 3 bengalas no autorizadas en sector General Sur baja durante el festejo de gol.
-            </td>
-<td class="py-3.5 px-space-md">
-<span class="inline-flex items-center gap-1 text-secondary bg-secondary-fixed px-2 py-0.5 rounded font-label-caps text-[10px] font-bold">
-<span class="material-symbols-outlined text-xs">history_edu</span> EN APELACIÓN
-              </span>
-</td>
-<td class="py-3.5 px-space-md text-right font-mono-table text-body-md font-bold text-sport-danger">
-              $ 2,500.00
-            </td>
-</tr>
-<!-- Fila 4 -->
-<tr class="bg-surface-base/50 hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<td class="py-3.5 px-space-md font-mono-table text-body-sm font-semibold">
-              Fecha 8
-              <span class="block text-text-secondary text-[11px] font-normal dark:text-[#CBD5E1]">vs Orense SC</span>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="font-mono-table text-body-sm bg-surface-container-high px-2 py-0.5 rounded font-bold dark:bg-[#0B0F19] dark:text-[#F8FAFC]">Art. 112</span>
-<span class="text-text-secondary text-body-sm block mt-0.5 dark:text-[#CBD5E1]">Indumentaria No Homologada</span>
-</td>
-<td class="py-3.5 px-space-md text-text-secondary text-body-sm dark:text-[#CBD5E1]">
-              Modificación de contraste en calcetas de arquero suplente sin aprobación previa en reunión técnica.
-            </td>
-<td class="py-3.5 px-space-md">
-<span class="inline-flex items-center gap-1 text-text-secondary bg-surface-container px-2 py-0.5 rounded font-label-caps text-[10px] dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<span class="material-symbols-outlined text-xs">gavel</span> EN FIRME
-              </span>
-</td>
-<td class="py-3.5 px-space-md text-right font-mono-table text-body-md font-bold text-text-primary dark:text-[#F8FAFC]">
-              $ 500.00
-            </td>
-</tr>
-</tbody>
-</table>
-</div>
-<!-- Pie Informativo de Conciliación -->
-<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm bg-surface-container-low p-space-md rounded-lg text-body-sm text-body-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<div class="flex items-center gap-2 text-text-secondary dark:text-[#CBD5E1]">
-<span class="material-symbols-outlined text-secondary text-lg">account_balance_wallet</span>
-<span>Retención de cuotas de derechos audiovisuales operada directamente por Dirección Financiera LigaPro Ecuador.</span>
-</div>
-<a class="font-label-caps text-label-caps text-secondary uppercase hover:underline flex items-center gap-1" href="javascript:void(0)" href="javascript:void(0)" onclick="mostrarNormativaCobro()">
-<span>Ver Normativa de Cobro Coactivo</span>
-<span class="material-symbols-outlined text-sm">open_in_new</span>
-</a>
-</div>
-</section>
-<!-- MODAL / ASISTENTE COMPLETO DE NUEVA SOLICITUD (OCULTO POR DEFECTO) -->
-<div class="fixed inset-0 z-50 bg-primary-container/70 backdrop-blur-sm hidden items-center justify-center p-gutter-lg" id="modal-tramite">
-<div class="bg-surface-card rounded-2xl w-full max-w-2xl max-h-[921px] overflow-y-auto p-space-xl shadow-2xl flex flex-col gap-space-lg relative animate-fade-in dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<!-- Modal Header -->
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-space-sm">
-<span class="w-10 h-10 rounded-xl bg-secondary-container text-on-secondary flex items-center justify-center">
-<span class="material-symbols-outlined text-xl">post_add</span>
-</span>
-<div>
-<h2 class="font-headline-sm text-headline-sm text-text-primary dark:text-white">Radicación de Expediente Reglamentario</h2>
-<span class="font-label-caps text-[10px] text-text-secondary uppercase dark:text-[#CBD5E1]">Mesa de Partes Virtual • SIGEC-LP 2025</span>
-</div>
-</div>
-<button class="text-text-secondary hover:text-text-primary p-1 rounded hover:bg-surface-container transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" onclick="toggleModal(false)" type="button">
-<span class="material-symbols-outlined text-2xl">close</span>
-</button>
-</div>
-<!-- Formulario Guiado Modal -->
-<form class="flex flex-col gap-space-md" onsubmit="event.preventDefault(); toggleModal(false); alert('Solicitud radicada con éxito con Hash SHA-256 generado.');">
-<div class="flex flex-col gap-1">
-<label class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Materia Reglamentaria</label>
-<select class="bg-surface-base text-text-primary font-body-md text-body-md rounded px-space-sm py-2.5 shadow-sm focus:outline-none dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<option>Cambio de Escenario o Localía (Art. 35)</option>
-<option>Subsanación de Indumentaria / Dorsal Especial (Art. 55.8)</option>
-<option>Autorización de Actos Conmemorativos Pre-Partido (Art. 62)</option>
-<option>Recurso de Apelación ante Tribunal Arbitral Disciplinario</option>
-<option>Inscripción Extraordinaria de Jugador por Lesión Definitiva</option>
-</select>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
-<div class="flex flex-col gap-1">
-<label class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Nº de Partido / Fecha COMET</label>
-<input class="bg-surface-base text-text-primary font-body-md text-body-md rounded px-space-sm py-2 shadow-sm focus:outline-none dark:bg-[#0B0F19] dark:text-[#F8FAFC]" placeholder="Ej: Fecha 18 - Partido #142" type="text"/>
-</div>
-<div class="flex flex-col gap-1">
-<label class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Fecha de Realización</label>
-<input class="bg-surface-base text-text-primary font-body-md text-body-md rounded px-space-sm py-2 shadow-sm focus:outline-none font-mono-table dark:bg-[#0B0F19] dark:text-[#F8FAFC]" type="date" value="2025-06-15"/>
-</div>
-</div>
-<div class="flex flex-col gap-1">
-<label class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Fundamentación Reglamentaria y Fáctica</label>
-<textarea class="bg-surface-base text-text-primary font-body-md text-body-md rounded p-space-sm shadow-sm focus:outline-none dark:bg-[#0B0F19] dark:text-[#F8FAFC]" placeholder="Describa de manera pormenorizada las consideraciones reglamentarias y operativas que sustentan su petición..." rows="4"></textarea>
-</div>
-<div class="flex flex-col gap-1">
-<label class="font-label-caps text-label-caps text-text-secondary uppercase dark:text-[#CBD5E1]">Adjuntar Recaudos Firmados Electrónicamente</label>
-<div class="bg-surface-base rounded-xl p-space-lg text-center flex flex-col items-center justify-center cursor-pointer hover:bg-surface-container-low transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<span class="material-symbols-outlined text-3xl text-secondary mb-1">note_add</span>
-<span class="font-body-md text-body-md text-text-primary font-semibold dark:text-[#F8FAFC]">Seleccionar archivos de su equipo</span>
-<span class="font-body-sm text-[11px] text-text-secondary dark:text-[#CBD5E1]">Se admiten PDF, ZIP con firma .p12 / .pfx • Verificación PKI instantánea</span>
-</div>
-</div>
-<div class="flex items-center gap-space-xs bg-surface-container-low p-space-sm rounded dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<input class="rounded text-secondary" id="check-juridico" required="" type="checkbox"/>
-<label class="font-body-sm text-[12px] text-text-secondary dark:text-[#CBD5E1]" for="check-juridico">
-            Declaro bajo juramento que los documentos ingresados gozan de validez reglamentaria y representan el compromiso institucional del club afiliado.
-          </label>
-</div>
-<!-- Botones Modal -->
-<div class="flex items-center justify-end gap-space-sm pt-space-xs">
-<button class="bg-surface-container-low hover:bg-surface-container text-text-secondary px-space-md py-2.5 rounded font-body-md text-body-md transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" onclick="toggleModal(false)" type="button">
-            Cancelar
-          </button>
-<button class="bg-secondary text-on-secondary px-space-lg py-2.5 rounded font-title-md text-body-md shadow-md hover:bg-secondary-container transition-colors flex items-center gap-1.5 cursor-pointer" type="submit" onclick="mostrarModalNuevoTramite()">
-<span class="material-symbols-outlined text-lg">verified</span>
-<span>Firmar y Enviar Solicitud</span>
-</button>
-</div>
-</form>
-</div>
-</div>
-</div></main></div>
+        </div>
+        <div class="grid grid-cols-3 gap-3 md:w-[420px]">
+          <div class="rounded-xl bg-slate-50 dark:bg-slate-800/50 px-4 py-3">
+            <div class="text-xl font-bold text-slate-900 dark:text-white">2</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">En revisión</div>
+          </div>
+          <div class="rounded-xl bg-slate-50 dark:bg-slate-800/50 px-4 py-3">
+            <div class="text-xl font-bold text-amber-600 dark:text-amber-400">1</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">Por subsanar</div>
+          </div>
+          <div class="rounded-xl bg-slate-50 dark:bg-slate-800/50 px-4 py-3">
+            <div class="text-xl font-bold text-slate-900 dark:text-white">$14.250</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">Saldo pendiente</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+        <!-- Solicitudes -->
+        <div class="lg:col-span-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
+          <div class="flex flex-wrap items-center justify-between gap-3 px-5 py-4 border-b border-slate-100 dark:border-slate-800">
+            <h2 class="text-base font-bold text-slate-900 dark:text-white">Solicitudes</h2>
+            <div class="inline-flex p-1 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-xs font-semibold" role="tablist" aria-label="Filtrar solicitudes">
+              <button type="button" data-filtro-solicitud="todas" onclick="filtrarSolicitudes('todas')" class="filtro-solicitud px-2.5 py-1 rounded-md">Todas</button>
+              <button type="button" data-filtro-solicitud="revision" onclick="filtrarSolicitudes('revision')" class="filtro-solicitud px-2.5 py-1 rounded-md">En revisión</button>
+              <button type="button" data-filtro-solicitud="aprobada" onclick="filtrarSolicitudes('aprobada')" class="filtro-solicitud px-2.5 py-1 rounded-md">Aprobadas</button>
+              <button type="button" data-filtro-solicitud="observada" onclick="filtrarSolicitudes('observada')" class="filtro-solicitud px-2.5 py-1 rounded-md">Observadas</button>
+            </div>
+          </div>
+          <ul class="divide-y divide-slate-100 dark:divide-slate-800">
+            <li data-estado-solicitud="revision" class="px-5 py-4 flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <p class="font-semibold text-sm text-slate-900 dark:text-white">Cambio de estadio y horario</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">LDU Quito vs CS Emelec · Fecha 18 · Art. 35</p>
+              </div>
+              <span class="shrink-0 px-2 py-0.5 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 dark:bg-sky-500/10 dark:text-sky-400">En revisión</span>
+            </li>
+            <li data-estado-solicitud="aprobada" class="px-5 py-4 flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <p class="font-semibold text-sm text-slate-900 dark:text-white">Acto protocolar previo al partido</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Homenaje a glorias del club · Fecha 14 · Art. 62</p>
+              </div>
+              <span class="shrink-0 px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">Aprobada</span>
+            </li>
+            <li data-estado-solicitud="observada" class="px-5 py-4 flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <p class="font-semibold text-sm text-slate-900 dark:text-white">Apodo en camiseta oficial</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Falta declaración juramentada del seudónimo · Art. 55.8</p>
+                <button type="button" onclick="mostrarModalNuevoTramite()" class="mt-2 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Subsanar ahora</button>
+              </div>
+              <span class="shrink-0 px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400">Observada</span>
+            </li>
+            <li data-estado-solicitud="aprobada" class="px-5 py-4 flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <p class="font-semibold text-sm text-slate-900 dark:text-white">Reprogramación Fecha 9 vs CD Cuenca</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Por Copa Sudamericana · Art. 48</p>
+              </div>
+              <span class="shrink-0 px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">Aprobada</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Sanciones -->
+        <div class="lg:col-span-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
+          <div class="flex items-center justify-between gap-3 px-5 py-4 border-b border-slate-100 dark:border-slate-800">
+            <h2 class="text-base font-bold text-slate-900 dark:text-white">Multas</h2>
+            <button type="button" onclick="showToast('Pago procesado vía débito automático conforme a Disposición 10ª.', 'success')" class="inline-flex items-center gap-1 h-8 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition-colors">
+              <span class="material-symbols-outlined text-sm">payments</span> Pagar
+            </button>
+          </div>
+          <ul class="divide-y divide-slate-100 dark:divide-slate-800 text-sm">
+            <li class="px-5 py-3 flex items-center justify-between gap-3">
+              <div class="min-w-0"><p class="font-medium text-slate-900 dark:text-white">Demora en reanudación</p><p class="text-xs text-slate-500 dark:text-slate-400">Fecha 12 · En firme</p></div>
+              <span class="font-semibold tabular-nums text-slate-900 dark:text-white">$1.000</span>
+            </li>
+            <li class="px-5 py-3 flex items-center justify-between gap-3">
+              <div class="min-w-0"><p class="font-medium text-slate-900 dark:text-white">Tarjetas amarillas acumuladas</p><p class="text-xs text-slate-500 dark:text-slate-400">Fecha 12 · Pagada</p></div>
+              <span class="font-semibold tabular-nums text-slate-400 line-through">$400</span>
+            </li>
+            <li class="px-5 py-3 flex items-center justify-between gap-3">
+              <div class="min-w-0"><p class="font-medium text-slate-900 dark:text-white">Uso de pirotecnia</p><p class="text-xs text-slate-500 dark:text-slate-400">Fecha 10 · En apelación</p></div>
+              <span class="font-semibold tabular-nums text-rose-600 dark:text-rose-400">$2.500</span>
+            </li>
+            <li class="px-5 py-3 flex items-center justify-between gap-3">
+              <div class="min-w-0"><p class="font-medium text-slate-900 dark:text-white">Indumentaria no homologada</p><p class="text-xs text-slate-500 dark:text-slate-400">Fecha 8 · En firme</p></div>
+              <span class="font-semibold tabular-nums text-slate-900 dark:text-white">$500</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
   </main>
   <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] text-slate-500 dark:text-slate-400 py-4 px-6 text-xs transition-colors">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">

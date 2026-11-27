@@ -154,32 +154,32 @@
         </div>
 
         <!-- Navegación HORIZONTAL limpia, centrada y sin desbordamiento -->
-        <nav id="header-nav" class="flex-1 min-w-0 flex items-center justify-center gap-1 overflow-x-auto no-scrollbar py-1 px-1">
-          <a href="javascript:void(0)" onclick="navigateView('tablero')" data-nav-id="tablero" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+        <nav id="header-nav" class="flex-1 min-w-0 flex items-center justify-start lg:justify-center gap-0.5 lg:gap-1 overflow-x-auto no-scrollbar py-1 px-1">
+          <a href="javascript:void(0)" onclick="navigateView('tablero')" data-nav-id="tablero" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">sports_soccer</span>
-          <span>Partidos</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('posiciones')" data-nav-id="posiciones" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span class="sr-only lg:not-sr-only">Partidos</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('posiciones')" data-nav-id="posiciones" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">leaderboard</span>
-          <span>Posiciones</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('clubes')" data-nav-id="clubes" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span class="sr-only lg:not-sr-only">Posiciones</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('clubes')" data-nav-id="clubes" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">shield</span>
-          <span>Clubes</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('uniformes')" data-nav-id="uniformes" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span class="sr-only lg:not-sr-only">Clubes</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('uniformes')" data-nav-id="uniformes" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">checkroom</span>
-          <span>Uniformes</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('estadios')" data-nav-id="estadios" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span class="sr-only lg:not-sr-only">Uniformes</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('estadios')" data-nav-id="estadios" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">stadium</span>
-          <span>Escenarios</span>
-        </a><a href="javascript:void(0)" onclick="navigateView('consola')" data-nav-id="consola" class="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
+          <span class="sr-only lg:not-sr-only">Escenarios</span>
+        </a><a href="javascript:void(0)" onclick="navigateView('consola')" data-nav-id="consola" class="shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60">
           <span class="material-symbols-outlined text-base">terminal</span>
-          <span>Consola</span>
+          <span class="sr-only lg:not-sr-only">Consola</span>
         </a>
         </nav>
 
         <!-- Derecha: Marcador En Vivo + Tema + Usuario -->
         <div class="flex items-center gap-2 shrink-0">
           <!-- Marcador En Vivo sutil y elegante -->
-          <div onclick="navigateView('consola')" class="cursor-pointer hidden lg:flex items-center gap-2 bg-slate-100 dark:bg-slate-900/80 hover:bg-slate-200/80 dark:hover:bg-slate-800/80 px-2.5 py-1 rounded-full text-xs transition-colors border border-slate-200 dark:border-slate-800 select-none shrink-0" title="Ver Consola de Partido">
+          <div onclick="navigateView('consola')" class="cursor-pointer hidden xl:flex items-center gap-2 bg-slate-100 dark:bg-slate-900/80 hover:bg-slate-200/80 dark:hover:bg-slate-800/80 px-2.5 py-1 rounded-full text-xs transition-colors border border-slate-200 dark:border-slate-800 select-none shrink-0" title="Ver Consola de Partido">
             <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
             <span class="font-semibold text-slate-600 dark:text-slate-300">En Vivo</span>
             <span class="font-bold text-slate-900 dark:text-white font-mono px-0.5" id="header-score">1 - 1</span>
@@ -204,7 +204,7 @@
             <div onclick="toggleUserDropdown()" class="cursor-pointer flex items-center gap-2 py-1 px-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               <img id="header-user-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" alt="Avatar Usuario" class="w-7 h-7 rounded-full object-cover border border-slate-300 dark:border-slate-700"/>
               <span id="header-user-name" class="font-semibold text-xs text-slate-800 dark:text-slate-200 hidden xl:inline max-w-[120px] truncate">Usuario</span>
-              <span class="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
+              <span class="material-symbols-outlined text-slate-400 text-sm hidden sm:inline">expand_more</span>
             </div>
 
             <!-- Menú Desplegable Minimalista -->
@@ -228,364 +228,54 @@
     </header>
     
   <main class="w-full flex-1">
-    <div class="w-full" style="padding-left: 300px; background-color: #000000;"><main class="relative w-full pt-16 bg-surface min-h-screen px-gutter-lg py-margin-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" style="background-color: #000000; min-height: 100vh; padding-top: 84px; color: #FFFFFF;">
+    <div class="w-full min-h-screen bg-[#000] text-[#fff]">
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-16">
+      <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+        <div>
+          <h1 class="text-3xl font-extrabold tracking-tight text-[#FFE600]">Consola · Alto contraste</h1>
+          <p class="text-base text-[#fff] mt-1" data-c="estadio">Estadio</p>
+        </div>
+        <div class="inline-flex p-1 rounded-lg border-2 border-[#FFE600] text-sm font-bold" aria-label="Modo de consola">
+          <button type="button" onclick="navigateView('consola')" class="px-3 py-1.5 rounded-md text-[#fff] hover:underline">Estándar</button>
+          <button type="button" onclick="navigateView('consola_alto_contraste')" class="px-3 py-1.5 rounded-md bg-[#FFE600] text-[#000]">Alto contraste</button>
+          <button type="button" onclick="navigateView('consola_tablet')" class="px-3 py-1.5 rounded-md text-[#fff] hover:underline">Tablet</button>
+        </div>
+      </div>
 
-        <!-- WCAG AAA Action Bar -->
-        <div class="mb-4 bg-black border-2 border-[#FFE600] text-white p-3 rounded-lg flex items-center justify-between text-sm font-bold">
-          <div class="flex items-center gap-2">
-            <span class="text-[#FFE600] font-mono tracking-wider">CONSOLA WCAG AAA ALTO CONTRASTE (21:1)</span>
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-5">
+        <div class="lg:col-span-3 space-y-5">
+          <div class="rounded-2xl border-4 border-[#FFE600] p-6">
+            <p class="text-center text-lg font-bold text-[#FFE600] mb-4" data-c="minuto">En vivo</p>
+            <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+              <span data-c="local-nombre" class="text-base sm:text-xl font-extrabold text-center leading-tight line-clamp-2 break-words">Local</span>
+              <div class="text-5xl sm:text-7xl font-extrabold tabular-nums text-[#FFE600]">
+                <span data-c="marcador-local">0</span><span class="mx-3">-</span><span data-c="marcador-visitante">0</span>
+              </div>
+              <span data-c="visitante-nombre" class="text-base sm:text-xl font-extrabold text-center leading-tight line-clamp-2 break-words">Visitante</span>
+            </div>
           </div>
-          <div class="flex items-center gap-2">
-            <button onclick="registrarGolEnVivo('local')" class="px-3 py-1.5 bg-[#FFE600] text-black font-extrabold rounded border-2 border-white">+GOL LDU</button>
-            <button onclick="registrarGolEnVivo('visitante')" class="px-3 py-1.5 bg-[#FFE600] text-black font-extrabold rounded border-2 border-white">+GOL BSC</button>
-            <button onclick="registrarTarjetaEnVivo('amarilla', 'visitante')" class="px-3 py-1.5 bg-black text-[#FFE600] font-extrabold rounded border-2 border-[#FFE600]">AMARILLA</button>
-            <button onclick="registrarTarjetaEnVivo('roja', 'visitante')" class="px-3 py-1.5 bg-[#FF3333] text-white font-extrabold rounded border-2 border-white">ROJA</button>
+
+          <div class="grid grid-cols-2 gap-3">
+            <button type="button" onclick="registrarGolEnVivo('local')" class="h-16 rounded-xl bg-[#FFE600] text-[#000] text-xl font-extrabold border-4 border-[#FFE600] focus:outline-none focus:ring-4 focus:ring-[#fff]">Gol local</button>
+            <button type="button" onclick="registrarGolEnVivo('visitante')" class="h-16 rounded-xl bg-[#FFE600] text-[#000] text-xl font-extrabold border-4 border-[#FFE600] focus:outline-none focus:ring-4 focus:ring-[#fff]">Gol visitante</button>
+            <button type="button" onclick="registrarTarjetaEnVivo('amarilla', 'visitante')" class="h-16 rounded-xl bg-[#000] text-[#FFE600] text-xl font-extrabold border-4 border-[#FFE600] focus:outline-none focus:ring-4 focus:ring-[#fff]">Amarilla</button>
+            <button type="button" onclick="registrarTarjetaEnVivo('roja', 'visitante')" class="h-16 rounded-xl bg-[#FF3B30] text-[#000] text-xl font-extrabold border-4 border-[#FF3B30] focus:outline-none focus:ring-4 focus:ring-[#fff]">Roja</button>
+            <button type="button" onclick="registrarSustitucionEnVivo('local')" class="h-16 rounded-xl bg-[#000] text-[#fff] text-xl font-extrabold border-4 border-[#fff] focus:outline-none focus:ring-4 focus:ring-[#FFE600]">Cambio</button>
+            <button type="button" onclick="registrarIncidenteEnVivo()" class="h-16 rounded-xl bg-[#000] text-[#fff] text-xl font-extrabold border-4 border-[#fff] focus:outline-none focus:ring-4 focus:ring-[#FFE600]">Incidente</button>
           </div>
         </div>
-        <div class="flex flex-col w-full gap-space-lg">
-<!-- Operational Context Header Ribbon -->
-<div class="w-full bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-space-md dark:bg-[#0B0F19] dark:text-[#F8FAFC]" style="background-color: #000000; border: 3px solid #FFE600; padding: 18px 24px; color: #FFFFFF;"><div class="flex flex-wrap items-center gap-4"><div class="flex items-center gap-2 bg-[#FFE600] text-[#000000] px-3.5 py-2 rounded-lg font-extrabold text-sm border-2 border-[#FFFFFF]"><span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">sports</span><span class="tracking-wider uppercase">FECHA 12 • FASE 1 • SERIE A</span></div><div class="flex items-center gap-2.5"><span class="w-3.5 h-3.5 rounded-full bg-[#00FF66] animate-pulse border-2 border-[#FFFFFF]"></span><span class="text-xl font-extrabold text-[#FFFFFF]">LDU Quito <span class="text-[#FFE600] font-bold">vs</span> Barcelona SC</span></div><span class="text-[#FFE600] text-xl font-bold hidden sm:inline">|</span><div class="flex items-center gap-2 text-base text-[#FFFFFF] font-bold"><span class="material-symbols-outlined text-[#FFE600] text-xl">stadium</span><span>Estadio Rodrigo Paz Delgado • Altitud: 2,850m</span></div></div><div class="flex items-center gap-3 flex-wrap"><div class="flex items-center gap-2 bg-[#000000] border-2 border-[#FFFFFF] px-3 py-1.5 rounded-lg"><span class="material-symbols-outlined text-[#FFE600] text-base">enhanced_encryption</span><span class="font-mono text-sm text-[#FFFFFF] font-bold">SIGEC-SEC://PKI-COM-883</span></div><div class="flex items-center gap-2 bg-[#000000] border-2 border-[#00FF66] px-3 py-1.5 rounded-lg"><span class="w-3 h-3 rounded-full bg-[#00FF66]"></span><span class="text-sm text-[#00FF66] uppercase font-extrabold">Planilla COMET OK</span></div><button class="flex items-center gap-2 bg-[#FFE600] text-[#000000] px-4 py-2 rounded font-extrabold text-sm uppercase border-2 border-[#FFFFFF] hover:bg-[#FFFFFF] hover:text-[#000000] transition-colors shadow-lg active:scale-95" id="contrastFlashBtn" onclick="toggleScreenFlasher()"><span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">flash_on</span><span>Alerta Lumínica Auditiva</span></button></div></div>
-<!-- Hero Grid: Countdown Display + Audio-Visual Sensory Beacon + Protocol Timeline -->
-<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
-<!-- Central Official Regenerative Chronometer & Audio-Accessibility Beacon (7 cols) -->
-<div class="xl:col-span-7 flex flex-col gap-space-md">
-<div class="bg-primary-container text-on-primary rounded-xl p-space-lg shadow-md relative overflow-hidden flex flex-col justify-between min-h-[380px]" style="background-color: #000000; border: 3px solid #FFE600; padding: 28px; color: #FFFFFF;">
-<!-- Decorative Ambient Graphic -->
-<div class="absolute -right-12 -top-12 w-64 h-64 bg-secondary-container/20 rounded-full blur-2xl pointer-events-none"></div>
-<div class="flex items-center justify-between relative z-10"><div class="flex items-center gap-3"><span class="px-3 py-1 rounded bg-[#FFE600] text-[#000000] font-extrabold text-sm tracking-wide border-2 border-[#FFFFFF]">FASE EN VIVO</span><span class="font-bold text-base text-[#FFFFFF] uppercase tracking-wider">Protocolo Reglamentario T-Minus</span></div><div class="flex items-center gap-2 font-mono text-base bg-[#000000] border-2 border-[#FFE600] px-3 py-1 rounded text-[#FFE600] font-bold"><span class="w-3 h-3 rounded-full bg-[#FFE600] animate-ping"></span><span>CRONO OFICIAL LIGAPRO</span></div></div>
-<!-- Big Mono Metric Clock Display -->
-<div class="my-space-md flex flex-col items-center justify-center text-center relative z-10"><div class="font-mono text-[76px] sm:text-[98px] xl:text-[112px] font-black tracking-tight leading-none text-[#FFE600] select-none flex items-baseline justify-center gap-3"><span class="text-[#FFFFFF] text-[54px] sm:text-[68px] font-extrabold">-</span><span id="countdownMinutes">44</span><span class="animate-pulse text-[#FFFFFF]">:</span><span id="countdownSeconds">38</span></div><p class="font-bold text-base text-[#FFFFFF] uppercase tracking-widest mt-3 bg-[#000000] px-3 py-1 border border-[#FFFFFF] rounded">Tiempo Restante Para el Pitazo Inicial (19:00:00 UTC-5)</p></div>
-<!-- Current Ongoing Official Event Card -->
-<div class="bg-inverse-surface/90 rounded-xl p-space-md relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm shadow-sm" style="background-color: #000000; border: 2px solid #FFFFFF; padding: 18px;"><div class="flex items-center gap-3"><div class="w-12 h-12 rounded-lg bg-[#FFE600] text-[#000000] flex items-center justify-center shrink-0 border-2 border-[#FFFFFF]"><span class="material-symbols-outlined text-3xl font-bold">fitness_center</span></div><div><div class="flex items-center gap-2"><span class="text-xl text-[#FFFFFF] font-extrabold">Hito Actual: T -45:00</span><span class="bg-[#00FF66] text-[#000000] font-extrabold text-xs px-2 py-0.5 rounded uppercase border border-[#FFFFFF]">En Curso</span></div><p class="text-base text-[#FFFFFF] font-medium mt-1">Calentamiento reglamentario en campo (Máx 30 min) • Chalecos oficiales numerados obligatorios.</p></div></div><div class="flex items-center gap-2 self-end sm:self-center"><button class="bg-[#FFE600] text-[#000000] px-4 py-2.5 rounded font-extrabold text-sm uppercase hover:bg-[#FFFFFF] transition-colors flex items-center gap-2 border-2 border-[#FFFFFF]" onclick="forzarSincroComet()"><span class="material-symbols-outlined text-lg">timer</span><span>Forzar Sincro</span></button></div></div>
-<!-- Triple Sensory Alert Beacon for Hearing & Visually Impaired -->
-<div class="mt-space-sm bg-surface-card rounded-lg p-space-sm flex items-center justify-between gap-space-sm relative z-10 shadow-inner dark:bg-[#0B0F19] dark:text-[#F8FAFC]" id="protocolSensoryBanner" style="background-color: #FFE600; color: #000000; border: 3px solid #FFFFFF; padding: 14px 18px;"><div class="flex items-center gap-3 min-w-0"><div class="w-10 h-10 rounded bg-[#000000] text-[#FFE600] flex items-center justify-center shrink-0 border border-[#FFFFFF]"><span class="material-symbols-outlined text-2xl animate-pulse">hearing_disabled</span></div><div class="flex flex-col min-w-0"><div class="flex items-center gap-2"><span class="text-xs px-2 py-0.5 rounded bg-[#000000] font-extrabold text-[#FFE600] uppercase border border-[#FFFFFF]">ALERTA SENSORIAL ÓPTICA / VISUAL</span><span class="font-mono text-sm text-[#000000] font-black underline">T -09:20 PRÓXIMA</span></div><span class="text-base text-[#000000] font-extrabold truncate mt-0.5">«Canción Oficial LigaPro (Ecualizador Audio-Visual en Pantalla Central y Subtitulado en Vivo)»</span></div></div><div class="flex items-center gap-1 bg-[#000000] text-[#00FF66] px-2.5 py-1 rounded font-bold text-xs border border-[#FFFFFF]"><span class="material-symbols-outlined text-base">check_circle</span><span>ACTIVO</span></div></div>
-</div>
-</div>
-<!-- Official Matchday Protocol Milestones Checklist (5 cols) -->
-<div class="xl:col-span-5 bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]" style="background-color: #000000; border: 3px solid #FFFFFF; padding: 22px; color: #FFFFFF;">
-<div><div class="flex items-center justify-between pb-3 border-b-2 border-[#FFFFFF]/40"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-[#FFE600] text-2xl">checklist</span><h2 class="text-xl font-extrabold text-[#FFFFFF] dark:text-white">Hitos Reglamentarios Obligatorios</h2></div><span class="font-bold text-xs text-[#000000] bg-[#FFE600] px-2.5 py-1 rounded border border-[#FFFFFF]">Reglamento 2025</span></div><div class="flex flex-col gap-2.5 mt-3 max-h-[380px] overflow-y-auto pr-1"><!-- -90m --><div class="flex items-start gap-3 p-3 rounded-lg bg-[#000000] border-2 border-[#00FF66]"><span class="material-symbols-outlined text-[#00FF66] text-2xl mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-mono text-base font-extrabold text-[#FFFFFF]">-90:00</span><span class="font-mono text-xs text-[#00FF66] font-bold bg-[#000000] border border-[#00FF66] px-2 py-0.5 rounded">17:30:12 REGISTRADO</span></div><p class="text-sm text-[#FFFFFF] mt-1">Llegada oficial de delegaciones, escolta policial y validación biométrica.</p></div></div><!-- -70m --><div class="flex items-start gap-3 p-3 rounded-lg bg-[#000000] border-2 border-[#00FF66]"><span class="material-symbols-outlined text-[#00FF66] text-2xl mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-mono text-base font-extrabold text-[#FFFFFF]">-70:00</span><span class="font-mono text-xs text-[#00FF66] font-bold bg-[#000000] border border-[#00FF66] px-2 py-0.5 rounded">17:50:04 FIRMADO</span></div><p class="text-sm text-[#FFFFFF] mt-1">Entrega de alineación oficial COMET firmada por ambos DT y Médicos.</p></div></div><!-- -45m (Active) --><div class="flex items-start gap-3 p-3 rounded-lg bg-[#000000] border-3 border-[#FFE600] shadow-md"><span class="material-symbols-outlined text-[#FFE600] text-2xl animate-spin mt-0.5">progress_activity</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-mono text-base font-extrabold text-[#FFE600]">-45:00 (ACTUAL)</span><span class="font-bold text-xs bg-[#FFE600] text-[#000000] px-2 py-0.5 rounded uppercase border border-[#FFFFFF]">En Progreso</span></div><p class="text-sm text-[#FFFFFF] font-bold mt-1">Salida a calentamiento reglamentario (30 min máx). Inspector en túnel.</p></div></div><!-- -09m:20s: Scheduled --><div class="flex items-start gap-3 p-3 rounded-lg bg-[#000000] border-2 border-[#FFE600]"><span class="material-symbols-outlined text-[#FFE600] text-2xl mt-0.5">radio_button_unchecked</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-mono text-base font-extrabold text-[#FFFFFF]">-09:20</span><span class="font-bold text-xs text-[#000000] bg-[#FFE600] px-2 py-0.5 rounded uppercase border border-[#FFFFFF]">ÓPTICA / AUDIO</span></div><p class="text-sm text-[#FFFFFF] mt-1">Canción Oficial LigaPro. Alerta visual de alto contraste y subtitulado.</p></div></div><!-- -08m:01s: Scheduled --><div class="flex items-start gap-3 p-3 rounded-lg bg-[#000000] border-2 border-[#FFFFFF]"><span class="material-symbols-outlined text-[#FFFFFF] text-2xl mt-0.5">radio_button_unchecked</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-mono text-base font-extrabold text-[#FFFFFF]">-08:01</span><span class="font-bold text-xs text-[#FFFFFF] border border-[#FFFFFF] px-2 py-0.5 rounded">PROGRAMADO</span></div><p class="text-sm text-[#FFFFFF] mt-1">Himno Nacional del Ecuador. Cuarteto arbitral en cabecera de hilera.</p></div></div></div></div>
-<div class="mt-space-md pt-space-sm flex items-center justify-between">
-<span class="font-label-caps text-label-caps text-text-secondary dark:text-[#CBD5E1]">Tolerancia Reglamento: ±30s</span>
-<button class="bg-surface-container-low text-text-primary hover:bg-surface-container px-3 py-1.5 rounded font-label-caps text-label-caps uppercase font-semibold transition-colors flex items-center gap-1 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" onclick="mostrarAuditoriaMarcas()">
-<span class="material-symbols-outlined text-sm">history</span>
-<span>Auditoría de Marcas</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Operational Middle Section: Tactical Incident Pad + Alignment Verification Panel -->
-<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
-<!-- Quick-Action Field Incident Buttons (Min Touch Target: 48px, High-Contrast) (5 cols) -->
-<div class="xl:col-span-5 bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]" style="background-color: #000000; border: 3px solid #FFE600; padding: 22px; color: #FFFFFF;">
-<div><div class="flex items-center justify-between pb-3 border-b-2 border-[#FFFFFF]/40"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-[#FFE600] text-2xl">checklist</span><h2 class="text-xl font-extrabold text-[#FFFFFF] dark:text-white">Hitos Reglamentarios Obligatorios</h2></div><span class="font-bold text-xs text-[#000000] bg-[#FFE600] px-2.5 py-1 rounded border border-[#FFFFFF]">Reglamento 2025</span></div><div class="flex flex-col gap-2.5 mt-3 max-h-[380px] overflow-y-auto pr-1"><!-- -90m --><div class="flex items-start gap-3 p-3 rounded-lg bg-[#000000] border-2 border-[#00FF66]"><span class="material-symbols-outlined text-[#00FF66] text-2xl mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-mono text-base font-extrabold text-[#FFFFFF]">-90:00</span><span class="font-mono text-xs text-[#00FF66] font-bold bg-[#000000] border border-[#00FF66] px-2 py-0.5 rounded">17:30:12 REGISTRADO</span></div><p class="text-sm text-[#FFFFFF] mt-1">Llegada oficial de delegaciones, escolta policial y validación biométrica.</p></div></div><!-- -70m --><div class="flex items-start gap-3 p-3 rounded-lg bg-[#000000] border-2 border-[#00FF66]"><span class="material-symbols-outlined text-[#00FF66] text-2xl mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-mono text-base font-extrabold text-[#FFFFFF]">-70:00</span><span class="font-mono text-xs text-[#00FF66] font-bold bg-[#000000] border border-[#00FF66] px-2 py-0.5 rounded">17:50:04 FIRMADO</span></div><p class="text-sm text-[#FFFFFF] mt-1">Entrega de alineación oficial COMET firmada por ambos DT y Médicos.</p></div></div><!-- -45m (Active) --><div class="flex items-start gap-3 p-3 rounded-lg bg-[#000000] border-3 border-[#FFE600] shadow-md"><span class="material-symbols-outlined text-[#FFE600] text-2xl animate-spin mt-0.5">progress_activity</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-mono text-base font-extrabold text-[#FFE600]">-45:00 (ACTUAL)</span><span class="font-bold text-xs bg-[#FFE600] text-[#000000] px-2 py-0.5 rounded uppercase border border-[#FFFFFF]">En Progreso</span></div><p class="text-sm text-[#FFFFFF] font-bold mt-1">Salida a calentamiento reglamentario (30 min máx). Inspector en túnel.</p></div></div><!-- -09m:20s: Scheduled --><div class="flex items-start gap-3 p-3 rounded-lg bg-[#000000] border-2 border-[#FFE600]"><span class="material-symbols-outlined text-[#FFE600] text-2xl mt-0.5">radio_button_unchecked</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-mono text-base font-extrabold text-[#FFFFFF]">-09:20</span><span class="font-bold text-xs text-[#000000] bg-[#FFE600] px-2 py-0.5 rounded uppercase border border-[#FFFFFF]">ÓPTICA / AUDIO</span></div><p class="text-sm text-[#FFFFFF] mt-1">Canción Oficial LigaPro. Alerta visual de alto contraste y subtitulado.</p></div></div><!-- -08m:01s: Scheduled --><div class="flex items-start gap-3 p-3 rounded-lg bg-[#000000] border-2 border-[#FFFFFF]"><span class="material-symbols-outlined text-[#FFFFFF] text-2xl mt-0.5">radio_button_unchecked</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="font-mono text-base font-extrabold text-[#FFFFFF]">-08:01</span><span class="font-bold text-xs text-[#FFFFFF] border border-[#FFFFFF] px-2 py-0.5 rounded">PROGRAMADO</span></div><p class="text-sm text-[#FFFFFF] mt-1">Himno Nacional del Ecuador. Cuarteto arbitral en cabecera de hilera.</p></div></div></div></div>
-<div class="mt-space-sm pt-space-xs flex items-center justify-between text-text-secondary font-label-caps text-[10px] dark:text-[#CBD5E1]">
-<span>REGISTRO GEOLOCALIZADO (GPS ESTADIO)</span>
-<span>AUDITORÍA LIGAPRO-COM</span>
-</div>
-</div>
-<!-- Alignment Sheet Control & Critical Protocol Verification (7 cols) -->
-<div class="xl:col-span-7 bg-surface-card rounded-xl p-space-md shadow-sm flex flex-col justify-between dark:bg-[#0B0F19] dark:text-[#F8FAFC]" style="background-color: #000000; border: 3px solid #FFFFFF; padding: 22px; color: #FFFFFF;">
-<div style="background-color: #000000; border: 3px solid #FFE600; padding: 28px; color: #FFFFFF;">
-<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm">
-<div class="flex items-center gap-space-xs">
-<span class="material-symbols-outlined text-secondary">badge</span>
-<div>
-<h2 class="font-title-md text-title-md font-bold text-text-primary dark:text-white">Planilla de Alineación &amp; Protocolo Sanitario</h2>
-<p class="font-body-sm text-body-sm text-text-secondary dark:text-[#CBD5E1]">23 Jugadores (11 Titulares + 12 Suplentes) • 10 Oficiales de Cuerpo Técnico</p>
-</div>
-</div>
-<!-- Club Switcher Segmented Control -->
-<div class="flex items-center bg-surface-container-low p-0.5 rounded-lg dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-<button class="px-space-sm py-1 rounded bg-secondary text-on-secondary font-label-caps text-label-caps uppercase transition-colors shadow-sm" id="clubLDUBtn" onclick="switchClubTab('ldu')" style="background-color: #FFE600; color: #000000; font-weight: 800; border: 2px solid #FFFFFF;"><span>LDU Quito (ACTIVO)</span></button>
-<button class="px-space-sm py-1 rounded text-text-secondary hover:text-text-primary font-label-caps text-label-caps uppercase transition-colors dark:text-[#F8FAFC]" id="clubBSCBtn" onclick="switchClubTab('bsc')" style="background-color: #000000; color: #FFFFFF; font-weight: 700; border: 2px solid #FFFFFF;">
-              Barcelona SC
-            </button>
-</div>
-</div>
-<!-- Mandatory Verification Highlights (Doctor & Ball Kids) -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm my-space-sm"><div class="flex items-center gap-3"><span class="px-3 py-1 rounded bg-[#FFE600] text-[#000000] font-extrabold text-sm tracking-wide border-2 border-[#FFFFFF]">FASE EN VIVO</span><span class="font-bold text-base text-[#FFFFFF] uppercase tracking-wider">Protocolo Reglamentario T-Minus</span></div><div class="flex items-center gap-2 font-mono text-base bg-[#000000] border-2 border-[#FFE600] px-3 py-1 rounded text-[#FFE600] font-bold"><span class="w-3 h-3 rounded-full bg-[#FFE600] animate-ping"></span><span>CRONO OFICIAL LIGAPRO</span></div></div>
-<!-- Alignment Roster Micro-Table -->
-<div class="mt-space-sm overflow-x-auto rounded-lg"><div class="font-mono text-[76px] sm:text-[98px] xl:text-[112px] font-black tracking-tight leading-none text-[#FFE600] select-none flex items-baseline justify-center gap-3"><span class="text-[#FFFFFF] text-[54px] sm:text-[68px] font-extrabold">-</span><span id="countdownMinutes">44</span><span class="animate-pulse text-[#FFFFFF]">:</span><span id="countdownSeconds">38</span></div><p class="font-bold text-base text-[#FFFFFF] uppercase tracking-widest mt-3 bg-[#000000] px-3 py-1 border border-[#FFFFFF] rounded">Tiempo Restante Para el Pitazo Inicial (19:00:00 UTC-5)</p></div>
-</div>
-<div class="mt-space-sm flex flex-wrap items-center justify-between gap-space-sm pt-space-xs">
-<div class="flex items-center gap-space-xs text-text-secondary font-body-sm text-[12px] dark:text-[#CBD5E1]">
-<span class="material-symbols-outlined text-sport-success text-base">fact_check</span>
-<span>Alineaciones homologadas por Árbitro Central y Cabina VOR</span>
-</div>
-<button class="bg-surface-container-low hover:bg-surface-container text-text-primary px-3 py-1.5 rounded font-label-caps text-label-caps uppercase font-bold transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]" onclick="mostrarNominaCompleta()">
-          Ver Nómina Completa (33 Integrantes)
-        </button>
-</div>
-</div>
-</div>
-<!-- Final Cryptographic Seal & Protocol Sign-off Drawer (WCAG AA High-Impact Block) -->
-<div class="w-full bg-primary-container text-on-primary rounded-xl p-space-md xl:p-space-lg shadow-lg relative overflow-hidden" style="background-color: #000000; border: 3px solid #FFE600; padding: 24px; color: #FFFFFF;">
-<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md">
-<!-- Informational Seal Metadata -->
-<div class="flex items-start gap-space-md max-w-3xl">
-<div class="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center shrink-0 shadow-md">
-<span class="material-symbols-outlined text-on-secondary text-2xl">verified_user</span>
-</div>
-<div class="flex flex-col">
-<div class="flex items-center gap-2">
-<span class="font-headline-sm text-headline-sm font-bold text-on-primary">Sellado de Acta &amp; Firma Digital del Comisario</span>
-<span class="bg-sport-success text-on-primary font-label-caps text-[10px] px-2 py-0.5 rounded font-bold uppercase">Validez Jurídica</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-primary-container mt-1">
-            Generación de cadena criptográfica inalterable con sellado de tiempo UTC-5. Los registros de incidentes y planillas verificadas adquieren plena validez probatoria ante la Comisión Disciplinaria de LigaPro.
-          </p>
-<div class="flex flex-wrap items-center gap-x-space-md gap-y-1 mt-2 text-on-primary-container font-mono-table text-[11px]">
-<span>COMISARIO: Ab. Carlos V. Zambrano (ID: LP-COM-092)</span>
-<span>•</span>
-<span>ALGORITMO: SHA-256 / RSA-4096</span>
-<span>•</span>
-<span class="text-sport-success">SELLO SEGURO: ACTIVO</span>
-</div>
-</div>
-</div>
-<!-- Action Trigger & Hash Generator -->
-<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-sm w-full lg:w-auto shrink-0">
-<button class="min-h-[48px] px-space-lg bg-sport-success hover:bg-sport-success/90 active:scale-[0.98] text-on-primary font-title-md text-title-md font-bold rounded-lg transition-all flex items-center justify-center gap-2 shadow-md" id="signActBtn" onclick="generateCryptographicSeal()" style="background-color: #FFE600; color: #000000; font-weight: 800; border: 2px solid #FFFFFF; font-size: 18px;">
-<span class="material-symbols-outlined text-xl">draw</span>
-<span>Firmar y Sellar Acta Previa</span>
-</button>
-<button class="min-h-[48px] px-space-md bg-inverse-surface hover:bg-inverse-surface/80 text-on-primary font-title-md text-body-md font-semibold rounded-lg transition-colors flex items-center justify-center gap-2" onclick="exportMatchJson()" style="background-color: #000000; color: #FFFFFF; font-weight: 800; border: 2px solid #FFFFFF; font-size: 18px;">
-<span class="material-symbols-outlined text-xl">download</span>
-<span>Exportar JSON</span>
-</button>
-</div>
-</div>
-<!-- Live Cryptographic Fingerprint String Box -->
-<div class="mt-space-md pt-space-sm bg-inverse-surface/60 rounded-lg p-space-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-<div class="flex items-center gap-2 min-w-0">
-<span class="font-label-caps text-label-caps text-on-primary-container uppercase shrink-0">HASH SHA-256 ACTA:</span>
-<span class="font-mono-table text-[12px] text-sport-warning font-semibold truncate select-all" id="cryptoHashDisplay">
-          e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-        </span>
-</div>
-<div class="flex items-center gap-space-xs shrink-0 text-on-primary-container font-label-caps text-[10px]">
-<span class="material-symbols-outlined text-sm text-sport-success">lock</span>
-<span>AUDITADO LIGAPRO BLOCKSTORE</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Client-side Interactive Logic & Audio-Visual Sensory Simulation -->
-<script>
-  let secondsRemaining = 44 * 60 + 38;
-  const minutesEl = document.getElementById('countdownMinutes');
-  const secondsEl = document.getElementById('countdownSeconds');
-  const hashEl = document.getElementById('cryptoHashDisplay');
-  let flashInterval = null;
 
-  // Real-time ticking countdown simulation
-  setInterval(() => {
-    if (secondsRemaining > 0) {
-      secondsRemaining--;
-      const m = Math.floor(secondsRemaining / 60);
-      const s = secondsRemaining % 60;
-      minutesEl.textContent = m < 10 ? '0' + m : m;
-      secondsEl.textContent = s < 10 ? '0' + s : s;
-    }
-  }, 1000);
-
-  // Optical sensory alert for visual/hearing accommodation
-  function toggleScreenFlasher() {
-    const banner = document.getElementById('protocolSensoryBanner');
-    let count = 0;
-    if (flashInterval) {
-      clearInterval(flashInterval);
-      flashInterval = null;
-      banner.classList.remove('bg-sport-warning', 'text-primary-container');
-      banner.classList.add('bg-surface-card');
-      return;
-    }
-    flashInterval = setInterval(() => {
-      count++;
-      if (count % 2 === 0) {
-        banner.classList.remove('bg-surface-card');
-        banner.classList.add('bg-sport-warning', 'text-primary-container');
-      } else {
-        banner.classList.remove('bg-sport-warning', 'text-primary-container');
-        banner.classList.add('bg-surface-card');
-      }
-      if (count > 7) {
-        clearInterval(flashInterval);
-        flashInterval = null;
-        banner.classList.remove('bg-sport-warning', 'text-primary-container');
-        banner.classList.add('bg-surface-card');
-      }
-    }, 280);
-  }
-
-  // Rapid field incident logging
-  function registerIncident(title, fine) {
-    const list = document.getElementById('incidentsList');
-    const now = new Date();
-    const timeStr = now.toTimeString().split(' ')[0];
-    
-    const row = document.createElement('div');
-    row.className = 'flex items-center justify-between p-2 bg-sport-danger/10 rounded text-body-sm text-text-primary animate-pulse';
-    row.innerHTML = `
-      <div class="flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-sport-danger"></span>
-        <span class="font-semibold text-xs text-sport-danger">${title}</span>
-        <span class="text-text-secondary text-[11px] dark:text-[#CBD5E1]">($${fine} USD)</span>
+        <div class="lg:col-span-2 rounded-2xl border-4 border-[#fff] flex flex-col">
+          <h2 class="px-5 py-4 text-xl font-extrabold text-[#FFE600] border-b-4 border-[#fff]">Bitácora</h2>
+          <ul data-c="eventos" data-c-tema="alto" class="flex-1 text-base"></ul>
+          <div class="p-4 border-t-4 border-[#fff]">
+            <button type="button" onclick="sellarPlanillaJuego()" class="w-full h-14 rounded-xl bg-[#fff] text-[#000] text-lg font-extrabold focus:outline-none focus:ring-4 focus:ring-[#FFE600]">Cerrar y firmar acta</button>
+          </div>
+        </div>
       </div>
-      <span class="font-mono-table text-xs font-bold text-text-primary dark:text-[#F8FAFC]">${timeStr}</span>
-    `;
-    list.prepend(row);
+    </section>
+    </div>
 
-    // Refresh hash display to mirror immutable tamper-proof state
-    updateDynamicHash();
-  }
-
-  // Club selector tab switch
-  function switchClubTab(club) {
-    const btnLdu = document.getElementById('clubLDUBtn');
-    const btnBsc = document.getElementById('clubBSCBtn');
-    const docName = document.getElementById('docName');
-    const docLicense = document.getElementById('docLicense');
-    const rosterTable = document.getElementById('rosterTableBody');
-
-    if (club === 'bsc') {
-      btnBsc.className = 'px-space-sm py-1 rounded bg-secondary text-on-secondary font-label-caps text-label-caps uppercase transition-colors shadow-sm';
-      btnLdu.className = 'px-space-sm py-1 rounded text-text-secondary hover:text-text-primary font-label-caps text-label-caps uppercase transition-colors';
-      docName.textContent = 'Dr. Andrés Arce Morales';
-      docLicense.textContent = 'Reg. Colegiatura: MED-GUAYAS-07823';
-
-      rosterTable.innerHTML = `
-        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#1</td>
-          <td class="py-1.5 px-space-sm font-bold text-text-primary flex items-center gap-1.5 dark:text-[#F8FAFC]">
-            <span>Javier Burrai</span>
-            <span class="px-1 py-0.2 rounded bg-surface-container font-label-caps text-[9px] uppercase font-bold dark:bg-[#0B0F19] dark:text-[#F8FAFC]">C</span>
-          </td>
-          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Arquero</td>
-          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
-          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
-        </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#4</td>
-          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Carlos Rodríguez</td>
-          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Defensa Cen</td>
-          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
-          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
-        </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#20</td>
-          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Jesús Trindade</td>
-          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Volante Cen</td>
-          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
-          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
-        </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#10</td>
-          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Damián Díaz</td>
-          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Enganche</td>
-          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
-          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
-        </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#9</td>
-          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Octavio Rivero</td>
-          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Delantero Cen</td>
-          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
-          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
-        </tr>
-      `;
-    } else {
-      btnLdu.className = 'px-space-sm py-1 rounded bg-secondary text-on-secondary font-label-caps text-label-caps uppercase transition-colors shadow-sm';
-      btnBsc.className = 'px-space-sm py-1 rounded text-text-secondary hover:text-text-primary font-label-caps text-label-caps uppercase transition-colors';
-      docName.textContent = 'Dr. Marco Antonio Caicedo';
-      docLicense.textContent = 'Reg. Colegiatura: MED-PICH-04921';
-
-      rosterTable.innerHTML = `
-        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#22</td>
-          <td class="py-1.5 px-space-sm font-bold text-text-primary flex items-center gap-1.5 dark:text-[#F8FAFC]">
-            <span>Alexander Domínguez</span>
-            <span class="px-1 py-0.2 rounded bg-surface-container font-label-caps text-[9px] uppercase font-bold dark:bg-[#0B0F19] dark:text-[#F8FAFC]">C</span>
-          </td>
-          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Arquero</td>
-          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
-          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
-        </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#14</td>
-          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">José Quintero</td>
-          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Lateral Der</td>
-          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
-          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
-        </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#3</td>
-          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Ricardo Adé</td>
-          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Defensa Cen</td>
-          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
-          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
-        </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#8</td>
-          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Ezequiel Piovi</td>
-          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Volante Cen</td>
-          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
-          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
-        </tr>
-        <tr class="hover:bg-surface-base transition-colors dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <td class="py-1.5 px-space-sm font-mono-table font-bold text-text-primary dark:text-[#F8FAFC]">#19</td>
-          <td class="py-1.5 px-space-sm text-text-primary dark:text-[#F8FAFC]">Alex Arce</td>
-          <td class="py-1.5 px-space-sm text-text-secondary dark:text-[#CBD5E1]">Delantero Cen</td>
-          <td class="py-1.5 px-space-sm text-sport-success font-semibold">Titular</td>
-          <td class="py-1.5 px-space-sm text-right font-mono-table text-[11px] text-sport-success">COMET-OK</td>
-        </tr>
-      `;
-    }
-  }
-
-  // Simulate cryptographic SHA-256 seal generation
-  function generateCryptographicSeal() {
-    const chars = '0123456789abcdef';
-    let newHash = '';
-    for (let i = 0; i < 64; i++) {
-      newHash += chars[Math.floor(Math.random() * chars.length)];
-    }
-    hashEl.textContent = newHash;
-
-    const btn = document.getElementById('signActBtn');
-    btn.innerHTML = `<span class="material-symbols-outlined text-xl">task_alt</span><span>Acta Sellada y Firmada</span>`;
-    btn.classList.remove('bg-sport-success');
-    btn.classList.add('bg-secondary');
-  }
-
-  function updateDynamicHash() {
-    const chars = '0123456789abcdef';
-    let dynamicSnippet = '';
-    for (let i = 0; i < 8; i++) {
-      dynamicSnippet += chars[Math.floor(Math.random() * chars.length)];
-    }
-    hashEl.textContent = hashEl.textContent.slice(0, 56) + dynamicSnippet;
-  }
-
-  function exportMatchJson() {
-    const data = {
-      matchId: "LP-2025-F12-LDU-BSC",
-      timestamp: new Date().toISOString(),
-      countdownStatus: document.getElementById('countdownMinutes').innerText + ":" + document.getElementById('countdownSeconds').innerText,
-      currentMilestone: "T-45:00 Calentamiento",
-      ballBoysVerified: 12,
-      doctorVerified: true,
-      sha256Hash: hashEl.textContent.trim()
-    };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `acta_previa_${data.matchId}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  }
-</script></main></div>
   </main>
   <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B0F19] text-slate-500 dark:text-slate-400 py-4 px-6 text-xs transition-colors">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">

@@ -397,17 +397,11 @@ window.toggleAuthTab = function(tab) {
   const tabBtnLogin = document.getElementById('tab-btn-login');
   const tabBtnSignup = document.getElementById('tab-btn-signup');
 
-  if (tab === 'signup') {
-    if (loginSection) loginSection.classList.add('hidden');
-    if (signupSection) signupSection.classList.remove('hidden');
-    if (tabBtnLogin) tabBtnLogin.className = "flex-1 py-2 text-center font-bold text-xs border-b-2 border-transparent text-slate-400 hover:text-white transition-colors";
-    if (tabBtnSignup) tabBtnSignup.className = "flex-1 py-2 text-center font-bold text-xs border-b-2 border-amber-400 text-amber-400 transition-colors";
-  } else {
-    if (signupSection) signupSection.classList.add('hidden');
-    if (loginSection) loginSection.classList.remove('hidden');
-    if (tabBtnLogin) tabBtnLogin.className = "flex-1 py-2 text-center font-bold text-xs border-b-2 border-amber-400 text-amber-400 transition-colors";
-    if (tabBtnSignup) tabBtnSignup.className = "flex-1 py-2 text-center font-bold text-xs border-b-2 border-transparent text-slate-400 hover:text-white transition-colors";
-  }
+  const esSignup = tab === 'signup';
+  if (loginSection) loginSection.classList.toggle('hidden', esSignup);
+  if (signupSection) signupSection.classList.toggle('hidden', !esSignup);
+  if (tabBtnLogin) marcarSegmento(tabBtnLogin, !esSignup, 'auth-tab py-1.5 rounded-md');
+  if (tabBtnSignup) marcarSegmento(tabBtnSignup, esSignup, 'auth-tab py-1.5 rounded-md');
 };
 
 // ==============================================================================
@@ -432,8 +426,8 @@ function cerrarModalAuthPassword() {
 function montarModalAuthPassword(innerHtml) {
   cerrarModalAuthPassword();
   document.body.insertAdjacentHTML('beforeend', `
-  <div id="${AUTH_MODAL_ID}" class="fixed inset-0 bg-black/75 z-50 flex items-start justify-center p-4 pt-24 overflow-y-auto">
-    <div class="bg-slate-900 text-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-800" role="dialog" aria-modal="true">
+  <div id="${AUTH_MODAL_ID}" class="fixed inset-0 bg-slate-900/60 z-50 flex items-start justify-center p-4 pt-24 overflow-y-auto">
+    <div class="bg-white dark:bg-[#111827] text-slate-900 dark:text-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800" role="dialog" aria-modal="true">
       ${innerHtml}
     </div>
   </div>`);
@@ -448,19 +442,19 @@ window.abrirRecuperarPassword = function() {
   montarModalAuthPassword(`
       <div class="flex items-center justify-between mb-4">
         <h3 class="font-extrabold text-base flex items-center gap-2">
-          <span class="material-symbols-outlined text-amber-400">lock_reset</span> Recuperar contraseña
+          <span class="material-symbols-outlined text-indigo-600">lock_reset</span> Recuperar contraseña
         </h3>
-        <button type="button" onclick="cerrarModalAuthPassword()" class="text-slate-400 hover:text-white p-1 rounded-lg" aria-label="Cerrar">
+        <button type="button" onclick="cerrarModalAuthPassword()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white p-1 rounded-lg" aria-label="Cerrar">
           <span class="material-symbols-outlined text-xl">close</span>
         </button>
       </div>
-      <p class="text-xs text-slate-400 mb-4">Ingresa el correo con el que te registraste. Te enviaremos un enlace para crear una nueva contraseña.</p>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Ingresa el correo con el que te registraste. Te enviaremos un enlace para crear una nueva contraseña.</p>
       <form id="form-recuperar-password" onsubmit="recuperarPasswordSubmit(event)" class="space-y-4">
         <div class="relative flex items-center">
           <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">mail</span>
-          <input type="email" id="recuperar-email" required value="${emailPrevio}" placeholder="tu.correo@ejemplo.com" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500"/>
+          <input type="email" id="recuperar-email" required value="${emailPrevio}" placeholder="tu.correo@ejemplo.com" class="w-full h-10 pl-9 pr-3 rounded-lg bg-white dark:bg-slate-900 text-sm border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-600/30 focus:border-indigo-600"/>
         </div>
-        <button type="submit" id="btn-recuperar-submit" class="w-full h-10 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5">
+        <button type="submit" id="btn-recuperar-submit" class="w-full h-10 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm flex items-center justify-center gap-1.5">
           <span class="material-symbols-outlined text-sm">send</span> Enviar enlace de recuperación
         </button>
       </form>`);
@@ -526,13 +520,13 @@ function abrirModalNuevaPassword() {
 
   montarModalAuthPassword(`
       <h3 class="font-extrabold text-base flex items-center gap-2 mb-2">
-        <span class="material-symbols-outlined text-emerald-400">key</span> Crear nueva contraseña
+        <span class="material-symbols-outlined text-indigo-600">key</span> Crear nueva contraseña
       </h3>
-      <p class="text-xs text-slate-400 mb-4">Ingresa tu nueva contraseña (mínimo 6 caracteres).</p>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Ingresa tu nueva contraseña (mínimo 6 caracteres).</p>
       <form id="form-nueva-password" onsubmit="guardarNuevaPasswordSubmit(event)" class="space-y-3">
-        <input type="password" id="nueva-password" required minlength="6" autocomplete="new-password" placeholder="Nueva contraseña" class="w-full h-10 px-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500"/>
-        <input type="password" id="nueva-password-confirm" required minlength="6" autocomplete="new-password" placeholder="Confirmar nueva contraseña" class="w-full h-10 px-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500"/>
-        <button type="submit" id="btn-nueva-password-submit" class="w-full h-10 mt-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5">
+        <input type="password" id="nueva-password" required minlength="6" autocomplete="new-password" placeholder="Nueva contraseña" class="w-full h-10 px-3 rounded-lg bg-white dark:bg-slate-900 text-sm border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-600/30 focus:border-indigo-600"/>
+        <input type="password" id="nueva-password-confirm" required minlength="6" autocomplete="new-password" placeholder="Confirmar nueva contraseña" class="w-full h-10 px-3 rounded-lg bg-white dark:bg-slate-900 text-sm border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-600/30 focus:border-indigo-600"/>
+        <button type="submit" id="btn-nueva-password-submit" class="w-full h-10 mt-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm flex items-center justify-center gap-1.5">
           <span class="material-symbols-outlined text-sm">save</span> Guardar nueva contraseña
         </button>
       </form>`);
@@ -982,8 +976,8 @@ window.registrarGolEnVivo = async function(club) {
   const p = store.state.partidoActivo;
   const nombreClub = club === 'local' ? (p.local?.nombre || 'Local') : (p.visitante?.nombre || 'Visitante');
   const jugador = club === 'local' 
-    ? (p.local?.nombre_corto === 'LDU' ? 'Alex Arce (19)' : 'Delantero Local (9)') 
-    : (p.visitante?.nombre_corto === 'BSC' ? 'Octavio Rivero (29)' : 'Delantero Visitante (11)');
+    ? (p.local?.nombreCorto === 'LDU' ? 'Alex Arce (19)' : 'Delantero Local (9)') 
+    : (p.visitante?.nombreCorto === 'BSC' ? 'Octavio Rivero (29)' : 'Delantero Visitante (11)');
   
   const evento = {
     tipo: 'gol',
@@ -1155,17 +1149,23 @@ window.actualizarKitsUniformes = function() {
   const badgeMedias = document.getElementById('ratio-medias-val');
   const badgeEstado = document.getElementById('estado-uniformes-badge');
 
-  if (badgeCamiseta) badgeCamiseta.textContent = `${evalContraste.ratioCamiseta}:1`;
-  if (badgePantaloneta) badgePantaloneta.textContent = `${evalContraste.ratioPantaloneta}:1`;
-  if (badgeMedias) badgeMedias.textContent = `${evalContraste.ratioMedias}:1`;
+  const pintarRatio = (el, ratio) => {
+    if (!el) return;
+    el.textContent = `${ratio}:1`;
+    const cumple = Number(ratio) >= 4.5;
+    el.className = `font-bold tabular-nums ${cumple ? 'text-slate-900 dark:text-white' : 'text-rose-600 dark:text-rose-400'}`;
+  };
+  pintarRatio(badgeCamiseta, evalContraste.ratioCamiseta);
+  pintarRatio(badgePantaloneta, evalContraste.ratioPantaloneta);
+  pintarRatio(badgeMedias, evalContraste.ratioMedias);
 
   if (badgeEstado) {
     if (evalContraste.aprobado) {
-      badgeEstado.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center gap-1';
-      badgeEstado.innerHTML = `<span class="material-symbols-outlined text-sm">verified</span> INDUMENTARIA APROBADA (Art. 31/32)`;
+      badgeEstado.className = 'px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400';
+      badgeEstado.textContent = 'Aprobado';
     } else {
-      badgeEstado.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300 flex items-center gap-1';
-      badgeEstado.innerHTML = `<span class="material-symbols-outlined text-sm">warning</span> CONFLICTO CROMÁTICO DETECTADO`;
+      badgeEstado.className = 'px-2 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400';
+      badgeEstado.textContent = 'Colores muy parecidos';
     }
   }
 };
@@ -1205,20 +1205,22 @@ window.evaluarEscenarioEnVivo = async function() {
     : 'no_calificado';
 
   const badgeCalificacion = document.getElementById('badge-calificacion-estadio');
+  const textos = {
+    calificado: 'Calificado',
+    condicionado: 'Condicionado: ajustar el césped',
+    no_calificado: 'No calificado'
+  };
   if (badgeCalificacion) {
-    if (estado === 'calificado') {
-      badgeCalificacion.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center gap-1';
-      badgeCalificacion.innerHTML = `<span class="material-symbols-outlined text-sm">check_circle</span> ESTADIO CALIFICADO`;
-    } else if (estado === 'condicionado') {
-      badgeCalificacion.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300 flex items-center gap-1';
-      badgeCalificacion.innerHTML = `<span class="material-symbols-outlined text-sm">warning</span> ESTADIO CONDICIONADO (Corte de Césped Requerido)`;
-    } else {
-      badgeCalificacion.className = 'px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800 border border-red-300 flex items-center gap-1';
-      badgeCalificacion.innerHTML = `<span class="material-symbols-outlined text-sm">cancel</span> NO CALIFICADO (Art. 51/87a/92)`;
-    }
+    const clases = {
+      calificado: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400',
+      condicionado: 'bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400',
+      no_calificado: 'bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400'
+    };
+    badgeCalificacion.className = `inline-flex px-2.5 py-1 rounded-full text-xs font-semibold ${clases[estado]}`;
+    badgeCalificacion.textContent = textos[estado];
   }
 
-  showToast(`🏟️ Inspección Técnica registrada: Estado "${estado.toUpperCase()}"`, 'info');
+  showToast(`Inspección registrada: ${textos[estado]}.`, estado === 'calificado' ? 'success' : 'warning');
 };
 
 // ==============================================================================
@@ -1587,9 +1589,9 @@ function updateActiveViewInDOM(viewId) {
   navButtons.forEach((link) => {
     const navId = link.getAttribute('data-nav-id');
     if (navId === viewId) {
-      link.className = "shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow-xs";
+      link.className = "shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap bg-indigo-600 text-white shadow-xs";
     } else {
-      link.className = "shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60";
+      link.className = "shrink-0 flex items-center gap-1.5 px-2 lg:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60";
     }
   });
 
@@ -1599,6 +1601,18 @@ function updateActiveViewInDOM(viewId) {
   }
   if (viewId === 'posiciones') {
     window.cambiarDivision(store.state.divisionActiva || 'A');
+  }
+  if (viewId === 'uniformes') {
+    window.actualizarKitsUniformes();
+  }
+  if (viewId === 'clubes') {
+    window.filtrarSolicitudes('todas');
+  }
+  if (viewId === 'auth') {
+    window.toggleAuthTab('login');
+  }
+  if (viewId.startsWith('consola')) {
+    renderizarConsola();
   }
 }
 
@@ -2018,96 +2032,115 @@ export const TABLA_SERIE_B = [
 
 let faseActivaActual = 'inicial';
 
+const COLOR_ZONA = {
+  libertadores_directa: 'bg-emerald-500',
+  libertadores_previa: 'bg-emerald-500',
+  ascenso: 'bg-emerald-500',
+  sudamericana: 'bg-sky-500',
+  filial: 'bg-amber-400',
+  descenso: 'bg-rose-500',
+  descenso_b: 'bg-rose-500'
+};
+
+const FASES_POR_DIVISION = {
+  A: [
+    { id: 'inicial', label: 'Fase inicial' },
+    { id: 'hex_titulo', label: 'Hexagonal por el título' },
+    { id: 'hex_sudamericana', label: 'Hexagonal Sudamericana' },
+    { id: 'cuad_descenso', label: 'Cuadrangular de descenso' }
+  ],
+  B: [
+    { id: 'clasificacion', label: 'Clasificación' },
+    { id: 'zona_ascenso', label: 'Zona de ascenso' },
+    { id: 'zona_descenso', label: 'Zona de descenso' }
+  ]
+};
+
+const LEYENDA_POR_DIVISION = {
+  A: [
+    { color: 'bg-emerald-500', label: 'Copa Libertadores (1–4)' },
+    { color: 'bg-sky-500', label: 'Copa Sudamericana (5–8)' },
+    { color: 'bg-rose-500', label: 'Descenso (15–16)' }
+  ],
+  B: [
+    { color: 'bg-emerald-500', label: 'Ascenso a Serie A (1–2)' },
+    { color: 'bg-amber-400', label: 'Filial sin derecho a ascenso' },
+    { color: 'bg-rose-500', label: 'Descenso (9–10)' }
+  ]
+};
+
 function renderFormaDots(forma) {
   if (!Array.isArray(forma)) return '';
-  return `<div class="inline-flex items-center gap-1">` +
-    forma.map(item => {
-      if (item === 'V') {
-        return `<span class="w-5 h-5 rounded-full bg-sport-success text-on-secondary font-label-caps text-[9px] flex items-center justify-center font-bold" title="Victoria">V</span>`;
-      } else if (item === 'E') {
-        return `<span class="w-5 h-5 rounded-full bg-sport-warning text-text-primary font-label-caps text-[9px] flex items-center justify-center font-bold dark:text-[#F8FAFC]" title="Empate">E</span>`;
-      } else {
-        return `<span class="w-5 h-5 rounded-full bg-sport-danger text-on-secondary font-label-caps text-[9px] flex items-center justify-center font-bold" title="Derrota">D</span>`;
-      }
+  const estilos = {
+    V: ['bg-emerald-500', 'Victoria'],
+    E: ['bg-slate-300 dark:bg-slate-600', 'Empate'],
+    D: ['bg-rose-500', 'Derrota']
+  };
+  return `<div class="flex items-center gap-1">` +
+    forma.map((r) => {
+      const [color, titulo] = estilos[r] || estilos.D;
+      return `<span class="w-2.5 h-2.5 rounded-full ${color}" title="${titulo}"></span>`;
     }).join('') +
     `</div>`;
 }
 
 export function renderizarFilasTabla(division, filtroFase = 'all') {
-  const tableBodies = document.querySelectorAll('#standings-table tbody, #standings-table-body');
+  const tableBodies = document.querySelectorAll('#standings-table tbody');
   if (tableBodies.length === 0) return;
 
   const rawData = division === 'B' ? TABLA_SERIE_B : TABLA_SERIE_A;
   let filteredData = rawData;
 
   if (division === 'A') {
-    if (filtroFase === 'hex_titulo') {
-      filteredData = rawData.slice(0, 6);
-    } else if (filtroFase === 'hex_sudamericana') {
-      filteredData = rawData.slice(6, 12);
-    } else if (filtroFase === 'cuad_descenso') {
-      filteredData = rawData.slice(12, 16);
-    }
+    if (filtroFase === 'hex_titulo') filteredData = rawData.slice(0, 6);
+    else if (filtroFase === 'hex_sudamericana') filteredData = rawData.slice(6, 12);
+    else if (filtroFase === 'cuad_descenso') filteredData = rawData.slice(12, 16);
   } else if (division === 'B') {
-    if (filtroFase === 'zona_ascenso') {
-      filteredData = rawData.slice(0, 2);
-    } else if (filtroFase === 'zona_descenso') {
-      filteredData = rawData.slice(8, 10);
-    }
+    if (filtroFase === 'zona_ascenso') filteredData = rawData.slice(0, 2);
+    else if (filtroFase === 'zona_descenso') filteredData = rawData.slice(8, 10);
   }
 
-  const rowsHtml = filteredData.map((club, idx) => {
-    const isEven = idx % 2 === 0;
-    const bgClass = isEven ? 'bg-surface-card' : 'bg-surface-base';
-
-    let zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 text-slate-400 dark:text-slate-600 font-mono text-sm">-</span>`;
-    if (club.zona === 'libertadores_directa') {
-      zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-success/15 text-sport-success" title="Zona Conmebol Libertadores (Fase de Grupos)"><span class="material-symbols-outlined text-lg">stars</span></span>`;
-    } else if (club.zona === 'libertadores_previa') {
-      zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-success/15 text-sport-success" title="Zona Conmebol Libertadores (Fases Clasificatorias)"><span class="material-symbols-outlined text-lg">verified</span></span>`;
-    } else if (club.zona === 'sudamericana') {
-      zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-secondary/15 text-secondary" title="Zona Conmebol Sudamericana"><span class="material-symbols-outlined text-lg">diamond</span></span>`;
-    } else if (club.zona === 'ascenso') {
-      zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-emerald-500/20 text-emerald-400 font-bold" title="Zona de Ascenso Directo a Serie A 2026"><span class="material-symbols-outlined text-lg font-bold">arrow_upward</span></span>`;
-    } else if (club.zona === 'filial') {
-      zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-amber-500/20 text-amber-400" title="Club Filial IDV — Sin derecho a ascenso según Art. 13"><span class="material-symbols-outlined text-lg">shield</span></span>`;
-    } else if (club.zona === 'descenso') {
-      zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-danger/15 text-sport-danger" title="Pérdida de Categoría Serie B"><span class="material-symbols-outlined text-lg">warning</span></span>`;
-    } else if (club.zona === 'descenso_b') {
-      zonaHtml = `<span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sport-danger/15 text-sport-danger" title="Zona de Descenso a Segunda Categoría FEF"><span class="material-symbols-outlined text-lg">arrow_downward</span></span>`;
-    }
-
-    const gdColor = club.dg.startsWith('+') ? 'text-sport-success' : (club.dg.startsWith('-') ? 'text-sport-danger' : 'text-slate-400');
-    const formaHtml = renderFormaDots(club.forma);
-
+  const rowsHtml = filteredData.map((club) => {
+    const zona = COLOR_ZONA[club.zona] || 'bg-transparent';
+    const dgColor = club.dg.startsWith('+') ? 'text-emerald-600 dark:text-emerald-400' : (club.dg.startsWith('-') ? 'text-rose-600 dark:text-rose-400' : 'text-slate-500');
     return `
-      <tr class="${bgClass} hover:bg-surface-container-low transition-colors group dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-        <td class="py-3 px-3 text-center font-mono-table font-bold text-base text-text-primary dark:text-[#F8FAFC]">${club.pos}</td>
-        <td class="py-3 px-3 text-center">${zonaHtml}</td>
-        <td class="py-3 px-4">
-          <div class="flex items-center gap-space-sm">
-            <img src="${club.escudo}" alt="${club.nombre}" class="w-8 h-8 object-contain shrink-0 drop-shadow-xs" />
-            <div class="flex flex-col min-w-0">
-              <span class="font-title-md text-title-md font-bold text-text-primary group-hover:text-secondary transition-colors dark:text-[#F8FAFC]">${club.nombre}</span>
-              <span class="font-body-sm text-[11px] text-text-secondary dark:text-[#CBD5E1]">${club.ciudadEstadio}</span>
-            </div>
+      <tr class="border-t border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+        <td class="py-2.5 pl-4 pr-2">
+          <div class="flex items-center gap-3">
+            <span class="w-1 h-6 rounded-full ${zona}"></span>
+            <span class="w-5 text-right tabular-nums font-semibold text-slate-700 dark:text-slate-200">${club.pos}</span>
           </div>
         </td>
-        <td class="py-3 px-3 text-right font-mono-table">${club.pj}</td>
-        <td class="py-3 px-3 text-right font-mono-table">${club.pg}</td>
-        <td class="py-3 px-3 text-right font-mono-table">${club.pe}</td>
-        <td class="py-3 px-3 text-right font-mono-table">${club.pp}</td>
-        <td class="py-3 px-3 text-right font-mono-table">${club.gf}</td>
-        <td class="py-3 px-3 text-right font-mono-table">${club.gc}</td>
-        <td class="py-3 px-3 text-right font-mono-table font-bold ${gdColor}">${club.dg}</td>
-        <td class="py-3 px-4 text-right font-mono-matchday font-extrabold text-secondary bg-secondary/5">${club.pts}</td>
-        <td class="py-3 px-4 text-center">${formaHtml}</td>
-      </tr>
-    `;
+        <td class="py-2.5 px-2">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <img src="${club.escudo}" alt="" class="w-6 h-6 object-contain shrink-0" />
+            <span class="font-semibold text-slate-900 dark:text-white truncate"><span class="sm:hidden">${club.nombreCorto}</span><span class="hidden sm:inline">${club.nombre}</span></span>
+          </div>
+        </td>
+        <td class="py-2.5 px-2 text-center tabular-nums text-slate-600 dark:text-slate-300 hidden sm:table-cell">${club.pj}</td>
+        <td class="py-2.5 px-2 text-center tabular-nums text-slate-600 dark:text-slate-300 hidden sm:table-cell">${club.pg}</td>
+        <td class="py-2.5 px-2 text-center tabular-nums text-slate-600 dark:text-slate-300 hidden sm:table-cell">${club.pe}</td>
+        <td class="py-2.5 px-2 text-center tabular-nums text-slate-600 dark:text-slate-300 hidden sm:table-cell">${club.pp}</td>
+        <td class="py-2.5 px-2 text-center tabular-nums font-medium ${dgColor}">${club.dg}</td>
+        <td class="py-2.5 px-2 text-center tabular-nums font-bold text-slate-900 dark:text-white">${club.pts}</td>
+        <td class="py-2.5 pl-2 pr-4 hidden md:table-cell">${renderFormaDots(club.forma)}</td>
+      </tr>`;
   }).join('');
 
-  tableBodies.forEach(tbody => {
+  tableBodies.forEach((tbody) => {
     tbody.innerHTML = rowsHtml;
+  });
+}
+
+function renderizarFasesPosiciones(division, faseActiva) {
+  document.querySelectorAll('#posiciones-phase-container').forEach((container) => {
+    container.innerHTML = FASES_POR_DIVISION[division].map((f) => {
+      const activa = f.id === faseActiva;
+      const clases = activa
+        ? 'bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-[#0f172a] dark:border-white'
+        : 'bg-white dark:bg-[#111827] text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-slate-400';
+      return `<button type="button" role="tab" aria-selected="${activa}" data-phase="${f.id}" onclick="cambiarFaseTorneo('${f.id}')" class="phase-btn shrink-0 whitespace-nowrap h-8 px-3 rounded-full border text-xs font-semibold transition-colors ${clases}">${f.label}</button>`;
+    }).join('');
   });
 }
 
@@ -2116,196 +2149,35 @@ window.cambiarDivision = function(div) {
   store.setDivision(division);
   faseActivaActual = division === 'B' ? 'clasificacion' : 'inicial';
 
-  // 1. Estilos de pestañas Division
-  const tabsA = document.querySelectorAll('[data-division="serie-a"]');
-  const tabsB = document.querySelectorAll('[data-division="serie-b"]');
-
-  tabsA.forEach(tab => {
-    if (division === 'A') {
-      tab.className = "division-tab px-space-md py-2 rounded-md font-title-md text-title-md font-bold bg-secondary text-on-secondary shadow-sm transition-all";
-      tab.setAttribute('aria-selected', 'true');
-    } else {
-      tab.className = "division-tab px-space-md py-2 rounded-md font-title-md text-title-md text-text-secondary hover:text-text-primary transition-all dark:text-[#F8FAFC]";
-      tab.setAttribute('aria-selected', 'false');
-    }
+  document.querySelectorAll('[data-division="serie-a"]').forEach((tab) => {
+    marcarSegmento(tab, division === 'A', 'division-tab px-4 py-1.5 rounded-md');
+  });
+  document.querySelectorAll('[data-division="serie-b"]').forEach((tab) => {
+    marcarSegmento(tab, division === 'B', 'division-tab px-4 py-1.5 rounded-md');
   });
 
-  tabsB.forEach(tab => {
-    if (division === 'B') {
-      tab.className = "division-tab px-space-md py-2 rounded-md font-title-md text-title-md font-bold bg-secondary text-on-secondary shadow-sm transition-all";
-      tab.setAttribute('aria-selected', 'true');
-    } else {
-      tab.className = "division-tab px-space-md py-2 rounded-md font-title-md text-title-md text-text-secondary hover:text-text-primary transition-all dark:text-[#F8FAFC]";
-      tab.setAttribute('aria-selected', 'false');
-    }
+  renderizarFasesPosiciones(division, faseActivaActual);
+
+  document.querySelectorAll('#posiciones-legend-container').forEach((container) => {
+    container.innerHTML = LEYENDA_POR_DIVISION[division].map((l) =>
+      `<span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full ${l.color}"></span>${l.label}</span>`
+    ).join('');
   });
 
-  // 2. Selector de Fases
-  const phaseContainers = document.querySelectorAll('#posiciones-phase-container, [aria-label="Fase de Competición"]');
-  phaseContainers.forEach(container => {
-    if (division === 'A') {
-      container.innerHTML = `
-        <button aria-selected="true" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-primary-container text-on-primary shadow-sm flex items-center gap-2 transition-all" data-phase="fase-inicial" role="tab" type="button" onclick="cambiarFaseTorneo('inicial')">
-          <span class="w-2 h-2 rounded-full bg-high-contrast-accent"></span>
-          <span>Fase Inicial (30 Fechas Acumuladas)</span>
-        </button>
-        <button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-phase="hex-1" role="tab" type="button" onclick="cambiarFaseTorneo('hex_titulo')">
-          <span class="material-symbols-outlined text-xs text-sport-success">stars</span>
-          <span>1° Hexagonal (Puestos 1-6 Título &amp; Libertadores)</span>
-        </button>
-        <button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-phase="hex-2" role="tab" type="button" onclick="cambiarFaseTorneo('hex_sudamericana')">
-          <span class="material-symbols-outlined text-xs text-secondary">diamond</span>
-          <span>2° Hexagonal (Puestos 7-12 Sudamericana)</span>
-        </button>
-        <button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-phase="cuadrangular" role="tab" type="button" onclick="cambiarFaseTorneo('cuad_descenso')">
-          <span class="material-symbols-outlined text-xs text-sport-danger">warning</span>
-          <span>Cuadrangular Descenso (Puestos 13-16)</span>
-        </button>
-      `;
-    } else {
-      container.innerHTML = `
-        <button aria-selected="true" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-primary-container text-on-primary shadow-sm flex items-center gap-2 transition-all" data-phase="fase-clasificacion" role="tab" type="button" onclick="cambiarFaseTorneo('clasificacion')">
-          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-          <span>Fase Clasificación (36 Fechas / 4 Ruedas)</span>
-        </button>
-        <button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-phase="zona-ascenso" role="tab" type="button" onclick="cambiarFaseTorneo('zona_ascenso')">
-          <span class="material-symbols-outlined text-xs text-emerald-400">arrow_upward</span>
-          <span>Zona de Ascenso (Puestos 1-2 Directo a Serie A)</span>
-        </button>
-        <button aria-selected="false" class="phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2 dark:bg-[#0B0F19] dark:text-[#F8FAFC]" data-phase="zona-descenso" role="tab" type="button" onclick="cambiarFaseTorneo('zona_descenso')">
-          <span class="material-symbols-outlined text-xs text-rose-500">warning</span>
-          <span>Zona de Descenso (Puestos 9-10 a 2ª Cat.)</span>
-        </button>
-      `;
-    }
+  document.querySelectorAll('#posiciones-table-title').forEach((el) => {
+    el.textContent = division === 'A' ? 'Serie A · Clasificación general' : 'Serie B · Clasificación';
   });
-
-  // 3. Leyendas adaptadas al torneo
-  const legendContainers = document.querySelectorAll('#posiciones-legend-container, .grid.grid-cols-1.sm\\:grid-cols-3');
-  legendContainers.forEach(container => {
-    if (division === 'A') {
-      container.innerHTML = `
-        <div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <div class="w-8 h-8 rounded bg-sport-success/15 flex items-center justify-center text-sport-success flex-shrink-0">
-            <span class="material-symbols-outlined text-xl">stars</span>
-          </div>
-          <div class="flex flex-col min-w-0">
-            <div class="flex items-center gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-sport-success"></span>
-              <span class="font-label-caps text-label-caps text-text-primary uppercase dark:text-[#F8FAFC]">Copa Libertadores</span>
-            </div>
-            <span class="font-body-sm text-body-sm text-text-secondary truncate dark:text-[#CBD5E1]">Puestos 1 al 4 | Fase Directa / Fase Previa</span>
-          </div>
-        </div>
-        <div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <div class="w-8 h-8 rounded bg-secondary/15 flex items-center justify-center text-secondary flex-shrink-0">
-            <span class="material-symbols-outlined text-xl">diamond</span>
-          </div>
-          <div class="flex flex-col min-w-0">
-            <div class="flex items-center gap-1.5">
-              <span class="w-2.5 h-2.5 bg-secondary rotate-45"></span>
-              <span class="font-label-caps text-label-caps text-text-primary uppercase dark:text-[#F8FAFC]">Copa Sudamericana</span>
-            </div>
-            <span class="font-body-sm text-body-sm text-text-secondary truncate dark:text-[#CBD5E1]">Puestos 5 al 8 | Fase Nacional Previa</span>
-          </div>
-        </div>
-        <div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <div class="w-8 h-8 rounded bg-sport-danger/15 flex items-center justify-center text-sport-danger flex-shrink-0">
-            <span class="material-symbols-outlined text-xl">warning</span>
-          </div>
-          <div class="flex flex-col min-w-0">
-            <div class="flex items-center gap-1.5">
-              <span class="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-b-[9px] border-b-sport-danger"></span>
-              <span class="font-label-caps text-label-caps text-text-primary uppercase dark:text-[#F8FAFC]">Zona de Descenso</span>
-            </div>
-            <span class="font-body-sm text-body-sm text-text-secondary truncate dark:text-[#CBD5E1]">Puestos 15 y 16 | Pérdida de Categoría Serie B</span>
-          </div>
-        </div>
-      `;
-    } else {
-      container.innerHTML = `
-        <div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <div class="w-8 h-8 rounded bg-emerald-500/15 flex items-center justify-center text-emerald-400 flex-shrink-0">
-            <span class="material-symbols-outlined text-xl font-bold">arrow_upward</span>
-          </div>
-          <div class="flex flex-col min-w-0">
-            <div class="flex items-center gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-              <span class="font-label-caps text-label-caps text-text-primary uppercase dark:text-[#F8FAFC]">Ascenso a Serie A</span>
-            </div>
-            <span class="font-body-sm text-body-sm text-text-secondary truncate dark:text-[#CBD5E1]">Puestos 1 y 2 | Ascenso Directo Serie A 2026</span>
-          </div>
-        </div>
-        <div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <div class="w-8 h-8 rounded bg-blue-500/15 flex items-center justify-center text-blue-400 flex-shrink-0">
-            <span class="material-symbols-outlined text-xl">shield</span>
-          </div>
-          <div class="flex flex-col min-w-0">
-            <div class="flex items-center gap-1.5">
-              <span class="w-2.5 h-2.5 bg-blue-400 rotate-45"></span>
-              <span class="font-label-caps text-label-caps text-text-primary uppercase dark:text-[#F8FAFC]">Zona Permanencia</span>
-            </div>
-            <span class="font-body-sm text-body-sm text-text-secondary truncate dark:text-[#CBD5E1]">Puestos 3 al 8 | Conservación de cupo Serie B</span>
-          </div>
-        </div>
-        <div class="bg-surface-card rounded-lg p-space-sm shadow-sm flex items-center gap-space-sm dark:bg-[#0B0F19] dark:text-[#F8FAFC]">
-          <div class="w-8 h-8 rounded bg-sport-danger/15 flex items-center justify-center text-sport-danger flex-shrink-0">
-            <span class="material-symbols-outlined text-xl">warning</span>
-          </div>
-          <div class="flex flex-col min-w-0">
-            <div class="flex items-center gap-1.5">
-              <span class="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-b-[9px] border-b-sport-danger"></span>
-              <span class="font-label-caps text-label-caps text-text-primary uppercase dark:text-[#F8FAFC]">Zona de Descenso</span>
-            </div>
-            <span class="font-body-sm text-body-sm text-text-secondary truncate dark:text-[#CBD5E1]">Puestos 9 y 10 | Descenso a Segunda Categoría</span>
-          </div>
-        </div>
-      `;
-    }
-  });
-
-  // 4. Título y Badge de Jornada
-  const titleEls = document.querySelectorAll('#posiciones-table-title');
-  const badgeEls = document.querySelectorAll('#posiciones-jornada-badge');
-
-  titleEls.forEach(el => {
-    el.textContent = division === 'A' ? 'Clasificación General Acumulada' : 'Clasificación Oficial — LigaPro Ecuabet Serie B';
-  });
-  badgeEls.forEach(el => {
+  document.querySelectorAll('#posiciones-jornada-badge').forEach((el) => {
     el.textContent = division === 'A' ? 'Jornada 24 de 30' : 'Jornada 11 de 36';
   });
 
-  // 5. Renderizar filas
   renderizarFilasTabla(division, 'all');
 };
 
 window.cambiarFaseTorneo = function(fase) {
   faseActivaActual = fase;
   const division = store.state.divisionActiva || 'A';
-
-  // Actualizar estilos activos de botones de fase
-  const phaseButtons = document.querySelectorAll('.phase-btn');
-  phaseButtons.forEach(btn => {
-    const p = btn.getAttribute('data-phase');
-    const matches = (
-      (fase === 'inicial' && p === 'fase-inicial') ||
-      (fase === 'hex_titulo' && p === 'hex-1') ||
-      (fase === 'hex_sudamericana' && p === 'hex-2') ||
-      (fase === 'cuad_descenso' && p === 'cuadrangular') ||
-      (fase === 'clasificacion' && p === 'fase-clasificacion') ||
-      (fase === 'zona_ascenso' && p === 'zona-ascenso') ||
-      (fase === 'zona_descenso' && p === 'zona-descenso')
-    );
-
-    if (matches) {
-      btn.className = "phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-primary-container text-on-primary shadow-sm flex items-center gap-2 transition-all";
-      btn.setAttribute('aria-selected', 'true');
-    } else {
-      btn.className = "phase-btn whitespace-nowrap px-space-md py-2 rounded font-label-caps text-label-caps uppercase bg-surface-container-low text-text-secondary hover:text-text-primary transition-all flex items-center gap-2 dark:bg-[#0B0F19] dark:text-[#F8FAFC]";
-      btn.setAttribute('aria-selected', 'false');
-    }
-  });
-
+  renderizarFasesPosiciones(division, fase);
   renderizarFilasTabla(division, fase);
 };
 
@@ -2534,19 +2406,24 @@ window.showToast = showToast;
 let filtroPartidosActual = 'todos';
 let suscripcionRealtime = null;
 
+// Clases compartidas para controles segmentados (filtros y pestañas)
+const SEG_ACTIVO = 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm';
+const SEG_INACTIVO = 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white';
+
+function marcarSegmento(el, activo, base) {
+  el.className = `${base} transition-colors ${activo ? SEG_ACTIVO : SEG_INACTIVO}`;
+  el.setAttribute('aria-selected', activo ? 'true' : 'false');
+}
+
+function actualizarBotonesFiltroPartidos() {
+  ['todos', 'en_juego', 'finalizado', 'programado'].forEach((btnId) => {
+    const el = document.getElementById(`btn-filtro-${btnId}`);
+    if (el) marcarSegmento(el, btnId === filtroPartidosActual, 'filtro-btn px-3 py-1.5 rounded-md');
+  });
+}
+
 window.filtrarPartidosTablero = function(filtro) {
   filtroPartidosActual = filtro;
-  const botones = ['todos', 'en_juego', 'finalizado', 'programado'];
-  botones.forEach((btnId) => {
-    const el = document.getElementById(`btn-filtro-${btnId}`);
-    if (el) {
-      if (btnId === filtro) {
-        el.className = 'px-3 py-1 rounded bg-secondary text-on-secondary shadow-xs transition-all font-bold';
-      } else {
-        el.className = 'px-3 py-1 rounded text-text-secondary hover:text-text-primary transition-all font-normal';
-      }
-    }
-  });
   renderizarPartidosTablero();
 };
 
@@ -2563,13 +2440,14 @@ window.seleccionarPartidoEnVivo = function(partidoId, irAConsola = false) {
 window.renderizarPartidosTablero = function() {
   const container = document.getElementById('contenedor-partidos-realtime');
   if (!container) return;
+  actualizarBotonesFiltroPartidos();
 
   const partidos = store.state.partidos || [];
   if (partidos.length === 0) {
     container.innerHTML = `
-      <div class="p-8 text-center bg-surface-card rounded-xl border border-border-subtle text-text-secondary">
-        <span class="material-symbols-outlined text-3xl mb-2 text-secondary">sports_soccer</span>
-        <p class="font-bold">No hay partidos registrados en la jornada oficial.</p>
+      <div class="md:col-span-2 p-10 text-center rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 text-slate-500">
+        <span class="material-symbols-outlined text-3xl mb-1">sports_soccer</span>
+        <p class="text-sm font-medium">No hay partidos registrados en esta jornada.</p>
       </div>`;
     return;
   }
@@ -2589,14 +2467,13 @@ window.renderizarPartidosTablero = function() {
   const btnTodos = document.getElementById('btn-filtro-todos');
   const btnVivo = document.getElementById('btn-filtro-en_juego');
   if (btnTodos) btnTodos.textContent = `Todos (${totalCount})`;
-  if (btnVivo) btnVivo.textContent = `🔴 En Vivo (${enVivoCount})`;
+  if (btnVivo) btnVivo.textContent = `En vivo (${enVivoCount})`;
 
   if (filtrados.length === 0) {
     container.innerHTML = `
-      <div class="p-8 text-center bg-surface-card rounded-xl border border-border-subtle text-text-secondary">
-        <span class="material-symbols-outlined text-3xl mb-2 text-secondary">filter_alt_off</span>
-        <p class="font-bold">No hay partidos en esta categoría (${filtroPartidosActual}).</p>
-        <button class="mt-3 px-3 py-1.5 rounded bg-secondary text-on-secondary text-xs font-bold" onclick="filtrarPartidosTablero('todos')">Ver todos los partidos</button>
+      <div class="md:col-span-2 p-10 text-center rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 text-slate-500">
+        <p class="text-sm font-medium">No hay partidos en esta categoría.</p>
+        <button class="mt-3 text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline" onclick="filtrarPartidosTablero('todos')">Ver todos</button>
       </div>`;
     return;
   }
@@ -2607,98 +2484,130 @@ window.renderizarPartidosTablero = function() {
     const esActivo = p.id === activoId;
     const esEnVivo = p.estado === 'en_juego';
     const esFinalizado = p.estado === 'finalizado' || p.estado === 'oficializado';
-    
-    // Insignia de estado
-    let badgeEstado = '';
+
+    let estadoHtml;
     if (esEnVivo) {
-      badgeEstado = `
-        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-label-caps text-xs font-bold uppercase animate-pulse">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span> EN VIVO: ${p.minuto || 45}' ${p.periodo || '1T'}
-        </span>`;
+      estadoHtml = `<span class="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-600 dark:text-rose-400"><span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>${escapeAttr(p.minuto || 45)}'</span>`;
     } else if (esFinalizado) {
-      badgeEstado = `
-        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-500/15 text-slate-600 dark:text-slate-400 font-label-caps text-xs font-bold uppercase">
-          <span class="material-symbols-outlined text-xs">check_circle</span> FINALIZADO
-        </span>`;
+      estadoHtml = `<span class="text-xs font-semibold text-slate-400">Final</span>`;
     } else {
-      badgeEstado = `
-        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/15 text-blue-600 dark:text-blue-400 font-label-caps text-xs font-bold uppercase">
-          <span class="material-symbols-outlined text-xs">schedule</span> HOY ${p.horario || '18:00'}
-        </span>`;
+      estadoHtml = `<span class="text-xs font-semibold text-slate-500 dark:text-slate-400">${escapeAttr(p.horario || '18:00')}</span>`;
     }
 
-    // Datos de equipos
-    const local = p.local || { nombre: 'Local', nombre_corto: 'LOC', escudo: '' };
-    const visitante = p.visitante || { nombre: 'Visitante', nombre_corto: 'VIS', escudo: '' };
+    const local = p.local || { nombre: 'Local' };
+    const visitante = p.visitante || { nombre: 'Visitante' };
     const nombreLocal = local.nombreCorto || local.nombre || 'Local';
     const nombreVisitante = visitante.nombreCorto || visitante.nombre || 'Visitante';
-    const estadioNombre = typeof p.estadio === 'string' ? p.estadio : (p.estadio?.nombre || 'Estadio Rodrigo Paz Delgado');
-    const ciudadEstadio = p.ciudad || (typeof p.estadio === 'object' ? p.estadio?.ciudad : '');
-    const estadioCiudad = ciudadEstadio ? ` (${ciudadEstadio})` : '';
+    const estadioNombre = typeof p.estadio === 'string' ? p.estadio : (p.estadio?.nombre || '');
 
-    const gl = p.goles_local !== null && p.goles_local !== undefined ? p.goles_local : (p.marcador?.local ?? '-');
-    const gv = p.goles_visitante !== null && p.goles_visitante !== undefined ? p.goles_visitante : (p.marcador?.visitante ?? '-');
+    const gl = p.goles_local !== null && p.goles_local !== undefined ? p.goles_local : (p.marcador?.local ?? '');
+    const gv = p.goles_visitante !== null && p.goles_visitante !== undefined ? p.goles_visitante : (p.marcador?.visitante ?? '');
+    const mostrarMarcador = esEnVivo || esFinalizado;
+    const colorMarcador = esEnVivo ? 'text-rose-600 dark:text-rose-400' : 'text-slate-900 dark:text-white';
+
+    const filaEquipo = (nombre, goles) => `
+        <div class="flex items-center gap-3">
+          <img src="${escapeAttr(getClubLogo(nombre))}" alt="" class="w-7 h-7 object-contain shrink-0" onerror="this.src='assets/ligapro-mini.svg'" />
+          <span class="flex-1 min-w-0 truncate text-sm font-semibold text-slate-900 dark:text-white">${escapeAttr(nombre)}</span>
+          <span class="w-6 text-right text-base font-bold tabular-nums ${colorMarcador}">${mostrarMarcador ? escapeAttr(goles) : ''}</span>
+        </div>`;
 
     return `
-    <div class="bg-surface-card rounded-xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all relative overflow-hidden border ${esActivo ? 'border-indigo-600 ring-2 ring-indigo-500/20' : 'border-slate-200 dark:border-slate-800'}">
-      <!-- Encabezado minimalista: Estadio y Estado -->
-      <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100 dark:border-slate-800 text-xs">
-        <span class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 font-medium">
-          <span class="material-symbols-outlined text-sm">stadium</span>
-          ${estadioNombre}${estadioCiudad}
-        </span>
-        <div>
-          ${badgeEstado}
-        </div>
+    <div class="rounded-2xl border bg-white dark:bg-[#111827] p-4 transition-colors ${esActivo ? 'border-indigo-500 ring-2 ring-indigo-500/15' : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'}">
+      <div class="flex items-center justify-between mb-3">
+        ${estadoHtml}
+        <span class="text-xs text-slate-400 truncate ml-3">${escapeAttr(estadioNombre)}</span>
       </div>
-
-      <!-- Fila de Partido: Equipos y Marcador -->
-      <div class="grid grid-cols-12 gap-2 sm:gap-4 items-center py-2">
-        <!-- Local -->
-        <div class="col-span-5 flex items-center justify-end gap-3 text-right">
-          <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">${nombreLocal}</span>
-          <img src="${getClubLogo(nombreLocal)}" alt="${nombreLocal}" class="w-10 h-10 sm:w-11 sm:h-11 object-contain shrink-0 drop-shadow-xs" onerror="this.src='assets/ligapro-mini.svg'" />
-        </div>
-
-        <!-- Marcador Central -->
-        <div class="col-span-2 flex flex-col items-center justify-center">
-          <div class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 font-mono text-lg sm:text-xl font-black ${esEnVivo ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'} flex items-center gap-1.5">
-            <span>${gl}</span>
-            <span class="text-slate-400 text-sm">:</span>
-            <span>${gv}</span>
-          </div>
-          <span class="text-[10px] text-slate-400 mt-1 uppercase font-medium">Fecha 18</span>
-        </div>
-
-        <!-- Visitante -->
-        <div class="col-span-5 flex items-center justify-start gap-3 text-left">
-          <img src="${getClubLogo(nombreVisitante)}" alt="${nombreVisitante}" class="w-10 h-10 sm:w-11 sm:h-11 object-contain shrink-0 drop-shadow-xs" onerror="this.src='assets/ligapro-mini.svg'" />
-          <span class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-tight">${nombreVisitante}</span>
-        </div>
+      <div class="space-y-2.5">${filaEquipo(nombreLocal, gl)}${filaEquipo(nombreVisitante, gv)}
       </div>
-
-      <!-- Barra de acciones minimalista -->
-      <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
-        <span class="text-slate-400 text-[11px]">${p.tv || 'Transmisión Oficial LigaPro'}</span>
-        <div class="flex items-center gap-2">
-          ${esActivo ? `
-            <span class="px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 font-semibold text-xs flex items-center gap-1">
-              <span class="material-symbols-outlined text-xs">check</span> En Consola
-            </span>
-          ` : `
-            <button type="button" onclick="seleccionarPartidoEnVivo('${p.id}', false)" class="px-2.5 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium text-xs transition-colors">
-              Seleccionar
-            </button>
-          `}
-          <button type="button" onclick="seleccionarPartidoEnVivo('${p.id}', true)" class="px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs shadow-xs transition-colors flex items-center gap-1">
-            <span class="material-symbols-outlined text-xs">terminal</span> Abrir Consola
-          </button>
-        </div>
+      <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+        ${esActivo
+          ? `<button type="button" onclick="navigateView('consola')" class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">En consola · Abrir</button>`
+          : `<button type="button" onclick="seleccionarPartidoEnVivo('${escapeAttr(p.id)}', true)" class="text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400">Abrir consola →</button>`}
       </div>
     </div>`;
   }).join('');
 
   container.innerHTML = htmlCards;
+};
+
+// ==============================================================================
+// CONSOLA DEL PARTIDO (estándar, alto contraste y tablet comparten [data-c="..."])
+// ==============================================================================
+
+const ICONO_EVENTO = {
+  gol: ['sports_soccer', 'text-emerald-600 dark:text-emerald-400'],
+  amarilla: ['style', 'text-amber-500'],
+  roja: ['style', 'text-rose-600 dark:text-rose-400'],
+  sustitucion: ['swap_horiz', 'text-sky-600 dark:text-sky-400'],
+  hidratacion_inicio: ['water_drop', 'text-sky-600 dark:text-sky-400'],
+  fin_periodo: ['warning', 'text-rose-600 dark:text-rose-400']
+};
+
+function renderizarConsola() {
+  const p = store.state.partidoActivo;
+  if (!p || !document.querySelector('[data-c]')) return;
+
+  const set = (clave, valor) => {
+    document.querySelectorAll(`[data-c="${clave}"]`).forEach((el) => { el.textContent = valor; });
+  };
+  const setImg = (clave, src) => {
+    document.querySelectorAll(`[data-c="${clave}"]`).forEach((el) => { el.src = src; el.alt = ''; });
+  };
+
+  const local = p.local || {};
+  const visitante = p.visitante || {};
+  set('local-nombre', local.nombreCorto || local.nombre || 'Local');
+  set('visitante-nombre', visitante.nombreCorto || visitante.nombre || 'Visitante');
+  setImg('local-escudo', local.escudo || getClubLogo(local.nombre) || 'assets/ligapro-mini.svg');
+  setImg('visitante-escudo', visitante.escudo || getClubLogo(visitante.nombre) || 'assets/ligapro-mini.svg');
+  set('marcador-local', String(p.marcador?.local ?? 0));
+  set('marcador-visitante', String(p.marcador?.visitante ?? 0));
+  const estadio = typeof p.estadio === 'string' ? p.estadio : (p.estadio?.nombre || '');
+  set('estadio', [`Fecha ${p.jornada || '-'}`, estadio].filter(Boolean).join(' · '));
+
+  const estados = { en_juego: 'En vivo', descanso: 'Descanso', finalizado: 'Finalizado', oficializado: 'Acta cerrada', programado: 'Por comenzar' };
+  const estadoTxt = estados[p.estado] || 'En vivo';
+  set('minuto', p.estado === 'en_juego' ? `${estadoTxt} · ${p.minuto || 0}' · ${p.periodo || 1}T` : estadoTxt);
+
+  const eventos = Array.isArray(p.eventos) ? p.eventos : [];
+  document.querySelectorAll('[data-c="eventos"]').forEach((lista) => {
+    const altoContraste = lista.getAttribute('data-c-tema') === 'alto';
+    if (eventos.length === 0) {
+      lista.innerHTML = `<li class="px-5 py-8 text-center ${altoContraste ? 'text-[#fff]' : 'text-slate-400'}">Aún no hay eventos registrados.</li>`;
+      return;
+    }
+    lista.innerHTML = eventos.slice(0, 12).map((ev) => {
+      const [icono, color] = ICONO_EVENTO[ev.tipo] || ['info', 'text-slate-400'];
+      const colorIcono = altoContraste ? 'text-[#FFE600]' : color;
+      const colorMinuto = altoContraste ? 'text-[#FFE600]' : 'text-slate-400';
+      const colorTexto = altoContraste ? 'text-[#fff]' : 'text-slate-900 dark:text-white';
+      const borde = altoContraste ? 'border-b-2 border-[#fff]/40' : '';
+      return `
+        <li class="px-5 py-3 flex items-start gap-3 ${borde}">
+          <span class="w-9 shrink-0 tabular-nums font-semibold ${colorMinuto}">${escapeAttr(ev.minuto ?? '')}'</span>
+          <span class="material-symbols-outlined text-lg ${colorIcono}">${icono}</span>
+          <span class="min-w-0 font-medium ${colorTexto}">${escapeAttr(ev.autor || ev.tipo)}</span>
+        </li>`;
+    }).join('');
+  });
+}
+
+store.subscribe(() => {
+  renderizarConsola();
+});
+
+// ==============================================================================
+// PORTAL DE CLUBES: filtro de solicitudes
+// ==============================================================================
+
+window.filtrarSolicitudes = function(estado) {
+  document.querySelectorAll('[data-filtro-solicitud]').forEach((btn) => {
+    marcarSegmento(btn, btn.getAttribute('data-filtro-solicitud') === estado, 'filtro-solicitud px-2.5 py-1 rounded-md');
+  });
+  document.querySelectorAll('[data-estado-solicitud]').forEach((item) => {
+    item.hidden = estado !== 'todas' && item.getAttribute('data-estado-solicitud') !== estado;
+  });
 };
 
 // Carga inicial y sincronización continua desde Supabase
@@ -2921,7 +2830,21 @@ function iniciarApp() {
   }
 
   const params = new URLSearchParams(window.location.search);
-  const initialView = params.get('view') || 'tablero';
+  // En una página suelta (tablero.html, posiciones.html, ...) la vista inicial es la de ese archivo
+  const vistaPorArchivo = {
+    'tablero.html': 'tablero',
+    'posiciones.html': 'posiciones',
+    'clubes.html': 'clubes',
+    'uniformes.html': 'uniformes',
+    'estadios.html': 'estadios',
+    'consola.html': 'consola',
+    'consola-alto-contraste.html': 'consola_alto_contraste',
+    'consola-tablet.html': 'consola_tablet',
+    'login.html': 'auth'
+  };
+  const archivoActual = window.location.pathname.split('/').pop();
+  const esPaginaSuelta = document.querySelectorAll('.sigec-view-container').length === 0;
+  const initialView = params.get('view') || (esPaginaSuelta && vistaPorArchivo[archivoActual]) || 'tablero';
   const initialDiv = params.get('division') || (window.location.hash.toLowerCase().includes('serie-b') ? 'B' : null);
   if (initialDiv) {
     store.setDivision(initialDiv);

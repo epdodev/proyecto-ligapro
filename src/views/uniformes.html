@@ -1,0 +1,68 @@
+<section class="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-16">
+  <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+    <div>
+      <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">Uniformes</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">LDU Quito vs Barcelona SC · Fecha 14 · Reunión técnica 48 h</p>
+    </div>
+    <button type="button" onclick="sellarActaUniformes()" class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition-colors">
+      <span class="material-symbols-outlined text-base">task_alt</span> Sellar acta
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <!-- Selección de uniformes -->
+    <div class="lg:col-span-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-5">
+      <h2 class="text-base font-bold text-slate-900 dark:text-white mb-4">Elige los uniformes</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <fieldset>
+          <legend class="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
+            <img src="assets/clubs/ldu-quito.png" alt="" class="w-6 h-6 object-contain" /> LDU Quito · Local
+          </legend>
+          <div class="space-y-2">
+            <label class="kit-option flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-700 cursor-pointer has-[:checked]:border-indigo-600 has-[:checked]:ring-2 has-[:checked]:ring-indigo-600/15">
+              <input type="radio" name="kit_local" value="principal" checked onchange="actualizarKitsUniformes()" class="accent-indigo-600" />
+              <span class="flex gap-1"><span class="w-5 h-5 rounded-full border border-slate-300" style="background:#FFFFFF"></span><span class="w-5 h-5 rounded-full border border-slate-300" style="background:#FFFFFF"></span></span>
+              <span class="text-sm font-medium text-slate-800 dark:text-slate-100">Principal · Blanco</span>
+            </label>
+            <label class="kit-option flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-700 cursor-pointer has-[:checked]:border-indigo-600 has-[:checked]:ring-2 has-[:checked]:ring-indigo-600/15">
+              <input type="radio" name="kit_local" value="alterno" onchange="actualizarKitsUniformes()" class="accent-indigo-600" />
+              <span class="flex gap-1"><span class="w-5 h-5 rounded-full border border-slate-300" style="background:#1A1A1A"></span><span class="w-5 h-5 rounded-full border border-slate-300" style="background:#1A1A1A"></span></span>
+              <span class="text-sm font-medium text-slate-800 dark:text-slate-100">Alterno · Negro</span>
+            </label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
+            <img src="assets/clubs/barcelona-sc.png" alt="" class="w-6 h-6 object-contain" /> Barcelona SC · Visitante
+          </legend>
+          <div class="space-y-2">
+            <label class="kit-option flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-700 cursor-pointer has-[:checked]:border-indigo-600 has-[:checked]:ring-2 has-[:checked]:ring-indigo-600/15">
+              <input type="radio" name="kit_visitante" value="principal" checked onchange="actualizarKitsUniformes()" class="accent-indigo-600" />
+              <span class="flex gap-1"><span class="w-5 h-5 rounded-full border border-slate-300" style="background:#FFE600"></span><span class="w-5 h-5 rounded-full border border-slate-300" style="background:#101010"></span></span>
+              <span class="text-sm font-medium text-slate-800 dark:text-slate-100">Principal · Amarillo</span>
+            </label>
+            <label class="kit-option flex items-center gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-700 cursor-pointer has-[:checked]:border-indigo-600 has-[:checked]:ring-2 has-[:checked]:ring-indigo-600/15">
+              <input type="radio" name="kit_visitante" value="alterno" onchange="actualizarKitsUniformes()" class="accent-indigo-600" />
+              <span class="flex gap-1"><span class="w-5 h-5 rounded-full border border-slate-300" style="background:#C41230"></span><span class="w-5 h-5 rounded-full border border-slate-300" style="background:#101010"></span></span>
+              <span class="text-sm font-medium text-slate-800 dark:text-slate-100">Alterno · Rojo</span>
+            </label>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <!-- Resultado de contraste -->
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-5">
+      <div class="flex items-center justify-between gap-2 mb-4">
+        <h2 class="text-base font-bold text-slate-900 dark:text-white">Contraste</h2>
+        <span id="estado-uniformes-badge" class="px-2 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600">Calculando…</span>
+      </div>
+      <dl class="space-y-3 text-sm">
+        <div class="flex items-center justify-between"><dt class="text-slate-500 dark:text-slate-400">Camiseta</dt><dd id="ratio-camiseta-val" class="font-bold tabular-nums text-slate-900 dark:text-white">—</dd></div>
+        <div class="flex items-center justify-between"><dt class="text-slate-500 dark:text-slate-400">Pantaloneta</dt><dd id="ratio-pantaloneta-val" class="font-bold tabular-nums text-slate-900 dark:text-white">—</dd></div>
+        <div class="flex items-center justify-between"><dt class="text-slate-500 dark:text-slate-400">Medias</dt><dd id="ratio-medias-val" class="font-bold tabular-nums text-slate-900 dark:text-white">—</dd></div>
+      </dl>
+      <p class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">Se exige un contraste mínimo de 4,5:1 entre ambos equipos (Arts. 31–32).</p>
+    </div>
+  </div>
+</section>

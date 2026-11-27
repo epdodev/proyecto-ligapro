@@ -1,0 +1,49 @@
+<section class="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-16">
+  <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+    <div>
+      <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">Posiciones</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">LigaPro Ecuabet 2025 · <span id="posiciones-jornada-badge">Jornada 24 de 30</span></p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button type="button" onclick="mostrarModalCriteriosDesempate()" class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-semibold transition-colors">
+        <span class="material-symbols-outlined text-base">balance</span> Criterios de desempate
+      </button>
+      <button type="button" onclick="mostrarModalFinalistas()" class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition-colors">
+        <span class="material-symbols-outlined text-base">emoji_events</span> Calcular campeón
+      </button>
+    </div>
+  </div>
+
+  <div class="flex flex-col lg:flex-row lg:items-center gap-3 mb-4">
+    <div class="inline-flex self-start p-1 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-sm font-semibold" role="tablist" aria-label="División">
+      <button type="button" data-division="serie-a" onclick="cambiarDivision('A')" class="division-tab px-4 py-1.5 rounded-md">Serie A</button>
+      <button type="button" data-division="serie-b" onclick="cambiarDivision('B')" class="division-tab px-4 py-1.5 rounded-md">Serie B</button>
+    </div>
+    <div id="posiciones-phase-container" class="flex gap-2 overflow-x-auto no-scrollbar" role="tablist" aria-label="Fase"></div>
+  </div>
+
+  <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] overflow-hidden">
+    <div class="px-4 sm:px-5 py-3.5 border-b border-slate-100 dark:border-slate-800">
+      <h2 id="posiciones-table-title" class="text-sm font-bold text-slate-900 dark:text-white">Clasificación general</h2>
+    </div>
+    <div class="overflow-x-auto">
+      <table id="standings-table" class="w-full text-sm">
+        <thead class="text-[11px] uppercase tracking-wide text-slate-400 bg-slate-50 dark:bg-slate-900/60">
+          <tr>
+            <th class="py-2.5 pl-4 pr-2 text-left font-semibold w-14">#</th>
+            <th class="py-2.5 px-2 text-left font-semibold">Club</th>
+            <th class="py-2.5 px-2 text-center font-semibold hidden sm:table-cell">PJ</th>
+            <th class="py-2.5 px-2 text-center font-semibold hidden sm:table-cell">G</th>
+            <th class="py-2.5 px-2 text-center font-semibold hidden sm:table-cell">E</th>
+            <th class="py-2.5 px-2 text-center font-semibold hidden sm:table-cell">P</th>
+            <th class="py-2.5 px-2 text-center font-semibold">DG</th>
+            <th class="py-2.5 px-2 text-center font-semibold">Pts</th>
+            <th class="py-2.5 pl-2 pr-4 text-left font-semibold hidden md:table-cell">Últimos 5</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div id="posiciones-legend-container" class="flex flex-wrap gap-x-5 gap-y-2 px-4 sm:px-5 py-3 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400"></div>
+  </div>
+</section>

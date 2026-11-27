@@ -1,0 +1,68 @@
+<section class="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-16">
+  <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+    <div>
+      <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">Consola del partido</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1" data-c="estadio">Estadio</p>
+    </div>
+    <div class="inline-flex p-1 rounded-lg bg-slate-100 dark:bg-slate-800/60 text-xs font-semibold" aria-label="Modo de consola">
+      <button type="button" onclick="navigateView('consola')" class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm">Estándar</button>
+      <button type="button" onclick="navigateView('consola_alto_contraste')" class="px-3 py-1.5 rounded-md text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">Alto contraste</button>
+      <button type="button" onclick="navigateView('consola_tablet')" class="px-3 py-1.5 rounded-md text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">Tablet</button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+    <div class="lg:col-span-3 space-y-4">
+      <!-- Marcador -->
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-5">
+        <div class="flex items-center justify-center gap-2 text-xs font-semibold text-rose-600 dark:text-rose-400 mb-4">
+          <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span><span data-c="minuto">En vivo</span>
+        </div>
+        <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+          <div class="flex flex-col items-center text-center gap-2 min-w-0">
+            <img data-c="local-escudo" src="assets/ligapro-mini.svg" alt="" class="w-14 h-14 object-contain" />
+            <span data-c="local-nombre" class="text-sm font-bold text-slate-900 dark:text-white leading-tight line-clamp-2 break-words">Local</span>
+          </div>
+          <div class="text-5xl font-extrabold tabular-nums text-slate-900 dark:text-white">
+            <span data-c="marcador-local">0</span><span class="text-slate-300 dark:text-slate-600 mx-2">-</span><span data-c="marcador-visitante">0</span>
+          </div>
+          <div class="flex flex-col items-center text-center gap-2 min-w-0">
+            <img data-c="visitante-escudo" src="assets/ligapro-mini.svg" alt="" class="w-14 h-14 object-contain" />
+            <span data-c="visitante-nombre" class="text-sm font-bold text-slate-900 dark:text-white leading-tight line-clamp-2 break-words">Visitante</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Acciones -->
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-5">
+        <h2 class="text-base font-bold text-slate-900 dark:text-white mb-3">Registrar evento</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          <button type="button" onclick="registrarGolEnVivo('local')" class="h-11 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition-colors">Gol local</button>
+          <button type="button" onclick="registrarGolEnVivo('visitante')" class="h-11 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition-colors">Gol visitante</button>
+          <button type="button" onclick="registrarSustitucionEnVivo('local')" class="h-11 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm font-semibold transition-colors">Cambio</button>
+          <button type="button" onclick="registrarTarjetaEnVivo('amarilla', 'visitante')" class="h-11 rounded-lg bg-amber-400 hover:bg-amber-500 text-[#1c1917] text-sm font-semibold transition-colors">Amarilla</button>
+          <button type="button" onclick="registrarTarjetaEnVivo('roja', 'visitante')" class="h-11 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-sm font-semibold transition-colors">Roja</button>
+          <button type="button" onclick="registrarHidratacionEnVivo()" class="h-11 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm font-semibold transition-colors">Hidratación</button>
+        </div>
+        <h3 class="text-xs font-semibold uppercase tracking-wide text-slate-400 mt-5 mb-2">Incidentes</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <button type="button" onclick="registrarIncidenteEnVivo('Lanzamiento de objetos (Art. 73)')" class="h-10 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-rose-300 hover:bg-rose-50 dark:hover:bg-rose-500/10 text-slate-700 dark:text-slate-200 text-sm font-medium transition-colors">Objetos</button>
+          <button type="button" onclick="registrarIncidenteEnVivo('Uso de bengalas / pirotecnia (Art. 73)')" class="h-10 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-rose-300 hover:bg-rose-50 dark:hover:bg-rose-500/10 text-slate-700 dark:text-slate-200 text-sm font-medium transition-colors">Pirotecnia</button>
+          <button type="button" onclick="registrarIncidenteEnVivo('Invasión del terreno de juego (Art. 73)')" class="h-10 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-rose-300 hover:bg-rose-50 dark:hover:bg-rose-500/10 text-slate-700 dark:text-slate-200 text-sm font-medium transition-colors">Invasión</button>
+          <button type="button" onclick="registrarIncidenteEnVivo('Demora en la reanudación (Art. 82)')" class="h-10 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-rose-300 hover:bg-rose-50 dark:hover:bg-rose-500/10 text-slate-700 dark:text-slate-200 text-sm font-medium transition-colors">Demora</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bitácora -->
+    <div class="lg:col-span-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] flex flex-col">
+      <div class="px-5 py-4 border-b border-slate-100 dark:border-slate-800">
+        <h2 class="text-base font-bold text-slate-900 dark:text-white">Bitácora</h2>
+      </div>
+      <ul data-c="eventos" class="flex-1 divide-y divide-slate-100 dark:divide-slate-800 text-sm"></ul>
+      <div class="p-4 border-t border-slate-100 dark:border-slate-800">
+        <button type="button" onclick="sellarPlanillaJuego()" class="w-full h-10 rounded-lg bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-[#0f172a] text-sm font-semibold transition-colors">Cerrar y firmar acta</button>
+      </div>
+    </div>
+  </div>
+</section>

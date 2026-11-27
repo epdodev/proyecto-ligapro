@@ -100,16 +100,20 @@ Proyecto LigaPro/
 │   │   └── uniformes/
 │   │       └── contraste.js                 # Luminancia WCAG 2.1 y contraste cromático (Arts. 29-32)
 │   │
+│   ├── views/                                # FUENTE ÚNICA del contenido de cada pantalla
+│   │   ├── tablero.html, posiciones.html, clubes.html, uniformes.html, estadios.html
+│   │   ├── consola.html, consola_alto_contraste.html, consola_tablet.html
+│   │   └── auth.html
+│   │
 │   └── lib/
 │       ├── supabase.js                       # Cliente Supabase oficial
 │       ├── store.js                          # Estado reactivo global y persistencia offline (localStorage)
 │       └── interactive.js                    # Event handlers en vivo, perfil de usuario y UI
 │
 ├── scripts/
-│   ├── build_full_app.py                     # Orquestador principal: genera las 10 pantallas HTML
-│   ├── build_helpers.py                      # Header, sidebar, isotipo SVG y navegación
-│   ├── build_cleaner_v2.py                   # Limpieza y transformación de links del sidebar
-│   └── final_audit.py                        # Auditoría: href="#", botones sin handler, etc.
+│   ├── sync_views.py                         # Copia src/views/*.html a index.html y a las páginas sueltas
+│   ├── final_audit.py                        # Auditoría: href="#", botones sin handler, etc.
+│   └── build_full_app.py, build_helpers.py, build_cleaner_v2.py   # LEGADO: generan el diseño antiguo
 │
 ├── supabase/
 │   ├── migrations/
@@ -267,8 +271,8 @@ npm run dev
 ### Build de producción
 
 ```bash
-# 1. Generar las 10 pantallas HTML desde los templates Python
-python scripts/build_full_app.py
+# 1. Sincronizar las vistas (src/views/*.html) en index.html y en las páginas sueltas
+python scripts/sync_views.py
 
 # 2. Compilar assets con Vite
 npm run build
@@ -297,18 +301,19 @@ python -m http.server 8080
 
 ## 🔧 Sistema de Build
 
-El sistema de build está basado en **Python + Vite**:
+El contenido de cada pantalla vive en **`src/views/<vista>.html`** (fuente única). `index.html` (la SPA) y las páginas sueltas (`tablero.html`, `posiciones.html`, …) comparten encabezado y pie, y su contenido se genera desde esas plantillas:
 
 | Script | Rol |
 |---|---|
-| `scripts/build_full_app.py` | Orquestador: genera los 10 HTML inyectando Header, sidebar y scripts |
-| `scripts/build_helpers.py` | Funciones `generate_header()`, `generate_sidebar()` e isotipo SVG |
-| `scripts/build_cleaner_v2.py` | Transforma links del sidebar y limpia atributos residuales |
+| `scripts/sync_views.py` | Inserta cada `src/views/*.html` en `index.html` (dentro de `#view-<id>`) y en su página suelta |
 | `scripts/final_audit.py` | Verifica 0 `href="#"`, 0 botones sin handler, 0 ocurrencias residuales |
+| `scripts/build_full_app.py` | **Legado.** Regenera el diseño antiguo desde `stitch_ligapro_competition_platform/`; no usar (pide `--force`) |
 
-**Flujo obligatorio antes de cada push:**
+> No edites a mano el contenido entre `<main class="w-full flex-1">` y `</main>` de los HTML: se sobrescribe al ejecutar `sync_views.py`.
+
+**Flujo antes de cada push:**
 ```
-build_full_app.py → npm run build → final_audit.py → git push
+editar src/views/*.html → python scripts/sync_views.py → npm run build → python scripts/final_audit.py → git push
 ```
 
 ---
