@@ -91,7 +91,7 @@ def clean_and_transform_screen(folder, screen_id):
     body_content = add_onclick_to_btn(body_content, r'Re-inspeccionar\s*Perímetro', 'evaluarEscenarioEnVivo()')
     body_content = re.sub(
         r'<button\b([^>]*?data-incident="([^"]+)"[^>]*?)>',
-        r'<button\1 onclick="registrarIncidenteEnVivo(\'\2 (Art. 73)\')">',
+        r'''<button\1 onclick="registrarIncidenteEnVivo('\2 (Art. 73)')">''',
         body_content
     )
     body_content = add_onclick_to_btn(body_content, r'Dictar\s*por\s*Voz', 'dictarPorVoz()')
@@ -106,12 +106,12 @@ def clean_and_transform_screen(folder, screen_id):
     )
     body_content = re.sub(
         r'<button\b([^>]*?)>(\s*<span[^>]*?>tune</span>\s*)</button>',
-        r'<button\1 onclick="navigateView(\'consola\')">\2</button>',
+        r'''<button\1 onclick="navigateView('consola')">\2</button>''',
         body_content
     )
     body_content = re.sub(
         r'<button\b([^>]*?)>(\s*<span[^>]*?>edit</span>\s*)</button>',
-        r'<button\1 onclick="navigateView(\'consola\')">\2</button>',
+        r'''<button\1 onclick="navigateView('consola')">\2</button>''',
         body_content
     )
 
@@ -342,13 +342,13 @@ def clean_and_transform_screen(folder, screen_id):
 
     body_content = re.sub(
         r'<a([^>]*href=["\']#["\'][^>]*)>(.*?Calificación Escenarios.*?</a>)',
-        r'<a\1 href="javascript:void(0)" onclick="navigateView(\'estadios\')">\2',
+        r'''<a\1 href="javascript:void(0)" onclick="navigateView('estadios')">\2''',
         body_content,
         flags=re.DOTALL
     )
     body_content = re.sub(
         r'<a([^>]*href=["\']#["\'][^>]*)>(.*?Asistente de Uniformes.*?</a>)',
-        r'<a\1 href="javascript:void(0)" onclick="navigateView(\'uniformes\')">\2',
+        r'''<a\1 href="javascript:void(0)" onclick="navigateView('uniformes')">\2''',
         body_content,
         flags=re.DOTALL
     )
@@ -402,7 +402,7 @@ def clean_and_transform_screen(folder, screen_id):
                 <div>
                   <div class="flex justify-between items-center mb-1">
                     <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Contraseña</label>
-                    <a href="javascript:void(0)" onclick="showToast('Para restablecer sus credenciales contacte a soporte@ligapro.ec', 'info')" class="text-[11px] text-blue-400 hover:underline">¿Olvidó contraseña?</a>
+                    <a href="javascript:void(0)" onclick="abrirRecuperarPassword()" class="text-[11px] text-blue-400 hover:underline">¿Olvidó contraseña?</a>
                   </div>
                   <div class="relative flex items-center">
                     <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">lock</span>

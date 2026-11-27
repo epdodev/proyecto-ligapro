@@ -163,6 +163,7 @@ SIGEC-LP admite dos modos de acceso:
 
 **Modo Supabase (producción):**
 - `supabase.auth.signInWithPassword()` con correo y contraseña real.
+- **Recuperar contraseña:** "¿Olvidó contraseña?" → `resetPasswordForEmail()` envía un enlace; al abrirlo, Supabase emite `PASSWORD_RECOVERY` y la app muestra el formulario de nueva contraseña (`updateUser({ password })`). La URL del sitio debe estar en *Authentication → URL Configuration → Redirect URLs* de Supabase.
 - Metadatos del usuario (`full_name`, `role`, `cargo`, `club`, `cedula`, `avatar_url`) guardados en `auth.users.user_metadata` y tabla `profiles`.
 
 **Modo Demo (offline):**
@@ -225,6 +226,7 @@ Tablas principales:
 Migraciones en `supabase/migrations/`:
 - `20261106000000_sigec_lp_schema.sql` — DDL completo con RLS y triggers.
 - `20261106000001_sigec_lp_seed.sql` — Datos iniciales de clubes, estadios e infracciones.
+- `20261127000000_profiles.sql` — Tabla `profiles` (perfil de usuario) con RLS: cada usuario solo lee/edita el suyo.
 
 ---
 

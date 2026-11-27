@@ -310,6 +310,7 @@ window.guardarCambiosPerfil = async function(event) {
   // 1. Persistencia real en Supabase
   const sb = getSupabase();
   let pwdUpdated = false;
+  let authError = null;
 
   if (sb && sb.auth) {
     try {
@@ -333,34 +334,28 @@ window.guardarCambiosPerfil = async function(event) {
 
       const { data, error } = await sb.auth.updateUser(updatePayload);
       if (error) {
+        authError = error;
         console.warn('Supabase auth.updateUser aviso:', error.message);
       } else {
         if (nuevaPwd) pwdUpdated = true;
       }
 
-      // Sincronizar en tabla profiles o user_roles si existen
-      try {
-        const { data: userData } = await sb.auth.getUser();
-        if (userData && userData.user) {
-          const uid = userData.user.id;
-          await sb.from('profiles').upsert({
-            id: uid,
-            full_name: nombre,
-            role: rol,
-            club: club,
-            cargo: cargo,
-            cedula: cedula,
-            avatar_url: finalAvatar,
-            updated_at: new Date().toISOString()
-          }).catch(() => {});
-
-          await sb.from('user_roles').upsert({
-            user_id: uid,
-            rol: rol
-          }).catch(() => {});
+      // Sincronizar en tabla profiles (el rol no se modifica desde el perfil)
+      const uid = data?.user?.id;
+      if (uid) {
+        const { error: profileError } = await sb.from('profiles').upsert({
+          id: uid,
+          full_name: nombre,
+          role: rol,
+          club: club,
+          cargo: cargo,
+          cedula: cedula,
+          avatar_url: finalAvatar,
+          updated_at: new Date().toISOString()
+        });
+        if (profileError) {
+          console.warn('Supabase profiles upsert aviso:', profileError.message);
         }
-      } catch (tableErr) {
-        // Tablas auxiliares opcionales
       }
     } catch (err) {
       console.warn('Supabase offline o modo demo:', err);
@@ -386,7 +381,10 @@ window.guardarCambiosPerfil = async function(event) {
   // 4. Cerrar modal y notificar al usuario
   window.cerrarModalPerfil();
 
-  if (pwdUpdated) {
+  if (nuevaPwd && !pwdUpdated) {
+    const detalle = authError?.message ? ` (${authError.message})` : '';
+    showToast(`⚠️ Perfil guardado, pero la contraseña NO se pudo actualizar${detalle}.`, 'error');
+  } else if (pwdUpdated) {
     showToast('✅ Perfil y contraseña actualizados correctamente.', 'success');
   } else {
     showToast('✅ Perfil de usuario actualizado exitosamente.', 'success');
@@ -409,6 +407,189 @@ window.toggleAuthTab = function(tab) {
     if (loginSection) loginSection.classList.remove('hidden');
     if (tabBtnLogin) tabBtnLogin.className = "flex-1 py-2 text-center font-bold text-xs border-b-2 border-amber-400 text-amber-400 transition-colors";
     if (tabBtnSignup) tabBtnSignup.className = "flex-1 py-2 text-center font-bold text-xs border-b-2 border-transparent text-slate-400 hover:text-white transition-colors";
+  }
+};
+
+// ==============================================================================
+// RECUPERACIÓN DE CONTRASEÑA (Supabase Auth: resetPasswordForEmail + PASSWORD_RECOVERY)
+// ==============================================================================
+
+// Capturar el hash ANTES de que Supabase lo procese y lo limpie de la URL.
+const URL_HASH_INICIAL = typeof window !== 'undefined' ? window.location.hash : '';
+const ES_ENLACE_RECUPERACION = /(^|[#&])type=recovery(&|$)/.test(URL_HASH_INICIAL);
+const ERROR_ENLACE_AUTH = (() => {
+  const m = URL_HASH_INICIAL.match(/(?:^|[#&])error_code=([^&]+)/);
+  return m ? decodeURIComponent(m[1]) : null;
+})();
+
+const AUTH_MODAL_ID = 'modal-auth-password-backdrop';
+
+function cerrarModalAuthPassword() {
+  const prev = document.getElementById(AUTH_MODAL_ID);
+  if (prev) prev.remove();
+}
+
+function montarModalAuthPassword(innerHtml) {
+  cerrarModalAuthPassword();
+  document.body.insertAdjacentHTML('beforeend', `
+  <div id="${AUTH_MODAL_ID}" class="fixed inset-0 bg-black/75 z-50 flex items-start justify-center p-4 pt-24 overflow-y-auto">
+    <div class="bg-slate-900 text-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-800" role="dialog" aria-modal="true">
+      ${innerHtml}
+    </div>
+  </div>`);
+}
+
+window.cerrarModalAuthPassword = cerrarModalAuthPassword;
+
+window.abrirRecuperarPassword = function() {
+  const emailLogin = document.getElementById('login-email');
+  const emailPrevio = escapeAttr(emailLogin ? emailLogin.value.trim() : '');
+
+  montarModalAuthPassword(`
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-extrabold text-base flex items-center gap-2">
+          <span class="material-symbols-outlined text-amber-400">lock_reset</span> Recuperar contraseña
+        </h3>
+        <button type="button" onclick="cerrarModalAuthPassword()" class="text-slate-400 hover:text-white p-1 rounded-lg" aria-label="Cerrar">
+          <span class="material-symbols-outlined text-xl">close</span>
+        </button>
+      </div>
+      <p class="text-xs text-slate-400 mb-4">Ingresa el correo con el que te registraste. Te enviaremos un enlace para crear una nueva contraseña.</p>
+      <form id="form-recuperar-password" onsubmit="recuperarPasswordSubmit(event)" class="space-y-4">
+        <div class="relative flex items-center">
+          <span class="material-symbols-outlined absolute left-3 text-slate-400 text-sm pointer-events-none">mail</span>
+          <input type="email" id="recuperar-email" required value="${emailPrevio}" placeholder="tu.correo@ejemplo.com" class="w-full h-10 pl-9 pr-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500"/>
+        </div>
+        <button type="submit" id="btn-recuperar-submit" class="w-full h-10 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-1.5">
+          <span class="material-symbols-outlined text-sm">send</span> Enviar enlace de recuperación
+        </button>
+      </form>`);
+
+  const input = document.getElementById('recuperar-email');
+  if (input) input.focus();
+};
+
+window.recuperarPasswordSubmit = async function(event) {
+  if (event) event.preventDefault();
+  const input = document.getElementById('recuperar-email');
+  const btn = document.getElementById('btn-recuperar-submit');
+  const email = input ? input.value.trim() : '';
+
+  if (!email) {
+    showToast('Por favor ingrese su correo electrónico.', 'warning');
+    return;
+  }
+
+  const sb = getSupabase();
+  if (!sb || !sb.auth) {
+    showToast('Error: Servicio de autenticación no disponible.', 'error');
+    return;
+  }
+
+  const origBtn = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<span class="material-symbols-outlined text-sm animate-spin">refresh</span> Enviando...`;
+  }
+
+  try {
+    // El enlace del correo regresa a esta misma página; Supabase emite PASSWORD_RECOVERY al abrirlo.
+    const redirectTo = `${window.location.origin}${window.location.pathname}`;
+    const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo });
+
+    if (error) {
+      const esLimite = error.status === 429 || /rate limit|security purposes/i.test(error.message || '');
+      showToast(esLimite
+        ? 'Se han solicitado demasiados correos. Espere unos minutos e intente de nuevo.'
+        : `No se pudo enviar el correo: ${error.message}`, 'error');
+      return;
+    }
+
+    // Mensaje neutro: no revela si el correo está registrado o no.
+    cerrarModalAuthPassword();
+    showToast('📧 Si el correo está registrado, recibirás un enlace para restablecer tu contraseña. Revisa también la carpeta de spam.', 'success');
+  } catch (ex) {
+    showToast('Error al conectar con el servicio de autenticación.', 'error');
+  } finally {
+    if (btn && document.body.contains(btn)) {
+      btn.disabled = false;
+      btn.innerHTML = origBtn;
+    }
+  }
+};
+
+let modalNuevaPasswordAbierto = false;
+
+function abrirModalNuevaPassword() {
+  if (modalNuevaPasswordAbierto) return;
+  modalNuevaPasswordAbierto = true;
+
+  montarModalAuthPassword(`
+      <h3 class="font-extrabold text-base flex items-center gap-2 mb-2">
+        <span class="material-symbols-outlined text-emerald-400">key</span> Crear nueva contraseña
+      </h3>
+      <p class="text-xs text-slate-400 mb-4">Ingresa tu nueva contraseña (mínimo 6 caracteres).</p>
+      <form id="form-nueva-password" onsubmit="guardarNuevaPasswordSubmit(event)" class="space-y-3">
+        <input type="password" id="nueva-password" required minlength="6" autocomplete="new-password" placeholder="Nueva contraseña" class="w-full h-10 px-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500"/>
+        <input type="password" id="nueva-password-confirm" required minlength="6" autocomplete="new-password" placeholder="Confirmar nueva contraseña" class="w-full h-10 px-3 rounded-lg bg-slate-800 text-white placeholder-slate-500 font-mono text-xs border border-slate-700 focus:outline-none focus:border-blue-500"/>
+        <button type="submit" id="btn-nueva-password-submit" class="w-full h-10 mt-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5">
+          <span class="material-symbols-outlined text-sm">save</span> Guardar nueva contraseña
+        </button>
+      </form>`);
+
+  const input = document.getElementById('nueva-password');
+  if (input) input.focus();
+}
+
+window.guardarNuevaPasswordSubmit = async function(event) {
+  if (event) event.preventDefault();
+  const pwdInput = document.getElementById('nueva-password');
+  const confirmInput = document.getElementById('nueva-password-confirm');
+  const btn = document.getElementById('btn-nueva-password-submit');
+  const pwd = pwdInput ? pwdInput.value : '';
+  const confirm = confirmInput ? confirmInput.value : '';
+
+  if (pwd.length < 6) {
+    showToast('La contraseña debe tener al menos 6 caracteres.', 'warning');
+    return;
+  }
+  if (pwd !== confirm) {
+    showToast('Las contraseñas no coinciden. Por favor verifique.', 'error');
+    return;
+  }
+
+  const sb = getSupabase();
+  if (!sb || !sb.auth) {
+    showToast('Error: Servicio de autenticación no disponible.', 'error');
+    return;
+  }
+
+  const origBtn = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<span class="material-symbols-outlined text-sm animate-spin">refresh</span> Guardando...`;
+  }
+
+  try {
+    const { error } = await sb.auth.updateUser({ password: pwd });
+    if (error) {
+      showToast(`No se pudo actualizar la contraseña: ${error.message}`, 'error');
+      return;
+    }
+
+    if (pwdInput) pwdInput.value = '';
+    if (confirmInput) confirmInput.value = '';
+    modalNuevaPasswordAbierto = false;
+    cerrarModalAuthPassword();
+    showToast('✅ Contraseña actualizada correctamente. Ya puedes usarla para iniciar sesión.', 'success');
+    window.navigateView('tablero');
+  } catch (ex) {
+    showToast('Error al conectar con el servicio de autenticación.', 'error');
+  } finally {
+    if (btn && document.body.contains(btn)) {
+      btn.disabled = false;
+      btn.innerHTML = origBtn;
+    }
   }
 };
 
@@ -608,17 +789,25 @@ window.signupFormSubmit = async function(event) {
       return;
     }
 
+    // Si el proyecto exige confirmar el correo, signUp no devuelve sesión:
+    // no se puede iniciar sesión todavía.
+    if (!data.session) {
+      window.toggleAuthTab('login');
+      const loginEmail = document.getElementById('login-email');
+      if (loginEmail) loginEmail.value = email;
+      showToast('📧 Cuenta creada. Revisa tu correo y confirma tu cuenta antes de iniciar sesión.', 'success');
+      return;
+    }
+
     // 2. Guardar registro en la tabla user_roles en la base de datos
     if (['DIR_COMP', 'COMISARIO', 'CLUB_ADMIN'].includes(rol)) {
-      try {
-        await sb.from('user_roles').insert({
-          user_id: newUser.id,
-          rol: rol,
-          vigente_desde: new Date().toISOString().split('T')[0]
-        });
-        console.log('✅ Rol registrado en tabla user_roles de la base de datos.');
-      } catch (errRole) {
-        console.warn('Aviso user_roles insert:', errRole);
+      const { error: errRole } = await sb.from('user_roles').insert({
+        user_id: newUser.id,
+        rol: rol,
+        vigente_desde: new Date().toISOString().split('T')[0]
+      });
+      if (errRole) {
+        console.warn('Aviso user_roles insert:', errRole.message);
       }
     }
 
@@ -913,8 +1102,10 @@ window.registrarHidratacionEnVivo = function() {
   showToast(`💧 Minuto de hidratación reglamentario iniciado (Art. 71).`, 'info');
 };
 
-window.registrarIncidenteEnVivo = async function() {
-  const causa = 'Lanzamiento de objetos e invasión parcial (Art. 73)';
+window.registrarIncidenteEnVivo = async function(causaParam) {
+  const causa = (typeof causaParam === 'string' && causaParam.trim())
+    ? causaParam.trim()
+    : 'Lanzamiento de objetos e invasión parcial (Art. 73)';
   store.registrarEventoPartido({
     tipo: 'fin_periodo',
     club: null,
@@ -2316,8 +2507,15 @@ function showToast(message, type = 'info') {
   };
 
   const toast = document.createElement('div');
-  toast.className = `fixed bottom-5 right-5 z-50 flex items-center gap-2 px-4 py-3 rounded-xl shadow-2xl border text-xs font-semibold animate-bounce transition-all ${colors[type] || colors.info}`;
-  toast.innerHTML = `<span class="material-symbols-outlined text-base">notifications</span><span>${message}</span>`;
+  toast.className = `fixed bottom-5 right-5 z-[60] flex items-center gap-2 px-4 py-3 rounded-xl shadow-2xl border text-xs font-semibold animate-bounce transition-all ${colors[type] || colors.info}`;
+  toast.setAttribute('role', type === 'error' ? 'alert' : 'status');
+  const icon = document.createElement('span');
+  icon.className = 'material-symbols-outlined text-base';
+  icon.textContent = 'notifications';
+  const text = document.createElement('span');
+  // textContent evita inyección de HTML (p. ej. mensajes de error de Supabase o nombres de usuario)
+  text.textContent = String(message);
+  toast.append(icon, text);
   document.body.appendChild(toast);
 
   setTimeout(() => {
@@ -2325,6 +2523,9 @@ function showToast(message, type = 'info') {
     setTimeout(() => toast.remove(), 400);
   }, 4000);
 }
+
+// Expuesto globalmente: los atributos onclick="showToast(...)" del HTML lo requieren.
+window.showToast = showToast;
 
 // ==============================================================================
 // 7. PARTIDOS EN TIEMPO REAL (LIGAPRO 2025 OFICIAL & SUPABASE REALTIME)
@@ -2695,8 +2896,28 @@ function iniciarApp() {
       if (event === 'SIGNED_OUT') {
         store.setUserRole('PUBLICO', 'Invitado', '');
         actualizarUIHeader();
+      } else if (event === 'PASSWORD_RECOVERY') {
+        abrirModalNuevaPassword();
       }
     });
+
+    // Respaldo: si el evento PASSWORD_RECOVERY se emitió antes de suscribirse,
+    // abrir el formulario igualmente cuando la sesión del enlace esté lista.
+    if (ES_ENLACE_RECUPERACION) {
+      sb.auth.getSession().then(({ data: { session } }) => {
+        if (session) abrirModalNuevaPassword();
+      }).catch(() => {});
+    }
+  }
+
+  if (ERROR_ENLACE_AUTH) {
+    const msg = ERROR_ENLACE_AUTH === 'otp_expired'
+      ? 'El enlace de recuperación expiró o ya fue utilizado. Solicita uno nuevo desde "¿Olvidó contraseña?".'
+      : 'El enlace de autenticación no es válido. Solicita uno nuevo.';
+    setTimeout(() => showToast(msg, 'error'), 300);
+    try {
+      window.history.replaceState({}, '', `${window.location.pathname}${window.location.search}`);
+    } catch (e) {}
   }
 
   const params = new URLSearchParams(window.location.search);
