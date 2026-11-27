@@ -82,7 +82,7 @@ Proyecto LigaPro/
 ├── login.html                                # Inicio de Sesión y Selector de Roles
 │
 ├── public/
-│   └── favicon.svg                           # Isotipo SVG institucional (escudo índigo + dorado)
+│   └── favicon.svg                           # Ícono de la pestaña: mismo logo LigaPro del encabezado
 │
 ├── docs/
 │   ├── SRS_SIGEC-LP_Gestion_Competiciones_LigaPro.md   # Especificación de Requisitos de Software
