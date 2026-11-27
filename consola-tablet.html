@@ -241,39 +241,67 @@
         </div>
       </div>
 
+      <div data-c="acta-cerrada" class="hidden mb-5 flex items-center gap-2 rounded-2xl border border-emerald-200 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-500/10 px-5 py-4 text-base font-semibold text-emerald-800 dark:text-emerald-300">
+        <span class="material-symbols-outlined">verified</span> Acta cerrada y firmada. La bitácora es de solo lectura.
+      </div>
+
       <!-- Marcador -->
       <div class="rounded-3xl bg-slate-900 text-[#fff] p-6 sm:p-8 mb-5">
         <p class="text-center text-sm font-semibold text-rose-400 mb-4" data-c="minuto">En vivo</p>
         <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
-          <div class="flex flex-col items-center gap-2 min-w-0">
+          <div class="flex flex-col items-center gap-2 min-w-0 text-center">
             <img data-c="local-escudo" src="assets/ligapro-mini.svg" alt="" class="w-16 h-16 object-contain" />
             <span data-c="local-nombre" class="text-lg font-bold leading-tight line-clamp-2 break-words">Local</span>
           </div>
           <div class="text-6xl sm:text-7xl font-extrabold tabular-nums">
             <span data-c="marcador-local">0</span><span class="text-slate-500 mx-3">-</span><span data-c="marcador-visitante">0</span>
           </div>
-          <div class="flex flex-col items-center gap-2 min-w-0">
+          <div class="flex flex-col items-center gap-2 min-w-0 text-center">
             <img data-c="visitante-escudo" src="assets/ligapro-mini.svg" alt="" class="w-16 h-16 object-contain" />
             <span data-c="visitante-nombre" class="text-lg font-bold leading-tight line-clamp-2 break-words">Visitante</span>
           </div>
         </div>
       </div>
 
-      <!-- Botones grandes -->
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-5">
-        <button type="button" onclick="registrarGolEnVivo('local')" class="h-20 rounded-2xl bg-emerald-600 active:scale-[.98] text-white text-lg font-bold transition-transform">Gol local</button>
-        <button type="button" onclick="registrarGolEnVivo('visitante')" class="h-20 rounded-2xl bg-emerald-600 active:scale-[.98] text-white text-lg font-bold transition-transform">Gol visitante</button>
-        <button type="button" onclick="registrarSustitucionEnVivo('local')" class="h-20 rounded-2xl bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-700 active:scale-[.98] text-slate-900 dark:text-white text-lg font-bold transition-transform">Cambio</button>
-        <button type="button" onclick="registrarTarjetaEnVivo('amarilla', 'visitante')" class="h-20 rounded-2xl bg-amber-400 active:scale-[.98] text-[#1c1917] text-lg font-bold transition-transform">Amarilla</button>
-        <button type="button" onclick="registrarTarjetaEnVivo('roja', 'visitante')" class="h-20 rounded-2xl bg-rose-600 active:scale-[.98] text-white text-lg font-bold transition-transform">Roja</button>
-        <button type="button" onclick="registrarIncidenteEnVivo()" class="h-20 rounded-2xl bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-700 active:scale-[.98] text-slate-900 dark:text-white text-lg font-bold transition-transform">Incidente</button>
+      <!-- Botones grandes por equipo -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-4">
+          <div class="flex items-center gap-2 mb-3 text-base font-bold text-slate-900 dark:text-white">
+            <img data-c="local-escudo" src="assets/ligapro-mini.svg" alt="" class="w-7 h-7 object-contain" /><span data-c="local-nombre">Local</span>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('gol', 'local')" class="h-20 rounded-2xl bg-emerald-600 active:scale-[.98] text-white text-lg font-bold transition-transform">Gol</button>
+            <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('sustitucion', 'local')" class="h-20 rounded-2xl border border-slate-200 dark:border-slate-700 active:scale-[.98] text-slate-900 dark:text-white text-lg font-bold transition-transform">Cambio</button>
+            <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('amarilla', 'local')" class="h-20 rounded-2xl bg-amber-400 active:scale-[.98] text-[#1c1917] text-lg font-bold transition-transform">Amarilla</button>
+            <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('roja', 'local')" class="h-20 rounded-2xl bg-rose-600 active:scale-[.98] text-white text-lg font-bold transition-transform">Roja</button>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-4">
+          <div class="flex items-center gap-2 mb-3 text-base font-bold text-slate-900 dark:text-white">
+            <img data-c="visitante-escudo" src="assets/ligapro-mini.svg" alt="" class="w-7 h-7 object-contain" /><span data-c="visitante-nombre">Visitante</span>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('gol', 'visitante')" class="h-20 rounded-2xl bg-emerald-600 active:scale-[.98] text-white text-lg font-bold transition-transform">Gol</button>
+            <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('sustitucion', 'visitante')" class="h-20 rounded-2xl border border-slate-200 dark:border-slate-700 active:scale-[.98] text-slate-900 dark:text-white text-lg font-bold transition-transform">Cambio</button>
+            <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('amarilla', 'visitante')" class="h-20 rounded-2xl bg-amber-400 active:scale-[.98] text-[#1c1917] text-lg font-bold transition-transform">Amarilla</button>
+            <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('roja', 'visitante')" class="h-20 rounded-2xl bg-rose-600 active:scale-[.98] text-white text-lg font-bold transition-transform">Roja</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 mb-5">
+        <button type="button" data-c-requiere-acta-abierta onclick="registrarHidratacionEnVivo()" class="h-16 rounded-2xl bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-700 active:scale-[.98] text-slate-900 dark:text-white text-base font-bold transition-transform">Hidratación</button>
+        <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroIncidente()" class="h-16 rounded-2xl bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-700 active:scale-[.98] text-slate-900 dark:text-white text-base font-bold transition-transform">Incidente</button>
       </div>
 
       <!-- Bitácora -->
       <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
-        <div class="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-slate-800">
-          <h2 class="text-lg font-bold text-slate-900 dark:text-white">Bitácora</h2>
-          <button type="button" onclick="sellarPlanillaJuego()" class="h-11 px-5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-[#0f172a] text-sm font-bold">Cerrar acta</button>
+        <div class="flex items-center justify-between gap-3 px-5 py-4 border-b border-slate-100 dark:border-slate-800">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 dark:text-white">Bitácora</h2>
+            <span data-c="eventos-resumen" class="text-xs text-slate-400"></span>
+          </div>
+          <button type="button" data-c-requiere-acta-abierta onclick="sellarPlanillaJuego()" class="h-11 px-5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-[#0f172a] text-sm font-bold">Cerrar acta</button>
         </div>
         <ul data-c="eventos" class="divide-y divide-slate-100 dark:divide-slate-800 text-base"></ul>
       </div>

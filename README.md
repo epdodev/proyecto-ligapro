@@ -140,7 +140,7 @@ Proyecto LigaPro/
 | **MOD-TRM** | Portal de Clubes | `clubes.html` | Radicación de solicitudes con plazos automáticos: 7d, 30d, 48h, 72h. |
 | **MOD-PRE** | Asistente de Uniformes | `uniformes.html` | Simulación cromática, contraste WCAG y sellado de acta 48h antes del partido. |
 | **MOD-EST** | Escenarios y VAR | `estadios.html` | Parámetros: césped 20–25 mm, hospital < 15 m, fibra VAR, energía 220V. |
-| **MOD-OPS** | Consola de Comisario | `consola.html` | Registro en vivo: goles, tarjetas, sustituciones, hidratación e incidentes. |
+| **MOD-OPS** | Consola de Comisario | `consola.html` | Registro en vivo por equipo y jugador: goles (jugada, penal, autogol), tarjetas, cambios, hidratación e incidentes. Anulación trazable con motivo, «Deshacer» inmediato, doble amarilla = expulsión, máximo 5 cambios y cierre de acta irreversible. |
 | **MOD-ACC** | Consola Alto Contraste | `consola-alto-contraste.html` | Modo estricto WCAG AAA `#000000 / #FFE600` para sol extremo o noche. |
 | **MOD-TABL** | Consola Tablet | `consola-tablet.html` | Interfaz táctil optimizada para banquillo y camerinos. |
 | **MOD-PERF** | Perfil de Usuario | Modal en Header | Editor de perfil con avatar interactivo, cargo, club, cédula. Persistencia en Supabase y localStorage. |
@@ -231,6 +231,7 @@ Migraciones en `supabase/migrations/`:
 - `20261106000000_sigec_lp_schema.sql` — DDL completo con RLS y triggers.
 - `20261106000001_sigec_lp_seed.sql` — Datos iniciales de clubes, estadios e infracciones.
 - `20261127000000_profiles.sql` — Tabla `profiles` (perfil de usuario) con RLS: cada usuario solo lee/edita el suyo.
+- `20261127000001_anulacion_eventos.sql` — Anulación trazable de eventos: columnas `anulado`, `anulado_en`, `anulado_por`, `motivo_anulacion`; función `anular_evento_partido(client_uuid, motivo)` que valida permisos y acta abierta, registra en `audit_log` y recalcula el marcador.
 
 ---
 

@@ -710,11 +710,32 @@ export const ROLES_MAP = {
   }
 };
 
+function nuevoUid() {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+  });
+}
+
+const TIPOS_GOL = ['gol', 'gol_penal', 'autogol'];
+
+function esGol(tipo) {
+  return TIPOS_GOL.includes(tipo);
+}
+
+/** Un autogol suma al rival del club que lo comete. */
+function clubQueAnota(evento) {
+  if (evento.tipo === 'autogol') return evento.club === 'local' ? 'visitante' : 'local';
+  return evento.club === 'visitante' ? 'visitante' : 'local';
+}
+
 class Store {
   constructor() {
     this.state = { ...INITIAL_STATE };
     this.listeners = new Set();
     this.loadFromLocalStorage();
+    this._normalizarEventos();
   }
 
   getState() {
@@ -911,32 +932,126 @@ class Store {
     this.notify();
   }
 
+  /** El acta cerrada (oficializada) no admite nuevos eventos ni anulaciones (Art. 45). */
+  actaCerrada() {
+    return this.state.partidoActivo?.estado === 'oficializado';
+  }
+
+  /** Eventos vigentes (no anulados) del partido activo. */
+  eventosVigentes() {
+    return (this.state.partidoActivo?.eventos || []).filter((e) => !e.anulado);
+  }
+
+  /** Amarillas vigentes de un jugador en el partido activo (para la doble amarilla). */
+  contarAmarillas(club, jugador) {
+    if (!jugador) return 0;
+    const nombre = jugador.trim().toLowerCase();
+    return this.eventosVigentes().filter((e) =>
+      e.tipo === 'amarilla' && e.club === club && (e.jugador || '').trim().toLowerCase() === nombre
+    ).length;
+  }
+
+  /** Sustituciones vigentes de un club en el partido activo. */
+  contarSustituciones(club) {
+    return this.eventosVigentes().filter((e) => e.tipo === 'sustitucion' && e.club === club).length;
+  }
+
+  /**
+   * Registra un evento en el partido activo y devuelve el evento creado.
+   * Los goles actualizan el marcador; el resto solo queda en la bitácora.
+   */
   registrarEventoPartido(evento) {
+    const p = this.state.partidoActivo;
     const nuevoEvento = {
-      id: Date.now(),
-      minuto: this.state.partidoActivo.minuto,
+      uid: nuevoUid(),
+      minuto: p.minuto,
+      periodo: p.periodo,
+      registradoEn: new Date().toISOString(),
+      anulado: false,
       ...evento
     };
 
-    const nuevosEventos = [nuevoEvento, ...this.state.partidoActivo.eventos];
-    const marcador = { ...this.state.partidoActivo.marcador };
-
-    if (evento.tipo === 'gol') {
-      if (evento.club === 'local') marcador.local += 1;
-      else marcador.visitante += 1;
+    const marcador = { ...p.marcador };
+    if (esGol(nuevoEvento.tipo)) {
+      const club = clubQueAnota(nuevoEvento);
+      marcador[club] = (marcador[club] || 0) + 1;
     }
 
     this.state.partidoActivo = {
-      ...this.state.partidoActivo,
+      ...p,
       marcador,
-      eventos: nuevosEventos
+      eventos: [nuevoEvento, ...(p.eventos || [])]
     };
 
-    if (evento.tipo === 'gol') {
+    if (esGol(nuevoEvento.tipo)) {
+      this._sincronizarMarcadorEnLista();
       this.recalcularPuntosPartidoEnVivo();
     }
 
     this.notify();
+    return nuevoEvento;
+  }
+
+  /**
+   * Anula un evento sin borrarlo (queda en la bitácora con motivo, autor y hora).
+   * Si era un gol, se descuenta del marcador. Devuelve el evento anulado o null.
+   */
+  anularEvento(uid, motivo) {
+    const p = this.state.partidoActivo;
+    const evento = (p.eventos || []).find((e) => e.uid === uid);
+    if (!evento || evento.anulado) return null;
+
+    const anulado = {
+      ...evento,
+      anulado: true,
+      anulacion: {
+        motivo,
+        en: new Date().toISOString(),
+        por: this.state.currentUser?.nombre || 'Comisario'
+      }
+    };
+
+    const marcador = { ...p.marcador };
+    if (esGol(evento.tipo)) {
+      const club = clubQueAnota(evento);
+      marcador[club] = Math.max(0, (marcador[club] || 0) - 1);
+    }
+
+    this.state.partidoActivo = {
+      ...p,
+      marcador,
+      eventos: p.eventos.map((e) => (e.uid === uid ? anulado : e))
+    };
+
+    if (esGol(evento.tipo)) {
+      this._sincronizarMarcadorEnLista();
+      this.recalcularPuntosPartidoEnVivo();
+    }
+
+    this.notify();
+    return anulado;
+  }
+
+  /** Refleja el marcador del partido activo en la lista de partidos (tarjetas del tablero). */
+  _sincronizarMarcadorEnLista() {
+    const p = this.state.partidoActivo;
+    const item = this.state.partidos?.find((x) => x.id === p.id);
+    if (item) {
+      item.marcador = { ...p.marcador };
+      item.goles_local = p.marcador.local;
+      item.goles_visitante = p.marcador.visitante;
+    }
+  }
+
+  /** Asegura que cada evento tenga uid y bandera de anulación (datos antiguos o de semilla). */
+  _normalizarEventos() {
+    const p = this.state.partidoActivo;
+    if (!p) return;
+    p.eventos = (p.eventos || []).map((e) => ({
+      anulado: false,
+      ...e,
+      uid: e.uid || nuevoUid()
+    }));
   }
 
   recalcularPuntosPartidoEnVivo() {
@@ -999,10 +1114,19 @@ class Store {
   seleccionarPartido(partidoId) {
     const encontrado = this.state.partidos?.find(p => p.id === partidoId);
     if (encontrado) {
+      const mismoPartido = this.state.partidoActivo?.id === partidoId;
+      const marcador = encontrado.marcador || {
+        local: encontrado.goles_local ?? 0,
+        visitante: encontrado.goles_visitante ?? 0
+      };
       this.state.partidoActivo = {
         ...this.state.partidoActivo,
-        ...encontrado
+        ...encontrado,
+        marcador,
+        // Al cambiar de partido no se arrastra la bitácora del anterior
+        eventos: mismoPartido ? this.state.partidoActivo.eventos : (encontrado.eventos || [])
       };
+      this._normalizarEventos();
       this.recalcularPuntosPartidoEnVivo();
       this.notify();
     }
@@ -1020,6 +1144,7 @@ class Store {
     if (this.state.partidoActivo?.id === partidoId) {
       this.state.partidoActivo.goles_local = gl;
       this.state.partidoActivo.goles_visitante = gv;
+      this.state.partidoActivo.marcador = { local: gl, visitante: gv };
       if (estado) this.state.partidoActivo.estado = estado;
       this.recalcularPuntosPartidoEnVivo();
     }

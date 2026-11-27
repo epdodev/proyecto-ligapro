@@ -972,158 +972,450 @@ window.marcarNotificacionesLeidas = function() {
 // 5. GESTIÓN DE EVENTOS DE PARTIDO (CONSOLA DE COMISARIO)
 // ==============================================================================
 
-window.registrarGolEnVivo = async function(club) {
-  const p = store.state.partidoActivo;
-  const nombreClub = club === 'local' ? (p.local?.nombre || 'Local') : (p.visitante?.nombre || 'Visitante');
-  const jugador = club === 'local' 
-    ? (p.local?.nombreCorto === 'LDU' ? 'Alex Arce (19)' : 'Delantero Local (9)') 
-    : (p.visitante?.nombreCorto === 'BSC' ? 'Octavio Rivero (29)' : 'Delantero Visitante (11)');
-  
-  const evento = {
-    tipo: 'gol',
-    club,
-    autor: jugador,
-    detalle: `Gol convalidado por Árbitro Central y VAR. Transmisión COMET actualizada.`
-  };
+// ------------------------------------------------------------------------------
+// 5.1 Diálogo reutilizable (accesible: foco, Escape, clic fuera)
+// ------------------------------------------------------------------------------
 
-  store.registrarEventoPartido(evento);
-  reproducirTonoAccesible(587.33, 0.3); // Tono agudo de gol
-  
-  // Persistir en Supabase de forma segura tanto el evento como el marcador actualizado en partidos
-  const nuevoGolesLocal = p.marcador.local;
-  const nuevoGolesVisitante = p.marcador.visitante;
+let dialogoTeclado = null;
+let dialogoFocoPrevio = null;
 
-  await safeInsert('eventos_partido', {
-    partido_id: p.id,
-    tipo: 'gol',
-    periodo: p.periodo,
-    minuto: p.minuto,
-    detalle: evento
+function cerrarDialogo() {
+  const d = document.getElementById('dialogo-sigec');
+  if (d) d.remove();
+  if (dialogoTeclado) {
+    document.removeEventListener('keydown', dialogoTeclado);
+    dialogoTeclado = null;
+  }
+  if (dialogoFocoPrevio && document.body.contains(dialogoFocoPrevio)) {
+    dialogoFocoPrevio.focus();
+  }
+  dialogoFocoPrevio = null;
+}
+
+/**
+ * Abre un diálogo con formulario. onConfirmar(datos) recibe los campos del formulario;
+ * si devuelve un texto, se muestra como error y el diálogo sigue abierto.
+ */
+function abrirDialogo({ titulo, descripcion = '', cuerpoHtml = '', confirmarTexto = 'Confirmar', peligro = false, onConfirmar }) {
+  cerrarDialogo();
+  dialogoFocoPrevio = document.activeElement;
+
+  const colorConfirmar = peligro
+    ? 'bg-rose-600 hover:bg-rose-700'
+    : 'bg-indigo-600 hover:bg-indigo-700';
+
+  document.body.insertAdjacentHTML('beforeend', `
+  <div id="dialogo-sigec" class="fixed inset-0 z-[55] bg-slate-900/60 flex items-end sm:items-center justify-center p-4">
+    <form id="dialogo-sigec-form" novalidate role="dialog" aria-modal="true" aria-labelledby="dialogo-sigec-titulo"
+      class="w-full max-w-md rounded-2xl bg-white dark:bg-[#111827] text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 shadow-2xl p-6">
+      <h2 id="dialogo-sigec-titulo" class="text-lg font-bold">${escapeAttr(titulo)}</h2>
+      ${descripcion ? `<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">${escapeAttr(descripcion)}</p>` : ''}
+      <div class="mt-5 space-y-4">${cuerpoHtml}</div>
+      <p id="dialogo-sigec-error" role="alert" class="hidden mt-4 text-sm font-medium text-rose-600 dark:text-rose-400"></p>
+      <div class="mt-6 flex justify-end gap-2">
+        <button type="button" data-dialogo-cancelar class="h-10 px-4 rounded-lg border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800">Cancelar</button>
+        <button type="submit" class="h-10 px-4 rounded-lg ${colorConfirmar} text-white text-sm font-semibold">${escapeAttr(confirmarTexto)}</button>
+      </div>
+    </form>
+  </div>`);
+
+  const fondo = document.getElementById('dialogo-sigec');
+  const form = document.getElementById('dialogo-sigec-form');
+  const errorEl = document.getElementById('dialogo-sigec-error');
+
+  fondo.addEventListener('mousedown', (e) => { if (e.target === fondo) cerrarDialogo(); });
+  form.querySelector('[data-dialogo-cancelar]').addEventListener('click', cerrarDialogo);
+  dialogoTeclado = (e) => { if (e.key === 'Escape') cerrarDialogo(); };
+  document.addEventListener('keydown', dialogoTeclado);
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const datos = Object.fromEntries(new FormData(form).entries());
+    const resultado = await onConfirmar(datos);
+    if (typeof resultado === 'string') {
+      errorEl.textContent = resultado;
+      errorEl.classList.remove('hidden');
+      return;
+    }
+    cerrarDialogo();
   });
 
-  const sb = getSupabase();
-  if (sb) {
-    try {
-      await sb.from('partidos').update({
-        goles_local: nuevoGolesLocal,
-        goles_visitante: nuevoGolesVisitante,
-        estado: 'en_juego'
-      }).eq('id', p.id);
-    } catch (e) {
-      console.warn('Error actualizando marcador en Supabase:', e);
-    }
-  }
+  const primerCampo = form.querySelector('input:not([type="hidden"]):not([type="radio"]), textarea, select, input[type="radio"]:checked');
+  (primerCampo || form.querySelector('button[type="submit"]')).focus();
+}
 
-  showToast(`⚽ ¡GOL de ${nombreClub}! Registrado en Minuto ${p.minuto}'`, 'success');
+const CAMPO = 'mt-1 w-full h-10 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/30 focus:border-indigo-600';
+const ETIQUETA = 'text-sm font-medium text-slate-700 dark:text-slate-200';
+
+function campoTexto(nombre, etiqueta, { valor = '', placeholder = '', requerido = false, tipo = 'text', extra = '' } = {}) {
+  return `<label class="block"><span class="${ETIQUETA}">${etiqueta}${requerido ? '' : ' <span class="font-normal text-slate-400">(opcional)</span>'}</span>
+    <input name="${nombre}" type="${tipo}" value="${escapeAttr(valor)}" placeholder="${escapeAttr(placeholder)}" ${extra} class="${CAMPO}" autocomplete="off" /></label>`;
+}
+
+function opcionesRadio(nombre, opciones, seleccion) {
+  return `<div class="grid grid-cols-${opciones.length} gap-2">` + opciones.map(([valor, texto]) => `
+    <label class="flex items-center justify-center h-10 px-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm font-medium cursor-pointer has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-700 dark:has-[:checked]:bg-indigo-500/10 dark:has-[:checked]:text-indigo-300">
+      <input type="radio" name="${nombre}" value="${valor}" class="sr-only" ${valor === seleccion ? 'checked' : ''} />${texto}
+    </label>`).join('') + `</div>`;
+}
+
+function campoMinuto(valor) {
+  return campoTexto('minuto', 'Minuto', { valor: String(valor ?? ''), requerido: true, tipo: 'number', extra: 'min="0" max="130" inputmode="numeric"' });
+}
+
+function leerMinuto(datos) {
+  const minuto = parseInt(datos.minuto, 10);
+  if (!Number.isFinite(minuto) || minuto < 0 || minuto > 130) return null;
+  return minuto;
+}
+
+// ------------------------------------------------------------------------------
+// 5.2 Persistencia en Supabase (la bitácora local siempre se actualiza primero)
+// ------------------------------------------------------------------------------
+
+function clubIdDe(club) {
+  const p = store.state.partidoActivo;
+  if (club === 'local') return p.local?.id || null;
+  if (club === 'visitante') return p.visitante?.id || null;
+  return null;
+}
+
+function nombreEquipo(club) {
+  const p = store.state.partidoActivo;
+  const eq = club === 'local' ? p.local : p.visitante;
+  return eq?.nombreCorto || eq?.nombre || (club === 'local' ? 'Local' : 'Visitante');
+}
+
+const TIPOS_EVENTO_DB = ['gol', 'gol_penal', 'autogol', 'amarilla', 'segunda_amarilla', 'roja', 'sustitucion', 'hidratacion_inicio'];
+
+async function actualizarMarcadorRemoto() {
+  const sb = getSupabase();
+  const p = store.state.partidoActivo;
+  if (!sb) return;
+  try {
+    const { error } = await sb.from('partidos').update({
+      goles_local: p.marcador.local,
+      goles_visitante: p.marcador.visitante
+    }).eq('id', p.id);
+    if (error) console.warn('No se pudo actualizar el marcador en Supabase:', error.message);
+  } catch (e) {
+    console.warn('No se pudo actualizar el marcador en Supabase:', e);
+  }
+}
+
+async function persistirEvento(ev) {
+  const p = store.state.partidoActivo;
+  if (ev.tipo === 'incidente') {
+    await safeInsert('incidentes', {
+      partido_id: p.id,
+      tipo: ev.categoria || 'otro',
+      minuto: ev.minuto,
+      sector: ev.sector || null,
+      descripcion: ev.detalle || ev.categoria
+    });
+    return;
+  }
+  if (!TIPOS_EVENTO_DB.includes(ev.tipo)) return;
+
+  const res = await safeInsert('eventos_partido', {
+    partido_id: p.id,
+    tipo: ev.tipo,
+    periodo: ev.periodo || p.periodo || 1,
+    minuto: ev.minuto,
+    club_id: clubIdDe(ev.club),
+    detalle: { club: ev.club, jugador: ev.jugador || null, jugador_sale: ev.jugadorSale || null },
+    client_uuid: ev.uid
+  });
+  if (!res.success) console.warn('Evento guardado solo localmente:', res.error?.message || res.error);
+
+  if (['gol', 'gol_penal', 'autogol'].includes(ev.tipo)) await actualizarMarcadorRemoto();
+}
+
+async function persistirAnulacion(ev, motivo) {
+  const sb = getSupabase();
+  if (!sb) return;
+  try {
+    const { error } = await sb.rpc('anular_evento_partido', { p_client_uuid: ev.uid, p_motivo: motivo });
+    if (error) {
+      console.warn('Anulación guardada solo localmente:', error.message);
+      // Sin la función en el servidor, al menos dejar el marcador correcto
+      if (['gol', 'gol_penal', 'autogol'].includes(ev.tipo)) await actualizarMarcadorRemoto();
+    }
+  } catch (e) {
+    console.warn('Anulación guardada solo localmente:', e);
+  }
+}
+
+// ------------------------------------------------------------------------------
+// 5.3 Registro de eventos
+// ------------------------------------------------------------------------------
+
+const TITULO_EVENTO = {
+  gol: 'Gol',
+  amarilla: 'Tarjeta amarilla',
+  roja: 'Tarjeta roja',
+  sustitucion: 'Cambio'
+};
+
+function avisarActaCerrada() {
+  showToast('El acta de este partido está cerrada: ya no se pueden registrar ni anular eventos.', 'warning');
+}
+
+function refrescarTrasEvento() {
   actualizarUIHeader();
   renderizarPartidosTablero();
-};
+}
 
-window.registrarTarjetaEnVivo = async function(tipo, club = 'visitante') {
-  const jugador = club === 'visitante' ? 'Jesús Trindade (8)' : 'Ezequiel Piovi (18)';
+window.abrirRegistroEvento = function(tipo, club) {
+  if (store.actaCerrada()) return avisarActaCerrada();
   const p = store.state.partidoActivo;
-  
-  if (tipo === 'amarilla') {
-    const res = evaluarAcumulacionAmarillas(5, 'A');
-    const evento = {
-      tipo: 'amarilla',
-      club,
-      autor: jugador,
-      detalle: res.mensaje
-    };
-    store.registrarEventoPartido(evento);
-    reproducirTonoAccesible(440, 0.2);
+  const equipo = nombreEquipo(club);
 
-    await safeInsert('eventos_partido', {
-      partido_id: p.id,
-      tipo: 'amarilla',
-      periodo: p.periodo,
-      minuto: p.minuto,
-      detalle: evento
-    });
-
-    showToast(`🟨 Tarjeta Amarilla a ${jugador}. ${res.mensaje} (Multa: US$ ${res.multaUsd})`, res.suspendido ? 'warning' : 'info');
-  } else {
-    const evento = {
-      tipo: 'roja',
-      club,
-      autor: jugador,
-      detalle: 'Expulsión directa (Art. 90). Suspensión provisional de 1 partido y multa de US$ 100.'
-    };
-    store.registrarEventoPartido(evento);
-    reproducirTonoAccesible(300, 0.4);
-
-    await safeInsert('eventos_partido', {
-      partido_id: p.id,
-      tipo: 'roja',
-      periodo: p.periodo,
-      minuto: p.minuto,
-      detalle: evento
-    });
-
-    showToast(`🟥 TARJETA ROJA a ${jugador}. Suspensión provisional de 1 fecha aplicada.`, 'error');
+  if (tipo === 'sustitucion' && store.contarSustituciones(club) >= 5) {
+    showToast(`${equipo} ya realizó los 5 cambios permitidos.`, 'warning');
+    return;
   }
-  actualizarUIHeader();
+
+  let cuerpo = '';
+  if (tipo === 'gol') {
+    cuerpo += `<div><span class="${ETIQUETA}">Tipo</span><div class="mt-1">${opcionesRadio('tipoGol', [['gol', 'Jugada'], ['gol_penal', 'Penal'], ['autogol', 'Autogol']], 'gol')}</div></div>`;
+    cuerpo += campoTexto('jugador', 'Jugador', { placeholder: 'Ej: 19 Alex Arce' });
+  } else if (tipo === 'sustitucion') {
+    cuerpo += campoTexto('jugadorSale', 'Sale', { placeholder: 'Ej: 18 Ezequiel Piovi', requerido: true });
+    cuerpo += campoTexto('jugador', 'Entra', { placeholder: 'Ej: 9 Lisandro Alzugaray', requerido: true });
+  } else {
+    cuerpo += campoTexto('jugador', 'Jugador', { placeholder: 'Ej: 8 Jesús Trindade', requerido: true });
+  }
+  cuerpo += campoMinuto(p.minuto);
+
+  const descripcion = tipo === 'sustitucion'
+    ? `Cambio ${store.contarSustituciones(club) + 1} de 5`
+    : '';
+
+  abrirDialogo({
+    titulo: `${TITULO_EVENTO[tipo]} · ${equipo}`,
+    descripcion,
+    cuerpoHtml: cuerpo,
+    confirmarTexto: 'Registrar',
+    onConfirmar: (datos) => {
+      const minuto = leerMinuto(datos);
+      if (minuto === null) return 'Ingresa un minuto válido (0 a 130).';
+      const jugador = (datos.jugador || '').trim();
+      const jugadorSale = (datos.jugadorSale || '').trim();
+      if (tipo !== 'gol' && !jugador) return tipo === 'sustitucion' ? 'Indica quién entra.' : 'Indica el jugador.';
+      if (tipo === 'sustitucion' && !jugadorSale) return 'Indica quién sale.';
+      if (store.actaCerrada()) return 'El acta ya fue cerrada.';
+
+      registrarEvento({
+        tipo: tipo === 'gol' ? (datos.tipoGol || 'gol') : tipo,
+        club,
+        jugador,
+        jugadorSale,
+        minuto
+      });
+    }
+  });
 };
 
-window.registrarSustitucionEnVivo = async function(club = 'local') {
-  const evento = {
-    tipo: 'sustitucion',
-    club,
-    autor: 'Jhojan Julio ➔ Entra: Lisandro Alzugaray (9)',
-    detalle: 'Ventana 1 de 3 utilizada. Sustitución 1 de 5 permitidas (Disp. 4ª).'
-  };
-  store.registrarEventoPartido(evento);
+function registrarEvento({ tipo, club, jugador, jugadorSale, minuto }) {
+  const equipo = nombreEquipo(club);
+  let tipoFinal = tipo;
+  if (tipo === 'amarilla' && store.contarAmarillas(club, jugador) >= 1) {
+    tipoFinal = 'segunda_amarilla';
+  }
 
-  await safeInsert('eventos_partido', {
-    partido_id: store.state.partidoActivo.id,
-    tipo: 'sustitucion',
-    periodo: store.state.partidoActivo.periodo,
-    minuto: store.state.partidoActivo.minuto,
-    detalle: evento
+  const ev = store.registrarEventoPartido({ tipo: tipoFinal, club, jugador, jugadorSale, minuto });
+
+  const mensajes = {
+    gol: [`Gol de ${equipo}${jugador ? ` (${jugador})` : ''} al ${minuto}'.`, 'success', 587.33],
+    gol_penal: [`Gol de penal de ${equipo}${jugador ? ` (${jugador})` : ''} al ${minuto}'.`, 'success', 587.33],
+    autogol: [`Autogol de ${equipo}${jugador ? ` (${jugador})` : ''} al ${minuto}'.`, 'success', 587.33],
+    amarilla: [`Amarilla a ${jugador} (${equipo}).`, 'info', 440],
+    segunda_amarilla: [`Segunda amarilla a ${jugador} (${equipo}): queda expulsado.`, 'warning', 300],
+    roja: [`Roja directa a ${jugador} (${equipo}).`, 'error', 300],
+    sustitucion: [`Cambio en ${equipo}: entra ${jugador} por ${jugadorSale} (${store.contarSustituciones(club)} de 5).`, 'info', 0]
+  };
+  const [texto, tipoToast, tono] = mensajes[tipoFinal];
+  if (tono) reproducirTonoAccesible(tono, 0.25);
+
+  showToast(texto, tipoToast, {
+    texto: 'Deshacer',
+    onClick: () => anularEventoConMotivo(ev.uid, 'Deshecho por el comisario (error de registro)')
   });
 
-  showToast(`🔄 Sustitución registrada para ${club === 'local' ? 'LDU Quito' : 'Barcelona SC'}. Ventana 1 consumida.`, 'info');
-};
+  refrescarTrasEvento();
+  persistirEvento(ev);
+}
 
 window.registrarHidratacionEnVivo = function() {
-  store.registrarEventoPartido({
-    tipo: 'hidratacion_inicio',
-    club: null,
-    autor: 'Pausa Reglamentaria (Art. 71)',
-    detalle: 'Minuto de hidratación autorizado por temperatura ambiental > 30°C. Duración máx. 1 minuto.'
+  if (store.actaCerrada()) return avisarActaCerrada();
+  const ev = store.registrarEventoPartido({ tipo: 'hidratacion_inicio', club: null, jugador: 'Pausa de hidratación' });
+  showToast('Pausa de hidratación registrada (máx. 1 minuto).', 'info', {
+    texto: 'Deshacer',
+    onClick: () => anularEventoConMotivo(ev.uid, 'Deshecho por el comisario (error de registro)')
   });
-  showToast(`💧 Minuto de hidratación reglamentario iniciado (Art. 71).`, 'info');
+  persistirEvento(ev);
 };
 
-window.registrarIncidenteEnVivo = async function(causaParam) {
-  const causa = (typeof causaParam === 'string' && causaParam.trim())
-    ? causaParam.trim()
-    : 'Lanzamiento de objetos e invasión parcial (Art. 73)';
-  store.registrarEventoPartido({
-    tipo: 'fin_periodo',
-    club: null,
-    autor: 'Comisario de Partido',
-    detalle: `Suspensión provisional por incidente: ${causa}. Se activa cronómetro de espera de 30 minutos (Art. 73/76).`
-  });
+const CATEGORIAS_INCIDENTE = [
+  ['objetos', 'Lanzamiento de objetos'],
+  ['pirotecnia', 'Bengalas o pirotecnia'],
+  ['invasion', 'Invasión del campo'],
+  ['demora', 'Demora en la reanudación'],
+  ['otro', 'Otro']
+];
 
-  await safeInsert('incidentes', {
-    partido_id: store.state.partidoActivo.id,
-    tipo: 'invasion_objetos',
-    minuto: store.state.partidoActivo.minuto,
-    sector: 'Preferencia y General Sur',
-    descripcion: causa
+window.abrirRegistroIncidente = function() {
+  if (store.actaCerrada()) return avisarActaCerrada();
+  const p = store.state.partidoActivo;
+  const opciones = CATEGORIAS_INCIDENTE.map(([v, t]) => `<option value="${v}">${t}</option>`).join('');
+  abrirDialogo({
+    titulo: 'Registrar incidente',
+    descripcion: 'Queda en la bitácora y en el informe del comisario (Art. 73).',
+    cuerpoHtml: `
+      <label class="block"><span class="${ETIQUETA}">Tipo de incidente</span>
+        <select name="categoria" class="${CAMPO}">${opciones}</select></label>
+      ${campoTexto('sector', 'Sector', { placeholder: 'Ej: General Sur' })}
+      ${campoMinuto(p.minuto)}`,
+    confirmarTexto: 'Registrar',
+    onConfirmar: (datos) => {
+      const minuto = leerMinuto(datos);
+      if (minuto === null) return 'Ingresa un minuto válido (0 a 130).';
+      const etiqueta = (CATEGORIAS_INCIDENTE.find(([v]) => v === datos.categoria) || [, 'Incidente'])[1];
+      const sector = (datos.sector || '').trim();
+      const ev = store.registrarEventoPartido({
+        tipo: 'incidente',
+        club: null,
+        categoria: datos.categoria,
+        jugador: etiqueta,
+        sector,
+        detalle: sector ? `${etiqueta} · ${sector}` : etiqueta,
+        minuto
+      });
+      reproducirTonoAccesible(250, 0.4);
+      showToast(`Incidente registrado: ${etiqueta}.`, 'warning', {
+        texto: 'Deshacer',
+        onClick: () => anularEventoConMotivo(ev.uid, 'Deshecho por el comisario (error de registro)')
+      });
+      persistirEvento(ev);
+    }
   });
-
-  reproducirTonoAccesible(250, 0.5);
-  showToast(`⚠️ INCIDENTE REGISTRADO (Art. 73): Cronómetro de espera perentorio de 30 minutos iniciado.`, 'warning');
 };
 
-window.sellarPlanillaJuego = async function() {
-  const hash = 'SHA256:' + Array.from(crypto.getRandomValues(new Uint8Array(16))).map(b => b.toString(16).padStart(2, '0')).join('');
-  store.state.partidoActivo.estado = 'oficializado';
-  store.notify();
-  showToast(`✅ Planilla de Juego oficializada y bloqueada según Art. 45. Hash Digital: ${hash}`, 'success');
+// Compatibilidad con llamadas antiguas
+window.registrarGolEnVivo = (club = 'local') => window.abrirRegistroEvento('gol', club);
+window.registrarTarjetaEnVivo = (tipo = 'amarilla', club = 'visitante') => window.abrirRegistroEvento(tipo === 'roja' ? 'roja' : 'amarilla', club);
+window.registrarSustitucionEnVivo = (club = 'local') => window.abrirRegistroEvento('sustitucion', club);
+window.registrarIncidenteEnVivo = () => window.abrirRegistroIncidente();
+
+// ------------------------------------------------------------------------------
+// 5.4 Anulación de eventos (con motivo y trazabilidad)
+// ------------------------------------------------------------------------------
+
+const ETIQUETA_TIPO = {
+  gol: 'Gol',
+  gol_penal: 'Gol de penal',
+  autogol: 'Autogol',
+  amarilla: 'Amarilla',
+  segunda_amarilla: 'Doble amarilla',
+  roja: 'Roja',
+  sustitucion: 'Cambio',
+  hidratacion_inicio: 'Hidratación',
+  incidente: 'Incidente',
+  fin_periodo: 'Incidente'
+};
+
+function describirEvento(ev) {
+  const partes = [ETIQUETA_TIPO[ev.tipo] || 'Evento'];
+  const quien = ev.jugador || ev.autor;
+  if (quien && ev.tipo !== 'hidratacion_inicio' && ev.tipo !== 'incidente') partes.push(quien);
+  if (ev.club) partes.push(nombreEquipo(ev.club));
+  return `${ev.minuto ?? ''}' · ${partes.join(' · ')}`;
+}
+
+window.abrirAnularEvento = function(uid) {
+  if (store.actaCerrada()) return avisarActaCerrada();
+  const p = store.state.partidoActivo;
+  const ev = (p.eventos || []).find((e) => e.uid === uid);
+  if (!ev || ev.anulado) return;
+
+  let aviso = '';
+  if (['gol', 'gol_penal', 'autogol'].includes(ev.tipo)) {
+    const m = { ...p.marcador };
+    const club = ev.tipo === 'autogol' ? (ev.club === 'local' ? 'visitante' : 'local') : (ev.club === 'visitante' ? 'visitante' : 'local');
+    m[club] = Math.max(0, m[club] - 1);
+    aviso = `<p class="rounded-lg bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-300 text-sm px-3 py-2">El marcador pasará de <strong>${p.marcador.local} - ${p.marcador.visitante}</strong> a <strong>${m.local} - ${m.visitante}</strong>.</p>`;
+  }
+
+  abrirDialogo({
+    titulo: 'Anular evento',
+    descripcion: describirEvento(ev),
+    peligro: true,
+    confirmarTexto: 'Anular evento',
+    cuerpoHtml: `
+      ${aviso}
+      <div><span class="${ETIQUETA}">Motivo</span>
+        <div class="mt-1 space-y-2">
+          ${[['error', 'Error de registro'], ['var', 'Decisión del árbitro o VAR'], ['otro', 'Otro motivo']].map(([v, t], i) => `
+          <label class="flex items-center gap-2 text-sm"><input type="radio" name="motivo" value="${v}" ${i === 0 ? 'checked' : ''} class="accent-rose-600" />${t}</label>`).join('')}
+        </div>
+      </div>
+      <label class="block"><span class="${ETIQUETA}">Detalle <span class="font-normal text-slate-400">(obligatorio si eliges «Otro motivo»)</span></span>
+        <textarea name="detalle" rows="2" class="mt-1 w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/30 focus:border-indigo-600"></textarea></label>
+      <p class="text-xs text-slate-500 dark:text-slate-400">El evento no se borra: queda tachado en la bitácora con el motivo, la hora y quién lo anuló.</p>`,
+    onConfirmar: (datos) => {
+      const textos = { error: 'Error de registro', var: 'Decisión del árbitro o VAR', otro: 'Otro motivo' };
+      const detalle = (datos.detalle || '').trim();
+      if (datos.motivo === 'otro' && !detalle) return 'Describe el motivo de la anulación.';
+      const motivo = detalle ? `${textos[datos.motivo]}: ${detalle}` : textos[datos.motivo];
+      anularEventoConMotivo(uid, motivo);
+    }
+  });
+};
+
+function anularEventoConMotivo(uid, motivo) {
+  if (store.actaCerrada()) return avisarActaCerrada();
+  const anulado = store.anularEvento(uid, motivo);
+  if (!anulado) return;
+  showToast(`Evento anulado: ${describirEvento(anulado)}.`, 'warning');
+  refrescarTrasEvento();
+  persistirAnulacion(anulado, motivo);
+}
+
+// ------------------------------------------------------------------------------
+// 5.5 Cierre del acta (irreversible)
+// ------------------------------------------------------------------------------
+
+window.sellarPlanillaJuego = function() {
+  if (store.actaCerrada()) return avisarActaCerrada();
+  const p = store.state.partidoActivo;
+  const vigentes = store.eventosVigentes().length;
+  abrirDialogo({
+    titulo: 'Cerrar y firmar acta',
+    descripcion: `${nombreEquipo('local')} ${p.marcador.local} - ${p.marcador.visitante} ${nombreEquipo('visitante')}`,
+    peligro: true,
+    confirmarTexto: 'Cerrar acta',
+    cuerpoHtml: `<p class="text-sm text-slate-600 dark:text-slate-300">Se firmará el acta con <strong>${vigentes}</strong> eventos vigentes. Después de cerrarla <strong>no podrás registrar ni anular eventos</strong> (Art. 45).</p>`,
+    onConfirmar: async () => {
+      store.state.partidoActivo = { ...store.state.partidoActivo, estado: 'oficializado' };
+      const item = store.state.partidos?.find((x) => x.id === p.id);
+      if (item) item.estado = 'oficializado';
+      store.notify();
+      refrescarTrasEvento();
+      showToast('Acta cerrada y firmada. El resultado queda oficializado.', 'success');
+
+      const sb = getSupabase();
+      if (sb) {
+        const { error } = await sb.from('partidos').update({
+          estado: 'oficializado',
+          oficializado_en: new Date().toISOString(),
+          goles_local: p.marcador.local,
+          goles_visitante: p.marcador.visitante
+        }).eq('id', p.id);
+        if (error) console.warn('Cierre de acta guardado solo localmente:', error.message);
+      }
+    }
+  });
 };
 
 // ==============================================================================
@@ -2370,30 +2662,60 @@ window.verificarHashSHA256 = function() {
   res.innerHTML = `<div class="flex items-center gap-1.5 font-bold text-emerald-800"><span class="material-symbols-outlined text-base">check_circle</span><span>INTEGRIDAD DIGITAL CONFIRMADA</span></div><p class="text-[11px] font-mono">Hash SHA-256 verificado contra el repositorio seguro de actas LigaPro.<br>Estado: AUTÉNTICO E INALTERADO.</p>`;
 };
 
-function showToast(message, type = 'info') {
-  const colors = {
-    info: 'bg-slate-900 text-white border-slate-700',
-    success: 'bg-emerald-900 text-emerald-100 border-emerald-700',
-    warning: 'bg-amber-900 text-amber-100 border-amber-700',
-    error: 'bg-red-900 text-red-100 border-red-700'
+/**
+ * Muestra un aviso. `accion` opcional: { texto, onClick } añade un botón (p. ej. «Deshacer»).
+ */
+function showToast(message, type = 'info', accion = null) {
+  const estilos = {
+    info: ['info', 'text-sky-400'],
+    success: ['check_circle', 'text-emerald-400'],
+    warning: ['warning', 'text-amber-400'],
+    error: ['error', 'text-rose-400']
   };
+  const [icono, colorIcono] = estilos[type] || estilos.info;
+
+  let pila = document.getElementById('toast-stack');
+  if (!pila) {
+    pila = document.createElement('div');
+    pila.id = 'toast-stack';
+    pila.className = 'fixed bottom-4 right-4 left-4 sm:left-auto z-[60] flex flex-col items-end gap-2 pointer-events-none';
+    document.body.appendChild(pila);
+  }
 
   const toast = document.createElement('div');
-  toast.className = `fixed bottom-5 right-5 z-[60] flex items-center gap-2 px-4 py-3 rounded-xl shadow-2xl border text-xs font-semibold animate-bounce transition-all ${colors[type] || colors.info}`;
+  toast.className = 'pointer-events-auto w-full sm:w-auto sm:max-w-sm flex items-start gap-3 pl-4 pr-3 py-3 rounded-xl shadow-xl bg-slate-900 text-white text-sm transition-opacity duration-300';
   toast.setAttribute('role', type === 'error' ? 'alert' : 'status');
+
   const icon = document.createElement('span');
-  icon.className = 'material-symbols-outlined text-base';
-  icon.textContent = 'notifications';
+  icon.className = `material-symbols-outlined text-lg leading-5 ${colorIcono}`;
+  icon.textContent = icono;
   const text = document.createElement('span');
+  text.className = 'flex-1 leading-5';
   // textContent evita inyección de HTML (p. ej. mensajes de error de Supabase o nombres de usuario)
   text.textContent = String(message);
   toast.append(icon, text);
-  document.body.appendChild(toast);
 
-  setTimeout(() => {
+  const cerrar = () => {
     toast.style.opacity = '0';
-    setTimeout(() => toast.remove(), 400);
-  }, 4000);
+    setTimeout(() => toast.remove(), 300);
+  };
+
+  if (accion && typeof accion.onClick === 'function') {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'shrink-0 -my-1 px-2 py-1 rounded-md text-sm font-semibold text-indigo-300 hover:bg-white/10';
+    btn.textContent = accion.texto || 'Deshacer';
+    btn.addEventListener('click', () => {
+      cerrar();
+      accion.onClick();
+    });
+    toast.append(btn);
+  }
+
+  // Máximo 3 avisos visibles: se descarta el más antiguo
+  while (pila.children.length >= 3) pila.firstElementChild.remove();
+  pila.appendChild(toast);
+  setTimeout(cerrar, accion ? 7000 : 4500);
 }
 
 // Expuesto globalmente: los atributos onclick="showToast(...)" del HTML lo requieren.
@@ -2537,12 +2859,24 @@ window.renderizarPartidosTablero = function() {
 
 const ICONO_EVENTO = {
   gol: ['sports_soccer', 'text-emerald-600 dark:text-emerald-400'],
+  gol_penal: ['sports_soccer', 'text-emerald-600 dark:text-emerald-400'],
+  autogol: ['sports_soccer', 'text-slate-500'],
   amarilla: ['style', 'text-amber-500'],
+  segunda_amarilla: ['style', 'text-rose-600 dark:text-rose-400'],
   roja: ['style', 'text-rose-600 dark:text-rose-400'],
   sustitucion: ['swap_horiz', 'text-sky-600 dark:text-sky-400'],
   hidratacion_inicio: ['water_drop', 'text-sky-600 dark:text-sky-400'],
+  incidente: ['warning', 'text-rose-600 dark:text-rose-400'],
   fin_periodo: ['warning', 'text-rose-600 dark:text-rose-400']
 };
+
+function horaCorta(iso) {
+  try {
+    return new Date(iso).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' });
+  } catch (e) {
+    return '';
+  }
+}
 
 function renderizarConsola() {
   const p = store.state.partidoActivo;
@@ -2571,23 +2905,65 @@ function renderizarConsola() {
   set('minuto', p.estado === 'en_juego' ? `${estadoTxt} · ${p.minuto || 0}' · ${p.periodo || 1}T` : estadoTxt);
 
   const eventos = Array.isArray(p.eventos) ? p.eventos : [];
+  const cerrada = store.actaCerrada();
+  const vigentes = eventos.filter((e) => !e.anulado).length;
+  set('eventos-resumen', eventos.length === 0 ? '' : `${vigentes} vigentes${eventos.length > vigentes ? ` · ${eventos.length - vigentes} anulados` : ''}`);
+  document.querySelectorAll('[data-c="acta-cerrada"]').forEach((el) => { el.classList.toggle('hidden', !cerrada); });
+  document.querySelectorAll('[data-c-requiere-acta-abierta]').forEach((el) => {
+    el.disabled = cerrada;
+    el.classList.toggle('opacity-40', cerrada);
+    el.classList.toggle('cursor-not-allowed', cerrada);
+  });
+
   document.querySelectorAll('[data-c="eventos"]').forEach((lista) => {
-    const altoContraste = lista.getAttribute('data-c-tema') === 'alto';
+    const ac = lista.getAttribute('data-c-tema') === 'alto';
     if (eventos.length === 0) {
-      lista.innerHTML = `<li class="px-5 py-8 text-center ${altoContraste ? 'text-[#fff]' : 'text-slate-400'}">Aún no hay eventos registrados.</li>`;
+      lista.innerHTML = `<li class="px-5 py-8 text-center ${ac ? 'text-[#fff]' : 'text-slate-400'}">Aún no hay eventos registrados.</li>`;
       return;
     }
-    lista.innerHTML = eventos.slice(0, 12).map((ev) => {
+    lista.innerHTML = eventos.map((ev) => {
       const [icono, color] = ICONO_EVENTO[ev.tipo] || ['info', 'text-slate-400'];
-      const colorIcono = altoContraste ? 'text-[#FFE600]' : color;
-      const colorMinuto = altoContraste ? 'text-[#FFE600]' : 'text-slate-400';
-      const colorTexto = altoContraste ? 'text-[#fff]' : 'text-slate-900 dark:text-white';
-      const borde = altoContraste ? 'border-b-2 border-[#fff]/40' : '';
+      const anulado = Boolean(ev.anulado);
+      const colorIcono = anulado ? (ac ? 'text-[#fff]/50' : 'text-slate-300 dark:text-slate-600') : (ac ? 'text-[#FFE600]' : color);
+      const colorMinuto = ac ? 'text-[#FFE600]' : 'text-slate-400';
+      const colorTexto = ac ? 'text-[#fff]' : 'text-slate-900 dark:text-white';
+      const colorSub = ac ? 'text-[#fff]/80' : 'text-slate-500 dark:text-slate-400';
+      const borde = ac ? 'border-b-2 border-[#fff]/40' : '';
+
+      const etiqueta = ETIQUETA_TIPO[ev.tipo] || 'Evento';
+      const quien = ev.jugador || ev.autor || '';
+      const equipo = ev.club ? nombreEquipo(ev.club) : '';
+      let principal = etiqueta;
+      if (ev.tipo === 'sustitucion') principal = `Cambio · ${equipo}`;
+      else if (ev.tipo === 'incidente') principal = `Incidente · ${quien}`;
+      else if (ev.tipo === 'hidratacion_inicio') principal = 'Pausa de hidratación';
+      else principal = [etiqueta, quien, equipo].filter(Boolean).join(' · ');
+
+      let secundario = '';
+      if (ev.tipo === 'sustitucion') secundario = `Entra ${ev.jugador || '—'} · Sale ${ev.jugadorSale || '—'}`;
+      else if (ev.tipo === 'incidente' && ev.sector) secundario = `Sector: ${ev.sector}`;
+      else if (ev.tipo === 'segunda_amarilla') secundario = 'Expulsado por doble amarilla';
+
+      const anulacion = anulado && ev.anulacion
+        ? `<span class="block mt-0.5 text-xs font-semibold ${ac ? 'text-[#FF3B30]' : 'text-rose-600 dark:text-rose-400'}">Anulado: ${escapeAttr(ev.anulacion.motivo)} · ${escapeAttr(ev.anulacion.por || '')} ${escapeAttr(horaCorta(ev.anulacion.en))}</span>`
+        : '';
+
+      const boton = (!anulado && !cerrada)
+        ? `<button type="button" onclick="abrirAnularEvento('${escapeAttr(ev.uid)}')" aria-label="Anular evento: ${escapeAttr(describirEvento(ev))}"
+             class="shrink-0 inline-flex items-center gap-1 h-8 px-2.5 rounded-lg text-xs font-semibold ${ac ? 'border-2 border-[#fff] text-[#fff] hover:bg-[#fff] hover:text-[#000]' : 'text-slate-500 dark:text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10'}">
+             <span class="material-symbols-outlined text-base">undo</span>Anular</button>`
+        : '';
+
       return `
         <li class="px-5 py-3 flex items-start gap-3 ${borde}">
-          <span class="w-9 shrink-0 tabular-nums font-semibold ${colorMinuto}">${escapeAttr(ev.minuto ?? '')}'</span>
-          <span class="material-symbols-outlined text-lg ${colorIcono}">${icono}</span>
-          <span class="min-w-0 font-medium ${colorTexto}">${escapeAttr(ev.autor || ev.tipo)}</span>
+          <span class="w-9 shrink-0 tabular-nums font-semibold ${colorMinuto} ${anulado ? 'line-through opacity-60' : ''}">${escapeAttr(ev.minuto ?? '')}'</span>
+          <span class="material-symbols-outlined text-lg leading-6 ${colorIcono}">${icono}</span>
+          <span class="flex-1 min-w-0">
+            <span class="block font-medium ${colorTexto} ${anulado ? 'line-through opacity-60' : ''}">${escapeAttr(principal)}</span>
+            ${secundario ? `<span class="block text-xs ${colorSub} ${anulado ? 'line-through opacity-60' : ''}">${escapeAttr(secundario)}</span>` : ''}
+            ${anulacion}
+          </span>
+          ${boton}
         </li>`;
     }).join('');
   });
@@ -2606,7 +2982,7 @@ window.filtrarSolicitudes = function(estado) {
     marcarSegmento(btn, btn.getAttribute('data-filtro-solicitud') === estado, 'filtro-solicitud px-2.5 py-1 rounded-md');
   });
   document.querySelectorAll('[data-estado-solicitud]').forEach((item) => {
-    item.hidden = estado !== 'todas' && item.getAttribute('data-estado-solicitud') !== estado;
+    item.classList.toggle('hidden', estado !== 'todas' && item.getAttribute('data-estado-solicitud') !== estado);
   });
 };
 

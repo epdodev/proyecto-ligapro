@@ -242,6 +242,10 @@
         </div>
       </div>
 
+      <div data-c="acta-cerrada" class="hidden mb-5 rounded-xl border-4 border-[#FFE600] px-5 py-4 text-lg font-extrabold text-[#FFE600]">
+        ACTA CERRADA Y FIRMADA · Solo lectura
+      </div>
+
       <div class="grid grid-cols-1 lg:grid-cols-5 gap-5">
         <div class="lg:col-span-3 space-y-5">
           <div class="rounded-2xl border-4 border-[#FFE600] p-6">
@@ -255,21 +259,41 @@
             </div>
           </div>
 
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <p data-c="local-nombre" class="mb-2 text-lg font-extrabold text-[#FFE600] truncate">Local</p>
+              <div class="grid grid-cols-2 gap-3">
+                <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('gol', 'local')" class="h-16 rounded-xl bg-[#FFE600] text-[#000] text-xl font-extrabold focus:outline-none focus:ring-4 focus:ring-[#fff]">Gol</button>
+                <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('sustitucion', 'local')" class="h-16 rounded-xl bg-[#000] text-[#fff] text-xl font-extrabold border-4 border-[#fff] focus:outline-none focus:ring-4 focus:ring-[#FFE600]">Cambio</button>
+                <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('amarilla', 'local')" class="h-16 rounded-xl bg-[#000] text-[#FFE600] text-xl font-extrabold border-4 border-[#FFE600] focus:outline-none focus:ring-4 focus:ring-[#fff]">Amarilla</button>
+                <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('roja', 'local')" class="h-16 rounded-xl bg-[#FF3B30] text-[#000] text-xl font-extrabold focus:outline-none focus:ring-4 focus:ring-[#fff]">Roja</button>
+              </div>
+            </div>
+            <div>
+              <p data-c="visitante-nombre" class="mb-2 text-lg font-extrabold text-[#FFE600] truncate">Visitante</p>
+              <div class="grid grid-cols-2 gap-3">
+                <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('gol', 'visitante')" class="h-16 rounded-xl bg-[#FFE600] text-[#000] text-xl font-extrabold focus:outline-none focus:ring-4 focus:ring-[#fff]">Gol</button>
+                <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('sustitucion', 'visitante')" class="h-16 rounded-xl bg-[#000] text-[#fff] text-xl font-extrabold border-4 border-[#fff] focus:outline-none focus:ring-4 focus:ring-[#FFE600]">Cambio</button>
+                <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('amarilla', 'visitante')" class="h-16 rounded-xl bg-[#000] text-[#FFE600] text-xl font-extrabold border-4 border-[#FFE600] focus:outline-none focus:ring-4 focus:ring-[#fff]">Amarilla</button>
+                <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroEvento('roja', 'visitante')" class="h-16 rounded-xl bg-[#FF3B30] text-[#000] text-xl font-extrabold focus:outline-none focus:ring-4 focus:ring-[#fff]">Roja</button>
+              </div>
+            </div>
+          </div>
+
           <div class="grid grid-cols-2 gap-3">
-            <button type="button" onclick="registrarGolEnVivo('local')" class="h-16 rounded-xl bg-[#FFE600] text-[#000] text-xl font-extrabold border-4 border-[#FFE600] focus:outline-none focus:ring-4 focus:ring-[#fff]">Gol local</button>
-            <button type="button" onclick="registrarGolEnVivo('visitante')" class="h-16 rounded-xl bg-[#FFE600] text-[#000] text-xl font-extrabold border-4 border-[#FFE600] focus:outline-none focus:ring-4 focus:ring-[#fff]">Gol visitante</button>
-            <button type="button" onclick="registrarTarjetaEnVivo('amarilla', 'visitante')" class="h-16 rounded-xl bg-[#000] text-[#FFE600] text-xl font-extrabold border-4 border-[#FFE600] focus:outline-none focus:ring-4 focus:ring-[#fff]">Amarilla</button>
-            <button type="button" onclick="registrarTarjetaEnVivo('roja', 'visitante')" class="h-16 rounded-xl bg-[#FF3B30] text-[#000] text-xl font-extrabold border-4 border-[#FF3B30] focus:outline-none focus:ring-4 focus:ring-[#fff]">Roja</button>
-            <button type="button" onclick="registrarSustitucionEnVivo('local')" class="h-16 rounded-xl bg-[#000] text-[#fff] text-xl font-extrabold border-4 border-[#fff] focus:outline-none focus:ring-4 focus:ring-[#FFE600]">Cambio</button>
-            <button type="button" onclick="registrarIncidenteEnVivo()" class="h-16 rounded-xl bg-[#000] text-[#fff] text-xl font-extrabold border-4 border-[#fff] focus:outline-none focus:ring-4 focus:ring-[#FFE600]">Incidente</button>
+            <button type="button" data-c-requiere-acta-abierta onclick="registrarHidratacionEnVivo()" class="h-14 rounded-xl bg-[#000] text-[#fff] text-lg font-extrabold border-4 border-[#fff] focus:outline-none focus:ring-4 focus:ring-[#FFE600]">Hidratación</button>
+            <button type="button" data-c-requiere-acta-abierta onclick="abrirRegistroIncidente()" class="h-14 rounded-xl bg-[#000] text-[#fff] text-lg font-extrabold border-4 border-[#fff] focus:outline-none focus:ring-4 focus:ring-[#FFE600]">Incidente</button>
           </div>
         </div>
 
         <div class="lg:col-span-2 rounded-2xl border-4 border-[#fff] flex flex-col">
-          <h2 class="px-5 py-4 text-xl font-extrabold text-[#FFE600] border-b-4 border-[#fff]">Bitácora</h2>
-          <ul data-c="eventos" data-c-tema="alto" class="flex-1 text-base"></ul>
+          <div class="px-5 py-4 border-b-4 border-[#fff]">
+            <h2 class="text-xl font-extrabold text-[#FFE600]">Bitácora</h2>
+            <span data-c="eventos-resumen" class="text-sm text-[#fff]"></span>
+          </div>
+          <ul data-c="eventos" data-c-tema="alto" class="flex-1 max-h-[34rem] overflow-y-auto text-base"></ul>
           <div class="p-4 border-t-4 border-[#fff]">
-            <button type="button" onclick="sellarPlanillaJuego()" class="w-full h-14 rounded-xl bg-[#fff] text-[#000] text-lg font-extrabold focus:outline-none focus:ring-4 focus:ring-[#FFE600]">Cerrar y firmar acta</button>
+            <button type="button" data-c-requiere-acta-abierta onclick="sellarPlanillaJuego()" class="w-full h-14 rounded-xl bg-[#fff] text-[#000] text-lg font-extrabold focus:outline-none focus:ring-4 focus:ring-[#FFE600]">Cerrar y firmar acta</button>
           </div>
         </div>
       </div>
